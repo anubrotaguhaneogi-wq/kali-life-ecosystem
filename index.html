@@ -3,380 +3,205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>KALI LIFE ECOSYSTEM</title>
-<meta name="description" content="Kali Life Ecosystem - Integrated Farming, Organic Living, Astrology, Membership & Community Platform">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-scroll-behavior:smooth;
-font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
 body{
-background:#f5f8f4;
-color:#222;
-line-height:1.6;
+    font-family:Arial, sans-serif;
+    background:#0d1117;
+    color:white;
+    line-height:1.6;
 }
-header{
-position:sticky;
-top:0;
-z-index:1000;
-background:#0f4d2c;
-padding:15px 5%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-box-shadow:0 2px 10px rgba(0,0,0,.2);
-}
-.logo{
-color:white;
-font-size:24px;
-font-weight:700;
-}
-nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-font-size:14px;
-}
-nav a:hover{
-color:#9cffb1;
-}
+
 .hero{
-height:100vh;
-background:
-linear-gradient(rgba(0,0,0,.45),
-rgba(0,0,0,.45)),
-url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
-background-size:cover;
-background-position:center;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+    background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1600');
+    background-size:cover;
+    background-position:center;
 }
-.hero-content{
-max-width:900px;
-color:white;
-}
+
 .hero h1{
-font-size:55px;
-margin-bottom:20px;
+    font-size:3rem;
+    margin-bottom:15px;
 }
-.hero p{
-font-size:20px;
-margin-bottom:25px;
+
+.hero-subtitle{
+    max-width:800px;
+    font-size:1.2rem;
+    margin-bottom:30px;
 }
-.btn{
-display:inline-block;
-padding:14px 30px;
-background:#3fbf61;
-color:white;
-text-decoration:none;
-border-radius:10px;
-font-weight:600;
-margin:10px;
-transition:.3s;
+
+.join-btn{
+    display:inline-block;
+    background:#00c853;
+    color:white;
+    text-decoration:none;
+    padding:16px 35px;
+    border-radius:50px;
+    font-size:1.2rem;
+    font-weight:bold;
+    margin-bottom:20px;
 }
-.btn:hover{
-background:#2d9448;
-transform:translateY(-3px);
+
+.join-btn:hover{
+    transform:scale(1.05);
 }
-.section{
-padding:80px 8%;
+
+.contact-box{
+    background:rgba(255,255,255,.1);
+    padding:15px 25px;
+    border-radius:15px;
+    backdrop-filter:blur(8px);
 }
+
+.services{
+    padding:60px 20px;
+}
+
 .section-title{
-text-align:center;
-font-size:36px;
-color:#0f4d2c;
-margin-bottom:20px;
+    text-align:center;
+    margin-bottom:40px;
+    font-size:2rem;
 }
-.section-subtitle{
-text-align:center;
-max-width:850px;
-margin:auto;
-margin-bottom:40px;
+
+.service-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
 }
-.about-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-margin-top:30px;
-}
+
 .card{
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
+    background:#161b22;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
 }
+
+.card .icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
 .card h3{
-color:#0f4d2c;
-margin-bottom:15px;
+    margin-bottom:10px;
 }
-.video-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:25px;
+
+.about{
+    padding:60px 20px;
+    text-align:center;
+    background:#161b22;
 }
-.video-card{
-background:white;
-padding:15px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-transition:.3s;
+
+.about p{
+    max-width:900px;
+    margin:auto;
 }
-.video-card:hover{
-transform:translateY(-5px);
+
+.footer{
+    text-align:center;
+    padding:25px;
+    background:#0a0d12;
 }
-.video-card iframe{
-width:100%;
-height:300px;
-border:none;
-border-radius:12px;
-}
-@media(max-width:768px){
-header{
-flex-direction:column;
-}
-nav{
-margin-top:10px;
-}
-nav a{
-display:inline-block;
-margin:5px;
-}
-.hero h1{
-font-size:32px;
-}
-.hero p{
-font-size:16px;
-}
-.section-title{
-font-size:28px;
-}
-}
+
 </style>
 </head>
+
 <body>
-<header>
-<div class="logo">
-🌱 KALI LIFE ECOSYSTEM
-</div>
-<nav>
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#videos">Videos</a>
-<a href="#membership">Membership</a>
-<a href="#contact">Contact</a>
-</nav>
-</header>
-<section class="hero" id="home">
-<div class="hero-content">
-<h1>
-🌄 Sustainable Living Starts Here
-</h1>
-<p>
-Integrated Farming • Organic Living • Community Growth • Astrology • Business Opportunities
+
+<section class="hero">
+
+<h1>KALI LIFE ECOSYSTEM</h1>
+
+<p class="hero-subtitle">
+কৃষি, ব্যবসা, শিক্ষা, কর্মসংস্থান ও সামাজিক সংযোগের সমন্বিত ডিজিটাল পরিবার
 </p>
-<a href="#membership" class="btn">
-Join Free
+
+<a href="https://forms.gle/KMcpapQF8N4L76SG" class="join-btn">
+🚀 Join Free Membership
 </a>
-<a href="#videos" class="btn">
-Watch Videos
-</a>
+
+<div class="contact-box">
+<p>📱 WhatsApp: 7063213119</p>
+<p>📩 Free Registration Open</p>
 </div>
+
 </section>
-<section class="section" id="about">
-<h2 class="section-title">
-🌱 About Kali Life Ecosystem
-</h2>
-<p class="section-subtitle">
-রান্নাঘর থেকে কৃষিক্ষেত্র, জৈব জীবনধারা, Waste to Wealth, Integrated Farming, Astrology, Community Building এবং Business Growth-এর জন্য একটি পূর্ণাঙ্গ Ecosystem।
-</p>
-<div class="about-grid">
+
+<section class="services">
+
+<h2 class="section-title">আমাদের সেবা</h2>
+
+<div class="service-grid">
+
 <div class="card">
-<h3>🌿 Organic Farming</h3>
-<p>জৈব কৃষি ও স্বাস্থ্যকর খাদ্য উৎপাদনের শিক্ষা।</p>
+<div class="icon">🌾</div>
+<h3>Organic Farming</h3>
+<p>আধুনিক ও প্রাকৃতিক কৃষি প্রযুক্তি</p>
 </div>
+
 <div class="card">
-<h3>🐟 Integrated Farming</h3>
-<p>মাছ, হাঁস, গরু, সবজি ও ফলের সমন্বিত উৎপাদন ব্যবস্থা।</p>
+<div class="icon">💼</div>
+<h3>Business Network</h3>
+<p>ব্যবসায়িক সংযোগ ও সুযোগ</p>
 </div>
+
 <div class="card">
-<h3>♻ Waste To Wealth</h3>
-<p>বর্জ্য থেকে সম্পদ তৈরির আধুনিক কৌশল।</p>
+<div class="icon">👨‍👩‍👧‍👦</div>
+<h3>Community Support</h3>
+<p>একটি শক্তিশালী সামাজিক পরিবার</p>
 </div>
+
+<div class="card">
+<div class="icon">🔮</div>
+<h3>Astrology Services</h3>
+<p>জ্যোতিষ ও পরামর্শ সেবা</p>
 </div>
+
+<div class="card">
+<div class="icon">💍</div>
+<h3>Marriage Network</h3>
+<p>বিশ্বস্ত বিবাহ পরিচয় সেবা</p>
+</div>
+
+</div>
+
 </section>
-<section class="section" id="videos">
-<h2 class="section-title">
-🎥 Featured Videos
-</h2>
-<div class="video-grid">
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/3tyQCmIPcLs" allowfullscreen></iframe>
-</div>
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/pCpm_hZpR6w" allowfullscreen></iframe>
-</div>
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/66BfpN5wZyg" allowfullscreen></iframe>
-</div>
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/15esJhFoL8I" allowfullscreen></iframe>
-</div>
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/6USXMnFAXHs" allowfullscreen></iframe>
-</div>
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/7JSZdlOKP2k" allowfullscreen></iframe>
-</div>
-</div>
-</section><!-- Membership Section -->
-<section class="section" id="membership">
-<h2 class="section-title">
-👥 Membership Plans
-</h2>
-<div class="about-grid">
-<div class="card">
-<h3>🟢 Free Member</h3>
+
+<section class="about">
+
+<h2>আমাদের সম্পর্কে</h2>
+
+<br>
+
 <p>
-✔ সমস্ত ভিডিও দেখতে পারবেন<br>
-✔ কৃষি ও বাগান বিষয়ক তথ্য পাবেন<br>
-✔ Astrology সেকশন ব্যবহার করতে পারবেন<br>
-✔ Marriage Bureau-তে আবেদন করতে পারবেন<br>
-✔ Community Updates পাবেন
+KALI LIFE ECOSYSTEM একটি সমন্বিত ডিজিটাল প্ল্যাটফর্ম যেখানে কৃষি,
+ব্যবসা, শিক্ষা, কর্মসংস্থান, সামাজিক সংযোগ, জ্যোতিষ সেবা এবং
+বিবাহ পরিচয় সেবাকে এক ছাতার নিচে আনার প্রচেষ্টা করা হচ্ছে।
 </p>
-<a href="#" class="btn">
-FREE JOIN
-</a>
-</div>
-<div class="card">
-<h3>⭐ Premium Member</h3>
-<p>
-✔ Business Promotion<br>
-✔ Featured Profile<br>
-✔ Priority Support<br>
-✔ Premium Marketplace Access<br>
-✔ Special Training Programs<br>
-✔ Premium Astrology Consultation<br>
-✔ Premium Marriage Profile
-</p>
-<a href="#contact" class="btn">
-Contact For Premium Access
-</a>
-</div>
-</div>
+
 </section>
-<!-- Astrology Section -->
-<section class="section" id="astrology">
-<h2 class="section-title">
-🔮 Astrology & Life Pattern Analysis
-</h2>
-<p class="section-subtitle">
-অতীত, বর্তমান ও সম্ভাব্য ভবিষ্যৎ প্রবণতার বিশ্লেষণের মাধ্যমে জীবন সম্পর্কে উন্নত সিদ্ধান্ত গ্রহণে সহায়তা।
-</p>
-<div class="about-grid">
-<div class="card">
-<h3>🌟 Personal Analysis</h3>
-<p>জন্মতথ্য ও জীবনধারার ভিত্তিতে বিশ্লেষণ।</p>
-</div>
-<div class="card">
-<h3>💼 Career & Business</h3>
-<p>কর্মজীবন ও ব্যবসায়িক সম্ভাবনার মূল্যায়ন।</p>
-</div>
-<div class="card">
-<h3>❤️ Relationship Analysis</h3>
-<p>সম্পর্ক, পরিবার ও সামাজিক জীবনের বিশ্লেষণ।</p>
-</div>
-</div>
-</section>
-<!-- Marriage Bureau -->
-<section class="section" id="marriage">
-<h2 class="section-title">
-💍 Marriage Bureau & Member Connect
-</h2>
-<p class="section-subtitle">
-জীবনসঙ্গী খোঁজা, পরিচিতি বৃদ্ধি এবং সমমনা মানুষের সাথে সংযোগ স্থাপনের একটি নিরাপদ প্ল্যাটফর্ম।
-</p>
-<div class="about-grid">
-<div class="card">
-<h3>👨 Groom Registration</h3>
-<p>যোগ্য পাত্রদের জন্য নিবন্ধন ব্যবস্থা।</p>
-</div>
-<div class="card">
-<h3>👩 Bride Registration</h3>
-<p>যোগ্য পাত্রীদের জন্য নিবন্ধন ব্যবস্থা।</p>
-</div>
-<div class="card">
-<h3>🤝 Member Connect</h3>
-<p>সমমনা মানুষদের সাথে পরিচিত হওয়ার সুযোগ।</p>
-</div>
-</div>
-</section>
-<!-- Marketplace -->
-<section class="section" id="marketplace">
-<h2 class="section-title">
-🛒 Business & Services Marketplace
-</h2>
-<p class="section-subtitle">
-Premium সদস্যরা এখানে নিজেদের ব্যবসা, পণ্য ও পরিষেবা প্রচার করতে পারবেন।
-</p>
-<div class="about-grid">
-<div class="card">
-<h3>🌱 Agricultural Products</h3>
-<p>কৃষি ও জৈব পণ্যের প্রচার।</p>
-</div>
-<div class="card">
-<h3>📢 Business Promotion</h3>
-<p>ব্যবসার বিজ্ঞাপন ও প্রচার।</p>
-</div>
-<div class="card">
-<h3>🧰 Professional Services</h3>
-<p>বিভিন্ন ধরনের সেবা প্রদানের সুযোগ।</p>
-</div>
-</div>
-</section>
-<!-- Contact -->
-<section class="section" id="contact">
-<h2 class="section-title">
-📞 Contact Us
-</h2>
-<div class="about-grid">
-<div class="card">
-<h3>📱 Mobile</h3>
-<p>
-7063213090
-</p>
-</div>
-<div class="card">
-<h3>📧 Email</h3>
-<p>
-guhaneogiashim@gmail.com
-</p>
-</div>
-<div class="card">
-<h3>🌱 Kali Life Ecosystem</h3>
-<p>
-Integrated Farming, Organic Living & Community Growth Platform
-</p>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer style="background:#0f4d2c;color:white;text-align:center;padding:30px;">
-<h3>
-🌱 KALI LIFE ECOSYSTEM
-</h3>
-<p style="margin-top:10px;">
-Integrated Farming | Organic Living | Astrology | Community | Business Growth
-</p>
-<p style="margin-top:15px;">
-© 2026 KALI LIFE ECOSYSTEM
-</p>
+
+<footer class="footer">
+
+<p>© 2026 KALI LIFE ECOSYSTEM</p>
+<p>WhatsApp: 7063213119</p>
+
 </footer>
+
 </body>
 </html>
