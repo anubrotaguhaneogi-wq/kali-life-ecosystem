@@ -239,6 +239,25 @@ KALI LIFE ECOSYSTEM একটি সমন্বিত ডিজিটাল প
 
 <p>📩 Free Registration Open</p>
 
-</footer>
+</footer> 
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:f0034e627c0212cbfe0b10",
+  measurementId: "G-D8K1W61F6K"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+console.log("Firebase Connected Successfully");
+    </script>
 </body>
 </html>
