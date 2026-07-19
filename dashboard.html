@@ -55,7 +55,17 @@ KALI LIFE ECOSYSTEM
 
 <a class="menu-btn" href="admin.html">⚙️ Admin Login</a>
 
-<a class="menu-btn" href="index.html">🏠 Home</a>এর
+<a class="menu-btn" href="index.html">🏠 Home</a>
+    <div style="background:#1b263b;padding:20px;border-radius:12px;margin-top:20px;">
+<h2>Welcome User</h2>
+<p>Name: <span id="userName">Loading...</span></p>
+<p>Mobile: <span id="userMobile">Loading...</span></p>
+</div>
+
+<script>
+document.getElementById("userName").innerText=localStorage.getItem("userName")||"Not Found";
+document.getElementById("userMobile").innerText=localStorage.getItem("userMobile")||"Not Found";
+</script>
 
 </div>
 
