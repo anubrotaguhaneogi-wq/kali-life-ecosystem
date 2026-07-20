@@ -91,29 +91,68 @@ Login
 </a>
 
 </div>
-<script>
+<script type="module">
 
-function loginUser(){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let mobile=document.getElementById("mobile").value;
+const firebaseConfig = {
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSC...",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:26f79e...",
+  measurementId: "G-LBEY0W7RX3"
+};
 
-let password=document.getElementById("password").value;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-if(mobile==="" || password===""){
+window.loginUser = async function () {
 
-document.getElementById("error").innerHTML="সব তথ্য পূরণ করুন";
+  const mobile = document.getElementById("mobile").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-return;
+  if (!mobile || !password) {
+    document.getElementById("error").innerHTML =
+      "Please enter Mobile Number and Password";
+    return;
+  }
 
-}
+  const q = query(
+    collection(db, "users"),
+    where("mobile", "==", mobile)
+  );
 
-alert("Login Successful!");
+  const querySnapshot = await getDocs(q);
 
-window.location.href="dashboard.html";
+  if (querySnapshot.empty) {
+    document.getElementById("error").innerHTML =
+      "Mobile number not found!";
+    return;
+  }
 
-}
+  const user = querySnapshot.docs[0].data();
+
+  if (user.password !== password) {
+    document.getElementById("error").innerHTML =
+      "Wrong password!";
+    return;
+  }
+
+  alert("Login Successful!");
+
+  window.location.href = "dashboard.html";
+
+};
 
 </script>
-
 </body>
 </html>
