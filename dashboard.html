@@ -72,6 +72,12 @@ localStorage.getItem("userName") || "Not Found";
 
 document.getElementById("userMobile").innerText =
 localStorage.getItem("userMobile") || "Not Found";
+    function logoutUser() {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userMobile");
+    alert("Logged out successfully!");
+    window.location.href = "login.html";
+    }
 </script>
 
 </div>
