@@ -67,8 +67,14 @@ KALI LIFE ECOSYSTEM
 🚪 Logout
 </button>
 <script>
-document.getElementById("userName").innerText =
-localStorage.getItem("userName") || "Not Found";
+
+    if (!localStorage.getItem("userName")) {
+    alert("Please login first!");
+    window.location.href = "login.html";
+}
+   document.getElementById("userName").innerText =
+localStorage.getItem("userName") || "Not Available"; 
+
 
 document.getElementById("userMobile").innerText =
 localStorage.getItem("userMobile") || "Not Found";
