@@ -89,7 +89,8 @@ let pass=document.getElementById("password").value;
 if(user==="admin" && pass==="12345"){
 
 alert("Login Successful!");
-
+localStorage.setItem("userName", "Admin");
+localStorage.setItem("userMobile", "6296107338");
 window.location.href="dashboard.html";
 
 }else{
