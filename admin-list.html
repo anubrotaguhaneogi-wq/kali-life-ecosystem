@@ -32,10 +32,10 @@
     <td>Super Admin</td>
     <td>Super Admin</td>
     <td>---</td>
-    <td>Active</td>
-    <td>View</td>
-    <td>Edit</td>
-    <td>Delete</td>
+    <td><button onclick="viewUser(1)">View</button></td>
+<td><button onclick="editUser(1)">Edit</button></td>
+<td><button onclick="deleteUser(1)">Delete</button></td>
+    
 </tr>
 
 <tr>
@@ -66,5 +66,16 @@
 
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
 
+<script>
+function viewUser(id) {
+    alert("View Button Clicked : User ID = " + id);
+}
+    function editUser(id) {
+    alert("Edit Button Clicked : User ID = " + id);
+    }
+    function deleteUser(id) {
+    alert("Delete Button Clicked : User ID = " + id);
+    }
+</script>
 </body>
 </html>
