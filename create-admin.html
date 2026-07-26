@@ -97,10 +97,10 @@
 
 <br><br>
 
-<button type="submit" onclick="alert('New Admin Created Successfully!')">
+
+<button type="button" onclick="createAdmin()">
     Create Admin
 </button>
-
 <button type="reset">
     Reset Form
 </button>
@@ -110,6 +110,11 @@
 <hr>
 
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
-
+<script>
+function createAdmin() {
+    alert("Admin created successfully.");
+    window.location.href = "admin-list.html";
+}
+</script>
 </body>
 </html>
