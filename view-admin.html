@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Admin - KALI LIFE ECOSYSTEM</title>
+</head>
+
+<body>
+
+<h1>Admin Details</h1>
+
+<hr>
+
+<p><strong>Admin ID:</strong> <span id="adminId"></span></p>
+<p><strong>Name:</strong> Super Admin</p>
+<p><strong>Role:</strong> Super Admin</p>
+<p><strong>Status:</strong> Active</p>
+
+<br>
+
+<button onclick="goBack()">Back to Admin List</button>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+document.getElementById("adminId").textContent = params.get("id");
+
+function goBack() {
+    window.location.href = "admin-list.html";
+}
+</script>
+
+</body>
+</html>
