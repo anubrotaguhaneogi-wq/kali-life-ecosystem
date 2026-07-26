@@ -66,20 +66,22 @@
 
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
 
-<script>
+
 <script>
 function viewUser(id) {
-    alert("Viewing User ID: " + id);
+    window.location.href = "view-admin.html?id=" + id;
 }
 
 function editUser(id) {
-    alert("Editing User ID: " + id);
+    window.location.href = "create-admin.html?id=" + id;
 }
 
 function deleteUser(id) {
-    if (confirm("Are you sure you want to delete this user?")) {
-        alert("User ID " + id + " deleted successfully.");
+    if (confirm("Are you sure you want to delete this admin?")) {
+        alert("Delete function will be connected to database later.");
     }
+}
+</script>
 }
 </script>
 </html>
