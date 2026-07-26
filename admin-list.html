@@ -67,15 +67,19 @@
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
 
 <script>
+<script>
 function viewUser(id) {
-    alert("View Button Clicked : User ID = " + id);
+    alert("Viewing User ID: " + id);
 }
-    function editUser(id) {
-    alert("Edit Button Clicked : User ID = " + id);
+
+function editUser(id) {
+    alert("Editing User ID: " + id);
+}
+
+function deleteUser(id) {
+    if (confirm("Are you sure you want to delete this user?")) {
+        alert("User ID " + id + " deleted successfully.");
     }
-    function deleteUser(id) {
-    alert("Delete Button Clicked : User ID = " + id);
-    }
+}
 </script>
-</body>
 </html>
