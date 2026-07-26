@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Admin - KALI LIFE ECOSYSTEM</title>
+</head>
+
+<body>
+
+<h1>Edit Admin</h1>
+
+<hr>
+
+<form>
+    <label>Admin ID</label><br>
+    <input type="text" id="adminId" readonly><br><br>
+
+    <label>Name</label><br>
+    <input type="text" id="adminName" value="Super Admin"><br><br>
+
+    <label>Role</label><br>
+    <input type="text" id="adminRole" value="Super Admin"><br><br>
+
+    <label>Status</label><br>
+    <select id="adminStatus">
+        <option>Active</option>
+        <option>Inactive</option>
+    </select><br><br>
+
+    <button type="button" onclick="saveAdmin()">Save Changes</button>
+    <button type="button" onclick="goBack()">Back</button>
+</form>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+document.getElementById("adminId").value = params.get("id");
+
+function saveAdmin() {
+    alert("Admin information updated successfully.");
+}
+
+function goBack() {
+    window.location.href = "admin-list.html";
+}
+</script>
+
+</body>
+</html>
