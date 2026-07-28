@@ -22,10 +22,14 @@
 <button onclick="goBack()">Back to Admin List</button>
 
 <script>
+const params = new URLSearchParams(window.location.search);
+
 document.getElementById("adminId").textContent = params.get("id");
 document.getElementById("adminName").textContent = "Super Admin";
 document.getElementById("adminRole").textContent = "Super Admin";
 document.getElementById("adminStatus").textContent = "Active";
+
+function goBack() {
     window.location.href = "admin-list.html";
 }
 </script>
