@@ -13,19 +13,19 @@
 <hr>
 
 <p><strong>Admin ID:</strong> <span id="adminId"></span></p>
-<p><strong>Name:</strong> Super Admin</p>
-<p><strong>Role:</strong> Super Admin</p>
-<p><strong>Status:</strong> Active</p>
+<p><strong>Name:</strong> <span id="adminName"></span></p>
+<p><strong>Role:</strong> <span id="adminRole"></span></p>
+<p><strong>Status:</strong> <span id="adminStatus"></span></p>
 
 <br>
 
 <button onclick="goBack()">Back to Admin List</button>
 
 <script>
-const params = new URLSearchParams(window.location.search);
 document.getElementById("adminId").textContent = params.get("id");
-
-function goBack() {
+document.getElementById("adminName").textContent = "Super Admin";
+document.getElementById("adminRole").textContent = "Super Admin";
+document.getElementById("adminStatus").textContent = "Active";
     window.location.href = "admin-list.html";
 }
 </script>
