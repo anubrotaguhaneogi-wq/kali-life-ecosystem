@@ -33,10 +33,12 @@
 </form>
 
 <script>
-    document.getElementById("adminStatus").value = "Active";
-    
-const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
+
 document.getElementById("adminId").value = params.get("id");
+document.getElementById("adminName").value = "Super Admin";
+document.getElementById("adminRole").value = "Super Admin";
+document.getElementById("adminStatus").value = "Active";
 
 function saveAdmin() {
     alert("Admin information updated successfully.");
