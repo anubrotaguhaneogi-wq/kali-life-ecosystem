@@ -76,7 +76,37 @@ Login
 
 <p id="error"></p>
 
-</div>
+<a href="dashboard.html"
+style="display:block;margin-top:15px;text-decoration:none;color:#2e7d32;font-weight:bold;">
+<!-- Temporary Admin Login (Will be replaced with Firestore Login) -->
+
+<script>
+
+// Temporary Admin Login
+// Next Upgrade: Firestore + Role Based Login
+
+function login(){
+
+let user=document.getElementById("username").value;
+
+let pass=document.getElementById("password").value;
+
+if(user==="admin" && pass==="12345"){
+
+alert("Login Successful!");
+localStorage.setItem("userName","Admin");
+localStorage.setItem("userMobile","6296107338");
+window.location.href="admin-dashboard.html";
+
+}else{
+
+document.getElementById("error").innerHTML="Wrong Username or Password";
+
+}
+
+}
+
+</script>
 
 <script>
 
