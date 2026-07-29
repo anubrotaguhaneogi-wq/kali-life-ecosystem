@@ -146,12 +146,54 @@ width:100%;
     padding:25px;
     background:#0a0d12;
 }
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 25px;
+    background:#0b3d2e;
+    position:sticky;
+    top:0;
+    z-index:999;
+}
 
+.logo{
+    font-size:1.3rem;
+    font-weight:bold;
+    color:#ffffff;
+}
+
+.navbar nav{
+    display:flex;
+    gap:15px;
+}
+
+.navbar nav a{
+    color:#ffffff;
+    text-decoration:none;
+    font-size:0.95rem;
+    transition:0.3s;
+}
+
+.navbar nav a:hover{
+    color:#00c853;
+}
 </style>
 </head>
 
 <body>
+<header class="navbar">
+    <div class="logo">KALI LIFE ECOSYSTEM</div>
 
+    <nav>
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#products">Products</a>
+        <a href="#organic">Organic Farming</a>
+        <a href="#health">Health Tips</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
 <section class="hero">
 
 <h1>KALI LIFE ECOSYSTEM</h1>
