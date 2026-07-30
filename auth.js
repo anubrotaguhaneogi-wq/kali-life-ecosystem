@@ -7,3 +7,7 @@
 function checkLogin() {
     console.log("Authentication System Loaded");
 }
+// Check User Role
+function checkRole(role) {
+    console.log("Current Role:", role);
+}
