@@ -3,3 +3,7 @@
 // Authentication & Security System
 // Version 1.0
 // ===============================
+// Check Login Status
+function checkLogin() {
+    console.log("Authentication System Loaded");
+}
