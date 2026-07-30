@@ -12,6 +12,4 @@ function checkLogin() {
 function checkRole(role) {
     console.log("Current Role:", role);
 }
-function checkRole(role) {
-    console.log("Current Role:", role);
-}
+
