@@ -69,25 +69,16 @@
 
 <label>Reports To</label><br>
 
-<script>
-function viewUser(id) {
-    window.location.href = "view-admin.html?id=" + id;
-}
 
-function editUser(id) {
-    window.location.href = "edit-admin.html?id=" + id;
-}
+    <label>Status</label><br>
 
-function deleteUser(id) {
-    if (confirm("Are you sure you want to delete this admin?")) {
-        alert("Delete function will be connected to database later.");
-    }
-}
-</script>
+<select name="status" required>
     <option value="">-- Select Status --</option>
     <option value="Active">Active</option>
     <option value="Inactive">Inactive</option>
 </select>
+
+<br><br>
 
 <br><br>
 
