@@ -69,19 +69,60 @@
 
 
 <script>
-function viewUser(id) {
-    window.location.href = "view-admin.html?id=" + id;
+
+function loadAdmins(){
+
+let admins = JSON.parse(localStorage.getItem("admins")) || [];
+
+let table = document.getElementById("adminTableBody");
+
+table.innerHTML = "";
+
+admins.forEach(function(admin,index){
+
+table.innerHTML += `
+<tr>
+<td>${index+1}</td>
+<td>${admin.fullName}</td>
+<td>${admin.role}</td>
+<td>Super Admin</td>
+<td>${admin.status}</td>
+<td><button onclick="viewUser(${index})">View</button></td>
+<td><button onclick="editUser(${index})">Edit</button></td>
+<td><button onclick="deleteUser(${index})">Delete</button></td>
+</tr>
+`;
+
+});
+
 }
 
-function editUser(id) {
-    window.location.href = "edit-admin.html?id=" + id;
+function viewUser(id){
+window.location.href="view-admin.html?id="+id;
 }
 
-function deleteUser(id) {
-    if (confirm("Are you sure you want to delete this admin?")) {
-        alert("Delete function will be connected to database later.");
-    }
+function editUser(id){
+window.location.href="edit-admin.html?id="+id;
 }
+
+function deleteUser(id){
+
+let admins = JSON.parse(localStorage.getItem("admins")) || [];
+
+if(confirm("Are you sure you want to delete this admin?")){
+
+admins.splice(id,1);
+
+localStorage.setItem("admins",JSON.stringify(admins));
+
+loadAdmins();
+
+}
+
+}
+
+loadAdmins();
+
 </script>
 </body>
 
