@@ -16,6 +16,7 @@
 <table border="1" cellpadding="10" id="adminTable">
 <tr>
     <th>SL</th>
+    <th>Admin ID</th>
     <th>Name</th>
     <th>Role</th>
     <th>Reports To</th>
@@ -48,9 +49,10 @@ admins.forEach(function(admin,index){
 table.innerHTML += `
 <tr>
 <td>${index+1}</td>
+<td>${index+1}</td>
 <td>${admin.fullName}</td>
 <td>${admin.role}</td>
-<td>Super Admin</td>
+
 <td>${admin.status}</td>
 <td><button onclick="viewUser(${index})">View</button></td>
 <td><button onclick="editUser(${index})">Edit</button></td>
