@@ -128,7 +128,15 @@ const admin = {
 };
 
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
+const duplicate = admins.find(item =>
+    item.email === admin.email ||
+    item.mobile === admin.mobile
+);
 
+if (duplicate) {
+    alert("Email or Mobile Number already exists!");
+    return;
+}
 admins.push(admin);
 
 localStorage.setItem("admins", JSON.stringify(admins));
