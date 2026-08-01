@@ -126,6 +126,23 @@ const admin = {
 
     createdAt: new Date().toLocaleString()
 };
+    if (admin.fullName.length < 3) {
+    alert("Full Name must be at least 3 characters!");
+    return;
+    }
+    if (!admin.email.includes("@")) {
+    alert("Please enter a valid Email Address!");
+    return;
+    }
+   
+    if (admin.role === "") }
+        if (admin.reportsTo === "") {
+    alert("Please Select Reporting Admin!");
+    return;
+        }
+    alert("Please Select Admin Role!");
+    return;
+    }
 if (admin.password.length < 8) {
     alert("Password must be at least 8 characters!");
     return;
@@ -134,6 +151,11 @@ if (admin.password.length < 8) {
     alert("Mobile Number must be exactly 10 digits!");
     return;
     }
+    if (admin.status === "") {
+    alert("Please Select Status!");
+    return;
+    }
+    
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
 const duplicate = admins.find(item =>
     item.email === admin.email ||
