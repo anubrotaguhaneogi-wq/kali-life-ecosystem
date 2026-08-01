@@ -135,14 +135,15 @@ const admin = {
     return;
     }
    
-    if (admin.role === "") }
-        if (admin.reportsTo === "") {
-    alert("Please Select Reporting Admin!");
-    return;
-        }
+if (admin.role === "") {
     alert("Please Select Admin Role!");
     return;
-    }
+}
+
+if (admin.reportsTo === "") {
+    alert("Please Select Reporting Admin!");
+    return;
+}
 if (admin.password.length < 8) {
     alert("Password must be at least 8 characters!");
     return;
