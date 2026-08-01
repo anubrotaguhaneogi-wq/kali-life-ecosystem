@@ -108,12 +108,23 @@
 function createAdmin() {
 
 const admin = {
-    fullName: document.querySelector('input[name="fullName"]').value,
-    email: document.querySelector('input[name="email"]').value,
-    mobile: document.querySelector('input[name="mobile"]').value,
+    id: "ADM-" + Date.now(),
+
+    fullName: document.querySelector('input[name="fullName"]').value.trim(),
+
+    email: document.querySelector('input[name="email"]').value.trim().toLowerCase(),
+
+    mobile: document.querySelector('input[name="mobile"]').value.trim(),
+
     password: document.querySelector('input[name="password"]').value,
+
     role: document.querySelector('select[name="adminRole"]').value,
-    status: document.querySelector('select[name="status"]').value
+
+    reportsTo: document.querySelector('select[name="reportsTo"]').value,
+
+    status: document.querySelector('select[name="status"]').value,
+
+    createdAt: new Date().toLocaleString()
 };
 
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
