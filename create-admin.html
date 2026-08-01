@@ -126,7 +126,14 @@ const admin = {
 
     createdAt: new Date().toLocaleString()
 };
-
+if (admin.password.length < 8) {
+    alert("Password must be at least 8 characters!");
+    return;
+}
+    if (!/^[0-9]{10}$/.test(admin.mobile)) {
+    alert("Mobile Number must be exactly 10 digits!");
+    return;
+    }
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
 const duplicate = admins.find(item =>
     item.email === admin.email ||
