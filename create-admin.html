@@ -89,7 +89,13 @@
 <br><br>
 
 <br><br>
+<h3>Profile Photo</h3>
 
+<label>Upload Profile Photo</label><br>
+
+<input type="file" id="profilePhoto" accept="image/*">
+
+<br><br>
 
 <button type="button" onclick="createAdmin()">
     Create Admin
@@ -123,7 +129,7 @@ const admin = {
     reportsTo: document.querySelector('select[name="reportsTo"]').value,
 
     status: document.querySelector('select[name="status"]').value,
-
+photo: "",
     createdAt: new Date().toLocaleString()
 };
     if (admin.fullName.length < 3) {
