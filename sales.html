@@ -59,9 +59,11 @@ button:hover{
 
 <h2>Sales Entry</h2>
 
-<input type="date">
+<input type="datetime-local" id="invoiceDateTime" readonly>
 
-<input type="text" placeholder="Invoice Number">
+<input type="text" id="invoiceNumber" placeholder="Invoice Number (Auto)" readonly>
+
+<input type="text" id="customerId" placeholder="Customer ID (Auto)" readonly>
 
 <input type="text" placeholder="Customer Name">
 
@@ -74,6 +76,42 @@ button:hover{
 <input type="number" placeholder="Selling Price (Per Piece)">
 
 <input type="number" placeholder="Discount">
+<input type="number" id="transportCharge" placeholder="Transportation Charge">
+
+<input type="number" id="grandTotal" placeholder="Grand Total" readonly>
+
+<input type="number" id="downPayment" placeholder="Down Payment (Minimum 40%)">
+
+<input type="number" id="dueAmount" placeholder="Remaining Amount" readonly>
+
+<select id="paymentType">
+    <option value="">Select Payment Type</option>
+    <option value="full">Full Payment</option>
+    <option value="emi12">EMI - 12 Weeks</option>
+    <option value="emi24">EMI - 24 Weeks</option>
+</select>
+ <script>
+const now = new Date();
+
+document.getElementById("invoiceDateTime").value =
+now.toISOString().slice(0,16);
+
+const invoiceNo =
+"KLE-" +
+now.getFullYear() +
+String(now.getMonth()+1).padStart(2,'0') +
+String(now.getDate()).padStart(2,'0') +
+"-0001";
+
+document.getElementById("invoiceNumber").value = invoiceNo;
+
+const customerId =
+"CUS-" +
+Date.now().toString().slice(-6);
+
+document.getElementById("customerId").value = customerId;
+ </script>
+
 
 <select>
 <option>Payment Method</option>
