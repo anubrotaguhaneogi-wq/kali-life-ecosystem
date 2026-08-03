@@ -158,3 +158,28 @@ margin-bottom:25px;
 <textarea id="remarks" rows="4" placeholder="Remarks"></textarea>
 
 <button type="button" id="saveSales">Save Sales & EMI</button>
+  
+<hr>
+
+<h3>EMI Schedule</h3>
+
+<label>EMI Start Date</label>
+<input type="date" id="emiStartDate">
+
+<label>Total Installments</label>
+<input type="text" id="totalInstallments" value="12 Weeks" readonly>
+
+<label>EMI Status</label>
+<input type="text" id="emiStatus" value="Pending" readonly>
+
+<div id="emiScheduleTable"></div>
+
+<br>
+
+<button type="button" id="printInvoice">
+Print Invoice
+</button>
+
+<button type="button" id="printAgreement">
+Print EMI Agreement
+</button>
