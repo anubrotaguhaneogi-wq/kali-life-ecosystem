@@ -85,28 +85,6 @@ style="display:block;margin-top:15px;text-decoration:none;color:#2e7d32;font-wei
 // Temporary Admin Login
 // Next Upgrade: Firestore + Role Based Login
 
-function login(){
-
-let user=document.getElementById("username").value;
-
-let pass=document.getElementById("password").value;
-
-if(user==="admin" && pass==="12345"){
-
-alert("Login Successful!");
-localStorage.setItem("userName","Admin");
-localStorage.setItem("userMobile","6296107338");
-window.location.href="admin-dashboard.html";
-
-}else{
-
-document.getElementById("error").innerHTML="Wrong Username or Password";
-
-}
-
-}
-
-</script>
 
 <script>
 
@@ -121,7 +99,7 @@ if(user==="admin" && pass==="12345"){
 alert("Login Successful!");
 localStorage.setItem("userName", "Admin");
 localStorage.setItem("userMobile", "6296107338");
-window.location.href = "admin-dashboard.html";
+window.location.href = "super-admin-dashboard.html";
 }else{
 
 document.getElementById("error").innerHTML="Wrong Username or Password";
@@ -131,6 +109,6 @@ document.getElementById("error").innerHTML="Wrong Username or Password";
 }
 
 </script>
-
+<script src="auth.js"></script>
 </body>
 </html>
