@@ -102,15 +102,47 @@ checkRole("Super Admin");
 <option>Department Admin</option>
 <option>Field Admin</option>
 </select>
-
+<label>Created By</label>
+<input type="text" value="Super Admin" readonly>
 <label>Department</label>
 <input type="text" placeholder="Enter Department Name">
-
+<label>Reporting To</label>
+<select>
+<option>Super Admin</option>
+<option>Operations Core Admin</option>
+<option>Agriculture Core Admin</option>
+<option>Business & Marketplace Core Admin</option>
+<option>Finance & Customer Core Admin</option>
+<option>Technical & Security Core Admin</option>
+  <label>Approval Authority</label>
+<select>
+<option>Super Admin</option>
+<option>Board of Directors</option>
+  <label>Agreement Reference No.</label>
+<input type="text" placeholder="Reference Number">
+  <label>Approval Date</label>
+<input type="date">
+  <label>Agreement Expiry Reminder</label>
+<select>
+<option>30 Days Before</option>
+<option>15 Days Before</option>
+<option>7 Days Before</option>
+<option>1 Day Before</option>
+</select>
+<option>Pending Approval</option>
+</select>
+</select>
 <label>Agreement Status</label>
 <select>
 <option>Draft</option>
 <option>Pending Approval</option>
 <option>Approved</option>
+  <label>Agreement Type</label>
+<select>
+<option>Core Admin Agreement</option>
+<option>Department Admin Agreement</option>
+<option>Vendor Agreement</option>
+</select>
 <option>Rejected</option>
 </select>
 
