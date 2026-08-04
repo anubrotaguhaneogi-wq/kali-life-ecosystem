@@ -9,8 +9,21 @@ function checkLogin() {
 }
 // Check User Role
 
+// ===============================
+// Role Security Check
+// ===============================
 function checkRole(role) {
-    console.log("Current Role:", role);
+
+    let currentRole = localStorage.getItem("userRole");
+
+    if (currentRole !== role) {
+
+        alert("Access Denied!");
+
+        window.location.href = "admin.html";
+
+    }
+
 }
 // Check User Login
 let isLoggedIn = false;
