@@ -9,19 +9,8 @@
 
 <body>
 <script>
-// ===============================
-// Super Admin Security Check
-// ===============================
-
-if (localStorage.getItem("isLoggedIn") !== "true") {
-    alert("Please Login First!");
-    window.location.href = "admin.html";
-}
-
-if (localStorage.getItem("userRole") !== "Super Admin") {
-    alert("Access Denied!");
-    window.location.href = "admin.html";
-}
+checkLogin();
+checkRole("Super Admin");
 </script>
 <h1>KALI LIFE ECOSYSTEM</h1>
 <h2>Super Admin Dashboard</h2>
