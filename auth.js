@@ -17,16 +17,19 @@ let isLoggedIn = false;
 // ===============================
 // Login Function
 // ===============================
-function login(username, password) {
+function login() {
 
-    // Super Admin Login
-    if (username === "superadmin" && password === "123456") {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if (username === "admin" && password === "12345") {
 
         isLoggedIn = true;
 
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userRole", "Super Admin");
-        localStorage.setItem("username", username);
+        localStorage.setItem("userName", "Admin");
+        localStorage.setItem("userMobile", "6296107338");
 
         alert("Login Successful!");
 
