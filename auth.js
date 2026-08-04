@@ -14,3 +14,28 @@ function checkRole(role) {
 }
 // Check User Login
 let isLoggedIn = false;
+// ===============================
+// Login Function
+// ===============================
+function login(username, password) {
+
+    // Super Admin Login
+    if (username === "superadmin" && password === "123456") {
+
+        isLoggedIn = true;
+
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userRole", "Super Admin");
+        localStorage.setItem("username", username);
+
+        alert("Login Successful!");
+
+        window.location.href = "super-admin-dashboard.html";
+
+    } else {
+
+        alert("Invalid Username or Password!");
+
+    }
+
+}
