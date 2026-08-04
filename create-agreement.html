@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Agreement - KALI LIFE ECOSYSTEM</title>
+
+<script src="auth.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#008000;
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+
+.container{
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:#1f2937;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+border:none;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#008000;
+color:white;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+margin-top:15px;
+}
+
+button:hover{
+background:#006400;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<script>
+checkLogin();
+checkRole("Super Admin");
+</script>
+
+<header>
+📄 CREATE AGREEMENT
+</header>
+
+<div class="container">
+  <div class="card">
+
+<h2>Agreement Information</h2>
+
+<label>Agreement Number</label>
+<input type="text" placeholder="Auto Generated">
+
+<label>Agreement Date</label>
+<input type="date">
+
+<label>Admin ID</label>
+<input type="text" placeholder="Enter Admin ID">
+
+<label>Admin Full Name</label>
+<input type="text" placeholder="Enter Full Name">
+
+<label>Admin Role</label>
+<select>
+<option>Select Role</option>
+<option>Core Admin</option>
+<option>Department Admin</option>
+<option>Field Admin</option>
+</select>
+
+<label>Department</label>
+<input type="text" placeholder="Enter Department Name">
+
+<label>Agreement Status</label>
+<select>
+<option>Draft</option>
+<option>Pending Approval</option>
+<option>Approved</option>
+<option>Rejected</option>
+</select>
+
+  </div>
+  <div class="card">
+
+<h2>Responsibilities & Financial Terms</h2>
+
+<label>Job Responsibilities</label>
+<textarea rows="5" placeholder="Enter Admin Responsibilities"></textarea>
+
+<label>Share Amount (₹)</label>
+<input type="number" placeholder="Enter Share Amount">
+
+<label>Security Deposit (₹)</label>
+<input type="number" placeholder="Enter Security Deposit">
+
+<label>Commission (%)</label>
+<input type="number" placeholder="Enter Commission">
+
+<label>Agreement Duration</label>
+<select>
+<option>1 Year</option>
+<option>2 Years</option>
+<option>3 Years</option>
+<option>5 Years</option>
+</select>
+
+<label>Agreement Start Date</label>
+<input type="date">
+
+<label>Agreement Expiry Date</label>
+<input type="date">
+
+  </div>
+  <div class="card">
+
+<h2>Terms & Conditions</h2>
+
+<textarea rows="12">
+
+1. Admin must follow all company rules and policies.
+
+2. Company confidential information must not be shared.
+
+3. Admin shall perform assigned duties honestly.
+
+4. Financial transactions must follow company procedures.
+
+5. Company assets must be protected.
+
+6. Violation of this agreement may result in suspension or termination.
+
+7. Legal action may be taken as permitted under the applicable agreement and law.
+
+8. This agreement becomes effective after final approval.
+
+</textarea>
+
+  </div>
+  <div class="card">
+
+<h2>Signature & Approval</h2>
+
+<label>Admin Signature</label>
+<input type="text" placeholder="Admin Signature">
+
+<label>Company Representative</label>
+<input type="text" placeholder="Authorized Signature">
+
+<label>Witness 1</label>
+<input type="text" placeholder="Witness 1">
+
+<label>Witness 2</label>
+<input type="text" placeholder="Witness 2">
+
+<button>💾 Save Agreement</button>
+
+<button>🖨 Print Agreement</button>
+
+<button>📄 Download PDF</button>
+
+  </div>
+  </div>
+
+<footer style="text-align:center;padding:20px;">
+© 2026 KALI LIFE ECOSYSTEM
+</footer>
+
+</body>
+</html>
