@@ -39,3 +39,19 @@ function login(username, password) {
     }
 
 }
+// ===============================
+// Logout Function
+// ===============================
+function logout() {
+
+    isLoggedIn = false;
+
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("username");
+
+    alert("Logout Successful!");
+
+    window.location.href = "admin-login.html";
+
+}
