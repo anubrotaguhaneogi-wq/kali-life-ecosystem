@@ -1,4 +1,31 @@
 <!DOCTYPE html>
+<!--
+=========================================================
+KALI LIFE ECOSYSTEM
+CREATE AGREEMENT MODULE
+
+PROGRESS UPDATE : 05-08-2026
+
+✓ Agreement Information Completed
+✓ Admin Information Completed
+✓ Reporting & Approval Completed
+✓ Responsibilities & Financial Terms Completed
+✓ Salary, Bonus & Bank Details Added
+✓ Terms & Conditions Completed
+✓ Signature & Approval Completed
+✓ Save / Print / PDF Buttons Added
+
+NEXT WORK
+□ Document Upload
+□ Digital Signature
+□ Save Function (JavaScript)
+□ Print Function
+□ PDF Function
+□ Database Integration
+
+STATUS : PHASE-1 UI COMPLETED
+=========================================================
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -115,34 +142,42 @@ checkRole("Super Admin");
 <option>Business & Marketplace Core Admin</option>
 <option>Finance & Customer Core Admin</option>
 <option>Technical & Security Core Admin</option>
-  <label>Approval Authority</label>
+</select>
+
+<label>Approval Authority</label>
 <select>
 <option>Super Admin</option>
 <option>Board of Directors</option>
-  <label>Agreement Reference No.</label>
+</select>
+
+<label>Agreement Reference No.</label>
 <input type="text" placeholder="Reference Number">
-  <label>Approval Date</label>
+
+<label>Approval Date</label>
 <input type="date">
-  <label>Agreement Expiry Reminder</label>
+
+<label>Agreement Expiry Reminder</label>
 <select>
 <option>30 Days Before</option>
 <option>15 Days Before</option>
 <option>7 Days Before</option>
 <option>1 Day Before</option>
 </select>
-<option>Pending Approval</option>
-</select>
-</select>
+
 <label>Agreement Status</label>
 <select>
 <option>Draft</option>
 <option>Pending Approval</option>
 <option>Approved</option>
-  <label>Agreement Type</label>
+<option>Rejected</option>
+</select>
+
+<label>Agreement Type</label>
 <select>
 <option>Core Admin Agreement</option>
 <option>Department Admin Agreement</option>
 <option>Vendor Agreement</option>
+</select>
 </select>
 <option>Rejected</option>
 </select>
@@ -177,7 +212,25 @@ checkRole("Super Admin");
 
 <label>Agreement Expiry Date</label>
 <input type="date">
-<label>Monthly Salary (₹)</label>
+
+  
+  <label>Monthly Salary (₹)</label>
+<input type="number" placeholder="Enter Monthly Salary">
+
+<label>Performance Bonus (%)</label>
+<input type="number" placeholder="Enter Performance Bonus">
+
+<label>Bank Name</label>
+<input type="text" placeholder="Enter Bank Name">
+
+<label>Account Number</label>
+<input type="text" placeholder="Enter Account Number">
+
+<label>IFSC Code</label>
+<input type="text" placeholder="Enter IFSC Code">
+
+<label>UPI ID</label>
+<input type="text" placeholder="Enter UPI ID">
   </div>
   <div class="card">
 
