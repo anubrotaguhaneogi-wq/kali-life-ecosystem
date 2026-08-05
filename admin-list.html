@@ -46,7 +46,7 @@ style="width:250px;padding:10px;">
 function loadAdmins(){
 
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
-console.log("Admins:", admins);
+
 let table = document.getElementById("adminTableBody");
 
 table.innerHTML = "";
@@ -58,7 +58,7 @@ table.innerHTML += `
 <td>${index+1}</td>
 
 <td>${admin.id}</td>
-<td>${admin.fullconsole.log("Admins:", admins);Name}</td>
+<td>${admin.fullName}</td>
 <td>${admin.role}</td>
 <td>${admin.reportsTo}</td>
 <td>${admin.status}</td>
