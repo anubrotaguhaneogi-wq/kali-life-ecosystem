@@ -34,14 +34,34 @@
 
 <script>
     const params = new URLSearchParams(window.location.search);
+const index = params.get("id");
 
-document.getElementById("adminId").value = params.get("id");
-document.getElementById("adminName").value = "Super Admin";
-document.getElementById("adminRole").value = "Super Admin";
-document.getElementById("adminStatus").value = "Active";
+let admins = JSON.parse(localStorage.getItem("admins")) || [];
 
+let admin = admins[index];
+
+if(admin){
+
+document.getElementById("adminId").value = admin.id;
+document.getElementById("adminName").value = admin.fullName;
+document.getElementById("adminRole").value = admin.role;
+document.getElementById("adminStatus").value = admin.status;
+
+}
 function saveAdmin() {
-    alert("Admin information updated successfully.");
+
+    admins[index].fullName = document.getElementById("adminName").value;
+
+    admins[index].role = document.getElementById("adminRole").value;
+
+    admins[index].status = document.getElementById("adminStatus").value;
+
+    localStorage.setItem("admins", JSON.stringify(admins));
+
+    alert("Admin Updated Successfully!");
+
+    window.location.href = "admin-list.html";
+
 }
 
 function goBack() {
