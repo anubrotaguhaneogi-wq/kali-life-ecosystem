@@ -176,7 +176,7 @@ if (duplicate) {
 admins.push(admin);
 
 localStorage.setItem("admins", JSON.stringify(admins));
-
+alert(localStorage.getItem("admins"));
 alert("Admin Created Successfully!");
 
 window.location.href = "admin-list.html";
