@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Department Admin List - KALI LIFE ECOSYSTEM</title>
+
+<script src="auth.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#008000;
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.searchBox{
+width:100%;
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:8px;
+margin-bottom:20px;
+box-sizing:border-box;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#1f2937;
+}
+
+th{
+background:#008000;
+padding:12px;
+}
+
+td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #374151;
+}
+
+button{
+padding:8px 14px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+margin:2px;
+}
+
+.view{
+background:#2563eb;
+color:white;
+}
+
+.edit{
+background:#f59e0b;
+color:white;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+}
+
+.create{
+background:#16a34a;
+color:white;
+padding:12px 20px;
+margin-bottom:20px;
+font-size:16px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<script>
+checkLogin();
+checkRole("Core Admin");
+</script>
+
+<header>
+
+DEPARTMENT ADMIN LIST
+
+</header>
+
+<div class="container">
+
+<button class="create">
+➕ Create Department Admin
+</button>
+
+<input
+type="text"
+class="searchBox"
+placeholder="Search Department Admin">
+
+<table>
+
+<tr>
+
+<th>SL</th>
+<th>Admin ID</th>
+<th>Name</th>
+<th>Department</th>
+<th>Status</th>
+<th>View</th>
+<th>Edit</th>
+<th>Delete</th>
+
+</tr>
