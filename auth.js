@@ -5,7 +5,13 @@
 // ===============================
 // Check Login Status
 function checkLogin() {
-    console.log("Authentication System Loaded");
+    if(localStorage.getItem("isLoggedIn")!=="true"){
+
+alert("Please Login First!");
+
+window.location.href="admin-login.html";
+
+    }
 }
 // Check User Role
 
