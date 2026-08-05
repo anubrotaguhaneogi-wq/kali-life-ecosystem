@@ -46,6 +46,7 @@ function login() {
         isLoggedIn = true;
 
         localStorage.setItem("isLoggedIn", "true");
+        alert("Total Admins: " + admins.length);
         localStorage.setItem("userRole", "Super Admin");
         localStorage.setItem("userName", "Admin");
         localStorage.setItem("userMobile", "6296107338");
