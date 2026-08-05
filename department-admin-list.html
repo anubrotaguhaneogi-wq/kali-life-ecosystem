@@ -133,3 +133,27 @@ placeholder="Search Department Admin">
 <th>Delete</th>
 
 </tr>
+<tbody id="departmentTableBody">
+
+</tbody>
+</table>আমি 
+</div>
+<script>
+
+function loadDepartmentAdmins(){
+
+let admins = JSON.parse(localStorage.getItem("departmentAdmins")) || [];
+
+let table = document.getElementById("departmentTableBody");
+
+table.innerHTML = "";
+
+}
+
+loadDepartmentAdmins();
+
+</script>
+
+</body>
+
+</html>
