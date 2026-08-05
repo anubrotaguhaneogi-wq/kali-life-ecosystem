@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Admin Dashboard - KALI LIFE ECOSYSTEM</title>
+
+<script src="auth.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#008000;
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.card{
+background:#1f2937;
+padding:20px;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card:hover{
+background:#2563eb;
+transform:scale(1.03);
+}
+
+.card h3{
+margin:10px 0;
+}
+
+.card p{
+font-size:14px;
+color:#d1d5db;
+}
+
+</style>
+</head>
+
+<body>
+
+<script>
+checkLogin();
+checkRole("Core Admin");
+</script>
+
+<header>
+CORE ADMIN DASHBOARD
+</header>
+
+<div class="container">
+  <div class="card" onclick="location.href='department-admin-list.html'">
+<h3>👥 Department Admin</h3>
+<p>Create, View, Edit and Manage Department Admins</p>
+</div>
+
+<div class="card" onclick="location.href='customer-list.html'">
+<h3>👤 Customer Management</h3>
+<p>Manage Customer Registration & Information</p>
+</div>
+
+<div class="card" onclick="location.href='purchase.html'">
+<h3>📦 Purchase</h3>
+<p>Manage Purchase Records</p>
+</div>
+
+<div class="card" onclick="location.href='sales.html'">
+<h3>💰 Sales</h3>
+<p>Manage Sales Records</p>
+</div>
+
+<div class="card" onclick="location.href='agreement-list.html'">
+<h3>📄 Agreements</h3>
+<p>Manage All Agreements</p>
+</div>
+
+<div class="card" onclick="location.href='reports.html'">
+<h3>📊 Reports</h3>
+<p>Business Reports & Analytics</p>
+</div>
+
+<div class="card" onclick="location.href='settings.html'">
+<h3>⚙️ Settings</h3>
+<p>Core Admin Settings</p>
+</div>
+
+<div class="card" onclick="location.href='logout.html'">
+<h3>🚪 Logout</h3>
+<p>Secure Logout</p>
+</div>
+</div>
+
+</body>
+</html>
