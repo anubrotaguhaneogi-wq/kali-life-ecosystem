@@ -46,7 +46,7 @@ style="width:250px;padding:10px;">
 function loadAdmins(){
 
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
-
+alert(JSON.stringify(admins));
 let table = document.getElementById("adminTableBody");
 
 table.innerHTML = "";
