@@ -41,14 +41,22 @@ function login() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
- if (username === "admin" && password === "12345") {
+let admins = JSON.parse(localStorage.getItem("admins")) || [];
+
+let admin = admins.find(item =>
+    item.mobile === username &&
+    item.password === password &&
+    item.status === "Active"
+);
+
+if (admin) {
 
     isLoggedIn = true;
 
     localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userRole", "Super Admin");
-    localStorage.setItem("userName", "Admin");
-    localStorage.setItem("userMobile", "6296107338");
+    localStorage.setItem("userRole", admin.role);
+    localStorage.setItem("userName", admin.fullName);
+    localStorage.setItem("userMobile", admin.mobile);
 
     alert("Login Successful!");
 
@@ -56,9 +64,9 @@ function login() {
 
 } else {
 
-    alert("Invalid Username or Password!");
+    alert("Invalid Mobile Number or Password!");
 
- }   
+}
 
     }
 
