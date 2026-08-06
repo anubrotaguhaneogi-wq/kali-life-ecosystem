@@ -60,7 +60,13 @@ if (admin) {
 
     alert("Login Successful!");
 
+  if (admin.role === "Super Admin") {
     window.location.href = "super-admin-dashboard.html";
+} else if (admin.role === "Core Admin") {
+    window.location.href = "core-admin-dashboard.html";
+} else {
+    window.location.href = "department-admin-dashboard.html";
+  }  
 
 } else {
 
