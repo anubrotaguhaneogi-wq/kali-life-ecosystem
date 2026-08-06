@@ -40,19 +40,7 @@ function login() {
 
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-function login() {
 
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-
-    if (username === "admin" && password === "12345") {
-
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userRole", "Super Admin");
-        localStorage.setItem("userName", "Master Admin");
-
-        window.location.href = "super-admin-dashboard.html";
-        return;
     }
 
     let admins = JSON.parse(localStorage.getItem("admins")) || [];
