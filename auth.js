@@ -9,7 +9,7 @@ function checkLogin() {
 
 alert("Please Login First!");
 
-window.location.href="admin-login.html";
+window.location.href="admin.html";
 
     }
 }
