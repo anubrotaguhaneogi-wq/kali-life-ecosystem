@@ -84,6 +84,6 @@ function logout() {
 
     alert("Logout Successful!");
 
-    window.location.href = "admin-login.html";
+    window.location.href = "admin.html";
 
 }
