@@ -41,23 +41,24 @@ function login() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
-    if (username === "admin" && password === "12345") {
+ if (username === "admin" && password === "12345") {
 
-        isLoggedIn = true;
+    isLoggedIn = true;
 
-        localStorage.setItem("isLoggedIn", "true");
-        alert("Total Admins: " + admins.length);
-        localStorage.setItem("userRole", "Super Admin");
-        localStorage.setItem("userName", "Admin");
-        localStorage.setItem("userMobile", "6296107338");
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userRole", "Super Admin");
+    localStorage.setItem("userName", "Admin");
+    localStorage.setItem("userMobile", "6296107338");
 
-        alert("Login Successful!");
+    alert("Login Successful!");
 
-        window.location.href = "super-admin-dashboard.html";
+    window.location.href = "super-admin-dashboard.html";
 
-    } else {
+} else {
 
-        alert("Invalid Username or Password!");
+    alert("Invalid Username or Password!");
+
+ }   
 
     }
 
