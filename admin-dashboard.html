@@ -94,7 +94,7 @@ Role Based Access (Coming Soon)
 
 <a class="btn" href="index.html">🏠 Home</a>
 
-<button class="btn logout" onclick="logoutAdmin()">🚪 Logout</button>
+<button class="btn logout" onclick="logout()">🚪 Logout</button>
 </div>
 
 <script>
@@ -106,12 +106,7 @@ localStorage.getItem("userMobile") || "Not Available";
 
 document.getElementById("adminRole").innerText =
 localStorage.getItem("userRole") || "Super Admin";
-function logoutAdmin(){
-localStorage.removeItem("userName");
-localStorage.removeItem("userMobile");
-    localStorage.removeItem("userRole");
-window.location.href="admin.html";
-}
+
 </script>
 
 </body>
