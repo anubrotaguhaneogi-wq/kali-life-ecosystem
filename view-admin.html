@@ -1,13 +1,29 @@
 <!DOCTYPE html>
+<!--
+==========================================
+KALI LIFE ECOSYSTEM
+Page : View Admin
+File : view-admin.html
+Version : 2.1
+Status : In Development
+Last Updated : 07-08-2026
+==========================================
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Admin - KALI LIFE ECOSYSTEM</title>
+    <!-- Authentication System -->
+<script src="auth.js"></script>
 </head>
 
 <body>
-
+<!-- Login & Role Security -->
+<script>
+checkLogin();
+checkRole("Super Admin");
+</script>
 <h1>Admin Details</h1>
 
 <hr>
@@ -20,15 +36,16 @@
 <br>
 
 <button onclick="goBack()">Back to Admin List</button>
-
+<!-- View Admin JavaScript -->
 <script>
+    // Get Admin ID From URL
 const params = new URLSearchParams(window.location.search);
-
+// Display Admin Information
 document.getElementById("adminId").textContent = params.get("id");
 document.getElementById("adminName").textContent = "Super Admin";
 document.getElementById("adminRole").textContent = "Super Admin";
 document.getElementById("adminStatus").textContent = "Active";
-
+// Back To Admin List
 function goBack() {
     window.location.href = "admin-list.html";
 }
