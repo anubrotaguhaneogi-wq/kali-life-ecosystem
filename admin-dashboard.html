@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard</title>
-
+<script src="auth.js"></script>
 <style>
 body{
     margin:0;
@@ -57,7 +57,9 @@ header{
 </head>
 
 <body>
-
+<script>
+checkLogin();
+</script>
 <header>🔐 ADMIN DASHBOARD</header>
 
 <div class="container">
@@ -92,8 +94,7 @@ Role Based Access (Coming Soon)
 
 <a class="btn" href="index.html">🏠 Home</a>
 
-<button class="btn logout" onclick="logout()">🚪 Logout</button>
-
+<button class="btn logout" onclick="logoutAdmin()">🚪 Logout</button>
 </div>
 
 <script>
