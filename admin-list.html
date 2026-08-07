@@ -17,8 +17,9 @@ Last Updated : 07-08-2026
     <!-- Authentication System -->
     <script src="auth.js"></script>
 </head>
-<!-- Login & Role Security -->
+
 <body>
+    <!-- Login & Role Security -->
 <script>
 checkLogin();
 checkRole("Super Admin");
@@ -62,9 +63,9 @@ Create Admin
 
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
 
-
+<!-- Admin List JavaScript -->
 <script>
-
+// Load All Admins
 function loadAdmins(){
 
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
@@ -93,15 +94,15 @@ table.innerHTML += `
 });
 
 }
-
+// View Admin Details
 function viewUser(id){
 window.location.href="view-admin.html?id="+id;
 }
-
+// Edit Admin Details
 function editUser(id){
 window.location.href="edit-admin.html?id="+id;
 }
-
+// Delete Admin
 function deleteUser(id){
 
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
