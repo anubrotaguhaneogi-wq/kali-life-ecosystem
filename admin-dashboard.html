@@ -105,7 +105,25 @@ localStorage.getItem("userMobile") || "Not Available";
 
 document.getElementById("adminRole").innerText =
 localStorage.getItem("userRole") || "Super Admin";
+let role = localStorage.getItem("userRole");
 
+// Core Admin
+if (role === "Core Admin") {
+
+    document.getElementById("createAdminBtn").style.display = "none";
+    document.getElementById("permissionBtn").style.display = "none";
+
+}
+
+// Department Admin
+if (role !== "Super Admin" && role !== "Core Admin") {
+
+    document.getElementById("createAdminBtn").style.display = "none";
+    document.getElementById("adminListBtn").style.display = "none";
+    document.getElementById("permissionBtn").style.display = "none";
+    document.getElementById("reportsBtn").style.display = "none";
+
+}
 </script>
 
 </body>
