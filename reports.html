@@ -1,68 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Reports - KALI LIFE ECOSYSTEM</title>
 
+<script src="auth.js"></script>
+
 <style>
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#111827;
-    color:#fff;
-    text-align:center;
+
+/* ==========================================
+   KALI LIFE ECOSYSTEM
+   REPORTS DASHBOARD
+   PREMIUM FINAL DESIGN
+========================================== */
+
+* {
+    box-sizing: border-box;
 }
-header{
-    background:#008000;
-    padding:20px;
-    font-size:28px;
-    font-weight:bold;
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
 }
-.container{
-    padding:20px;
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #166534;
+    color: #ffffff;
+    padding: 24px 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
 }
-.btn{
-    display:block;
-    width:90%;
-    max-width:350px;
-    margin:15px auto;
-    padding:15px;
-    background:#008000;
-    color:white;
-    text-decoration:none;
-    border-radius:10px;
-    font-size:18px;
-    font-weight:bold;
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
 }
-.back{
-    background:#1565c0;
+
+header p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
 }
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 15px 40px;
+}
+
+/* ==========================================
+   INTRO CARD
+========================================== */
+
+.intro-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    border-left: 5px solid #16a34a;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+}
+
+.intro-card h2 {
+    margin: 0 0 8px;
+    color: #166534;
+    font-size: 23px;
+}
+
+.intro-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* ==========================================
+   REPORT GRID
+========================================== */
+
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* ==========================================
+   REPORT CARD
+========================================== */
+
+.report-card {
+    position: relative;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,0.07);
+
+    transition: 0.2s;
+}
+
+.report-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.10);
+}
+
+/* ==========================================
+   REPORT ICON
+========================================== */
+
+.report-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 12px;
+
+    background: #dcfce7;
+
+    font-size: 25px;
+
+    margin-bottom: 15px;
+}
+
+/* ==========================================
+   REPORT TEXT
+========================================== */
+
+.report-card h3 {
+    margin: 0 0 8px;
+
+    color: #0f172a;
+
+    font-size: 19px;
+}
+
+.report-card p {
+    margin: 0 0 20px;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+/* ==========================================
+   VIEW REPORT BUTTON
+========================================== */
+
+.report-btn {
+    display: inline-block;
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    background: #16a34a;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.report-btn:hover {
+    background: #15803d;
+}
+
+/* ==========================================
+   COMING SOON
+========================================== */
+
+.coming-soon {
+    background: #f8fafc;
+
+    border: 1px dashed #cbd5e1;
+}
+
+.coming-soon .report-icon {
+    background: #e2e8f0;
+}
+
+.coming-soon .report-btn {
+    background: #94a3b8;
+
+    cursor: not-allowed;
+
+    pointer-events: none;
+}
+
+.badge {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #e2e8f0;
+
+    color: #475569;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+/* ==========================================
+   BACK BUTTON
+========================================== */
+
+.back-section {
+    margin-top: 25px;
+}
+
+.back-btn {
+    display: block;
+
+    width: 100%;
+
+    padding: 14px;
+
+    background: #475569;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #334155;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+    margin-top: 30px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 0 10px 30px;
+    }
+
+    .intro-card {
+        padding: 20px;
+    }
+
+    .intro-card h2 {
+        font-size: 20px;
+    }
+
+    .report-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .report-card {
+        min-height: 165px;
+        padding: 20px;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<header>📊 REPORTS</header>
+<script>
+
+/* ==========================================
+   REPORT ACCESS CONTROL
+========================================== */
+
+checkLogin();
+
+const reportRole =
+    localStorage.getItem("userRole") || "";
+
+if (
+    reportRole !== "Super Admin" &&
+    reportRole !== "Core Admin"
+) {
+
+    alert("Access Denied!");
+
+    window.location.href =
+        "admin-dashboard.html";
+
+}
+
+</script>
+
+
+<header>
+
+    <h1>📊 KALI LIFE ECOSYSTEM</h1>
+
+    <p>Reports & Business Analytics</p>
+
+</header>
+
 
 <div class="container">
 
-<h2>KALI LIFE ECOSYSTEM</h2>
-<p>Select a report to view.</p>
 
-<a class="btn" href="sales.html">💰 Sales Report</a>
+    <!-- ======================================
+         INTRO
+    ======================================= -->
 
-<a class="btn" href="purchase.html">🛒 Purchase Report</a>
+    <div class="intro-card">
 
-<a class="btn" href="#">📈 Profit & Loss Report (Coming Soon)</a>
+        <h2>
+            Reports Dashboard
+        </h2>
 
-<a class="btn" href="#">💵 Income Report (Coming Soon)</a>
+        <p>
+            Select a report below to view
+            business and financial information.
+        </p>
 
-<a class="btn" href="#">💸 Expense Report (Coming Soon)</a>
+    </div>
 
-<a class="btn" href="admin-dashboard.html">⬅ Back to Dashboard</a>
+
+    <!-- ======================================
+         REPORTS
+    ======================================= -->
+
+    <div class="report-grid">
+
+
+        <!-- SALES -->
+
+        <div class="report-card">
+
+            <div>
+
+                <div class="report-icon">
+                    💰
+                </div>
+
+                <h3>
+                    Sales Report
+                </h3>
+
+                <p>
+                    View sales transactions,
+                    sales performance and
+                    revenue information.
+                </p>
+
+            </div>
+
+            <a
+                class="report-btn"
+                href="sales.html">
+
+                View Sales Report
+
+            </a>
+
+        </div>
+
+
+        <!-- PURCHASE -->
+
+        <div class="report-card">
+
+            <div>
+
+                <div class="report-icon">
+                    🛒
+                </div>
+
+                <h3>
+                    Purchase Report
+                </h3>
+
+                <p>
+                    View purchase transactions,
+                    supplier information and
+                    purchase expenses.
+                </p>
+
+            </div>
+
+            <a
+                class="report-btn"
+                href="purchase.html">
+
+                View Purchase Report
+
+            </a>
+
+        </div>
+
+
+        <!-- PROFIT & LOSS -->
+
+        <div class="report-card coming-soon">
+
+            <span class="badge">
+                COMING SOON
+            </span>
+
+            <div>
+
+                <div class="report-icon">
+                    📈
+                </div>
+
+                <h3>
+                    Profit & Loss Report
+                </h3>
+
+                <p>
+                    Analyze business profit,
+                    loss and overall financial
+                    performance.
+                </p>
+
+            </div>
+
+            <a
+                class="report-btn"
+                href="#">
+
+                Coming Soon
+
+            </a>
+
+        </div>
+
+
+        <!-- INCOME -->
+
+        <div class="report-card coming-soon">
+
+            <span class="badge">
+                COMING SOON
+            </span>
+
+            <div>
+
+                <div class="report-icon">
+                    💵
+                </div>
+
+                <h3>
+                    Income Report
+                </h3>
+
+                <p>
+                    Monitor total income,
+                    admin income and other
+                    business earnings.
+                </p>
+
+            </div>
+
+            <a
+                class="report-btn"
+                href="#">
+
+                Coming Soon
+
+            </a>
+
+        </div>
+
+
+        <!-- EXPENSE -->
+
+        <div class="report-card coming-soon">
+
+            <span class="badge">
+                COMING SOON
+            </span>
+
+            <div>
+
+                <div class="report-icon">
+                    💸
+                </div>
+
+                <h3>
+                    Expense Report
+                </h3>
+
+                <p>
+                    Track operational expenses,
+                    purchases and other business
+                    costs.
+                </p>
+
+            </div>
+
+            <a
+                class="report-btn"
+                href="#">
+
+                Coming Soon
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ======================================
+         BACK
+    ======================================= -->
+
+    <div class="back-section">
+
+        <a
+            class="back-btn"
+            href="admin-dashboard.html">
+
+            ⬅ Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+    <div class="footer">
+
+        © KALI LIFE ECOSYSTEM -
+        Admin Reports System
+
+    </div>
+
 
 </div>
 
 </body>
+
 </html>
