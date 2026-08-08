@@ -1,63 +1,448 @@
 <!DOCTYPE html>
+
 <!--
 ==========================================
 KALI LIFE ECOSYSTEM
-Page : View Admin
-File : view-admin.html
-Version : 2.1
-Status : Completed
-Last Updated : 07-08-2026
+Page     : View Admin
+File     : view-admin.html
+Version  : 2.2
+Status   : Completed
+Updated  : 08-08-2026
 ==========================================
 -->
+
 <html lang="en">
+
 <head>
+
+    <!-- ==========================================
+         BASIC PAGE SETTINGS
+    ========================================== -->
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>View Admin - KALI LIFE ECOSYSTEM</title>
-    <!-- Authentication System -->
-<script src="auth.js"></script>
+
+
+    <!-- ==========================================
+         AUTHENTICATION SYSTEM
+    ========================================== -->
+
+    <script src="auth.js"></script>
+
+
+    <!-- ==========================================
+         PAGE STYLE
+    ========================================== -->
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .page-container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .admin-card {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #1f2937;
+            color: #ffffff;
+            padding: 22px;
+        }
+
+        .card-header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .card-header p {
+            margin: 7px 0 0;
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        .admin-details {
+            padding: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .detail-value {
+            text-align: right;
+            color: #111827;
+            word-break: break-word;
+        }
+
+        .status-active {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status-inactive {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #fee2e2;
+            color: #991b1b;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card-footer {
+            padding: 20px 25px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .back-button {
+            width: 100%;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #1f2937;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background: #374151;
+        }
+
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .page-container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 7px;
+            }
+
+            .detail-value {
+                text-align: left;
+            }
+
+            .card-header h1 {
+                font-size: 22px;
+            }
+        }
+
+    </style>
+
 </head>
 
+
 <body>
-<!-- Login & Role Security -->
-<script>
-checkLogin();
-checkRole("Super Admin");
-</script>
-<h1>Admin Details</h1>
 
-<hr>
 
-<p><strong>Admin ID:</strong> <span id="adminId"></span></p>
-<p><strong>Name:</strong> <span id="adminName"></span></p>
-<p><strong>Role:</strong> <span id="adminRole"></span></p>
-<p><strong>Status:</strong> <span id="adminStatus"></span></p>
+    <!-- ==========================================
+         LOGIN & ROLE SECURITY
+         Only Super Admin can access this page
+    ========================================== -->
 
-<br>
-<!-- ==========================================
-     ADMIN INFORMATION
-========================================== -->
+    <script>
 
-<hr>
+        checkLogin();
+        checkRole("Super Admin");
 
-<p><strong>Admin ID:</strong> <span id="adminId"></span></p>
-<!-- ==========================================
-     BACK TO ADMIN LIST
-========================================== -->
+    </script>
 
-<br>
 
-<button onclick="goBack()">Back to Admin List</button>
-// Display Admin Information
-document.getElementById("adminId").textContent = params.get("id");
-document.getElementById("adminName").textContent = "Super Admin";
-document.getElementById("adminRole").textContent = "Super Admin";
-document.getElementById("adminStatus").textContent = "Active";
-// Back To Admin List
-function goBack() {
-    window.location.href = "admin-list.html";
-}
-</script>
+    <!-- ==========================================
+         MAIN PAGE CONTAINER
+    ========================================== -->
+
+    <div class="page-container">
+
+
+        <!-- ==========================================
+             ADMIN CARD
+        ========================================== -->
+
+        <div class="admin-card">
+
+
+            <!-- ==========================================
+                 CARD HEADER
+            ========================================== -->
+
+            <div class="card-header">
+
+                <h1>Admin Details</h1>
+
+                <p>
+                    KALI LIFE ECOSYSTEM - Admin Management
+                </p>
+
+            </div>
+
+
+            <!-- ==========================================
+                 ADMIN INFORMATION
+            ========================================== -->
+
+            <div class="admin-details">
+
+                <div
+                    id="errorMessage"
+                    class="message"
+                ></div>
+
+
+                <!-- Admin ID -->
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Admin ID
+                    </span>
+
+                    <span
+                        id="adminId"
+                        class="detail-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- Admin Name -->
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Name
+                    </span>
+
+                    <span
+                        id="adminName"
+                        class="detail-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- Admin Role -->
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Role
+                    </span>
+
+                    <span
+                        id="adminRole"
+                        class="detail-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- Admin Status -->
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <span
+                        id="adminStatus"
+                        class="detail-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                 BACK TO ADMIN LIST
+            ========================================== -->
+
+            <div class="card-footer">
+
+                <button
+                    type="button"
+                    class="back-button"
+                    onclick="goBack()"
+                >
+                    Back to Admin List
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         VIEW ADMIN JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+
+        // ==========================================
+        // GET ADMIN ID FROM URL
+        // ==========================================
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const adminId =
+            params.get("id");
+
+
+        // ==========================================
+        // DEFAULT ADMIN INFORMATION
+        // ==========================================
+
+        let adminName = "Super Admin";
+
+        let adminRole = "Super Admin";
+
+        let adminStatus = "Active";
+
+
+        // ==========================================
+        // DISPLAY ADMIN INFORMATION
+        // ==========================================
+
+        document.getElementById("adminId")
+            .textContent = adminId || "Not Available";
+
+        document.getElementById("adminName")
+            .textContent = adminName;
+
+        document.getElementById("adminRole")
+            .textContent = adminRole;
+
+
+        // ==========================================
+        // DISPLAY ADMIN STATUS
+        // ==========================================
+
+        const statusElement =
+            document.getElementById("adminStatus");
+
+        statusElement.textContent = adminStatus;
+
+        if (adminStatus === "Active") {
+
+            statusElement.classList.add(
+                "status-active"
+            );
+
+        } else {
+
+            statusElement.classList.add(
+                "status-inactive"
+            );
+
+        }
+
+
+        // ==========================================
+        // CHECK ADMIN ID
+        // ==========================================
+
+        if (!adminId) {
+
+            const errorMessage =
+                document.getElementById("errorMessage");
+
+            errorMessage.textContent =
+                "Admin ID was not provided.";
+
+            errorMessage.style.display = "block";
+
+        }
+
+
+        // ==========================================
+        // BACK TO ADMIN LIST
+        // ==========================================
+
+        function goBack() {
+
+            window.location.href =
+                "admin-list.html";
+
+        }
+
+
+    </script>
+
 
 </body>
+
 </html>
