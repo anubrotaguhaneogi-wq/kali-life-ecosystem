@@ -4,6 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Admin - KALI LIFE ECOSYSTEM</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 25px 15px;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+body > h1 {
+    max-width: 700px;
+    margin: 10px auto 5px;
+    text-align: center;
+    color: #166534;
+    font-size: 30px;
+}
+
+body > h2 {
+    max-width: 700px;
+    margin: 0 auto 25px;
+    text-align: center;
+    color: #334155;
+    font-size: 22px;
+}
+
+body > hr {
+    max-width: 700px;
+    border: 0;
+    height: 1px;
+    background: #cbd5e1;
+    margin: 20px auto;
+}
+
+form {
+    max-width: 700px;
+    margin: 25px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+h3 {
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #dcfce7;
+    color: #166534;
+    font-size: 20px;
+}
+
+form > hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 30px 0;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+    color: #334155;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px dashed #94a3b8;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #475569;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    border-color: #16a34a;
+    background: #f0fdf4;
+}
+
+button {
+    min-width: 160px;
+    padding: 13px 20px;
+    margin-top: 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button[type="button"] {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+button[type="button"]:hover {
+    background: #15803d;
+}
+
+button[type="reset"] {
+    background: #64748b;
+    color: #ffffff;
+}
+
+button[type="reset"]:hover {
+    background: #475569;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+body > p {
+    max-width: 700px;
+    margin: 20px auto;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px 10px;
+    }
+
+    body > h1 {
+        font-size: 25px;
+    }
+
+    body > h2 {
+        font-size: 19px;
+    }
+
+    form {
+        padding: 20px;
+        margin: 15px auto;
+        border-radius: 12px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        margin-right: 0;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -44,30 +233,30 @@
     <option value="Business & Marketplace Admin">Business & Marketplace Admin</option>
     <option value="Finance & Customer Admin">Finance & Customer Admin</option>
     <option value="Technical & Security Admin">Technical & Security Admin</option>
-<option value="Crop Farming Admin">Crop Farming Admin</option>
-<option value="Horticulture Admin">Horticulture Admin</option>
-<option value="Nursery Admin">Nursery Admin</option>
-<option value="Livestock Admin">Livestock Admin</option>
-<option value="Poultry Admin">Poultry Admin</option>
-<option value="Fisheries Admin">Fisheries Admin</option>
-<option value="Organic Farming Admin">Organic Farming Admin</option>
-<option value="Farm Machinery Admin">Farm Machinery Admin</option>
-<option value="Marketplace Admin">Marketplace Admin</option>
-<option value="Warehouse Admin">Warehouse Admin</option>
-<option value="Logistics Admin">Logistics Admin</option>
-<option value="Marketing Admin">Marketing Admin</option>
-<option value="Training Admin">Training Admin</option>
-<option value="Research & Development Admin">Research & Development Admin</option>
-<option value="Veterinary Admin">Veterinary Admin</option>
-<option value="Reports & Analytics Admin">Reports & Analytics Admin</option>
-<option value="Customer Service Admin">Customer Service Admin</option>
-<option value="Accounts & Finance Admin">Accounts & Finance Admin</option>
+    <option value="Crop Farming Admin">Crop Farming Admin</option>
+    <option value="Horticulture Admin">Horticulture Admin</option>
+    <option value="Nursery Admin">Nursery Admin</option>
+    <option value="Livestock Admin">Livestock Admin</option>
+    <option value="Poultry Admin">Poultry Admin</option>
+    <option value="Fisheries Admin">Fisheries Admin</option>
+    <option value="Organic Farming Admin">Organic Farming Admin</option>
+    <option value="Farm Machinery Admin">Farm Machinery Admin</option>
+    <option value="Marketplace Admin">Marketplace Admin</option>
+    <option value="Warehouse Admin">Warehouse Admin</option>
+    <option value="Logistics Admin">Logistics Admin</option>
+    <option value="Marketing Admin">Marketing Admin</option>
+    <option value="Training Admin">Training Admin</option>
+    <option value="Research & Development Admin">Research & Development Admin</option>
+    <option value="Veterinary Admin">Veterinary Admin</option>
+    <option value="Reports & Analytics Admin">Reports & Analytics Admin</option>
+    <option value="Customer Service Admin">Customer Service Admin</option>
+    <option value="Accounts & Finance Admin">Accounts & Finance Admin</option>
 </select>
-
 
 <br><br>
 
 <label>Reports To</label><br>
+
 <select name="reportsTo" id="reportsTo" required>
     <option value="">-- Select Reporting Admin --</option>
     <option value="Super Admin">Super Admin</option>
@@ -78,7 +267,7 @@
     <option value="Technical & Security Admin">Technical & Security Admin</option>
 </select>
 
-    <label>Status</label><br>
+<label>Status</label><br>
 
 <select name="status" required>
     <option value="">-- Select Status --</option>
@@ -88,7 +277,6 @@
 
 <br><br>
 
-<br><br>
 <h3>Profile Photo</h3>
 
 <label>Upload Profile Photo</label><br>
@@ -100,6 +288,7 @@
 <button type="button" onclick="createAdmin()">
     Create Admin
 </button>
+
 <button type="reset">
     Reset Form
 </button>
@@ -109,6 +298,7 @@
 <hr>
 
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
+
 <script>
 
 function createAdmin() {
@@ -129,18 +319,22 @@ const admin = {
     reportsTo: document.querySelector('select[name="reportsTo"]').value,
 
     status: document.querySelector('select[name="status"]').value,
-photo: "",
+
+    photo: "",
+
     createdAt: new Date().toLocaleString()
 };
-    if (admin.fullName.length < 3) {
+
+if (admin.fullName.length < 3) {
     alert("Full Name must be at least 3 characters!");
     return;
-    }
-    if (!admin.email.includes("@")) {
+}
+
+if (!admin.email.includes("@")) {
     alert("Please enter a valid Email Address!");
     return;
-    }
-   
+}
+
 if (admin.role === "") {
     alert("Please Select Admin Role!");
     return;
@@ -150,20 +344,24 @@ if (admin.reportsTo === "") {
     alert("Please Select Reporting Admin!");
     return;
 }
+
 if (admin.password.length < 8) {
     alert("Password must be at least 8 characters!");
     return;
 }
-    if (!/^[0-9]{10}$/.test(admin.mobile)) {
+
+if (!/^[0-9]{10}$/.test(admin.mobile)) {
     alert("Mobile Number must be exactly 10 digits!");
     return;
-    }
-    if (admin.status === "") {
+}
+
+if (admin.status === "") {
     alert("Please Select Status!");
     return;
-    }
-    
+}
+
 let admins = JSON.parse(localStorage.getItem("admins")) || [];
+
 const duplicate = admins.find(item =>
     item.email === admin.email ||
     item.mobile === admin.mobile
@@ -173,15 +371,20 @@ if (duplicate) {
     alert("Email or Mobile Number already exists!");
     return;
 }
+
 admins.push(admin);
 
 localStorage.setItem("admins", JSON.stringify(admins));
+
 alert(localStorage.getItem("admins"));
+
 alert("Admin Created Successfully!");
 
 window.location.href = "admin-list.html";
 
 }
+
 </script>
+
 </body>
 </html>
