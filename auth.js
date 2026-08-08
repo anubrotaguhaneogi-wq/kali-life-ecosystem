@@ -1,147 +1,637 @@
 // ==========================================
 // KALI LIFE ECOSYSTEM
-// Authentication & Security System
-// Version 2.0
+// AUTHENTICATION & SECURITY SYSTEM
+// PREMIUM FINAL VERSION
 // ==========================================
 
-// ----------------------------
-// Check Login Status
-// ----------------------------
+/*
+    IMPORTANT:
+
+    This file manages:
+    - Login protection
+    - Role protection
+    - Session information
+    - Logout
+    - Current user information
+    - Role-based dashboard routing
+
+    NOTE:
+    localStorage is suitable for the current
+    development stage, but it is NOT a secure
+    production authentication system.
+
+    Production authentication should later use
+    Firebase Authentication / server-side security.
+*/
+
+
+// ==========================================
+// SESSION HELPERS
+// ==========================================
+
+function isUserLoggedIn() {
+
+    return (
+        localStorage.getItem("isLoggedIn") === "true"
+    );
+
+}
+
+
+function getUserRole() {
+
+    return (
+        localStorage.getItem("userRole") || ""
+    );
+
+}
+
+
+function getUserName() {
+
+    return (
+        localStorage.getItem("userName") ||
+        "Administrator"
+    );
+
+}
+
+
+function getUserMobile() {
+
+    return (
+        localStorage.getItem("userMobile") ||
+        ""
+    );
+
+}
+
+
+function getUserEmail() {
+
+    return (
+        localStorage.getItem("userEmail") ||
+        ""
+    );
+
+}
+
+
+function getAdminId() {
+
+    return (
+        localStorage.getItem("adminId") ||
+        ""
+    );
+
+}
+
+
+// ==========================================
+// CHECK LOGIN STATUS
+// ==========================================
+
 function checkLogin() {
 
-    if (localStorage.getItem("isLoggedIn") !== "true") {
+    if (!isUserLoggedIn()) {
 
-        alert("Please Login First!");
-
-        window.location.href = "admin.html";
-
-        return;
-    }
-
-}
-
-// ----------------------------
-// Check User Role
-// ----------------------------
-function checkRole(role) {
-
-    let currentRole = localStorage.getItem("userRole");
-
-    if (currentRole !== role) {
-
-        alert("Access Denied!");
-
-        window.location.href = "admin.html";
-
-        return;
-    }
-
-}
-
-// ----------------------------
-// Login Status
-// ----------------------------
-let isLoggedIn = false;
-
-// ----------------------------
-// Login Function
-// ----------------------------
-function login() {
-
-    let username =
-        document.getElementById("username").value.trim();
-
-    let password =
-        document.getElementById("password").value.trim();
-
-    // Temporary Master Login
-
-    if (username === "admin" && password === "12345") {
-
-        isLoggedIn = true;
-
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userRole", "Super Admin");
-        localStorage.setItem("userName", "Master Admin");
-        localStorage.setItem("userMobile", "0000000000");
-
-        alert("Super Admin Login Successful!");
-
-        window.location.href = "super-admin-dashboard.html";
-
-        return;
-
-    }
-
-    // Admin List
-
-    let admins =
-        JSON.parse(localStorage.getItem("admins")) || [];
-
-    let admin =
-        admins.find(item =>
-            item.mobile === username &&
-            item.password === password &&
-            item.status === "Active"
+        alert(
+            "Please Login First!"
         );
-        if (admin) {
 
-        isLoggedIn = true;
+        window.location.href =
+            "admin.html";
 
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userRole", admin.role);
-        localStorage.setItem("userName", admin.fullName);
-        localStorage.setItem("userMobile", admin.mobile);
+        return false;
+    }
 
-        alert("Login Successful!");
+    return true;
 
-        if (admin.role === "Super Admin") {
+}
 
-            window.location.href = "super-admin-dashboard.html";
 
-        } else if (admin.role === "Core Admin") {
+// ==========================================
+// CHECK USER / ADMIN LOGIN
+// ==========================================
 
-            window.location.href = "core-admin-dashboard.html";
+function checkUserLogin() {
 
-        } else {
+    if (!isUserLoggedIn()) {
 
-            window.location.href = "department-admin-dashboard.html";
+        alert(
+            "Please Login First!"
+        );
 
-        }
+        window.location.href =
+            "login.html";
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+// ==========================================
+// CHECK EXACT ROLE
+// ==========================================
+
+function checkRole(requiredRole) {
+
+    if (!isUserLoggedIn()) {
+
+        alert(
+            "Please Login First!"
+        );
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+    }
+
+
+    const currentRole =
+        getUserRole();
+
+
+    if (
+        currentRole !== requiredRole
+    ) {
+
+        alert(
+            "Access Denied!"
+        );
+
+        redirectToDashboard();
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+// ==========================================
+// CHECK MULTIPLE ROLES
+// ==========================================
+
+function checkAnyRole(allowedRoles) {
+
+    if (!isUserLoggedIn()) {
+
+        alert(
+            "Please Login First!"
+        );
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+    }
+
+
+    const currentRole =
+        getUserRole();
+
+
+    if (
+        !allowedRoles.includes(
+            currentRole
+        )
+    ) {
+
+        alert(
+            "Access Denied!"
+        );
+
+        redirectToDashboard();
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+// ==========================================
+// ADMIN ACCESS
+// ==========================================
+
+function checkAdminAccess() {
+
+    if (!isUserLoggedIn()) {
+
+        alert(
+            "Please Login First!"
+        );
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+    }
+
+
+    const role =
+        getUserRole();
+
+
+    if (
+        !role ||
+        role === "User"
+    ) {
+
+        alert(
+            "Admin Access Required!"
+        );
+
+        window.location.href =
+            "dashboard.html";
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+// ==========================================
+// SUPER ADMIN ACCESS
+// ==========================================
+
+function checkSuperAdmin() {
+
+    return checkRole(
+        "Super Admin"
+    );
+
+}
+
+
+// ==========================================
+// CORE ADMIN ACCESS
+// ==========================================
+
+function checkCoreAdmin() {
+
+    return checkRole(
+        "Core Admin"
+    );
+
+}
+
+
+// ==========================================
+// ADMIN DASHBOARD REDIRECT
+// ==========================================
+
+function redirectToDashboard() {
+
+    const role =
+        getUserRole();
+
+
+    if (
+        role === "Super Admin"
+    ) {
+
+        window.location.href =
+            "super-admin-dashboard.html";
 
         return;
+    }
+
+
+    if (
+        role === "Core Admin"
+    ) {
+
+        window.location.href =
+            "admin-dashboard.html";
+
+        return;
+    }
+
+
+    if (
+        role &&
+        role !== "User"
+    ) {
+
+        window.location.href =
+            "admin-dashboard.html";
+
+        return;
+    }
+
+
+    if (
+        role === "User"
+    ) {
+
+        window.location.href =
+            "dashboard.html";
+
+        return;
+    }
+
+
+    window.location.href =
+        "admin.html";
+
+}
+
+
+// ==========================================
+// SAVE LOGIN SESSION
+// ==========================================
+
+function createSession(userData) {
+
+    localStorage.setItem(
+        "isLoggedIn",
+        "true"
+    );
+
+
+    localStorage.setItem(
+        "userName",
+        userData.name || ""
+    );
+
+
+    localStorage.setItem(
+        "userMobile",
+        userData.mobile || ""
+    );
+
+
+    localStorage.setItem(
+        "userEmail",
+        userData.email || ""
+    );
+
+
+    localStorage.setItem(
+        "userRole",
+        userData.role || "User"
+    );
+
+
+    if (userData.uid) {
+
+        localStorage.setItem(
+            "userUid",
+            userData.uid
+        );
 
     }
 
-    alert("Invalid Mobile Number or Password!");
 
-}// ----------------------------
-// Logout Function
-// ----------------------------
+    if (userData.adminId) {
+
+        localStorage.setItem(
+            "adminId",
+            userData.adminId
+        );
+
+    }
+
+
+    if (userData.reportsTo) {
+
+        localStorage.setItem(
+            "adminReportsTo",
+            userData.reportsTo
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
 function logout() {
 
-    isLoggedIn = false;
+    /*
+        Firebase logout is handled by the
+        Firebase-enabled pages.
 
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userMobile");
+        This function clears the local session
+        so existing admin pages remain protected.
+    */
 
-    alert("Logout Successful!");
 
-    window.location.href = "admin.html";
+    localStorage.removeItem(
+        "isLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "userUid"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    localStorage.removeItem(
+        "userName"
+    );
+
+    localStorage.removeItem(
+        "userMobile"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    localStorage.removeItem(
+        "adminId"
+    );
+
+    localStorage.removeItem(
+        "adminReportsTo"
+    );
+
+
+    alert(
+        "Logout Successful!"
+    );
+
+
+    window.location.href =
+        "admin.html";
 
 }
 
-// ----------------------------
-// Get Current User
-// ----------------------------
+
+// ==========================================
+// USER LOGOUT
+// ==========================================
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "isLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "userUid"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    localStorage.removeItem(
+        "userName"
+    );
+
+    localStorage.removeItem(
+        "userMobile"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    localStorage.removeItem(
+        "adminId"
+    );
+
+    localStorage.removeItem(
+        "adminReportsTo"
+    );
+
+
+    alert(
+        "Logout Successful!"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+// ==========================================
+// GET CURRENT USER
+// ==========================================
+
 function getCurrentUser() {
 
     return {
-        name: localStorage.getItem("userName"),
-        role: localStorage.getItem("userRole"),
-        mobile: localStorage.getItem("userMobile")
+
+        isLoggedIn:
+            isUserLoggedIn(),
+
+        name:
+            getUserName(),
+
+        mobile:
+            getUserMobile(),
+
+        email:
+            getUserEmail(),
+
+        role:
+            getUserRole(),
+
+        adminId:
+            getAdminId()
+
     };
 
 }
+
+
+// ==========================================
+// CHECK CURRENT SESSION
+// ==========================================
+
+function getSessionStatus() {
+
+    return {
+
+        loggedIn:
+            isUserLoggedIn(),
+
+        role:
+            getUserRole(),
+
+        name:
+            getUserName(),
+
+        mobile:
+            getUserMobile(),
+
+        email:
+            getUserEmail()
+
+    };
+
+}
+
+
+// ==========================================
+// PREVENT BACK-ACCESS AFTER LOGOUT
+// ==========================================
+
+function preventUnauthorizedAccess() {
+
+    if (
+        !isUserLoggedIn()
+    ) {
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+// ==========================================
+// PAGE LOAD SECURITY CHECK
+// ==========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+            Authentication is intentionally
+            NOT forced automatically here.
+
+            Individual pages decide whether they
+            require:
+            - checkLogin()
+            - checkUserLogin()
+            - checkAdminAccess()
+            - checkRole()
+            - checkAnyRole()
+        */
+    }
+);
+
+
+// ==========================================
+// END OF AUTHENTICATION SYSTEM
+// ==========================================
