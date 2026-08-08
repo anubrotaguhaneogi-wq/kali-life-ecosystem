@@ -4,69 +4,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Admin - KALI LIFE ECOSYSTEM</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            text-align: center;
+            color: #166534;
+            font-size: 28px;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 20px 0 25px;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            background: #ffffff;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+        }
+
+        input[readonly] {
+            background: #f8fafc;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .save-btn {
+            background: #16a34a;
+            color: #ffffff;
+        }
+
+        .save-btn:hover {
+            background: #15803d;
+        }
+
+        .back-btn {
+            background: #64748b;
+            color: #ffffff;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-<h1>Edit Admin</h1>
+<div class="container">
 
-<hr>
+    <h1>Edit Admin</h1>
 
-<form>
-    <label>Admin ID</label><br>
-    <input type="text" id="adminId" readonly><br><br>
+    <hr>
 
-    <label>Name</label><br>
-    <input type="text" id="adminName" value="Super Admin"><br><br>
+    <form>
 
-    <label>Role</label><br>
-    <input type="text" id="adminRole" value="Super Admin"><br><br>
+        <label>Admin ID</label>
+        <input type="text" id="adminId" readonly>
 
-    <label>Status</label><br>
-    <select id="adminStatus">
-        <option>Active</option>
-        <option>Inactive</option>
-    </select><br><br>
+        <br><br>
 
-    <button type="button" onclick="saveAdmin()">Save Changes</button>
-    <button type="button" onclick="goBack()">Back</button>
-</form>
+        <label>Name</label>
+        <input type="text" id="adminName" value="Super Admin">
+
+        <br><br>
+
+        <label>Role</label>
+        <input type="text" id="adminRole" value="Super Admin">
+
+        <br><br>
+
+        <label>Status</label>
+        <select id="adminStatus">
+            <option>Active</option>
+            <option>Inactive</option>
+        </select>
+
+        <div class="button-group">
+            <button type="button" class="save-btn" onclick="saveAdmin()">
+                Save Changes
+            </button>
+
+            <button type="button" class="back-btn" onclick="goBack()">
+                Back
+            </button>
+        </div>
+
+    </form>
+
+</div>
 
 <script>
+
     const params = new URLSearchParams(window.location.search);
-const index = params.get("id");
+    const index = params.get("id");
 
-let admins = JSON.parse(localStorage.getItem("admins")) || [];
+    let admins = JSON.parse(localStorage.getItem("admins")) || [];
 
-let admin = admins[index];
+    let admin = admins[index];
 
-if(admin){
+    if(admin){
 
-document.getElementById("adminId").value = admin.id;
-document.getElementById("adminName").value = admin.fullName;
-document.getElementById("adminRole").value = admin.role;
-document.getElementById("adminStatus").value = admin.status;
+        document.getElementById("adminId").value = admin.id;
+        document.getElementById("adminName").value = admin.fullName;
+        document.getElementById("adminRole").value = admin.role;
+        document.getElementById("adminStatus").value = admin.status;
 
-}
-function saveAdmin() {
+    }
 
-    admins[index].fullName = document.getElementById("adminName").value;
+    function saveAdmin() {
 
-    admins[index].role = document.getElementById("adminRole").value;
+        admins[index].fullName =
+            document.getElementById("adminName").value;
 
-    admins[index].status = document.getElementById("adminStatus").value;
+        admins[index].role =
+            document.getElementById("adminRole").value;
 
-    localStorage.setItem("admins", JSON.stringify(admins));
+        admins[index].status =
+            document.getElementById("adminStatus").value;
 
-    alert("Admin Updated Successfully!");
+        localStorage.setItem("admins", JSON.stringify(admins));
 
-    window.location.href = "admin-list.html";
+        alert("Admin Updated Successfully!");
 
-}
+        window.location.href = "admin-list.html";
 
-function goBack() {
-    window.location.href = "admin-list.html";
-}
+    }
+
+    function goBack() {
+        window.location.href = "admin-list.html";
+    }
+
 </script>
 
 </body>
