@@ -1,67 +1,1068 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin Dashboard - KALI LIFE ECOSYSTEM</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Super Admin Dashboard - KALI LIFE ECOSYSTEM</title>
+
 <script src="auth.js"></script>
+
+<style>
+
+/* ==========================================
+   KALI LIFE ECOSYSTEM
+   SUPER ADMIN DASHBOARD
+   PREMIUM FINAL DESIGN
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #166534;
+    color: #ffffff;
+    padding: 24px 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.12);
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.brand p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.admin-badge {
+    padding: 9px 14px;
+    background: #14532d;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 15px 45px;
+}
+
+/* ==========================================
+   WELCOME
+========================================== */
+
+.welcome-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+
+    border-left: 5px solid #16a34a;
+
+    box-shadow:
+        0 7px 22px rgba(0,0,0,0.07);
+
+    margin-bottom: 25px;
+}
+
+.welcome-card h2 {
+    margin: 0 0 7px;
+    color: #166534;
+    font-size: 23px;
+}
+
+.welcome-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 13px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.06);
+}
+
+.stat-icon {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.stat-title {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.stat-value {
+    margin-top: 6px;
+    color: #166534;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   SECTION TITLE
+========================================== */
+
+.section-title {
+    margin: 0 0 15px;
+    color: #166534;
+    font-size: 21px;
+}
+
+/* ==========================================
+   MENU GRID
+========================================== */
+
+.menu-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+/* ==========================================
+   MENU CARD
+========================================== */
+
+.menu-card {
+    min-height: 145px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 21px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 13px;
+
+    text-decoration: none;
+    color: #0f172a;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.06);
+
+    transition: 0.2s;
+}
+
+.menu-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #86efac;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.10);
+}
+
+.menu-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #dcfce7;
+
+    border-radius: 11px;
+
+    font-size: 23px;
+}
+
+.menu-card h3 {
+    margin: 15px 0 6px;
+
+    color: #166534;
+
+    font-size: 16px;
+}
+
+.menu-card p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+/* ==========================================
+   QUICK ACTIONS
+========================================== */
+
+.quick-actions {
+    margin-top: 30px;
+}
+
+.action-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.action-btn {
+    display: block;
+
+    padding: 14px;
+
+    background: #166534;
+
+    color: #ffffff;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.action-btn:hover {
+    background: #14532d;
+}
+
+.action-secondary {
+    background: #475569;
+}
+
+.action-secondary:hover {
+    background: #334155;
+}
+
+/* ==========================================
+   SYSTEM STATUS
+========================================== */
+
+.status-card {
+    margin-top: 30px;
+
+    padding: 20px;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 13px;
+}
+
+.status-title {
+    margin: 0 0 8px;
+
+    color: #166534;
+
+    font-size: 17px;
+}
+
+.status-text {
+    margin: 0;
+
+    color: #15803d;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+.logout-btn {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background: #b91c1c;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+    margin-top: 30px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 900px) {
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .menu-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .action-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .brand h1 {
+        font-size: 22px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 0 10px 35px;
+    }
+
+    .welcome-card {
+        padding: 20px;
+    }
+
+    .welcome-card h2 {
+        font-size: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
 </head>
 
+
 <body>
+
 <script>
-checkLogin();
-checkRole("Super Admin");
+
+/* ==========================================
+   SUPER ADMIN SECURITY
+========================================== */
+
+if (!checkRole("Super Admin")) {
+
+    /* checkRole handles redirect */
+
+}
+
 </script>
-<h1>KALI LIFE ECOSYSTEM</h1>
-<h2>Super Admin Dashboard</h2>
 
-<hr>
 
-<h3>Dashboard Menu</h3>
+<header>
 
-<ul>
-    <li>🏠 Dashboard Home</li>
-    <li>👥 Core Admin Management</li>
-    <li>🏢 Department Admin Management</li>
-    <li>🔐 Permission Management</li>
-    <li>📊 Reports & Analytics</li>
-    <li>🌾 Agriculture Management</li>
-    <li>🛒 Marketplace Management</li>
-    <li>💰 Finance Management</li>
-    <li>🛠 Technical & Security</li>
-    <li>⚙️ Website Settings</li>
-    <li>📩 Customer Service</li>
-    <li>🚪 Logout</li>
-</ul>
+    <div class="brand">
 
-<hr>
+        <h1>
+            KALI LIFE ECOSYSTEM
+        </h1>
 
-<h3>System Overview</h3>
+        <p>
+            Super Admin Control Center
+        </p>
 
-<ul>
-    <li>Total Core Admin : 5</li>
-    <li>Total Department Admin : 18</li>
-    <li>Total Admin : 24</li>
-</ul>
+    </div>
 
-<hr>
 
-<h3>Quick Actions</h3>
+    <div class="admin-badge">
+        🔐 SUPER ADMIN
+    </div>
 
-<button onclick="location.href='create-admin.html'">Create Core Admin</button>
+</header>
 
-<button onclick="location.href='admin-list.html'">Create Department Admin</button>
 
-<button onclick="location.href='admin-roles.html'">Manage Permissions</button>
-<button onclick="location.href='admin-dashboard.html'">View Reports</button>
+<div class="container">
 
-<button onclick="location.href='index.html'">System Settings</button>
-<button onclick="logout()">Logout</button>
-    <hr>
 
-<h3>System Status</h3>
+    <!-- ======================================
+         WELCOME
+    ======================================= -->
 
-<p>✅ KALI LIFE ECOSYSTEM is Running Successfully.</p>
+    <div class="welcome-card">
+
+        <h2>
+            Welcome,
+            <span id="adminName">
+                Super Admin
+            </span>
+            👋
+        </h2>
+
+        <p>
+            You have full administrative control
+            over the KALI LIFE ECOSYSTEM.
+        </p>
+
+    </div>
+
+
+    <!-- ======================================
+         SYSTEM STATISTICS
+    ======================================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👑
+            </div>
+
+            <div class="stat-title">
+                Super Admin
+            </div>
+
+            <div class="stat-value">
+                1
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🛡️
+            </div>
+
+            <div class="stat-title">
+                Core Admin
+            </div>
+
+            <div
+                class="stat-value"
+                id="coreAdminCount">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🏢
+            </div>
+
+            <div class="stat-title">
+                Department Admin
+            </div>
+
+            <div
+                class="stat-value"
+                id="departmentAdminCount">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <div class="stat-title">
+                Total Admin
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalAdminCount">
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ======================================
+         ADMIN MANAGEMENT
+    ======================================= -->
+
+    <h2 class="section-title">
+        👥 Admin Management
+    </h2>
+
+
+    <div class="menu-grid">
+
+
+        <a
+            class="menu-card"
+            href="create-admin.html">
+
+            <div class="menu-icon">
+                ➕
+            </div>
+
+            <div>
+
+                <h3>
+                    Create Admin
+                </h3>
+
+                <p>
+                    Create and register a new
+                    administrator.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-card"
+            href="admin-list.html">
+
+            <div class="menu-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h3>
+                    Admin List
+                </h3>
+
+                <p>
+                    View, edit and manage
+                    administrator accounts.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-card"
+            href="admin-roles.html">
+
+            <div class="menu-icon">
+                🛡️
+            </div>
+
+            <div>
+
+                <h3>
+                    Admin Roles
+                </h3>
+
+                <p>
+                    Review available roles
+                    and administrative structure.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-card"
+            href="permission-management.html">
+
+            <div class="menu-icon">
+                🔑
+            </div>
+
+            <div>
+
+                <h3>
+                    Permission Management
+                </h3>
+
+                <p>
+                    Manage administrative
+                    permissions and access.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-card"
+            href="reports.html">
+
+            <div class="menu-icon">
+                📊
+            </div>
+
+            <div>
+
+                <h3>
+                    Reports & Analytics
+                </h3>
+
+                <p>
+                    View business reports
+                    and system analytics.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-card"
+            href="admin-dashboard.html">
+
+            <div class="menu-icon">
+                ⚙️
+            </div>
+
+            <div>
+
+                <h3>
+                    Admin Dashboard
+                </h3>
+
+                <p>
+                    Open the operational
+                    administration dashboard.
+                </p>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- ======================================
+         BUSINESS MANAGEMENT
+    ======================================= -->
+
+    <div style="margin-top:30px;">
+
+        <h2 class="section-title">
+            🏢 Business Management
+        </h2>
+
+
+        <div class="menu-grid">
+
+
+            <a
+                class="menu-card"
+                href="purchase.html">
+
+                <div class="menu-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <h3>
+                        Purchase Management
+                    </h3>
+
+                    <p>
+                        Manage purchase entries,
+                        suppliers and costs.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                class="menu-card"
+                href="sales.html">
+
+                <div class="menu-icon">
+                    💰
+                </div>
+
+                <div>
+
+                    <h3>
+                        Sales Management
+                    </h3>
+
+                    <p>
+                        Manage sales, invoices,
+                        payments and dues.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                class="menu-card"
+                href="reports.html">
+
+                <div class="menu-icon">
+                    📈
+                </div>
+
+                <div>
+
+                    <h3>
+                        Business Reports
+                    </h3>
+
+                    <p>
+                        Review sales and
+                        purchase reports.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         QUICK ACTIONS
+    ======================================= -->
+
+    <div class="quick-actions">
+
+        <h2 class="section-title">
+            ⚡ Quick Actions
+        </h2>
+
+
+        <div class="action-grid">
+
+            <a
+                class="action-btn"
+                href="create-admin.html">
+
+                ➕ Create Admin
+
+            </a>
+
+
+            <a
+                class="action-btn"
+                href="admin-list.html">
+
+                👥 View Admin List
+
+            </a>
+
+
+            <a
+                class="action-btn"
+                href="permission-management.html">
+
+                🔑 Permissions
+
+            </a>
+
+
+            <a
+                class="action-btn"
+                href="reports.html">
+
+                📊 Reports
+
+            </a>
+
+
+            <a
+                class="action-btn action-secondary"
+                href="index.html">
+
+                🏠 Website Home
+
+            </a>
+
+
+            <a
+                class="action-btn action-secondary"
+                href="admin-dashboard.html">
+
+                ⚙️ Admin Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         SYSTEM STATUS
+    ======================================= -->
+
+    <div class="status-card">
+
+        <h3 class="status-title">
+            🟢 System Status
+        </h3>
+
+        <p class="status-text">
+            KALI LIFE ECOSYSTEM is running successfully.
+        </p>
+
+    </div>
+
+
+    <!-- ======================================
+         LOGOUT
+    ======================================= -->
+
+    <button
+        class="logout-btn"
+        onclick="logout()">
+
+        🚪 Logout Super Admin
+
+    </button>
+
+
+    <div class="footer">
+
+        © KALI LIFE ECOSYSTEM -
+        Super Admin Control Center
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   LOAD CURRENT ADMIN
+========================================== */
+
+const currentAdminName =
+    localStorage.getItem(
+        "userName"
+    ) || "Super Admin";
+
+
+document.getElementById(
+    "adminName"
+).innerText =
+    currentAdminName;
+
+
+/* ==========================================
+   LOAD ADMIN STATISTICS
+========================================== */
+
+function loadAdminStatistics() {
+
+    let admins = [];
+
+    try {
+
+        admins =
+            JSON.parse(
+                localStorage.getItem(
+                    "admins"
+                )
+            ) || [];
+
+    }
+
+    catch (error) {
+
+        admins = [];
+
+    }
+
+
+    let coreCount = 0;
+    let departmentCount = 0;
+
+
+    admins.forEach(function(admin) {
+
+        const role =
+            String(
+                admin.role || ""
+            ).trim();
+
+
+        if (
+            role === "Core Admin"
+        ) {
+
+            coreCount++;
+
+        }
+
+        else if (
+            role !== "Super Admin"
+            &&
+            role !== ""
+        ) {
+
+            departmentCount++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "coreAdminCount"
+    ).innerText =
+        coreCount;
+
+
+    document.getElementById(
+        "departmentAdminCount"
+    ).innerText =
+        departmentCount;
+
+
+    document.getElementById(
+        "totalAdminCount"
+    ).innerText =
+        admins.length + 1;
+
+}
+
+
+loadAdminStatistics();
+
+</script>
+
 
 </body>
+
 </html>
