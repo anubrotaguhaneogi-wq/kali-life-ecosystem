@@ -1,124 +1,864 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permission Management - KALI LIFE ECOSYSTEM</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Permission Management - KALI LIFE ECOSYSTEM</title>
+
+<script src="auth.js"></script>
+
+<style>
+
+/* ==========================================
+   KALI LIFE ECOSYSTEM
+   PERMISSION MANAGEMENT
+   PREMIUM FINAL DESIGN
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #166534;
+    color: #ffffff;
+    padding: 24px 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 15px 40px;
+}
+
+/* ==========================================
+   SECTION TITLE
+========================================== */
+
+.section-title {
+    background: #ffffff;
+    padding: 20px 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 5px solid #16a34a;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+}
+
+.section-title h2 {
+    margin: 0;
+    color: #166534;
+    font-size: 22px;
+}
+
+.section-title p {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ==========================================
+   SUMMARY CARDS
+========================================== */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+    border: 1px solid #e2e8f0;
+}
+
+.summary-card h3 {
+    margin: 0 0 10px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.summary-card .value {
+    font-size: 25px;
+    font-weight: bold;
+    color: #166534;
+}
+
+/* ==========================================
+   TABLE CARD
+========================================== */
+
+.table-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+    border: 1px solid #e2e8f0;
+}
+
+.table-title {
+    margin: 0 0 18px;
+    color: #166534;
+    font-size: 20px;
+}
+
+/* ==========================================
+   TABLE WRAPPER
+========================================== */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+th {
+    background: #166534;
+    color: #ffffff;
+    padding: 13px 10px;
+    text-align: center;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+tbody tr:hover {
+    background: #f0fdf4;
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.status-active {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-inactive {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.action-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 2px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+.view-btn {
+    background: #2563eb;
+}
+
+.edit-btn {
+    background: #f59e0b;
+}
+
+.permission-btn {
+    background: #7c3aed;
+}
+
+.income-btn {
+    background: #0891b2;
+}
+
+.report-btn {
+    background: #475569;
+}
+
+.delete-btn {
+    background: #dc2626;
+}
+
+/* ==========================================
+   PERMISSION CONTROL AREA
+========================================== */
+
+.permission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.add-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    background: #16a34a;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #15803d;
+}
+
+/* ==========================================
+   SEARCH AREA
+========================================== */
+
+.search-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+
+.search-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #166534;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background: #14532d;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 30px;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 0 10px 30px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .summary-card {
+        padding: 18px;
+    }
+
+    .table-card {
+        padding: 15px;
+    }
+
+    .permission-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+
+    .search-area {
+        flex-direction: column;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>KALI LIFE ECOSYSTEM</h1>
-
-<h2>Admin Management Dashboard</h2>
-
-<hr>
-
-<h3>Admin Performance & Income</h3>
-<hr>
-
-<h3>Dashboard Summary</h3>
-
-<table border="1" cellpadding="10">
-<tr>
-    <th>Total Admin</th>
-    <th>Active Admin</th>
-    <th>Total Business</th>
-    <th>Total Revenue</th>
-</tr>
-
-<tr>
-    <td>24</td>
-    <td>22</td>
-    <td>520</td>
-    <td>₹25,80,000</td>
-</tr>
-</table>
-
-<br>
-<table border="1" cellpadding="10">
-
-<tr>
-<th>Admin Name</th>
-<th>Role</th>
-<th>Business</th>
-<th>Total Sales</th>
-<th>Commission</th>
-<th>Total Income</th>
-<th>Status</th>
-<th>View</th>
-<th>Edit</th>
-<th>Permission</th>
-<th>Income</th>
-<th>Reports</th>
-</tr>
-
-<tr>
-<td>Operations Admin</td>
-<td>Core Admin</td>
-<td>120</td>
-<td>₹850000</td>
-<td>₹42500</td>
-<td>₹47500</td>
-<td>Active</td>
-<td>View</td>
-<td>Edit</td>
-<td>Permission</td>
-<td>Income</td>
-<td>Reports</td>
-   
-
-<tr>
-    <td>Core Admin</td>
-    <td>View</td>
-    <td>Edit</td>
-    <td>Permission</td>
-    <td>₹28000</td>
-    <td>Active</td>
-</tr>
-
-</table>
-    <h2>Permission Management</h2>
-
-<p>Manage user roles and permissions from this page.</p>
-
-<button>Add New Permission</button>
-    <br><br>
-
-<input type="text" placeholder="Search User">
-
-<button>Search</button>
-    <br><br>
-
-<table border="1" cellpadding="8">
-<tr>
-    <th>User Name</th>
-    <th>Role</th>
-    <th>Status</th>
-    <th>Action</th>
-    <th>Delete</th>
-</tr>
-
-<tr>
-    <td>Core Admin</td>
-    <td>Administrator</td>
-    <td>Active</td>
-    <td><button onclick="editUser()">Edit</button></td>
-    <td><button>Delete</button></td>
-</tr>
-
-<tr>
-    <td>Operations Admin</td>
-    <td>Manager</td>
-    <td>Active</td>
-    <td><button onclick="editUser()">Edit</button></td>
-    <td><button>Delete</button></td>
-</tr>
-</table>
 <script>
-function editUser() {
-alert("Edit Button Clicked");
-}
+checkLogin();
+checkRole("Super Admin");
 </script>
+
+<header>
+
+    <h1>🔐 KALI LIFE ECOSYSTEM</h1>
+
+    <p>Permission Management & Admin Performance Dashboard</p>
+
+</header>
+
+<div class="container">
+
+    <!-- ======================================
+         ADMIN PERFORMANCE
+    ======================================= -->
+
+    <div class="section-title">
+
+        <h2>Admin Performance & Income</h2>
+
+        <p>
+            Monitor admin activity, business performance,
+            revenue and income.
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <h3>Total Admin</h3>
+
+            <div class="value">
+                24
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>Active Admin</h3>
+
+            <div class="value">
+                22
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>Total Business</h3>
+
+            <div class="value">
+                520
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>Total Revenue</h3>
+
+            <div class="value">
+                ₹25,80,000
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN PERFORMANCE TABLE -->
+
+    <div class="table-card">
+
+        <h2 class="table-title">
+            Admin Performance
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admin Name</th>
+                        <th>Role</th>
+                        <th>Business</th>
+                        <th>Total Sales</th>
+                        <th>Commission</th>
+                        <th>Total Income</th>
+                        <th>Status</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Permission</th>
+                        <th>Income</th>
+                        <th>Reports</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Operations Admin</td>
+
+                        <td>Core Admin</td>
+
+                        <td>120</td>
+
+                        <td>₹8,50,000</td>
+
+                        <td>₹42,500</td>
+
+                        <td>₹47,500</td>
+
+                        <td>
+                            <span class="status-active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn view-btn"
+                                onclick="viewAdmin()">
+                                View
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn edit-btn"
+                                onclick="editAdmin()">
+                                Edit
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn permission-btn"
+                                onclick="managePermission()">
+                                Permission
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn income-btn"
+                                onclick="viewIncome()">
+                                Income
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn report-btn"
+                                onclick="viewReports()">
+                                Reports
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         PERMISSION MANAGEMENT
+    ======================================= -->
+
+    <div class="table-card">
+
+        <div class="permission-header">
+
+            <div>
+
+                <h2 class="table-title">
+                    Permission Management
+                </h2>
+
+                <p style="margin:0;color:#64748b;font-size:14px;">
+                    Manage admin roles and system permissions.
+                </p>
+
+            </div>
+
+            <button
+                class="add-btn"
+                onclick="addPermission()">
+                ➕ Add New Permission
+            </button>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-area">
+
+            <input
+                type="text"
+                id="searchUser"
+                class="search-input"
+                placeholder="🔍 Search User">
+
+            <button
+                class="search-btn"
+                onclick="searchUser()">
+                Search
+            </button>
+
+        </div>
+
+
+        <!-- PERMISSION TABLE -->
+
+        <div class="table-wrapper">
+
+            <table id="permissionTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>User Name</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>Delete</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Core Admin</td>
+
+                        <td>Administrator</td>
+
+                        <td>
+                            <span class="status-active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn edit-btn"
+                                onclick="editUser(this)">
+                                Edit
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteUser(this)">
+                                Delete
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Operations Admin</td>
+
+                        <td>Manager</td>
+
+                        <td>
+                            <span class="status-active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn edit-btn"
+                                onclick="editUser(this)">
+                                Edit
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteUser(this)">
+                                Delete
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        © KALI LIFE ECOSYSTEM - Admin Management System
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   ADMIN PERFORMANCE ACTIONS
+========================================== */
+
+function viewAdmin() {
+
+    alert("Admin Profile View");
+
+}
+
+function editAdmin() {
+
+    alert("Admin Edit Panel");
+
+}
+
+function managePermission() {
+
+    alert("Permission Management Panel");
+
+}
+
+function viewIncome() {
+
+    alert("Admin Income Details");
+
+}
+
+function viewReports() {
+
+    alert("Admin Reports");
+
+}
+
+
+/* ==========================================
+   ADD PERMISSION
+========================================== */
+
+function addPermission() {
+
+    alert("Add New Permission");
+
+}
+
+
+/* ==========================================
+   EDIT USER
+========================================== */
+
+function editUser(button) {
+
+    let row = button.closest("tr");
+
+    let userName =
+        row.cells[0].innerText;
+
+    alert(
+        "Edit Permission for: " + userName
+    );
+
+}
+
+
+/* ==========================================
+   DELETE USER
+========================================== */
+
+function deleteUser(button) {
+
+    let row = button.closest("tr");
+
+    let userName =
+        row.cells[0].innerText;
+
+    if (
+        confirm(
+            "Are you sure you want to delete " +
+            userName +
+            "?"
+        )
+    ) {
+
+        row.remove();
+
+    }
+
+}
+
+
+/* ==========================================
+   SEARCH USER
+========================================== */
+
+function searchUser() {
+
+    let search =
+        document.getElementById("searchUser")
+        .value
+        .toLowerCase()
+        .trim();
+
+    let rows =
+        document.querySelectorAll(
+            "#permissionTable tbody tr"
+        );
+
+    rows.forEach(function(row) {
+
+        let text =
+            row.innerText.toLowerCase();
+
+        if (text.includes(search)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
 </body>
+
 </html>
