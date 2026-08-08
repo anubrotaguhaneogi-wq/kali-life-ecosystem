@@ -1,82 +1,1081 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Purchase Management - KALI LIFE ECOSYSTEM</title>
 
+<script src="auth.js"></script>
+
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
-    margin:0;
-    padding:20px;
+
+/* ==========================================
+   KALI LIFE ECOSYSTEM
+   PURCHASE MANAGEMENT
+   PREMIUM FINAL DESIGN
+========================================== */
+
+* {
+    box-sizing: border-box;
 }
 
-.container{
-    max-width:700px;
-    margin:auto;
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
 }
 
-h2{
-    text-align:center;
-    color:green;
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #166534;
+    color: #ffffff;
+    padding: 23px 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
 }
 
-input,select{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
+header h1 {
+    margin: 0;
+    font-size: 27px;
 }
 
-button{
-    width:100%;
-    padding:12px;
-    background:green;
-    color:white;
-    border:none;
-    border-radius:5px;
-    font-size:16px;
+header p {
+    margin: 7px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
 }
 
-button:hover{
-    background:darkgreen;
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    width: 100%;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 15px 40px;
 }
+
+/* ==========================================
+   FORM CARD
+========================================== */
+
+.form-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 7px 22px rgba(0,0,0,0.07);
+    border: 1px solid #e2e8f0;
+}
+
+/* ==========================================
+   SECTION TITLE
+========================================== */
+
+.section-title {
+    margin: 0 0 22px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #dcfce7;
+    color: #166534;
+    font-size: 22px;
+}
+
+.section-subtitle {
+    margin: -12px 0 22px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ==========================================
+   FORM GRID
+========================================== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* ==========================================
+   LABEL
+========================================== */
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   INPUT / SELECT
+========================================== */
+
+input,
+select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+/* ==========================================
+   CALCULATION CARD
+========================================== */
+
+.calculation-card {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.calculation-card h3 {
+    margin: 0 0 15px;
+    color: #166534;
+    font-size: 18px;
+}
+
+.calculation-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 9px 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 14px;
+}
+
+.calculation-row:last-child {
+    border-bottom: none;
+}
+
+.total-row {
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 2px solid #16a34a;
+    color: #166534;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+button {
+    flex: 1;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.save-btn {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.save-btn:hover {
+    background: #15803d;
+}
+
+.reset-btn {
+    background: #64748b;
+    color: #ffffff;
+}
+
+.reset-btn:hover {
+    background: #475569;
+}
+
+.back-btn {
+    display: block;
+    margin-top: 12px;
+    padding: 13px;
+    background: #334155;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background: #1e293b;
+}
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+#message {
+    min-height: 20px;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.success {
+    color: #15803d;
+}
+
+.error {
+    color: #dc2626;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 0 10px 30px;
+    }
+
+    .form-card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .calculation-row {
+        font-size: 13px;
+    }
+
+    .total-row {
+        font-size: 17px;
+    }
+
+}
+
 </style>
 
 </head>
 
 <body>
 
+<script>
+
+/* ==========================================
+   LOGIN & ROLE SECURITY
+========================================== */
+
+checkLogin();
+
+const purchaseRole =
+    localStorage.getItem("userRole") || "";
+
+if (purchaseRole !== "Super Admin") {
+
+    alert("Access Denied!");
+
+    window.location.href =
+        "admin-dashboard.html";
+
+}
+
+</script>
+
+
+<header>
+
+    <h1>🛒 KALI LIFE ECOSYSTEM</h1>
+
+    <p>Purchase Management System</p>
+
+</header>
+
+
 <div class="container">
 
-<h2>Purchase Entry</h2>
+    <div class="form-card">
 
-<input type="date">
+        <h2 class="section-title">
+            Purchase Entry
+        </h2>
 
-<input type="text" placeholder="Supplier Name">
+        <p class="section-subtitle">
+            Enter supplier, product and purchase cost information.
+        </p>
 
-<input type="text" placeholder="Invoice Number">
 
-<input type="text" placeholder="Product Name">
+        <!-- ==================================
+             PURCHASE INFORMATION
+        =================================== -->
 
-<input type="number" placeholder="Quantity">
+        <div class="form-grid">
 
-<input type="number" placeholder="Purchase Rate">
+            <div class="form-group">
 
-<input type="number" placeholder="Transport Cost">
+                <label for="purchaseDate">
+                    Purchase Date
+                </label>
 
-<input type="number" placeholder="Other Expenses">
+                <input
+                    type="date"
+                    id="purchaseDate"
+                    required>
 
-<button>Save Purchase</button>
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="invoiceNumber">
+                    Invoice Number
+                </label>
+
+                <input
+                    type="text"
+                    id="invoiceNumber"
+                    placeholder="Enter Invoice Number">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="supplierName">
+                    Supplier Name
+                </label>
+
+                <input
+                    type="text"
+                    id="supplierName"
+                    placeholder="Enter Supplier Name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="productName">
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Enter Product Name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="quantity">
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    placeholder="Enter Quantity"
+                    min="0"
+                    step="0.01"
+                    oninput="calculateTotal()"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="purchaseRate">
+                    Purchase Rate
+                </label>
+
+                <input
+                    type="number"
+                    id="purchaseRate"
+                    placeholder="Enter Rate"
+                    min="0"
+                    step="0.01"
+                    oninput="calculateTotal()"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="transportCost">
+                    Transport Cost
+                </label>
+
+                <input
+                    type="number"
+                    id="transportCost"
+                    placeholder="Enter Transport Cost"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="otherExpenses">
+                    Other Expenses
+                </label>
+
+                <input
+                    type="number"
+                    id="otherExpenses"
+                    placeholder="Enter Other Expenses"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="gst">
+                    GST (%)
+                </label>
+
+                <input
+                    type="number"
+                    id="gst"
+                    placeholder="Enter GST %"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="paymentStatus">
+                    Payment Status
+                </label>
+
+                <select id="paymentStatus">
+
+                    <option value="">
+                        -- Select Payment Status --
+                    </option>
+
+                    <option value="Paid">
+                        Paid
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Partial">
+                        Partial
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================
+             AUTOMATIC CALCULATION
+        =================================== -->
+
+        <div class="calculation-card">
+
+            <h3>
+                Purchase Cost Summary
+            </h3>
+
+            <div class="calculation-row">
+
+                <span>
+                    Product Cost
+                </span>
+
+                <strong id="productCost">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="calculation-row">
+
+                <span>
+                    Transport Cost
+                </span>
+
+                <strong id="transportDisplay">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="calculation-row">
+
+                <span>
+                    Other Expenses
+                </span>
+
+                <strong id="otherDisplay">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="calculation-row">
+
+                <span>
+                    GST
+                </span>
+
+                <strong id="gstDisplay">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+
+            <div class="calculation-row total-row">
+
+                <span>
+                    TOTAL PURCHASE COST
+                </span>
+
+                <strong id="grandTotal">
+                    ₹0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div id="message"></div>
+
+
+        <!-- ==================================
+             BUTTONS
+        =================================== -->
+
+        <div class="button-group">
+
+            <button
+                type="button"
+                class="save-btn"
+                onclick="savePurchase()">
+
+                💾 Save Purchase
+
+            </button>
+
+
+            <button
+                type="button"
+                class="reset-btn"
+                onclick="resetPurchaseForm()">
+
+                🔄 Reset
+
+            </button>
+
+        </div>
+
+
+        <a
+            class="back-btn"
+            href="admin-dashboard.html">
+
+            ⬅ Back to Dashboard
+
+        </a>
+
+    </div>
 
 </div>
 
+
+<script>
+
+/* ==========================================
+   SET TODAY'S DATE
+========================================== */
+
+document.getElementById("purchaseDate").value =
+    new Date().toISOString().split("T")[0];
+
+
+/* ==========================================
+   CALCULATE PURCHASE TOTAL
+========================================== */
+
+function calculateTotal() {
+
+    const quantity =
+        parseFloat(
+            document.getElementById("quantity").value
+        ) || 0;
+
+    const rate =
+        parseFloat(
+            document.getElementById("purchaseRate").value
+        ) || 0;
+
+    const transport =
+        parseFloat(
+            document.getElementById("transportCost").value
+        ) || 0;
+
+    const other =
+        parseFloat(
+            document.getElementById("otherExpenses").value
+        ) || 0;
+
+    const gstPercent =
+        parseFloat(
+            document.getElementById("gst").value
+        ) || 0;
+
+
+    const productCost =
+        quantity * rate;
+
+    const taxableAmount =
+        productCost + transport + other;
+
+    const gstAmount =
+        taxableAmount * gstPercent / 100;
+
+    const total =
+        taxableAmount + gstAmount;
+
+
+    document.getElementById("productCost").innerText =
+        formatCurrency(productCost);
+
+    document.getElementById("transportDisplay").innerText =
+        formatCurrency(transport);
+
+    document.getElementById("otherDisplay").innerText =
+        formatCurrency(other);
+
+    document.getElementById("gstDisplay").innerText =
+        formatCurrency(gstAmount);
+
+    document.getElementById("grandTotal").innerText =
+        formatCurrency(total);
+
+}
+
+
+/* ==========================================
+   CURRENCY FORMAT
+========================================== */
+
+function formatCurrency(amount) {
+
+    return "₹" +
+        Number(amount).toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
+}
+
+
+/* ==========================================
+   SAVE PURCHASE
+========================================== */
+
+function savePurchase() {
+
+    const purchaseDate =
+        document.getElementById("purchaseDate")
+        .value;
+
+    const supplierName =
+        document.getElementById("supplierName")
+        .value
+        .trim();
+
+    const invoiceNumber =
+        document.getElementById("invoiceNumber")
+        .value
+        .trim();
+
+    const productName =
+        document.getElementById("productName")
+        .value
+        .trim();
+
+    const quantity =
+        parseFloat(
+            document.getElementById("quantity").value
+        ) || 0;
+
+    const purchaseRate =
+        parseFloat(
+            document.getElementById("purchaseRate").value
+        ) || 0;
+
+    const transportCost =
+        parseFloat(
+            document.getElementById("transportCost").value
+        ) || 0;
+
+    const otherExpenses =
+        parseFloat(
+            document.getElementById("otherExpenses").value
+        ) || 0;
+
+    const gstPercent =
+        parseFloat(
+            document.getElementById("gst").value
+        ) || 0;
+
+    const paymentStatus =
+        document.getElementById("paymentStatus")
+        .value;
+
+
+    /* VALIDATION */
+
+    if (!purchaseDate) {
+
+        showMessage(
+            "Please select Purchase Date.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!supplierName) {
+
+        showMessage(
+            "Please enter Supplier Name.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!productName) {
+
+        showMessage(
+            "Please enter Product Name.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (quantity <= 0) {
+
+        showMessage(
+            "Quantity must be greater than 0.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (purchaseRate < 0) {
+
+        showMessage(
+            "Purchase Rate is invalid.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!paymentStatus) {
+
+        showMessage(
+            "Please select Payment Status.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* CALCULATION */
+
+    const productCost =
+        quantity * purchaseRate;
+
+    const taxableAmount =
+        productCost +
+        transportCost +
+        otherExpenses;
+
+    const gstAmount =
+        taxableAmount *
+        gstPercent / 100;
+
+    const totalCost =
+        taxableAmount +
+        gstAmount;
+
+
+    /* PURCHASE OBJECT */
+
+    const purchase = {
+
+        id:
+            "PUR-" +
+            Date.now(),
+
+        purchaseDate:
+
+            purchaseDate,
+
+        invoiceNumber:
+
+            invoiceNumber,
+
+        supplierName:
+
+            supplierName,
+
+        productName:
+
+            productName,
+
+        quantity:
+
+            quantity,
+
+        purchaseRate:
+
+            purchaseRate,
+
+        productCost:
+
+            productCost,
+
+        transportCost:
+
+            transportCost,
+
+        otherExpenses:
+
+            otherExpenses,
+
+        gstPercent:
+
+            gstPercent,
+
+        gstAmount:
+
+            gstAmount,
+
+        totalCost:
+
+            totalCost,
+
+        paymentStatus:
+
+            paymentStatus,
+
+        createdBy:
+
+            localStorage.getItem(
+                "userName"
+            ) || "Super Admin",
+
+        createdAt:
+
+            new Date().toLocaleString()
+
+    };
+
+
+    /* SAVE TO LOCAL STORAGE */
+
+    let purchases =
+        JSON.parse(
+            localStorage.getItem("purchases")
+        ) || [];
+
+
+    purchases.push(purchase);
+
+
+    localStorage.setItem(
+        "purchases",
+        JSON.stringify(purchases)
+    );
+
+
+    showMessage(
+        "Purchase saved successfully!",
+        "success"
+    );
+
+
+    alert(
+        "Purchase Saved Successfully!\n\nPurchase ID: " +
+        purchase.id
+    );
+
+
+    resetPurchaseForm();
+
+}
+
+
+/* ==========================================
+   RESET FORM
+========================================== */
+
+function resetPurchaseForm() {
+
+    document.getElementById("purchaseDate").value =
+        new Date().toISOString().split("T")[0];
+
+    document.getElementById("invoiceNumber").value =
+        "";
+
+    document.getElementById("supplierName").value =
+        "";
+
+    document.getElementById("productName").value =
+        "";
+
+    document.getElementById("quantity").value =
+        "";
+
+    document.getElementById("purchaseRate").value =
+        "";
+
+    document.getElementById("transportCost").value =
+        "0";
+
+    document.getElementById("otherExpenses").value =
+        "0";
+
+    document.getElementById("gst").value =
+        "0";
+
+    document.getElementById("paymentStatus").value =
+        "";
+
+    calculateTotal();
+
+}
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(message, type) {
+
+    const element =
+        document.getElementById("message");
+
+    element.innerText =
+        message;
+
+    element.className =
+        type;
+
+}
+
+</script>
+
 </body>
-</html>
+
+    </html>
