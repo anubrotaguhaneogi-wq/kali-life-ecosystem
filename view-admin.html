@@ -34,12 +34,20 @@ checkRole("Super Admin");
 <p><strong>Status:</strong> <span id="adminStatus"></span></p>
 
 <br>
+<!-- ==========================================
+     ADMIN INFORMATION
+========================================== -->
+
+<hr>
+
+<p><strong>Admin ID:</strong> <span id="adminId"></span></p>
+<!-- ==========================================
+     BACK TO ADMIN LIST
+========================================== -->
+
+<br>
 
 <button onclick="goBack()">Back to Admin List</button>
-<!-- View Admin JavaScript -->
-<script>
-    // Get Admin ID From URL
-const params = new URLSearchParams(window.location.search);
 // Display Admin Information
 document.getElementById("adminId").textContent = params.get("id");
 document.getElementById("adminName").textContent = "Super Admin";
