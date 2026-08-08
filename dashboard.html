@@ -1,95 +1,837 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALI LIFE Dashboard</title>
+
+<title>User Dashboard - KALI LIFE ECOSYSTEM</title>
+
+<script src="auth.js"></script>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#0d1117;
-    color:#ffffff;
-    text-align:center;
+
+/* ==========================================
+   KALI LIFE ECOSYSTEM
+   USER DASHBOARD
+   PREMIUM FINAL DESIGN
+========================================== */
+
+* {
+    box-sizing: border-box;
 }
-header{
-    background:#00c853;
-    padding:20px;
-    font-size:28px;
-    font-weight:bold;
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
 }
-.container{
-    padding:30px 20px;
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #166534;
+    color: #ffffff;
+    padding: 24px 15px;
+    text-align: center;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.12);
 }
-.menu-btn{
-    display:block;
-    width:90%;
-    max-width:350px;
-    margin:15px auto;
-    padding:18px;
-    background:#00c853;
-    color:#fff;
-    text-decoration:none;
-    border-radius:12px;
-    font-size:20px;
-    font-weight:bold;
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
 }
-.menu-btn:hover{
-    background:#00a844;
+
+.header-subtitle {
+    margin-top: 7px;
+    font-size: 13px;
+    opacity: 0.9;
 }
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    width: 100%;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 15px 40px;
+}
+
+/* ==========================================
+   WELCOME CARD
+========================================== */
+
+.welcome-card {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+
+    border-left: 5px solid #16a34a;
+
+    box-shadow:
+        0 7px 22px rgba(0,0,0,0.07);
+}
+
+.welcome-card h1 {
+    margin: 0 0 8px;
+
+    color: #166534;
+
+    font-size: 25px;
+}
+
+.welcome-card p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+/* ==========================================
+   USER INFORMATION
+========================================== */
+
+.user-info {
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.info-box {
+    padding: 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 9px;
+}
+
+.info-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.info-value {
+    color: #0f172a;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    word-break: break-word;
+}
+
+/* ==========================================
+   SECTION TITLE
+========================================== */
+
+.section-title {
+    margin: 0 0 15px;
+
+    color: #166534;
+
+    font-size: 20px;
+}
+
+/* ==========================================
+   MENU GRID
+========================================== */
+
+.menu-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+/* ==========================================
+   MENU CARD
+========================================== */
+
+.menu-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 13px;
+
+    color: #0f172a;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.06);
+
+    transition: 0.2s;
+}
+
+.menu-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #86efac;
+
+    box-shadow:
+        0 9px 24px rgba(0,0,0,0.10);
+}
+
+/* ==========================================
+   MENU ICON
+========================================== */
+
+.menu-icon {
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background: #dcfce7;
+
+    border-radius: 12px;
+
+    font-size: 24px;
+}
+
+/* ==========================================
+   MENU TEXT
+========================================== */
+
+.menu-text h3 {
+    margin: 0 0 5px;
+
+    color: #166534;
+
+    font-size: 16px;
+}
+
+.menu-text p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+.logout-btn {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background: #b91c1c;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+    margin-top: 30px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+
+    header {
+        padding: 20px 10px;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+
+    .container {
+        margin-top: 20px;
+
+        padding:
+            0 10px 30px;
+    }
+
+    .welcome-card {
+        padding: 21px;
+    }
+
+    .welcome-card h1 {
+        font-size: 21px;
+    }
+
+    .user-info {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-card {
+        min-height: 85px;
+
+        padding: 16px;
+    }
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<header>
-KALI LIFE ECOSYSTEM
-</header>
-
-<div class="container">  
-<a class="menu-btn" href="login.html">👤 User Login</a>
-
-<!--
-<a class="menu-btn" href="register.html">📝 User Registration</a>
--->
-
-<a class="menu-btn" href="videos.html">▶️ Watch Videos</a>
-
-<a class="menu-btn" href="admin.html">⚙️ Admin Login</a>
-
-<a class="menu-btn" href="index.html">🏠 Home</a>
-    <div style="background:#1b263b;padding:20px;border-radius:12px;margin-top:20px;">
-    <h2>Welcome User</h2>
-
-    <p>Name: <span id="userName">Loading...</span></p>
-
-    <p>Mobile: <span id="userMobile">Loading...</span></p>
-</div>
-<button onclick="logoutUser()" class="menu-btn" style="background:#d32f2f;">
-🚪 Logout
-</button>
 <script>
 
-/*
-    if (!localStorage.getItem("userName")) {
-    alert("Please login first!");
-    window.location.href = "login.html";
-}*/
-   document.getElementById("userName").innerText =
-localStorage.getItem("userName") || "Not Available"; 
+/* ==========================================
+   LOGIN PROTECTION
+========================================== */
+
+checkLogin();
 
 
-document.getElementById("userMobile").innerText =
-localStorage.getItem("userMobile") || "Not Found";
-    function logoutUser() {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userMobile");
-    alert("Logged out successfully!");
-    window.location.href = "login.html";
-    }
+/* ==========================================
+   USER ROLE CHECK
+   ADMIN USERS SHOULD NOT USE USER DASHBOARD
+========================================== */
+
+const dashboardRole =
+    localStorage.getItem("userRole") || "User";
+
+
+if (
+    dashboardRole === "Super Admin"
+) {
+
+    window.location.href =
+        "super-admin-dashboard.html";
+
+}
+
+else if (
+    dashboardRole === "Core Admin"
+) {
+
+    window.location.href =
+        "admin-dashboard.html";
+
+}
+
+else if (
+    dashboardRole !== "User"
+) {
+
+    window.location.href =
+        "admin-dashboard.html";
+
+}
+
 </script>
+
+
+<header>
+
+    <div class="logo">
+        KALI LIFE ECOSYSTEM
+    </div>
+
+    <div class="header-subtitle">
+        User Dashboard
+    </div>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- ======================================
+         WELCOME
+    ======================================= -->
+
+    <div class="welcome-card">
+
+        <h1>
+            Welcome,
+            <span id="welcomeName">
+                User
+            </span>
+            👋
+        </h1>
+
+        <p>
+            Welcome to your KALI LIFE ECOSYSTEM
+            user dashboard.
+        </p>
+
+
+        <!-- USER INFORMATION -->
+
+        <div class="user-info">
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Full Name
+                </span>
+
+                <span
+                    class="info-value"
+                    id="userName">
+
+                    Loading...
+
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Mobile Number
+                </span>
+
+                <span
+                    class="info-value"
+                    id="userMobile">
+
+                    Loading...
+
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Account Role
+                </span>
+
+                <span
+                    class="info-value"
+                    id="userRole">
+
+                    User
+
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Account Status
+                </span>
+
+                <span
+                    class="info-value"
+                    id="userStatus">
+
+                    Active
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         USER MENU
+    ======================================= -->
+
+    <h2 class="section-title">
+        User Services
+    </h2>
+
+
+    <div class="menu-grid">
+
+
+        <!-- VIDEOS -->
+
+        <a
+            class="menu-card"
+            href="videos.html">
+
+            <div class="menu-icon">
+                ▶️
+            </div>
+
+            <div class="menu-text">
+
+                <h3>
+                    Watch Videos
+                </h3>
+
+                <p>
+                    Watch educational and
+                    informative videos.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <!-- HOME -->
+
+        <a
+            class="menu-card"
+            href="index.html">
+
+            <div class="menu-icon">
+                🏠
+            </div>
+
+            <div class="menu-text">
+
+                <h3>
+                    Home
+                </h3>
+
+                <p>
+                    Return to the main
+                    KALI LIFE website.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <!-- PROFILE -->
+
+        <a
+            class="menu-card"
+            href="#"
+            onclick="showProfileMessage(); return false;">
+
+            <div class="menu-icon">
+                👤
+            </div>
+
+            <div class="menu-text">
+
+                <h3>
+                    My Profile
+                </h3>
+
+                <p>
+                    View your account
+                    information.
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <!-- ACCOUNT -->
+
+        <a
+            class="menu-card"
+            href="#"
+            onclick="showAccountMessage(); return false;">
+
+            <div class="menu-icon">
+                🔐
+            </div>
+
+            <div class="menu-text">
+
+                <h3>
+                    Account Security
+                </h3>
+
+                <p>
+                    Manage your account
+                    security settings.
+                </p>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- ======================================
+         LOGOUT
+    ======================================= -->
+
+    <button
+        class="logout-btn"
+        onclick="logoutUser()">
+
+        🚪 Logout
+
+    </button>
+
+
+    <div class="footer">
+
+        © KALI LIFE ECOSYSTEM -
+        User Dashboard
+
+    </div>
 
 </div>
 
+
+<script>
+
+/* ==========================================
+   LOAD USER INFORMATION
+========================================== */
+
+const userName =
+    localStorage.getItem("userName")
+    || "User";
+
+const userMobile =
+    localStorage.getItem("userMobile")
+    || "Not Available";
+
+const userRole =
+    localStorage.getItem("userRole")
+    || "User";
+
+
+document.getElementById(
+    "welcomeName"
+).innerText =
+    userName;
+
+
+document.getElementById(
+    "userName"
+).innerText =
+    userName;
+
+
+document.getElementById(
+    "userMobile"
+).innerText =
+    userMobile;
+
+
+document.getElementById(
+    "userRole"
+).innerText =
+    userRole;
+
+
+/* ==========================================
+   PROFILE MESSAGE
+========================================== */
+
+function showProfileMessage() {
+
+    alert(
+        "Profile Management will be available soon."
+    );
+
+}
+
+
+/* ==========================================
+   ACCOUNT SECURITY MESSAGE
+========================================== */
+
+function showAccountMessage() {
+
+    alert(
+        "Account Security Management will be available soon."
+    );
+
+}
+
+</script>
+
+
+<script type="module">
+
+/* ==========================================
+   FIREBASE LOGOUT
+========================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSC",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+
+};
+
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+const auth =
+    getAuth(app);
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+window.logoutUser = async function () {
+
+    try {
+
+        await signOut(auth);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Firebase logout error:",
+            error
+        );
+
+    }
+
+
+    /* CLEAR LOCAL SESSION */
+
+    localStorage.removeItem(
+        "isLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "userUid"
+    );
+
+    localStorage.removeItem(
+        "userName"
+    );
+
+    localStorage.removeItem(
+        "userMobile"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+
+    alert(
+        "Logged out successfully!"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+};
+
+</script>
+
 </body>
+
 </html>
