@@ -1,131 +1,1127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Sales Management - KALI LIFE ECOSYSTEM</title>
 
+<script src="auth.js"></script>
+
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
-    margin:0;
-    padding:20px;
+
+/* ==========================================
+   KALI LIFE ECOSYSTEM
+   SALES MANAGEMENT
+   PREMIUM FINAL DESIGN
+========================================== */
+
+* {
+    box-sizing: border-box;
 }
 
-.container{
-    max-width:700px;
-    margin:auto;
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
 }
 
-h2{
-    text-align:center;
-    color:#0066cc;
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #166534;
+    color: #ffffff;
+    padding: 23px 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
 }
 
-input,select,textarea{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
-    box-sizing:border-box;
+header h1 {
+    margin: 0;
+    font-size: 27px;
 }
 
-button{
-    width:100%;
-    padding:12px;
-    background:#0066cc;
-    color:white;
-    border:none;
-    border-radius:5px;
-    font-size:16px;
-    cursor:pointer;
+header p {
+    margin: 7px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
 }
 
-button:hover{
-    background:#004c99;
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px 40px;
 }
+
+/* ==========================================
+   FORM CARD
+========================================== */
+
+.form-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 7px 22px rgba(0,0,0,0.07);
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.section-title {
+    margin: 0 0 8px;
+    color: #166534;
+    font-size: 23px;
+}
+
+.section-subtitle {
+    margin: 0 0 25px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ==========================================
+   FORM GRID
+========================================== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* ==========================================
+   LABEL
+========================================== */
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   INPUT / SELECT / TEXTAREA
+========================================== */
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+
+input[readonly] {
+    background: #f8fafc;
+    color: #475569;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ==========================================
+   CALCULATION CARD
+========================================== */
+
+.summary-card {
+    margin-top: 28px;
+    padding: 22px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.summary-card h3 {
+    margin: 0 0 15px;
+    color: #166534;
+    font-size: 18px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 14px;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-total {
+    margin-top: 8px;
+    padding-top: 15px;
+    border-top: 2px solid #16a34a;
+    color: #166534;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.due-row {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* ==========================================
+   EMI INFORMATION
+========================================== */
+
+.emi-info {
+    margin-top: 15px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #f0fdf4;
+    color: #166534;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ==========================================
+   BUTTON AREA
+========================================== */
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.save-btn {
+    flex: 1;
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.save-btn:hover {
+    background: #15803d;
+}
+
+.reset-btn {
+    flex: 1;
+    background: #64748b;
+    color: #ffffff;
+}
+
+.reset-btn:hover {
+    background: #475569;
+}
+
+.back-btn {
+    display: block;
+    margin-top: 12px;
+    padding: 13px;
+    background: #334155;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background: #1e293b;
+}
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+#message {
+    min-height: 20px;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.success {
+    color: #15803d;
+}
+
+.error {
+    color: #dc2626;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 0 10px 30px;
+    }
+
+    .form-card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .summary-row {
+        font-size: 13px;
+    }
+
+    .summary-total {
+        font-size: 17px;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
+<script>
+
+/* ==========================================
+   LOGIN & ROLE ACCESS
+========================================== */
+
+checkLogin();
+
+const salesRole =
+    localStorage.getItem("userRole") || "";
+
+if (
+    salesRole !== "Super Admin" &&
+    salesRole !== "Core Admin"
+) {
+
+    alert("Access Denied!");
+
+    window.location.href =
+        "admin-dashboard.html";
+}
+
+</script>
+
+
+<header>
+
+    <h1>💰 KALI LIFE ECOSYSTEM</h1>
+
+    <p>Sales Management System</p>
+
+</header>
+
+
 <div class="container">
 
-<h2>Sales Entry</h2>
+<div class="form-card">
 
-<input type="datetime-local" id="invoiceDateTime" readonly>
+    <h2 class="section-title">
+        Sales Entry
+    </h2>
 
-<input type="text" id="invoiceNumber" placeholder="Invoice Number (Auto)" readonly>
-
-<input type="text" id="customerId" placeholder="Customer ID (Auto)" readonly>
-
-<input type="text" placeholder="Customer Name">
-
-<input type="text" placeholder="Customer Mobile">
-
-<input type="text" placeholder="Product Name">
-
-<input type="number" placeholder="Quantity">
-
-<input type="number" placeholder="Selling Price (Per Piece)">
-
-<input type="number" placeholder="Discount">
-<input type="number" id="transportCharge" placeholder="Transportation Charge">
-
-<input type="number" id="grandTotal" placeholder="Grand Total" readonly>
-
-<input type="number" id="downPayment" placeholder="Down Payment (Minimum 40%)">
-
-<input type="number" id="dueAmount" placeholder="Remaining Amount" readonly>
-
-<select id="paymentType">
-    <option value="">Select Payment Type</option>
-    <option value="full">Full Payment</option>
-    <option value="emi12">EMI - 12 Weeks</option>
-    <option value="emi24">EMI - 24 Weeks</option>
-</select>
- <script>
-const now = new Date();
-
-document.getElementById("invoiceDateTime").value =
-now.toISOString().slice(0,16);
-
-const invoiceNo =
-"KLE-" +
-now.getFullYear() +
-String(now.getMonth()+1).padStart(2,'0') +
-String(now.getDate()).padStart(2,'0') +
-"-0001";
-
-document.getElementById("invoiceNumber").value = invoiceNo;
-
-const customerId =
-"CUS-" +
-Date.now().toString().slice(-6);
-
-document.getElementById("customerId").value = customerId;
- </script>
+    <p class="section-subtitle">
+        Create a sales invoice and calculate payment,
+        discount, transport and outstanding amount.
+    </p>
 
 
-<select>
-<option>Payment Method</option>
-<option>Cash</option>
-<option>UPI</option>
-<option>Bank Transfer</option>
-<option>Credit (Due)</option>
-</select>
+    <!-- ======================================
+         BASIC INFORMATION
+    ======================================= -->
 
-<textarea rows="4" placeholder="Remarks"></textarea>
+    <div class="form-grid">
 
-<button>Save Sales</button>
+        <div class="form-group">
+
+            <label for="invoiceDateTime">
+                Invoice Date & Time
+            </label>
+
+            <input
+                type="datetime-local"
+                id="invoiceDateTime"
+                readonly>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="invoiceNumber">
+                Invoice Number
+            </label>
+
+            <input
+                type="text"
+                id="invoiceNumber"
+                readonly>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="customerId">
+                Customer ID
+            </label>
+
+            <input
+                type="text"
+                id="customerId"
+                readonly>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="customerName">
+                Customer Name
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Enter Customer Name"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="customerMobile">
+                Customer Mobile
+            </label>
+
+            <input
+                type="tel"
+                id="customerMobile"
+                placeholder="10 digit mobile number"
+                maxlength="10"
+                inputmode="numeric"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productName">
+                Product Name
+            </label>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Enter Product Name"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="quantity">
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Enter Quantity"
+                min="1"
+                step="1"
+                oninput="calculateSale()"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="sellingPrice">
+                Selling Price / Piece
+            </label>
+
+            <input
+                type="number"
+                id="sellingPrice"
+                placeholder="Enter Selling Price"
+                min="0"
+                step="0.01"
+                oninput="calculateSale()"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="discount">
+                Discount
+            </label>
+
+            <input
+                type="number"
+                id="discount"
+                placeholder="Enter Discount"
+                min="0"
+                step="0.01"
+                value="0"
+                oninput="calculateSale()">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="transportCharge">
+                Transportation Charge
+            </label>
+
+            <input
+                type="number"
+                id="transportCharge"
+                placeholder="Enter Transportation Charge"
+                min="0"
+                step="0.01"
+                value="0"
+                oninput="calculateSale()">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="paymentType">
+                Payment Type
+            </label>
+
+            <select id="paymentType" onchange="handlePaymentType()">
+
+                <option value="">
+                    -- Select Payment Type --
+                </option>
+
+                <option value="full">
+                    Full Payment
+                </option>
+
+                <option value="emi12">
+                    EMI - 12 Weeks
+                </option>
+
+                <option value="emi24">
+                    EMI - 24 Weeks
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="paymentMethod">
+                Payment Method
+            </label>
+
+            <select id="paymentMethod">
+
+                <option value="">
+                    -- Select Payment Method --
+                </option>
+
+                <option value="Cash">
+                    Cash
+                </option>
+
+                <option value="UPI">
+                    UPI
+                </option>
+
+                <option value="Bank Transfer">
+                    Bank Transfer
+                </option>
+
+                <option value="Credit">
+                    Credit / Due
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="downPayment">
+                Down Payment
+            </label>
+
+            <input
+                type="number"
+                id="downPayment"
+                placeholder="Minimum 40% for EMI"
+                min="0"
+                step="0.01"
+                oninput="calculateSale()">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="dueAmount">
+                Remaining Due
+            </label>
+
+            <input
+                type="number"
+                id="dueAmount"
+                readonly>
+
+        </div>
+
+
+        <div class="form-group full-width">
+
+            <label for="remarks">
+                Remarks
+            </label>
+
+            <textarea
+                id="remarks"
+                placeholder="Enter any additional remarks...">
+            </textarea>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         SALES SUMMARY
+    ======================================= -->
+
+    <div class="summary-card">
+
+        <h3>
+            Sales Calculation
+        </h3>
+
+
+        <div class="summary-row">
+
+            <span>
+                Product Amount
+            </span>
+
+            <strong id="productAmount">
+                ₹0.00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Discount
+            </span>
+
+            <strong id="discountDisplay">
+                ₹0.00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Transportation
+            </span>
+
+            <strong id="transportDisplay">
+                ₹0.00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row summary-total">
+
+            <span>
+                GRAND TOTAL
+            </span>
+
+            <strong id="grandTotalDisplay">
+                ₹0.00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Down Payment
+            </span>
+
+            <strong id="downPaymentDisplay">
+                ₹0.00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row due-row">
+
+            <span>
+                REMAINING DUE
+            </span>
+
+            <strong id="dueDisplay">
+                ₹0.00
+            </strong>
+
+        </div>
+
+
+        <div
+            id="emiInfo"
+            class="emi-info">
+
+            Select an EMI option to see payment information.
+
+        </div>
+
+    </div>
+
+
+    <div id="message"></div>
+
+
+    <!-- ======================================
+         BUTTONS
+    ======================================= -->
+
+    <div class="button-group">
+
+        <button
+            type="button"
+            class="save-btn"
+            onclick="saveSale()">
+
+            💾 Save Sales
+
+        </button>
+
+
+        <button
+            type="button"
+            class="reset-btn"
+            onclick="resetSaleForm()">
+
+            🔄 Reset
+
+        </button>
+
+    </div>
+
+
+    <a
+        class="back-btn"
+        href="admin-dashboard.html">
+
+        ⬅ Back to Dashboard
+
+    </a>
 
 </div>
 
-</body>
-</html>
+</div>
+
+
+<script>
+
+/* ==========================================
+   GENERATE INVOICE NUMBER
+========================================== */
+
+function generateInvoiceNumber() {
+
+    const now = new Date();
+
+    const datePart =
+        now.getFullYear() +
+        String(now.getMonth() + 1).padStart(2, "0") +
+        String(now.getDate()).padStart(2, "0");
+
+    const sales =
+        JSON.parse(
+            localStorage.getItem("sales")
+        ) || [];
+
+    const serial =
+        String(sales.length + 1)
+        .padStart(4, "0");
+
+    return "KLE-" +
+        datePart +
+        "-" +
+        serial;
+}
+
+
+/* ==========================================
+   GENERATE CUSTOMER ID
+========================================== */
+
+function generateCustomerId() {
+
+    return "CUS-" +
+        Date.now()
+        .toString()
+        .slice(-6);
+
+}
+
+
+/* ==========================================
+   SET DATE & IDS
+========================================== */
+
+function initializeSaleForm() {
+
+    const now = new Date();
+
+    const localDateTime =
+        new Date(
+            now.getTime() -
+            now.getTimezoneOffset() * 60000
+        )
+        .toISOString()
+        .slice(0, 16);
+
+    document.getElementById(
+        "invoiceDateTime"
+    ).value = localDateTime;
+
+    document.getElementById(
+        "invoiceNumber"
+    ).value =
+        generateInvoiceNumber();
+
+    document.getElementById(
+        "customerId"
+    ).value =
+        generateCustomerId();
+
+}
+
+
+/* ==========================================
+   CALCULATE SALE
+========================================== */
+
+function calculateSale() {
+
+    const quantity =
+        parseFloat(
+            document.getElementById(
+                "quantity"
+            ).value
+        ) || 0;
+
+    const sellingPrice =
+        parseFloat(
+            document.getElementById(
+                "sellingPrice"
+            ).value
+        ) || 0;
+
+    const discount =
+        parseFloat(
+            document.getElementById(
+                "discount"
+            ).value
+        ) || 0;
+
+    const transport =
+        parseFloat(
+            document.getElementById(
+                "transportCharge"
+            ).value
+        ) || 0;
+
+    const downPayment =
+        parseFloat(
+            document.getElementById(
+                "downPayment"
+            ).value
+        ) || 0;
+
+
+    const productAmount =
+        quantity * sellingPrice;
+
+
+    const afterDiscount =
+        Math.max(
+            productAmount - discount,
+            0
+        );
+
+
+    const grandTotal =
+        afterDiscount + transport;
+
+
+    let actualDownPayment =
+        downPayment;
+
+
+    if (
+        document.getElementById(
+            "paymentType"
+        ).value === "full"
+    ) {
+
+        actualDownPayment =
+            grandTotal;
+
+        document.getElementById(
+            "downPayment"
+        ).value =
+            grandTotal.toFixed(2);
+
+    }
+
+
+    const dueAmount =
+        Math.max(
+            grandTotal -
+            actualDownPayment,
+            0
+        );
+
+
+    document.getElementById(
+        "dueAmount"
+    ).value =
+        dueAmount.toFixed(2);
+
+
+    document.getElementById(
+        "productAmount"
+    ).innerText =
+        formatCurrency(productAmount);
+
+
+    document.getElementById(
+        "discountDisplay"
+    ).innerText =
+        formatCurrency(discount);
+
+
+    document.getElementById(
+        "transportDisplay"
+    ).innerText =
+        formatCurrency(transport);
+
+
+    document.getElementById(
+        "grandTotalDisplay"
+    ).innerText =
+        formatCurrency(grandTotal);
+
+
+    document.getElementById(
+        "downPaymentDisplay"
+    ).innerText =
+        formatCurrency(actualDownPayment);
+
+
+    document.getElementById(
+        "dueDisplay"
+    ).innerText =
+        formatCurrency(dueAmount);
+
+
+    updateEmiInfo(
+        grandTotal,
+        actualDownPayment,
+        dueAmount
+    );
+
+}
+
+
+/* ==========================================
+   PAYMENT TYPE
+========================================== */
+
+function handlePaymentType() {
+
+    const type =
+        document.getElementById(
+            "paymentType"
+        ).value;
+
+
+    if (type === "full") {
+
+        const total =
+            calculateGrandTotalOnly();
+
+        document.getElementById(
+            "downPayment"
+        ).value =
+            total.toFixed(2);
+
+    }
+
+
+    if (
+        type === "emi12" ||
+        type === "emi24"
+    ) {
+
+        const total =
+            calculateGrandTotalOnly();
+
+        const minimum =
+            total * 0.40;
+
+        document.getElementById(
+            "downPayment"
+        ).value =
+            minimum.toFixed(2);
+
+    }
+
+
+    calculateSale();
+
+}
+
+
+/* ==========================================
+   GRAND TOTAL ONLY
+========================================== */
+
+function calculateGrandTotalOnly() {
+
+    const quantity =
+        parseFloat(
+            document.getElementById(
+                "quantity"
+            ).value
+        ) || 0;
+
+    const price =
+        parseFloat(
+            document.getElementById(
+                "sellingPrice"
+            ).value
+        ) || 0;
+
+    const discount =
+        parseFloat(
+            document.getElementById(
+                "discount"
+            ).value
+        ) || 0;
+
+    const transport =
+        parseFloat(
+            document.getElementById(
+                "transportCharge"
+            ).value
+        ) || 0;
+
+
+    return Math.max(
+        quantity * price -
+        discount,
+        0
+    ) + transport;
+
+}
+
+
+/* ==========================================
+   EMI INFORMATION
+==============
