@@ -1,395 +1,4 @@
-<!DOCTYPE html>
-<html lang="bn">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>User Login - KALI LIFE ECOSYSTEM</title>
-
-<style>
-
-/* ==========================================
-   KALI LIFE ECOSYSTEM
-   USER LOGIN
-   PREMIUM FINAL DESIGN
-========================================== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #14532d,
-            #166534,
-            #0f172a
-        );
-}
-
-/* ==========================================
-   LOGIN CARD
-========================================== */
-
-.login-box {
-    width: 100%;
-    max-width: 430px;
-    background: #ffffff;
-    padding: 32px;
-    border-radius: 18px;
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.25);
-
-    text-align: center;
-}
-
-/* ==========================================
-   BRAND
-========================================== */
-
-.logo {
-    color: #166534;
-    font-size: 27px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.subtitle {
-    color: #64748b;
-    font-size: 13px;
-    margin-bottom: 25px;
-}
-
-/* ==========================================
-   TITLE
-========================================== */
-
-h2 {
-    color: #0f172a;
-    font-size: 22px;
-    margin-bottom: 22px;
-}
-
-/* ==========================================
-   FORM GROUP
-========================================== */
-
-.form-group {
-    text-align: left;
-    margin-bottom: 17px;
-}
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    color: #334155;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* ==========================================
-   INPUT
-========================================== */
-
-input {
-    width: 100%;
-    padding: 13px 14px;
-
-    border: 1px solid #cbd5e1;
-    border-radius: 9px;
-
-    background: #ffffff;
-    color: #0f172a;
-
-    font-size: 15px;
-    outline: none;
-
-    transition: 0.2s;
-}
-
-input::placeholder {
-    color: #94a3b8;
-}
-
-input:focus {
-    border-color: #16a34a;
-
-    box-shadow:
-        0 0 0 3px rgba(22,163,74,0.12);
-}
-
-/* ==========================================
-   PASSWORD BOX
-========================================== */
-
-.password-box {
-    position: relative;
-}
-
-.password-box input {
-    padding-right: 65px;
-}
-
-.show-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    border: none;
-    background: transparent;
-
-    color: #166534;
-
-    font-size: 13px;
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-/* ==========================================
-   LOGIN BUTTON
-========================================== */
-
-.login-btn {
-    width: 100%;
-
-    padding: 14px;
-    margin-top: 5px;
-
-    border: none;
-    border-radius: 9px;
-
-    background: #16a34a;
-    color: #ffffff;
-
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.login-btn:hover {
-    background: #15803d;
-}
-
-.login-btn:disabled {
-    background: #94a3b8;
-    cursor: not-allowed;
-}
-
-/* ==========================================
-   ERROR MESSAGE
-========================================== */
-
-#error {
-    min-height: 20px;
-
-    margin-top: 13px;
-
-    color: #dc2626;
-
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* ==========================================
-   LINKS
-========================================== */
-
-.link {
-    display: block;
-
-    margin-top: 18px;
-
-    color: #166534;
-
-    text-decoration: none;
-
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.link:hover {
-    text-decoration: underline;
-}
-
-.back-btn {
-    margin-top: 12px;
-}
-
-/* ==========================================
-   SECURITY MESSAGE
-========================================== */
-
-.security-note {
-    margin-top: 20px;
-
-    padding: 10px;
-
-    border-radius: 7px;
-
-    background: #f0fdf4;
-
-    color: #166534;
-
-    font-size: 12px;
-}
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 500px) {
-
-    body {
-        padding: 12px;
-    }
-
-    .login-box {
-        padding: 24px 20px;
-        border-radius: 14px;
-    }
-
-    .logo {
-        font-size: 24px;
-    }
-
-    h2 {
-        font-size: 20px;
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="login-box">
-
-    <div class="logo">
-        KALI LIFE
-    </div>
-
-    <div class="subtitle">
-        ECOSYSTEM
-    </div>
-
-    <h2>
-        👤 User Login
-    </h2>
-
-
-    <div class="form-group">
-
-        <label for="mobile">
-            Mobile Number
-        </label>
-
-        <input
-            type="tel"
-            id="mobile"
-            placeholder="Enter 10 digit mobile number"
-            inputmode="numeric"
-            maxlength="10"
-            autocomplete="tel">
-
-    </div>
-
-
-    <div class="form-group">
-
-        <label for="password">
-            Password
-        </label>
-
-        <div class="password-box">
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                autocomplete="current-password">
-
-            <button
-                type="button"
-                class="show-password"
-                id="showPasswordBtn"
-                onclick="togglePassword()">
-
-                Show
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="login-btn"
-        id="loginBtn"
-        onclick="loginUser()">
-
-        Login
-
-    </button>
-
-
-    <p id="error"></p>
-
-
-    <a
-        class="link"
-        href="register.html">
-
-        Create New Account
-
-    </a>
-
-
-    <a
-        class="link back-btn"
-        href="index.html">
-
-        ⬅ Back to Home
-
-    </a>
-
-
-    <div class="security-note">
-
-        🔐 Login secured by Firebase Authentication
-
-    </div>
-
-</div>
-
-
 <script type="module">
-
-/* ==========================================
-   FIREBASE
-========================================== */
 
 import {
     initializeApp
@@ -414,7 +23,7 @@ import {
 ========================================== */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    apiKey: "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
     authDomain: "kali-life-ecosystem.firebaseapp.com",
     projectId: "kali-life-ecosystem",
     storageBucket: "kali-life-ecosystem.firebasestorage.app",
@@ -424,62 +33,64 @@ const firebaseConfig = {
 };
 
 
-
 /* ==========================================
    INITIALIZE FIREBASE
 ========================================== */
 
-const app =
-    initializeApp(firebaseConfig);
-
-const auth =
-    getAuth(app);
-
-const db =
-    getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 
 /* ==========================================
-   LOGIN
+   USER LOGIN
 ========================================== */
 
 window.loginUser = async function () {
 
-    const mobile =
-        document.getElementById("mobile")
-        .value
-        .trim();
+    const mobileInput =
+        document.getElementById("mobile");
 
-    const password =
-        document.getElementById("password")
-        .value;
+    const passwordInput =
+        document.getElementById("password");
 
-    const error =
+    const errorBox =
         document.getElementById("error");
 
     const button =
         document.getElementById("loginBtn");
 
 
-    error.innerText = "";
+    const mobile =
+        mobileInput.value.trim();
+
+    const password =
+        passwordInput.value;
 
 
-    /* MOBILE VALIDATION */
+    errorBox.innerText = "";
+
+
+    /* ======================================
+       MOBILE VALIDATION
+    ====================================== */
 
     if (!/^[0-9]{10}$/.test(mobile)) {
 
-        error.innerText =
+        errorBox.innerText =
             "Please enter a valid 10 digit mobile number.";
 
         return;
     }
 
 
-    /* PASSWORD VALIDATION */
+    /* ======================================
+       PASSWORD VALIDATION
+    ====================================== */
 
     if (!password) {
 
-        error.innerText =
+        errorBox.innerText =
             "Please enter your password.";
 
         return;
@@ -489,73 +100,111 @@ window.loginUser = async function () {
     try {
 
         button.disabled = true;
-
-        button.innerText =
-            "Logging in...";
+        button.innerText = "Checking...";
 
 
-        /* ======================================
-           FIND USER EMAIL BY MOBILE
-        ======================================= */
+        /* ==================================
+           FIND USER BY MOBILE
+           STRING FIRST
+        ================================== */
 
-        const userQuery =
+        let userSnapshot;
+
+        const stringQuery =
             query(
                 collection(db, "users"),
                 where("mobile", "==", mobile)
             );
 
+        userSnapshot =
+            await getDocs(stringQuery);
 
-        const snapshot =
-            await getDocs(userQuery);
+
+        /* ==================================
+           IF NOT FOUND
+           TRY NUMBER FORMAT
+        ================================== */
+
+        if (userSnapshot.empty) {
+
+            const numberQuery =
+                query(
+                    collection(db, "users"),
+                    where("mobile", "==", Number(mobile))
+                );
+
+            userSnapshot =
+                await getDocs(numberQuery);
+        }
 
 
-        if (snapshot.empty) {
+        /* ==================================
+           USER NOT FOUND
+        ================================== */
 
-            error.innerText =
-                "Mobile number not found.";
+        if (userSnapshot.empty) {
 
-            button.disabled = false;
-
-            button.innerText =
-                "Login";
+            showError(
+                "Mobile number not found in user database."
+            );
 
             return;
         }
 
 
+        /* ==================================
+           GET USER DATA
+        ================================== */
+
         const userDoc =
-            snapshot.docs[0];
+            userSnapshot.docs[0];
 
         const user =
             userDoc.data();
 
 
-        /* ======================================
-           CHECK USER STATUS
-        ======================================= */
+        /* ==================================
+           CHECK EMAIL
+        ================================== */
 
-        if (user.status === "Inactive") {
+        if (!user.email) {
 
-            error.innerText =
-                "Your account is inactive.";
-
-            button.disabled = false;
-
-            button.innerText =
-                "Login";
+            showError(
+                "This account has no email linked with Firebase Authentication."
+            );
 
             return;
         }
 
 
-        /* ======================================
+        /* ==================================
+           CHECK STATUS
+        ================================== */
+
+        if (
+            user.status &&
+            String(user.status).toLowerCase() === "inactive"
+        ) {
+
+            showError(
+                "Your account is inactive."
+            );
+
+            return;
+        }
+
+
+        /* ==================================
            FIREBASE AUTHENTICATION
-        ======================================= */
+        ================================== */
+
+        button.innerText = "Logging in...";
+
 
         const credential =
             await signInWithEmailAndPassword(
                 auth,
-                user.email,
+                user.email.trim(),
                 password
             );
 
@@ -564,9 +213,9 @@ window.loginUser = async function () {
             credential.user;
 
 
-        /* ======================================
-           LOCAL SESSION DATA
-        ======================================= */
+        /* ==================================
+           SAVE SESSION
+        ================================== */
 
         localStorage.setItem(
             "isLoggedIn",
@@ -585,7 +234,7 @@ window.loginUser = async function () {
 
         localStorage.setItem(
             "userMobile",
-            user.mobile || ""
+            String(user.mobile || mobile)
         );
 
         localStorage.setItem(
@@ -599,23 +248,29 @@ window.loginUser = async function () {
         );
 
 
-        alert(
-            "Login Successful!"
-        );
+        /* ==================================
+           LOGIN SUCCESS
+        ================================== */
+
+        alert("Login Successful!");
 
 
-        /* ======================================
-           ROLE BASED REDIRECT
-        ======================================= */
+        /* ==================================
+           ROLE REDIRECT
+        ================================== */
 
-        if (user.role === "Super Admin") {
+        const role =
+            user.role || "User";
+
+
+        if (role === "Super Admin") {
 
             window.location.href =
                 "super-admin-dashboard.html";
 
         }
 
-        else if (user.role === "Core Admin") {
+        else if (role === "Core Admin") {
 
             window.location.href =
                 "admin-dashboard.html";
@@ -623,8 +278,7 @@ window.loginUser = async function () {
         }
 
         else if (
-            user.role &&
-            user.role !== "User"
+            role !== "User"
         ) {
 
             window.location.href =
@@ -636,54 +290,95 @@ window.loginUser = async function () {
 
             window.location.href =
                 "dashboard.html";
-
         }
 
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (loginError) {
 
+        console.error(
+            "LOGIN ERROR:",
+            loginError
+        );
+
+
+        /* ================================
+           FIREBASE AUTH ERRORS
+        ================================= */
 
         if (
-            error.code ===
+            loginError.code ===
             "auth/invalid-credential"
         ) {
 
-            errorMessage(
-                "Incorrect email or password."
+            showError(
+                "Incorrect password or Firebase account details."
             );
 
         }
 
         else if (
-            error.code ===
+            loginError.code ===
             "auth/user-not-found"
         ) {
 
-            errorMessage(
-                "Account not found."
+            showError(
+                "Firebase Authentication account not found."
             );
 
         }
 
         else if (
-            error.code ===
+            loginError.code ===
+            "auth/wrong-password"
+        ) {
+
+            showError(
+                "Incorrect password."
+            );
+
+        }
+
+        else if (
+            loginError.code ===
             "auth/too-many-requests"
         ) {
 
-            errorMessage(
-                "Too many attempts. Please try again later."
+            showError(
+                "Too many login attempts. Please try again later."
+            );
+
+        }
+
+        else if (
+            loginError.code ===
+            "auth/operation-not-allowed"
+        ) {
+
+            showError(
+                "Email/Password Login is disabled in Firebase."
+            );
+
+        }
+
+        else if (
+            loginError.code ===
+            "permission-denied"
+        ) {
+
+            showError(
+                "Firebase permission denied. Check Firestore rules."
             );
 
         }
 
         else {
 
-            errorMessage(
-                "Login failed. Please try again."
+            showError(
+                "Login failed: " +
+                (loginError.message || "Unknown error")
             );
-
         }
 
     }
@@ -695,20 +390,20 @@ window.loginUser = async function () {
    ERROR HANDLER
 ========================================== */
 
-function errorMessage(message) {
+function showError(message) {
 
-    document.getElementById(
-        "error"
-    ).innerText = message;
+    const errorBox =
+        document.getElementById("error");
 
-    document.getElementById(
-        "loginBtn"
-    ).disabled = false;
+    const button =
+        document.getElementById("loginBtn");
 
-    document.getElementById(
-        "loginBtn"
-    ).innerText = "Login";
 
+    errorBox.innerText = message;
+
+    button.disabled = false;
+
+    button.innerText = "Login";
 }
 
 
@@ -727,12 +422,13 @@ window.togglePassword = function () {
         );
 
 
-    if (password.type === "password") {
+    if (
+        password.type === "password"
+    ) {
 
         password.type = "text";
 
-        button.innerText =
-            "Hide";
+        button.innerText = "Hide";
 
     }
 
@@ -740,15 +436,9 @@ window.togglePassword = function () {
 
         password.type = "password";
 
-        button.innerText =
-            "Show";
-
+        button.innerText = "Show";
     }
 
 };
 
-</script>
-
-</body>
-
-</html>
+            </script>
