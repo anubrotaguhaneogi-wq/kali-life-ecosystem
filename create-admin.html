@@ -1,390 +1,1271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#166534">
+
 <title>Create Admin - KALI LIFE ECOSYSTEM</title>
 
+
 <style>
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
 body {
+
     margin: 0;
+
+    min-height: 100vh;
+
     padding: 25px 15px;
-    font-family: Arial, sans-serif;
-    background: #f1f5f9;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #052e16,
+            #064e3b,
+            #0f172a
+        );
+
     color: #0f172a;
 }
 
-body > h1 {
-    max-width: 700px;
-    margin: 10px auto 5px;
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+
     text-align: center;
-    color: #166534;
-    font-size: 30px;
+
+    color: #ffffff;
+
+    margin-bottom: 22px;
 }
 
-body > h2 {
-    max-width: 700px;
-    margin: 0 auto 25px;
-    text-align: center;
-    color: #334155;
-    font-size: 22px;
+.header h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    font-weight: 800;
 }
 
-body > hr {
-    max-width: 700px;
-    border: 0;
-    height: 1px;
-    background: #cbd5e1;
-    margin: 20px auto;
+.header p {
+
+    margin: 7px 0 0;
+
+    color:
+        rgba(255,255,255,0.75);
+
+    font-size: 13px;
 }
 
-form {
-    max-width: 700px;
-    margin: 25px auto;
-    padding: 30px;
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+
     background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,0.28);
 }
 
-h3 {
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-title {
+
     margin: 0 0 20px;
+
     padding-bottom: 10px;
-    border-bottom: 2px solid #dcfce7;
+
+    border-bottom:
+        2px solid
+        #dcfce7;
+
     color: #166534;
-    font-size: 20px;
+
+    font-size: 19px;
+
+    font-weight: 800;
 }
 
-form > hr {
-    border: 0;
-    height: 1px;
-    background: #e2e8f0;
-    margin: 30px 0;
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+
+    margin-bottom: 18px;
 }
 
 label {
+
     display: block;
-    margin: 15px 0 7px;
-    font-weight: bold;
+
+    margin-bottom: 7px;
+
     color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 700;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="password"],
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+input,
 select {
+
     width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+
+    height: 48px;
+
+    padding: 0 13px;
+
+    border:
+        1px solid
+        #cbd5e1;
+
+    border-radius: 9px;
+
     background: #ffffff;
+
     color: #0f172a;
+
     font-size: 15px;
+
     outline: none;
+
     transition: 0.2s;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus,
-input[type="password"]:focus,
+input:focus,
 select:focus {
-    border-color: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+
+    border-color:
+        #16a34a;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(22,163,74,0.12);
 }
 
-input::placeholder {
-    color: #94a3b8;
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-box {
+
+    position: relative;
 }
 
-input[type="file"] {
-    width: 100%;
-    padding: 11px;
-    border: 1px dashed #94a3b8;
-    border-radius: 8px;
-    background: #f8fafc;
-    color: #475569;
+.password-box input {
+
+    padding-right: 70px;
+}
+
+.password-toggle {
+
+    position: absolute;
+
+    right: 7px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #166534;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
     cursor: pointer;
+
+    padding: 7px 9px;
 }
 
-input[type="file"]:hover {
-    border-color: #16a34a;
-    background: #f0fdf4;
+
+/* =========================================================
+   ROLE
+========================================================= */
+
+.role-info {
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    border-radius: 9px;
+
+    background:
+        #f0fdf4;
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    color: #166534;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 25px;
 }
 
 button {
-    min-width: 160px;
-    padding: 13px 20px;
-    margin-top: 15px;
-    margin-right: 10px;
+
+    flex: 1;
+
+    height: 48px;
+
     border: none;
-    border-radius: 8px;
+
+    border-radius: 9px;
+
     font-size: 15px;
-    font-weight: bold;
+
+    font-weight: 800;
+
     cursor: pointer;
+
     transition: 0.2s;
 }
 
-button[type="button"] {
-    background: #16a34a;
+.create-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
+        );
+
     color: #ffffff;
 }
 
-button[type="button"]:hover {
-    background: #15803d;
+.create-button:hover {
+
+    transform:
+        translateY(-1px);
 }
 
-button[type="reset"] {
-    background: #64748b;
+.create-button:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.reset-button {
+
+    background:
+        #64748b;
+
     color: #ffffff;
 }
 
-button[type="reset"]:hover {
-    background: #475569;
-}
 
-button:active {
-    transform: scale(0.98);
-}
+/* =========================================================
+   MESSAGE
+========================================================= */
 
-body > p {
-    max-width: 700px;
-    margin: 20px auto;
+.message {
+
+    display: none;
+
+    margin-top: 18px;
+
+    padding: 12px;
+
+    border-radius: 9px;
+
     text-align: center;
-    color: #64748b;
-    font-size: 14px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.45;
 }
+
+.message.show {
+
+    display: block;
+}
+
+.error {
+
+    background:
+        #fef2f2;
+
+    border:
+        1px solid
+        #fecaca;
+
+    color:
+        #b91c1c;
+}
+
+.success {
+
+    background:
+        #f0fdf4;
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    color:
+        #166534;
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+========================================================= */
+
+.links {
+
+    margin-top: 22px;
+
+    text-align: center;
+}
+
+.links a {
+
+    display: inline-block;
+
+    margin: 5px 10px;
+
+    color: #166534;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.links a:hover {
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 600px) {
 
     body {
-        padding: 15px 10px;
+
+        padding:
+            15px 10px;
     }
 
-    body > h1 {
-        font-size: 25px;
+    .card {
+
+        padding:
+            22px 18px;
+
+        border-radius:
+            14px;
     }
 
-    body > h2 {
-        font-size: 19px;
+    .header h1 {
+
+        font-size: 24px;
     }
 
-    form {
-        padding: 20px;
-        margin: 15px auto;
-        border-radius: 12px;
-    }
+    .buttons {
 
-    h3 {
-        font-size: 18px;
-    }
-
-    button {
-        width: 100%;
-        margin-right: 0;
+        flex-direction: column;
     }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<h1>KALI LIFE ECOSYSTEM</h1>
-<h2>Create New Admin</h2>
 
-<hr>
+<div class="container">
 
-<form action="#" method="post">
 
-<h3>Personal Information</h3>
+    <div class="header">
 
-<label>Full Name</label><br>
-<input type="text" name="fullName" placeholder="Enter Full Name" required>
+        <h1>
+            🔐 Create Admin
+        </h1>
 
-<label>Email Address</label><br>
-<input type="email" name="email" placeholder="Enter Email Address" required>
+        <p>
+            KALI LIFE ECOSYSTEM — Admin Management
+        </p>
 
-<label>Mobile Number</label><br>
-<input type="tel" name="mobile" placeholder="Enter Mobile Number" required>
+    </div>
 
-<label>Password</label><br>
-<input type="password" name="password" placeholder="Create Password" required>
 
-<hr>
+    <div class="card">
 
-<h3>Admin Role</h3>
 
-<label>Select Admin Level</label><br>
+        <h2 class="section-title">
+            Admin Information
+        </h2>
 
-<select name="adminRole" required>
-    <option value="">-- Select Admin Role --</option>
-    <option value="Super Admin">Super Admin</option>
-    <option value="Core Admin">Core Admin</option>
-    <option value="Operations Admin">Operations Admin</option>
-    <option value="Agriculture Admin">Agriculture Admin</option>
-    <option value="Business & Marketplace Admin">Business & Marketplace Admin</option>
-    <option value="Finance & Customer Admin">Finance & Customer Admin</option>
-    <option value="Technical & Security Admin">Technical & Security Admin</option>
-    <option value="Crop Farming Admin">Crop Farming Admin</option>
-    <option value="Horticulture Admin">Horticulture Admin</option>
-    <option value="Nursery Admin">Nursery Admin</option>
-    <option value="Livestock Admin">Livestock Admin</option>
-    <option value="Poultry Admin">Poultry Admin</option>
-    <option value="Fisheries Admin">Fisheries Admin</option>
-    <option value="Organic Farming Admin">Organic Farming Admin</option>
-    <option value="Farm Machinery Admin">Farm Machinery Admin</option>
-    <option value="Marketplace Admin">Marketplace Admin</option>
-    <option value="Warehouse Admin">Warehouse Admin</option>
-    <option value="Logistics Admin">Logistics Admin</option>
-    <option value="Marketing Admin">Marketing Admin</option>
-    <option value="Training Admin">Training Admin</option>
-    <option value="Research & Development Admin">Research & Development Admin</option>
-    <option value="Veterinary Admin">Veterinary Admin</option>
-    <option value="Reports & Analytics Admin">Reports & Analytics Admin</option>
-    <option value="Customer Service Admin">Customer Service Admin</option>
-    <option value="Accounts & Finance Admin">Accounts & Finance Admin</option>
-</select>
 
-<br><br>
+        <div class="role-info">
 
-<label>Reports To</label><br>
+            <strong>Current Version:</strong>
+            Admin account only.
 
-<select name="reportsTo" id="reportsTo" required>
-    <option value="">-- Select Reporting Admin --</option>
-    <option value="Super Admin">Super Admin</option>
-    <option value="Core Admin">Core Admin</option>
-    <option value="Operations Admin">Operations Admin</option>
-    <option value="Agriculture Admin">Agriculture Admin</option>
-    <option value="Business & Marketplace Admin">Business & Marketplace Admin</option>
-    <option value="Technical & Security Admin">Technical & Security Admin</option>
-</select>
+            <br>
 
-<label>Status</label><br>
+            Additional departments and permissions
+            can be added later as the business grows.
 
-<select name="status" required>
-    <option value="">-- Select Status --</option>
-    <option value="Active">Active</option>
-    <option value="Inactive">Inactive</option>
-</select>
+        </div>
 
-<br><br>
 
-<h3>Profile Photo</h3>
+        <!-- NAME -->
 
-<label>Upload Profile Photo</label><br>
+        <div class="form-group">
 
-<input type="file" id="profilePhoto" accept="image/*">
+            <label for="name">
+                Full Name
+            </label>
 
-<br><br>
+            <input
+                id="name"
+                type="text"
+                autocomplete="name"
+                placeholder="Enter admin full name">
 
-<button type="button" onclick="createAdmin()">
-    Create Admin
-</button>
+        </div>
 
-<button type="reset">
-    Reset Form
-</button>
 
-</form>
+        <!-- EMAIL -->
 
-<hr>
+        <div class="form-group">
 
-<p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
+            <label for="email">
+                Email Address
+            </label>
 
-<script>
+            <input
+                id="email"
+                type="email"
+                autocomplete="email"
+                placeholder="Enter admin email">
 
-function createAdmin() {
+        </div>
 
-const admin = {
-    id: "ADM-" + Date.now(),
 
-    fullName: document.querySelector('input[name="fullName"]').value.trim(),
+        <!-- MOBILE -->
 
-    email: document.querySelector('input[name="email"]').value.trim().toLowerCase(),
+        <div class="form-group">
 
-    mobile: document.querySelector('input[name="mobile"]').value.trim(),
+            <label for="mobile">
+                Mobile Number
+            </label>
 
-    password: document.querySelector('input[name="password"]').value,
+            <input
+                id="mobile"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                autocomplete="tel"
+                placeholder="Enter 10 digit mobile number">
 
-    role: document.querySelector('select[name="adminRole"]').value,
+        </div>
 
-    reportsTo: document.querySelector('select[name="reportsTo"]').value,
 
-    status: document.querySelector('select[name="status"]').value,
+        <!-- PASSWORD -->
 
-    photo: "",
+        <div class="form-group">
 
-    createdAt: new Date().toLocaleString()
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-box">
+
+                <input
+                    id="password"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Minimum 8 characters">
+
+                <button
+                    type="button"
+                    id="passwordToggle"
+                    class="password-toggle">
+
+                    Show
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ROLE -->
+
+        <div class="form-group">
+
+            <label for="role">
+                Account Role
+            </label>
+
+            <select id="role">
+
+                <option value="Admin">
+                    Admin
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="form-group">
+
+            <label for="status">
+                Account Status
+            </label>
+
+            <select id="status">
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Inactive">
+                    Inactive
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button
+                type="button"
+                id="createButton"
+                class="create-button">
+
+                Create Admin
+
+            </button>
+
+
+            <button
+                type="button"
+                id="resetButton"
+                class="reset-button">
+
+                Reset
+
+            </button>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <!-- LINKS -->
+
+        <div class="links">
+
+            <a href="admin-dashboard.html">
+                ← Admin Dashboard
+            </a>
+
+            <a href="admin-list.html">
+                Admin List
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     FIREBASE
+====================================================== -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signOut
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    setDoc,
+    serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* ======================================================
+   FIREBASE CONFIG
+====================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+
 };
 
-if (admin.fullName.length < 3) {
-    alert("Full Name must be at least 3 characters!");
-    return;
-}
 
-if (!admin.email.includes("@")) {
-    alert("Please enter a valid Email Address!");
-    return;
-}
+/* ======================================================
+   MAIN APP
+====================================================== */
 
-if (admin.role === "") {
-    alert("Please Select Admin Role!");
-    return;
-}
+const app =
+    initializeApp(
+        firebaseConfig
+    );
 
-if (admin.reportsTo === "") {
-    alert("Please Select Reporting Admin!");
-    return;
-}
 
-if (admin.password.length < 8) {
-    alert("Password must be at least 8 characters!");
-    return;
-}
+/* ======================================================
+   SECONDARY APP
+   IMPORTANT:
+   Creating the new Admin must NOT log the
+   current Super Admin out.
+====================================================== */
 
-if (!/^[0-9]{10}$/.test(admin.mobile)) {
-    alert("Mobile Number must be exactly 10 digits!");
-    return;
-}
+const adminApp =
+    initializeApp(
+        firebaseConfig,
+        "AdminCreationApp"
+    );
 
-if (admin.status === "") {
-    alert("Please Select Status!");
-    return;
-}
 
-let admins = JSON.parse(localStorage.getItem("admins")) || [];
+const adminAuth =
+    getAuth(
+        adminApp
+    );
 
-const duplicate = admins.find(item =>
-    item.email === admin.email ||
-    item.mobile === admin.mobile
+
+const db =
+    getFirestore(
+        app
+    );
+
+
+/* ======================================================
+   ELEMENTS
+====================================================== */
+
+const nameInput =
+    document.getElementById(
+        "name"
+    );
+
+const emailInput =
+    document.getElementById(
+        "email"
+    );
+
+const mobileInput =
+    document.getElementById(
+        "mobile"
+    );
+
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
+
+const passwordToggle =
+    document.getElementById(
+        "passwordToggle"
+    );
+
+const roleInput =
+    document.getElementById(
+        "role"
+    );
+
+const statusInput =
+    document.getElementById(
+        "status"
+    );
+
+const createButton =
+    document.getElementById(
+        "createButton"
+    );
+
+const resetButton =
+    document.getElementById(
+        "resetButton"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+/* ======================================================
+   PASSWORD SHOW / HIDE
+====================================================== */
+
+passwordToggle.addEventListener(
+    "click",
+    function () {
+
+        if (
+            passwordInput.type ===
+            "password"
+        ) {
+
+            passwordInput.type =
+                "text";
+
+            passwordToggle.textContent =
+                "Hide";
+
+        } else {
+
+            passwordInput.type =
+                "password";
+
+            passwordToggle.textContent =
+                "Show";
+
+        }
+
+    }
 );
 
-if (duplicate) {
-    alert("Email or Mobile Number already exists!");
-    return;
+
+/* ======================================================
+   MOBILE INPUT
+====================================================== */
+
+mobileInput.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
+
+    }
+);
+
+
+/* ======================================================
+   MESSAGE
+====================================================== */
+
+function showMessage(
+    text,
+    type
+) {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message show " +
+        type;
+
 }
 
-admins.push(admin);
 
-localStorage.setItem("admins", JSON.stringify(admins));
+function clearMessage() {
 
-alert(localStorage.getItem("admins"));
+    message.textContent =
+        "";
 
-alert("Admin Created Successfully!");
-
-window.location.href = "admin-list.html";
+    message.className =
+        "message";
 
 }
 
-</script>
 
-</body>
-</html>
+/* ======================================================
+   RESET
+====================================================== */
+
+resetButton.addEventListener(
+    "click",
+    function () {
+
+        nameInput.value =
+            "";
+
+        emailInput.value =
+            "";
+
+        mobileInput.value =
+            "";
+
+        passwordInput.value =
+            "";
+
+        roleInput.value =
+            "Admin";
+
+        statusInput.value =
+            "Active";
+
+        clearMessage();
+
+    }
+);
+
+
+/* ======================================================
+   CREATE ADMIN
+====================================================== */
+
+createButton.addEventListener(
+    "click",
+    createAdmin
+);
+
+
+async function createAdmin() {
+
+    clearMessage();
+
+
+    const name =
+        nameInput.value.trim();
+
+    const email =
+        emailInput.value
+            .trim()
+            .toLowerCase();
+
+    const mobile =
+        mobileInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+    const role =
+        roleInput.value;
+
+    const status =
+        statusInput.value;
+
+
+    /* ==================================================
+       VALIDATION
+    ================================================== */
+
+    if (
+        name.length < 3
+    ) {
+
+        showMessage(
+            "Please enter the admin's full name.",
+            "error"
+        );
+
+        nameInput.focus();
+
+        return;
+    }
+
+
+    if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            email
+        )
+    ) {
+
+        showMessage(
+            "Please enter a valid email address.",
+            "error"
+        );
+
+        emailInput.focus();
+
+        return;
+    }
+
+
+    if (
+        !/^[0-9]{10}$/.test(
+            mobile
+        )
+    ) {
+
+        showMessage(
+            "Mobile number must contain exactly 10 digits.",
+            "error"
+        );
+
+        mobileInput.focus();
+
+        return;
+    }
+
+
+    if (
+        password.length < 8
+    ) {
+
+        showMessage(
+            "Password must be at least 8 characters.",
+            "error"
+        );
+
+        passwordInput.focus();
+
+        return;
+    }
+
+
+    if (
+        role !== "Admin"
+    ) {
+
+        showMessage(
+            "Invalid admin role.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* ==================================================
+       LOADING
+    ================================================== */
+
+    createButton.disabled =
+        true;
+
+    createButton.textContent =
+        "Creating Admin...";
+
+
+    try {
+
+        /* ==================================================
+           CHECK DUPLICATE MOBILE
+        ================================================== */
+
+        const mobileQuery =
+            query(
+                collection(
+                    db,
+                    "users"
+                ),
+
+                where(
+                    "mobile",
+                    "==",
+                    mobile
+                )
+            );
+
+
+        const mobileSnapshot =
+            await getDocs(
+                mobileQuery
+            );
+
+
+        if (
+            !mobileSnapshot.empty
+        ) {
+
+            showMessage(
+                "This mobile number is already registered.",
+                "error"
+            );
+
+            createButton.disabled =
+                false;
+
+            createButton.textContent =
+                "Create Admin";
+
+            return;
+        }
+
+
+        /* ==================================================
+           CREATE FIREBASE AUTH ACCOUNT
+        ================================================== */
+
+        const credential =
+            await createUserWithEmailAndPassword(
+                adminAuth,
+                email,
+                password
+            );
+
+
+        const adminUser =
+            credential.user;
+
+
+        /* ==================================================
+           CREATE FIRESTORE PROFILE
+        ================================================== */
+
+        await setDoc(
+            doc(
+                db,
+                "users",
+                adminUser.uid
+            ),
+            {
+
+                uid:
+                    adminUser.uid,
+
+                name:
+                    name,
+
+                email:
+                    email,
+
+                mobile:
+                    mobile,
+
+                role:
+                    "Admin",
+
+                status:
+                    status,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        /* ==================================================
+           SIGN OUT SECONDARY AUTH
+        ================================================== */
+
+        await signOut(
+            adminAuth
+        );
+
+
+        /* ==================================================
+           SUCCESS
+        ================================================== */
+
+        showMessage(
+            "Admin created successfully.",
+            "success"
+        );
+
+
+        alert(
+            "Admin Created Successfully!"
+        );
+
+
+        /* ==================================================
+           CLEAR FORM
+        ================================================== */
+
+        nameInput.value =
+            "";
+
+        emailInput.value =
+            "";
+
+        mobileInput.value =
+            "";
+
+        passwordInput.value =
+            "";
+
+        roleInput.value =
+            "Admin";
+
+        statusInput.value =
+            "Active";
+
+
+    } catch (error) {
+
+        console.error(
+            "CREATE ADMIN ERROR:",
+            error
+        );
+
+
+        if (
+            error.code ===
+            "auth/email-already-in-use"
+        ) {
+
+            showMessage(
+                "This email address is already registered.",
+                "error"
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            showMessage(
+                "Please enter a valid email address.",
+                "error"
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/weak-password"
+        ) {
+
+            showMessage(
+                "Password is too weak. Use at least 8 characters.",
+                "error"
+            );
+
+        }
+
+        else {
+
+            showMessage(
+                "Admin creation failed. Please try again.",
+     
