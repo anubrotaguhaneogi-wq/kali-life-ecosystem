@@ -1340,3 +1340,54 @@ async function loginUser() {
         /* ===================================================
            SAVE LOGIN SESSION
         ======================================
+// SAVE LOGIN SESSION
+
+localStorage.setItem(
+    "isLoggedIn",
+    "true"
+);
+
+localStorage.setItem(
+    "userName",
+    userData.name || "Administrator"
+);
+
+localStorage.setItem(
+    "userMobile",
+    userData.mobile || mobile
+);
+
+localStorage.setItem(
+    "userEmail",
+    userData.email || ""
+);
+
+localStorage.setItem(
+    "userRole",
+    userData.role || "Super Admin"
+);
+
+localStorage.setItem(
+    "userUid",
+    userDoc.id
+);
+
+setLoading(false);
+
+// LOGIN SUCCESS
+window.location.href = "admin-dashboard.html";
+
+} catch (error) {
+
+    console.error(
+        "Login Error:",
+        error
+    );
+
+    showError(
+        "Login failed. Please try again."
+    );
+
+    setLoading(false);
+
+}
