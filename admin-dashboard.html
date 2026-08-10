@@ -1,319 +1,777 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#166534">
 
 <title>Admin Dashboard - KALI LIFE ECOSYSTEM</title>
 
+
+<!-- ======================================================
+     AUTHENTICATION SYSTEM
+====================================================== -->
+
 <script src="auth.js"></script>
+
 
 <style>
 
-/* ==========================================
-   KALI LIFE ECOSYSTEM
-   ADMIN DASHBOARD
-   FINAL CSS
-========================================== */
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
 body {
+
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f1f5f9;
-    color: #0f172a;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #f1f5f9;
+
+    color:
+        #0f172a;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header {
-    background: #166534;
-    color: #ffffff;
-    padding: 22px 15px;
-    text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+
+    background:
+        linear-gradient(
+            135deg,
+            #166534,
+            #15803d
+        );
+
+    color:
+        #ffffff;
+
+    padding:
+        22px 15px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,0.12);
 }
 
-/* MAIN CONTAINER */
+header h1 {
+
+    margin: 0;
+
+    font-size: 26px;
+
+    font-weight: 800;
+}
+
+header p {
+
+    margin: 7px 0 0;
+
+    color:
+        rgba(255,255,255,0.80);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
 .container {
+
     width: 100%;
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 0 15px 30px;
+
+    max-width: 720px;
+
+    margin:
+        30px auto;
+
+    padding:
+        0 15px 35px;
 }
 
-/* ADMIN INFORMATION CARD */
+
+/* =========================================================
+   ADMIN CARD
+========================================================= */
 
 .card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 14px;
-    margin-bottom: 25px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    border: 1px solid #e2e8f0;
+
+    background:
+        #ffffff;
+
+    padding:
+        25px;
+
+    margin-bottom:
+        22px;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:
+        16px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.07);
 }
 
 .card h2 {
-    margin: 0 0 20px;
-    color: #166534;
-    font-size: 23px;
+
+    margin:
+        0 0 20px;
+
+    color:
+        #166534;
+
+    font-size:
+        21px;
 }
 
-.card p {
-    margin: 12px 0;
-    padding: 11px;
-    background: #f8fafc;
-    border-radius: 7px;
-    text-align: left;
-    color: #475569;
-    font-size: 15px;
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
+.info {
+
+    display:
+        grid;
+
+    gap:
+        10px;
 }
 
-.card span {
-    font-weight: bold;
-    color: #0f172a;
+.info-row {
+
+    padding:
+        12px 13px;
+
+    background:
+        #f8fafc;
+
+    border-radius:
+        8px;
+
+    font-size:
+        14px;
+
+    color:
+        #475569;
 }
 
-/* DASHBOARD BUTTONS */
+.info-row strong {
 
-.btn {
-    display: block;
-    width: 100%;
-    max-width: 600px;
-    margin: 12px auto;
-    padding: 15px 18px;
-    background: #16a34a;
-    color: #ffffff;
-    text-decoration: none;
-    border: none;
-    border-radius: 9px;
-    font-size: 17px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.10);
-    transition: 0.2s;
+    color:
+        #0f172a;
 }
 
-.btn:hover {
-    background: #15803d;
-    transform: translateY(-1px);
+
+/* =========================================================
+   ROLE BADGE
+========================================================= */
+
+.role-badge {
+
+    display:
+        inline-block;
+
+    margin-top:
+        5px;
+
+    padding:
+        6px 12px;
+
+    border-radius:
+        20px;
+
+    background:
+        #dcfce7;
+
+    color:
+        #166534;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
 }
 
-.btn:active {
-    transform: scale(0.98);
+
+/* =========================================================
+   DASHBOARD BUTTONS
+========================================================= */
+
+.button-grid {
+
+    display:
+        grid;
+
+    gap:
+        12px;
 }
 
-/* LOGOUT */
+.dashboard-button {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-height:
+        52px;
+
+    padding:
+        14px 18px;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        #16a34a;
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-size:
+        15px;
+
+    font-weight:
+        800;
+
+    text-align:
+        center;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 4px 12px
+        rgba(22,163,74,0.16);
+
+    transition:
+        0.2s;
+}
+
+.dashboard-button:hover {
+
+    background:
+        #15803d;
+
+    transform:
+        translateY(-1px);
+}
+
+.dashboard-button:active {
+
+    transform:
+        scale(0.98);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.secondary {
+
+    background:
+        #475569;
+}
+
+.secondary:hover {
+
+    background:
+        #334155;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 .logout {
-    background: #dc2626;
-    margin-top: 25px;
+
+    background:
+        #dc2626;
+
+    margin-top:
+        5px;
 }
 
 .logout:hover {
-    background: #b91c1c;
+
+    background:
+        #b91c1c;
 }
 
-/* MOBILE */
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.hidden {
+
+    display:
+        none !important;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    text-align:
+        center;
+
+    color:
+        #64748b;
+
+    font-size:
+        11px;
+
+    margin-top:
+        20px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 600px) {
 
-    header {
-        font-size: 21px;
-        padding: 18px 10px;
+    header h1 {
+
+        font-size:
+            21px;
     }
 
     .container {
-        margin-top: 20px;
-        padding: 0 10px 25px;
+
+        margin-top:
+            20px;
+
+        padding:
+            0 10px 25px;
     }
 
     .card {
-        padding: 18px;
-        border-radius: 12px;
+
+        padding:
+            19px;
+
+        border-radius:
+            13px;
     }
 
     .card h2 {
-        font-size: 20px;
+
+        font-size:
+            19px;
     }
 
-    .card p {
-        font-size: 14px;
-    }
+    .dashboard-button {
 
-    .btn {
-        font-size: 16px;
-        padding: 14px;
-        margin: 10px auto;
+        min-height:
+            50px;
+
+        font-size:
+            14px;
     }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- ======================================================
+     LOGIN PROTECTION
+====================================================== -->
+
 <script>
-checkLogin();
+
+if (
+    !checkAdminAccess()
+) {
+
+    throw new Error(
+        "Admin access required."
+    );
+
+}
+
 </script>
 
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
 <header>
-    🔐 ADMIN DASHBOARD
+
+    <h1>
+        🔐 ADMIN DASHBOARD
+    </h1>
+
+    <p>
+        KALI LIFE ECOSYSTEM
+    </p>
+
 </header>
+
 
 <div class="container">
 
+
+    <!-- ==================================================
+         ADMIN INFORMATION
+    ================================================== -->
+
     <div class="card">
 
-        <h2 id="welcomeText">Welcome Admin</h2>
+        <h2>
+            Welcome,
+            <span id="welcomeName">
+                Admin
+            </span>
+        </h2>
 
-        <p>
-            Name :
-            <span id="adminName"></span>
-        </p>
 
-        <p>
-            Mobile :
-            <span id="adminMobile"></span>
-        </p>
+        <div class="info">
 
-        <p>
-            Role :
-            <span id="adminRole"></span>
-        </p>
+
+            <div class="info-row">
+
+                <strong>
+                    Name:
+                </strong>
+
+                <span id="adminName">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Mobile:
+                </strong>
+
+                <span id="adminMobile">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Email:
+                </strong>
+
+                <span id="adminEmail">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Role:
+                </strong>
+
+                <span
+                    id="adminRole"
+                    class="role-badge">
+
+                    -
+
+                </span>
+
+            </div>
+
+
+        </div>
 
     </div>
 
-    <!--
-    =========================================
-    SUPER ADMIN CONTROL PANEL
-    =========================================
-    -->
 
-    <a id="createAdminBtn"
-       class="btn"
-       href="create-admin.html">
-       ➕ Create Admin
-    </a>
+    <!-- ==================================================
+         SUPER ADMIN CONTROLS
+    ================================================== -->
 
-    <a id="adminListBtn"
-       class="btn"
-       href="admin-list.html">
-       👥 Admin List
-    </a>
+    <div
+        id="superAdminCard"
+        class="card hidden">
 
-    <a id="permissionBtn"
-       class="btn"
-       href="permission-management.html">
-       🔑 Permission Management
-    </a>
+        <h2>
+            ⚙️ Super Admin Control
+        </h2>
 
-    <a id="reportsBtn"
-       class="btn"
-       href="reports.html">
-       📊 Reports
-    </a>
 
-    <a id="purchaseBtn"
-       class="btn"
-       href="purchase.html">
-       🛒 Purchase
-    </a>
+        <div class="button-grid">
 
-    <a id="salesBtn"
-       class="btn"
-       href="sales.html">
-       💰 Sales
-    </a>
 
-    <a class="btn"
-       href="index.html">
-       🏠 Home
-    </a>
+            <a
+                class="dashboard-button"
+                href="create-admin.html">
 
-    <button class="btn logout"
-            onclick="logout()">
-        🚪 Logout
-    </button>
+                ➕ Create Admin
+
+            </a>
+
+
+            <a
+                class="dashboard-button"
+                href="admin-list.html">
+
+                👥 Admin List
+
+            </a>
+
+
+            <a
+                class="dashboard-button"
+                href="reports.html">
+
+                📊 Reports
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         ADMIN BUSINESS CONTROLS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            📋 Business Management
+        </h2>
+
+
+        <div class="button-grid">
+
+
+            <a
+                class="dashboard-button"
+                href="purchase.html">
+
+                🛒 Purchase
+
+            </a>
+
+
+            <a
+                class="dashboard-button"
+                href="sales.html">
+
+                💰 Sales
+
+            </a>
+
+
+            <a
+                class="dashboard-button"
+                href="reports.html">
+
+                📊 Reports
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         COMMON CONTROLS
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="button-grid">
+
+
+            <a
+                class="dashboard-button secondary"
+                href="index.html">
+
+                🏠 Home
+
+            </a>
+
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="dashboard-button logout">
+
+                🚪 Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        © KALI LIFE ECOSYSTEM
+
+    </div>
 
 </div>
 
+
+<!-- ======================================================
+     DASHBOARD LOGIC
+====================================================== -->
+
 <script>
 
-/* ==========================================
-   LOAD ADMIN INFORMATION
-========================================== */
 
-document.getElementById("adminName").innerText =
-localStorage.getItem("userName") || "Administrator";
+/* ======================================================
+   CURRENT USER
+====================================================== */
 
-document.getElementById("adminMobile").innerText =
-localStorage.getItem("userMobile") || "Not Available";
-
-document.getElementById("adminRole").innerText =
-localStorage.getItem("userRole") || "Super Admin";
-
-let role = localStorage.getItem("userRole") || "Super Admin";
+const currentUser =
+    getCurrentUser();
 
 
-/* ==========================================
-   SUPER ADMIN
-   FULL ACCESS
-========================================== */
+/* ======================================================
+   DISPLAY USER INFORMATION
+====================================================== */
 
-if (role === "Super Admin") {
+document.getElementById(
+    "welcomeName"
+).textContent =
+    currentUser.name ||
+    "Admin";
 
-    // Everything remains visible.
+
+document.getElementById(
+    "adminName"
+).textContent =
+    currentUser.name ||
+    "-";
+
+
+document.getElementById(
+    "adminMobile"
+).textContent =
+    currentUser.mobile ||
+    "-";
+
+
+document.getElementById(
+    "adminEmail"
+).textContent =
+    currentUser.email ||
+    "-";
+
+
+document.getElementById(
+    "adminRole"
+).textContent =
+    currentUser.role ||
+    "-";
+
+
+/* ======================================================
+   SUPER ADMIN CONTROLS
+====================================================== */
+
+if (
+    currentUser.role ===
+    "Super Admin"
+) {
+
+    document.getElementById(
+        "superAdminCard"
+    ).classList.remove(
+        "hidden"
+    );
 
 }
 
 
-/* ==========================================
-   CORE ADMIN
-========================================== */
+/* ======================================================
+   LOGOUT
+====================================================== */
 
-if (role === "Core Admin") {
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    function () {
 
-    document.getElementById("createAdminBtn").style.display = "none";
+        logout();
 
-    document.getElementById("permissionBtn").style.display = "none";
-
-    document.getElementById("purchaseBtn").style.display = "none";
-
-    document.getElementById("salesBtn").style.display = "none";
-
-}
-
-
-/* ==========================================
-   DEPARTMENT ADMIN
-========================================== */
-
-if (role !== "Super Admin" && role !== "Core Admin") {
-
-    document.getElementById("createAdminBtn").style.display = "none";
-
-    document.getElementById("adminListBtn").style.display = "none";
-
-    document.getElementById("permissionBtn").style.display = "none";
-
-    document.getElementById("reportsBtn").style.display = "none";
-
-    document.getElementById("purchaseBtn").style.display = "none";
-
-    document.getElementById("salesBtn").style.display = "none";
-
-}
+    }
+);
 
 </script>
 
+
 </body>
+
 </html>
