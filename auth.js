@@ -1,32 +1,17 @@
 // ==========================================
 // KALI LIFE ECOSYSTEM
-// AUTHENTICATION & SECURITY SYSTEM
-// PREMIUM FINAL VERSION
+// AUTHENTICATION & SESSION SYSTEM
+// VERSION 1
+//
+// ROLES:
+// 1. Super Admin
+// 2. Admin
+// 3. User
 // ==========================================
-
-/*
-    IMPORTANT:
-
-    This file manages:
-    - Login protection
-    - Role protection
-    - Session information
-    - Logout
-    - Current user information
-    - Role-based dashboard routing
-
-    NOTE:
-    localStorage is suitable for the current
-    development stage, but it is NOT a secure
-    production authentication system.
-
-    Production authentication should later use
-    Firebase Authentication / server-side security.
-*/
 
 
 // ==========================================
-// SESSION HELPERS
+// LOGIN STATUS
 // ==========================================
 
 function isUserLoggedIn() {
@@ -37,6 +22,10 @@ function isUserLoggedIn() {
 
 }
 
+
+// ==========================================
+// CURRENT USER INFORMATION
+// ==========================================
 
 function getUserRole() {
 
@@ -51,7 +40,7 @@ function getUserName() {
 
     return (
         localStorage.getItem("userName") ||
-        "Administrator"
+        "User"
     );
 
 }
@@ -88,19 +77,15 @@ function getAdminId() {
 
 
 // ==========================================
-// CHECK LOGIN STATUS
+// LOGIN PROTECTION
 // ==========================================
 
 function checkLogin() {
 
     if (!isUserLoggedIn()) {
 
-        alert(
-            "Please Login First!"
-        );
-
         window.location.href =
-            "admin.html";
+            "login.html";
 
         return false;
     }
@@ -111,22 +96,132 @@ function checkLogin() {
 
 
 // ==========================================
-// CHECK USER / ADMIN LOGIN
+// USER LOGIN PROTECTION
 // ==========================================
 
 function checkUserLogin() {
 
     if (!isUserLoggedIn()) {
 
-        alert(
-            "Please Login First!"
-        );
+        window.location.href =
+            "login.html";
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+// ==========================================
+// ADMIN ACCESS
+// ==========================================
+
+function checkAdminAccess() {
+
+    if (!isUserLoggedIn()) {
 
         window.location.href =
             "login.html";
 
         return false;
     }
+
+
+    const role =
+        getUserRole();
+
+
+    if (
+        role !== "Super Admin" &&
+        role !== "Admin"
+    ) {
+
+        alert(
+            "Admin Access Required!"
+        );
+
+        redirectToDashboard();
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+// ==========================================
+// SUPER ADMIN ACCESS
+// ==========================================
+
+function checkSuperAdmin() {
+
+    if (!isUserLoggedIn()) {
+
+        window.location.href =
+            "login.html";
+
+        return false;
+    }
+
+
+    if (
+        getUserRole() !==
+        "Super Admin"
+    ) {
+
+        alert(
+            "Super Admin Access Required!"
+        );
+
+        redirectToDashboard();
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+// ==========================================
+// ADMIN ACCESS
+// SUPER ADMIN + ADMIN
+// ==========================================
+
+function checkAdminRole() {
+
+    if (!isUserLoggedIn()) {
+
+        window.location.href =
+            "login.html";
+
+        return false;
+    }
+
+
+    const role =
+        getUserRole();
+
+
+    if (
+        role !== "Super Admin" &&
+        role !== "Admin"
+    ) {
+
+        alert(
+            "Admin Access Required!"
+        );
+
+        redirectToDashboard();
+
+        return false;
+    }
+
 
     return true;
 
@@ -141,23 +236,16 @@ function checkRole(requiredRole) {
 
     if (!isUserLoggedIn()) {
 
-        alert(
-            "Please Login First!"
-        );
-
         window.location.href =
-            "admin.html";
+            "login.html";
 
         return false;
     }
 
 
-    const currentRole =
-        getUserRole();
-
-
     if (
-        currentRole !== requiredRole
+        getUserRole() !==
+        requiredRole
     ) {
 
         alert(
@@ -179,16 +267,14 @@ function checkRole(requiredRole) {
 // CHECK MULTIPLE ROLES
 // ==========================================
 
-function checkAnyRole(allowedRoles) {
+function checkAnyRole(
+    allowedRoles
+) {
 
     if (!isUserLoggedIn()) {
 
-        alert(
-            "Please Login First!"
-        );
-
         window.location.href =
-            "admin.html";
+            "login.html";
 
         return false;
     }
@@ -220,77 +306,7 @@ function checkAnyRole(allowedRoles) {
 
 
 // ==========================================
-// ADMIN ACCESS
-// ==========================================
-
-function checkAdminAccess() {
-
-    if (!isUserLoggedIn()) {
-
-        alert(
-            "Please Login First!"
-        );
-
-        window.location.href =
-            "admin.html";
-
-        return false;
-    }
-
-
-    const role =
-        getUserRole();
-
-
-    if (
-        !role ||
-        role === "User"
-    ) {
-
-        alert(
-            "Admin Access Required!"
-        );
-
-        window.location.href =
-            "dashboard.html";
-
-        return false;
-    }
-
-
-    return true;
-
-}
-
-
-// ==========================================
-// SUPER ADMIN ACCESS
-// ==========================================
-
-function checkSuperAdmin() {
-
-    return checkRole(
-        "Super Admin"
-    );
-
-}
-
-
-// ==========================================
-// CORE ADMIN ACCESS
-// ==========================================
-
-function checkCoreAdmin() {
-
-    return checkRole(
-        "Core Admin"
-    );
-
-}
-
-
-// ==========================================
-// ADMIN DASHBOARD REDIRECT
+// DASHBOARD ROUTING
 // ==========================================
 
 function redirectToDashboard() {
@@ -298,6 +314,8 @@ function redirectToDashboard() {
     const role =
         getUserRole();
 
+
+    // SUPER ADMIN
 
     if (
         role === "Super Admin"
@@ -310,8 +328,10 @@ function redirectToDashboard() {
     }
 
 
+    // ADMIN
+
     if (
-        role === "Core Admin"
+        role === "Admin"
     ) {
 
         window.location.href =
@@ -321,17 +341,7 @@ function redirectToDashboard() {
     }
 
 
-    if (
-        role &&
-        role !== "User"
-    ) {
-
-        window.location.href =
-            "admin-dashboard.html";
-
-        return;
-    }
-
+    // NORMAL USER
 
     if (
         role === "User"
@@ -344,17 +354,23 @@ function redirectToDashboard() {
     }
 
 
+    // UNKNOWN ROLE
+
+    localStorage.clear();
+
     window.location.href =
-        "admin.html";
+        "login.html";
 
 }
 
 
 // ==========================================
-// SAVE LOGIN SESSION
+// CREATE LOGIN SESSION
 // ==========================================
 
-function createSession(userData) {
+function createSession(
+    userData
+) {
 
     localStorage.setItem(
         "isLoggedIn",
@@ -386,7 +402,9 @@ function createSession(userData) {
     );
 
 
-    if (userData.uid) {
+    if (
+        userData.uid
+    ) {
 
         localStorage.setItem(
             "userUid",
@@ -396,7 +414,9 @@ function createSession(userData) {
     }
 
 
-    if (userData.adminId) {
+    if (
+        userData.adminId
+    ) {
 
         localStorage.setItem(
             "adminId",
@@ -406,7 +426,9 @@ function createSession(userData) {
     }
 
 
-    if (userData.reportsTo) {
+    if (
+        userData.reportsTo
+    ) {
 
         localStorage.setItem(
             "adminReportsTo",
@@ -424,15 +446,6 @@ function createSession(userData) {
 
 function logout() {
 
-    /*
-        Firebase logout is handled by the
-        Firebase-enabled pages.
-
-        This function clears the local session
-        so existing admin pages remain protected.
-    */
-
-
     localStorage.removeItem(
         "isLoggedIn"
     );
@@ -463,61 +476,6 @@ function logout() {
 
     localStorage.removeItem(
         "adminReportsTo"
-    );
-
-
-    alert(
-        "Logout Successful!"
-    );
-
-
-    window.location.href =
-        "admin.html";
-
-}
-
-
-// ==========================================
-// USER LOGOUT
-// ==========================================
-
-function logoutUser() {
-
-    localStorage.removeItem(
-        "isLoggedIn"
-    );
-
-    localStorage.removeItem(
-        "userUid"
-    );
-
-    localStorage.removeItem(
-        "userRole"
-    );
-
-    localStorage.removeItem(
-        "userName"
-    );
-
-    localStorage.removeItem(
-        "userMobile"
-    );
-
-    localStorage.removeItem(
-        "userEmail"
-    );
-
-    localStorage.removeItem(
-        "adminId"
-    );
-
-    localStorage.removeItem(
-        "adminReportsTo"
-    );
-
-
-    alert(
-        "Logout Successful!"
     );
 
 
@@ -528,7 +486,18 @@ function logoutUser() {
 
 
 // ==========================================
-// GET CURRENT USER
+// USER LOGOUT
+// ==========================================
+
+function logoutUser() {
+
+    logout();
+
+}
+
+
+// ==========================================
+// CURRENT USER
 // ==========================================
 
 function getCurrentUser() {
@@ -559,7 +528,7 @@ function getCurrentUser() {
 
 
 // ==========================================
-// CHECK CURRENT SESSION
+// SESSION STATUS
 // ==========================================
 
 function getSessionStatus() {
@@ -587,21 +556,18 @@ function getSessionStatus() {
 
 
 // ==========================================
-// PREVENT BACK-ACCESS AFTER LOGOUT
+// PREVENT UNAUTHORIZED ACCESS
 // ==========================================
 
 function preventUnauthorizedAccess() {
 
-    if (
-        !isUserLoggedIn()
-    ) {
+    if (!isUserLoggedIn()) {
 
         window.location.href =
-            "admin.html";
+            "login.html";
 
         return false;
     }
-
 
     return true;
 
@@ -609,29 +575,46 @@ function preventUnauthorizedAccess() {
 
 
 // ==========================================
-// PAGE LOAD SECURITY CHECK
+// CLEAR SESSION
 // ==========================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+function clearSession() {
 
-        /*
-            Authentication is intentionally
-            NOT forced automatically here.
+    localStorage.removeItem(
+        "isLoggedIn"
+    );
 
-            Individual pages decide whether they
-            require:
-            - checkLogin()
-            - checkUserLogin()
-            - checkAdminAccess()
-            - checkRole()
-            - checkAnyRole()
-        */
-    }
-);
+    localStorage.removeItem(
+        "userUid"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    localStorage.removeItem(
+        "userName"
+    );
+
+    localStorage.removeItem(
+        "userMobile"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    localStorage.removeItem(
+        "adminId"
+    );
+
+    localStorage.removeItem(
+        "adminReportsTo"
+    );
+
+}
 
 
 // ==========================================
-// END OF AUTHENTICATION SYSTEM
+// END OF AUTH SYSTEM
 // ==========================================
