@@ -1,450 +1,1041 @@
-        /* =====================================
-           USER NOT FOUND
-        ===================================== */
+<!DOCTYPE html>
+<html lang="bn">
 
-        if (
-            snapshot.empty
-        ) {
+<head>
 
-            showError(
-                "No account found with this mobile number."
-            );
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#052e16">
 
-            return;
-        }
+<title>User Login - KALI LIFE ECOSYSTEM</title>
 
+<style>
 
-        /* =====================================
-           GET USER DATA
-        ===================================== */
+/* =========================================================
+   KALI LIFE ECOSYSTEM
+   PREMIUM LOGIN PAGE
+========================================================= */
 
-        const userDoc =
-            snapshot.docs[0];
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        const userData =
-            userDoc.data();
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
 
+body {
+    min-height: 100vh;
 
-        /* =====================================
-           GET USER EMAIL
-        ===================================== */
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-        const email =
-            String(
-                userData.email || ""
-            )
-            .trim()
-            .toLowerCase();
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    padding: 20px;
 
-        if (!email) {
-
-            showError(
-                "This account does not have a valid email address."
-            );
-
-            return;
-        }
-
-
-        /* =====================================
-           ACCOUNT STATUS
-        ===================================== */
-
-        const status =
-            String(
-                userData.status || "Active"
-            )
-            .trim()
-            .toLowerCase();
-
-
-        if (
-            status !== "active"
-        ) {
-
-            showError(
-                "Your account is not active. Please contact support."
-            );
-
-            return;
-        }
-
-
-        /* =====================================
-           FIREBASE AUTHENTICATION
-        ===================================== */
-
-        let userCredential;
-
-        try {
-
-            userCredential =
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-        }
-
-        catch (authError) {
-
-            console.error(
-                "Firebase login error:",
-                authError
-            );
-
-
-            if (
-                authError.code ===
-                "auth/invalid-credential"
-            ) {
-
-                showError(
-                    "Incorrect mobile number or password."
-                );
-
-            }
-
-            else if (
-                authError.code ===
-                "auth/invalid-login-credentials"
-            ) {
-
-                showError(
-                    "Incorrect mobile number or password."
-                );
-
-            }
-
-            else if (
-                authError.code ===
-                "auth/user-not-found"
-            ) {
-
-                showError(
-                    "This account was not found."
-                );
-
-            }
-
-            else if (
-                authError.code ===
-                "auth/wrong-password"
-            ) {
-
-                showError(
-                    "Incorrect password."
-                );
-
-            }
-
-            else if (
-                authError.code ===
-                "auth/too-many-requests"
-            ) {
-
-                showError(
-                    "Too many login attempts. Please try again later."
-                );
-
-            }
-
-            else {
-
-                showError(
-                    "Login failed. Please try again."
-                );
-
-            }
-
-            return;
-        }
-
-
-        /* =====================================
-           AUTHENTICATED USER
-        ===================================== */
-
-        const firebaseUser =
-            userCredential.user;
-
-
-        /* =====================================
-           VERIFY USER ID
-        ===================================== */
-
-        if (
-            userData.uid &&
-            firebaseUser.uid !== userData.uid
-        ) {
-
-            showError(
-                "Account verification failed."
-            );
-
-            return;
-        }
-
-
-        /* =====================================
-           USER ROLE
-        ===================================== */
-
-        const role =
-            String(
-                userData.role || "User"
-            ).trim();
-
-
-        /* =====================================
-           SAVE LOGIN SESSION
-        ===================================== */
-
-        localStorage.setItem(
-            "isLoggedIn",
-            "true"
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(34,197,94,0.20),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(22,163,74,0.18),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #052e16 0%,
+            #064e3b 45%,
+            #0f172a 100%
         );
 
+    color: #0f172a;
+}
 
-        localStorage.setItem(
-            "userUid",
-            firebaseUser.uid
-        );
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
+.background-glow {
+    position: fixed;
+    inset: 0;
 
-        localStorage.setItem(
-            "userName",
-            userData.name || ""
-        );
+    overflow: hidden;
 
+    pointer-events: none;
 
-        localStorage.setItem(
-            "userMobile",
-            String(
-                userData.mobile || mobile
-            )
-        );
+    z-index: 0;
+}
 
+.glow {
+    position: absolute;
 
-        localStorage.setItem(
-            "userEmail",
-            email
-        );
+    border-radius: 50%;
 
+    filter: blur(90px);
 
-        localStorage.setItem(
-            "userRole",
-            role
-        );
+    opacity: 0.18;
+}
 
+.glow-one {
+    width: 280px;
+    height: 280px;
 
-        if (
-            userData.adminId
-        ) {
+    top: -120px;
+    left: -100px;
 
-            localStorage.setItem(
-                "adminId",
-                userData.adminId
-            );
+    background: #22c55e;
+}
 
-        }
+.glow-two {
+    width: 320px;
+    height: 320px;
 
+    right: -130px;
+    bottom: -140px;
 
-        if (
-            userData.reportsTo
-        ) {
+    background: #16a34a;
+}
 
-            localStorage.setItem(
-                "adminReportsTo",
-                userData.reportsTo
-            );
+/* =========================================================
+   WRAPPER
+========================================================= */
 
-        }
+.login-wrapper {
+    position: relative;
 
+    width: 100%;
+    max-width: 440px;
 
-        /* =====================================
-           LOGIN SUCCESS
-        ===================================== */
+    z-index: 2;
+}
 
-        showSuccess(
-            "Login successful. Redirecting..."
-        );
+/* =========================================================
+   CARD
+========================================================= */
 
+.login-card {
+    width: 100%;
 
-        /* =====================================
-           ROLE BASED REDIRECT
-        ===================================== */
+    padding: 34px 32px 30px;
 
-        setTimeout(
-            function () {
+    background:
+        rgba(255,255,255,0.97);
 
-                if (
-                    role === "Super Admin"
-                ) {
+    border:
+        1px solid rgba(255,255,255,0.7);
 
-                    window.location.href =
-                        "super-admin-dashboard.html";
+    border-radius: 24px;
 
-                    return;
-                }
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.30),
+        0 10px 30px rgba(0,0,0,0.12);
 
+    backdrop-filter: blur(18px);
 
-                if (
-                    role === "Core Admin"
-                ) {
+    animation:
+        cardEnter 0.45s ease;
+}
 
-                    window.location.href =
-                        "admin-dashboard.html";
+@keyframes cardEnter {
 
-                    return;
-                }
-
-
-                if (
-                    role &&
-                    role !== "User"
-                ) {
-
-                    window.location.href =
-                        "admin-dashboard.html";
-
-                    return;
-                }
-
-
-                window.location.href =
-                    "dashboard.html";
-
-            },
-            500
-        );
-
-
+    from {
+        opacity: 0;
+        transform:
+            translateY(18px)
+            scale(0.98);
     }
 
-    catch (error) {
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
 
-        console.error(
-            "Login error:",
-            error
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+    text-align: center;
+
+    margin-bottom: 26px;
+}
+
+.brand-icon {
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
         );
 
+    color: #ffffff;
 
-        showError(
-            "Something went wrong during login. Please try again."
+    font-size: 29px;
+
+    box-shadow:
+        0 10px 28px
+        rgba(22,163,74,0.30);
+}
+
+.brand-name {
+    color: #14532d;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.brand-subtitle {
+    margin-top: 5px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.login-title {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.login-title h1 {
+    color: #0f172a;
+
+    font-size: 23px;
+
+    font-weight: 800;
+}
+
+.login-title p {
+    margin-top: 7px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 17px;
+
+    pointer-events: none;
+}
+
+.form-input {
+    width: 100%;
+    height: 50px;
+
+    padding:
+        0 14px 0 43px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.form-input:hover {
+    border-color: #94a3b8;
+}
+
+.form-input:focus {
+    border-color: #16a34a;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(22,163,74,0.10);
+}
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-input {
+    padding-right: 75px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 9px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #166534;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    padding: 7px 9px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    background: #f0fdf4;
+}
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-button {
+    width: 100%;
+    height: 52px;
+
+    margin-top: 3px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
         );
 
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 22px
+        rgba(22,163,74,0.25);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.login-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(22,163,74,0.32);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.login-button:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.button-content {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+}
+
+.spinner {
+    width: 17px;
+    height: 17px;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.35);
+
+    border-top-color:
+        #ffffff;
+
+    border-radius: 50%;
+
+    animation:
+        spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.message {
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.45;
+}
+
+.message.show {
+    display: block;
+}
+
+.error-message {
+    background: #fef2f2;
+
+    border:
+        1px solid #fecaca;
+
+    color: #b91c1c;
+}
+
+.success-message {
+    background: #f0fdf4;
+
+    border:
+        1px solid #bbf7d0;
+
+    color: #166534;
+}
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+.links {
+    margin-top: 21px;
+
+    text-align: center;
+}
+
+.link {
+    display: block;
+
+    margin-top: 10px;
+
+    color: #166534;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.link:hover {
+    color: #15803d;
+
+    text-decoration: underline;
+}
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 24px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid #e2e8f0;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    text-align: center;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    margin-top: 16px;
+
+    text-align: center;
+
+    color:
+        rgba(255,255,255,0.70);
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 14px;
     }
 
-    finally {
+    .login-card {
+        padding:
+            28px 20px 24px;
 
-        setLoading(false);
-
+        border-radius: 20px;
     }
+
+    .brand-icon {
+        width: 58px;
+        height: 58px;
+
+        font-size: 27px;
+    }
+
+    .brand-name {
+        font-size: 23px;
+    }
+
+    .login-title h1 {
+        font-size: 21px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background-glow">
+
+    <div class="glow glow-one"></div>
+
+    <div class="glow glow-two"></div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🔐
+            </div>
+
+            <div class="brand-name">
+                KALI LIFE
+            </div>
+
+            <div class="brand-subtitle">
+                ECOSYSTEM
+            </div>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="login-title">
+
+            <h1>
+                User Login
+            </h1>
+
+            <p>
+                Sign in to continue to your account
+            </p>
+
+        </div>
+
+
+        <!-- MOBILE -->
+
+        <div class="form-group">
+
+            <label
+                class="form-label"
+                for="mobile">
+
+                Mobile Number
+
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    📱
+                </span>
+
+                <input
+                    id="mobile"
+                    class="form-input"
+                    type="tel"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    maxlength="10"
+                    placeholder="Enter 10 digit mobile number">
+
+            </div>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label
+                class="form-label"
+                for="password">
+
+                Password
+
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    🔑
+                </span>
+
+                <input
+                    id="password"
+                    class="form-input password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password">
+
+                <button
+                    id="passwordToggle"
+                    class="password-toggle"
+                    type="button">
+
+                    Show
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <button
+            id="loginButton"
+            class="login-button"
+            type="button">
+
+            <span
+                id="buttonContent"
+                class="button-content">
+
+                Login
+
+            </span>
+
+        </button>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorMessage"
+            class="message error-message">
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            id="successMessage"
+            class="message success-message">
+        </div>
+
+
+        <!-- LINKS -->
+
+        <div class="links">
+
+            <a
+                class="link"
+                href="register.html">
+
+                Create New Account
+
+            </a>
+
+            <a
+                class="link"
+                href="index.html">
+
+                ← Back to Home
+
+            </a>
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="security">
+
+            <span>
+                🔒
+            </span>
+
+            <span>
+                Secure login powered by Firebase Authentication
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        © KALI LIFE ECOSYSTEM
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FIREBASE + LOGIN SYSTEM
+
+     IMPORTANT:
+     This entire section MUST remain inside
+     the <script type="module"> tag.
+========================================================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    signInWithEmailAndPassword
+}
+from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs
+}
+from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
 
 };
 
 
 /* =========================================================
-   SHOW / HIDE PASSWORD
+   FIREBASE INITIALIZATION
 ========================================================= */
 
-window.togglePassword =
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
+
+const mobileInput =
+    document.getElementById("mobile");
+
+const passwordInput =
+    document.getElementById("password");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const buttonContent =
+    document.getElementById("buttonContent");
+
+const errorMessage =
+    document.getElementById("errorMessage");
+
+const successMessage =
+    document.getElementById("successMessage");
+
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+passwordToggle.addEventListener(
+    "click",
     function () {
 
-        const password =
-            document.getElementById(
-                "password"
-            );
-
-        const button =
-            document.getElementById(
-                "passwordToggle"
-            );
-
-
         if (
-            password.type === "password"
+            passwordInput.type === "password"
         ) {
 
-            password.type = "text";
+            passwordInput.type = "text";
 
-            button.innerText =
+            passwordToggle.textContent =
                 "Hide";
 
-        }
+        } else {
 
-        else {
+            passwordInput.type =
+                "password";
 
-            password.type = "password";
-
-            button.innerText =
+            passwordToggle.textContent =
                 "Show";
 
         }
 
-    };
+    }
+);
 
 
 /* =========================================================
-   SHOW ERROR
+   MOBILE NUMBER
+   ONLY NUMBERS
 ========================================================= */
+
+mobileInput.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value
+            .replace(/\D/g, "")
+            .slice(0, 10);
+
+    }
+);
+
+
+/* =========================================================
+   MESSAGE HELPERS
+========================================================= */
+
+function clearMessages() {
+
+    errorMessage.textContent = "";
+
+    successMessage.textContent = "";
+
+    errorMessage.classList.remove(
+        "show"
+    );
+
+    successMessage.classList.remove(
+        "show"
+    );
+
+}
+
 
 function showError(message) {
 
-    errorBox.innerText =
+    errorMessage.textContent =
         message;
 
-    errorBox.classList.add(
+    errorMessage.classList.add(
         "show"
     );
 
-    successBox.classList.remove(
+    successMessage.classList.remove(
         "show"
     );
 
 }
 
-
-/* =========================================================
-   SHOW SUCCESS
-========================================================= */
 
 function showSuccess(message) {
 
-    successBox.innerText =
+    successMessage.textContent =
         message;
 
-    successBox.classList.add(
+    successMessage.classList.add(
         "show"
     );
 
-    errorBox.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   HIDE MESSAGES
-========================================================= */
-
-function hideMessages() {
-
-    errorBox.innerText =
-        "";
-
-    successBox.innerText =
-        "";
-
-    errorBox.classList.remove(
-        "show"
-    );
-
-    successBox.classList.remove(
+    errorMessage.classList.remove(
         "show"
     );
 
@@ -452,35 +1043,164 @@ function hideMessages() {
 
 
 /* =========================================================
-   LOADING STATE
+   LOADING
 ========================================================= */
 
-function setLoading(isLoading) {
+function setLoading(loading) {
 
     loginButton.disabled =
-        isLoading;
+        loading;
 
-
-    if (
-        isLoading
-    ) {
+    if (loading) {
 
         buttonContent.innerHTML =
-            '<span class="spinner"></span><span>Signing in...</span>';
+            '<span class="spinner"></span> Signing in...';
 
-    }
+    } else {
 
-    else {
-
-        buttonContent.innerText =
+        buttonContent.textContent =
             "Login";
 
     }
 
 }
 
-</script>
 
-</body>
+/* =========================================================
+   LOGIN FUNCTION
+========================================================= */
 
-</html>
+async function loginUser() {
+
+    clearMessages();
+
+
+    /* -------------------------------------------------------
+       GET VALUES
+    ------------------------------------------------------- */
+
+    const mobile =
+        mobileInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+
+    /* -------------------------------------------------------
+       VALIDATE MOBILE
+    ------------------------------------------------------- */
+
+    if (
+        !/^[0-9]{10}$/.test(mobile)
+    ) {
+
+        showError(
+            "Please enter a valid 10 digit mobile number."
+        );
+
+        mobileInput.focus();
+
+        return;
+
+    }
+
+
+    /* -------------------------------------------------------
+       VALIDATE PASSWORD
+    ------------------------------------------------------- */
+
+    if (
+        !password
+    ) {
+
+        showError(
+            "Please enter your password."
+        );
+
+        passwordInput.focus();
+
+        return;
+
+    }
+
+
+    setLoading(true);
+
+
+    try {
+
+
+        /* ===================================================
+           FIND USER
+        =================================================== */
+
+        let snapshot;
+
+
+        /* ---------------------------------------------------
+           MOBILE STORED AS STRING
+        --------------------------------------------------- */
+
+        const stringQuery =
+            query(
+                collection(
+                    db,
+                    "users"
+                ),
+
+                where(
+                    "mobile",
+                    "==",
+                    mobile
+                )
+            );
+
+
+        snapshot =
+            await getDocs(
+                stringQuery
+            );
+
+
+        /* ---------------------------------------------------
+           MOBILE STORED AS NUMBER
+        --------------------------------------------------- */
+
+        if (
+            snapshot.empty
+        ) {
+
+            const numberQuery =
+                query(
+                    collection(
+                        db,
+                        "users"
+                    ),
+
+                    where(
+                        "mobile",
+                        "==",
+                        Number(mobile)
+                    )
+                );
+
+
+            snapshot =
+                await getDocs(
+                    numberQuery
+                );
+
+        }
+
+
+        /* ===================================================
+           USER NOT FOUND
+        =================================================== */
+
+        if (
+            snapshot.empty
+        ) {
+
+            showError(
+                "No account was found with this mobile number."
+   
