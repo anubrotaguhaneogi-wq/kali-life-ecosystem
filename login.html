@@ -4,16 +4,24 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#052e16">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#052e16"
+>
 
 <title>User Login - KALI LIFE ECOSYSTEM</title>
+
 
 <style>
 
 /* =========================================================
-   KALI LIFE ECOSYSTEM
-   PREMIUM LOGIN PAGE
+   RESET
 ========================================================= */
 
 * {
@@ -29,6 +37,7 @@ body {
 }
 
 body {
+
     min-height: 100vh;
 
     font-family:
@@ -37,6 +46,7 @@ body {
         sans-serif;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
@@ -45,12 +55,12 @@ body {
     background:
         radial-gradient(
             circle at 10% 10%,
-            rgba(34,197,94,0.20),
+            rgba(34,197,94,0.22),
             transparent 32%
         ),
         radial-gradient(
             circle at 90% 90%,
-            rgba(22,163,74,0.18),
+            rgba(22,163,74,0.20),
             transparent 32%
         ),
         linear-gradient(
@@ -63,12 +73,15 @@ body {
     color: #0f172a;
 }
 
+
 /* =========================================================
    BACKGROUND
 ========================================================= */
 
-.background-glow {
+.background {
+
     position: fixed;
+
     inset: 0;
 
     overflow: hidden;
@@ -79,6 +92,7 @@ body {
 }
 
 .glow {
+
     position: absolute;
 
     border-radius: 50%;
@@ -89,6 +103,7 @@ body {
 }
 
 .glow-one {
+
     width: 280px;
     height: 280px;
 
@@ -99,6 +114,7 @@ body {
 }
 
 .glow-two {
+
     width: 320px;
     height: 320px;
 
@@ -108,82 +124,105 @@ body {
     background: #16a34a;
 }
 
+
 /* =========================================================
    WRAPPER
 ========================================================= */
 
 .login-wrapper {
+
     position: relative;
 
     width: 100%;
+
     max-width: 440px;
 
     z-index: 2;
 }
+
 
 /* =========================================================
    CARD
 ========================================================= */
 
 .login-card {
+
     width: 100%;
 
-    padding: 34px 32px 30px;
+    padding:
+        34px
+        32px
+        30px;
 
     background:
         rgba(255,255,255,0.97);
 
     border:
-        1px solid rgba(255,255,255,0.7);
+        1px solid
+        rgba(255,255,255,0.75);
 
     border-radius: 24px;
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,0.30),
-        0 10px 30px rgba(0,0,0,0.12);
+        0 30px 80px
+        rgba(0,0,0,0.30),
+        0 10px 30px
+        rgba(0,0,0,0.12);
 
-    backdrop-filter: blur(18px);
+    backdrop-filter:
+        blur(18px);
 
     animation:
-        cardEnter 0.45s ease;
+        cardEnter
+        0.45s
+        ease;
 }
 
 @keyframes cardEnter {
 
     from {
+
         opacity: 0;
+
         transform:
             translateY(18px)
             scale(0.98);
     }
 
     to {
+
         opacity: 1;
+
         transform:
             translateY(0)
             scale(1);
     }
 }
 
+
 /* =========================================================
    BRAND
 ========================================================= */
 
 .brand {
+
     text-align: center;
 
     margin-bottom: 26px;
 }
 
 .brand-icon {
+
     width: 64px;
     height: 64px;
 
-    margin: 0 auto 14px;
+    margin:
+        0 auto 14px;
 
     display: flex;
-    align-items: center;
+
     justify-content: center;
+    align-items: center;
 
     border-radius: 18px;
 
@@ -204,16 +243,19 @@ body {
 }
 
 .brand-name {
+
     color: #14532d;
 
     font-size: 25px;
 
     font-weight: 800;
 
-    letter-spacing: 0.5px;
+    letter-spacing:
+        0.5px;
 }
 
 .brand-subtitle {
+
     margin-top: 5px;
 
     color: #64748b;
@@ -222,20 +264,24 @@ body {
 
     font-weight: 800;
 
-    letter-spacing: 2.5px;
+    letter-spacing:
+        2.5px;
 }
+
 
 /* =========================================================
    TITLE
 ========================================================= */
 
 .login-title {
+
     text-align: center;
 
     margin-bottom: 25px;
 }
 
 .login-title h1 {
+
     color: #0f172a;
 
     font-size: 23px;
@@ -244,6 +290,7 @@ body {
 }
 
 .login-title p {
+
     margin-top: 7px;
 
     color: #64748b;
@@ -251,15 +298,18 @@ body {
     font-size: 13px;
 }
 
+
 /* =========================================================
    FORM
 ========================================================= */
 
 .form-group {
+
     margin-bottom: 18px;
 }
 
 .form-label {
+
     display: block;
 
     margin-bottom: 8px;
@@ -271,21 +321,25 @@ body {
     font-weight: 700;
 }
 
+
 /* =========================================================
    INPUT
 ========================================================= */
 
 .input-wrapper {
+
     position: relative;
 }
 
 .input-icon {
+
     position: absolute;
 
     left: 14px;
     top: 50%;
 
-    transform: translateY(-50%);
+    transform:
+        translateY(-50%);
 
     font-size: 17px;
 
@@ -293,73 +347,95 @@ body {
 }
 
 .form-input {
+
     width: 100%;
+
     height: 50px;
 
     padding:
         0 14px 0 43px;
 
     border:
-        1px solid #cbd5e1;
+        1px solid
+        #cbd5e1;
 
     border-radius: 11px;
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    color: #0f172a;
+    color:
+        #0f172a;
 
     font-size: 15px;
 
     outline: none;
 
     transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        border-color
+        0.2s ease,
+
+        box-shadow
+        0.2s ease;
 }
 
 .form-input::placeholder {
-    color: #94a3b8;
+
+    color:
+        #94a3b8;
 }
 
 .form-input:hover {
-    border-color: #94a3b8;
+
+    border-color:
+        #94a3b8;
 }
 
 .form-input:focus {
-    border-color: #16a34a;
+
+    border-color:
+        #16a34a;
 
     box-shadow:
         0 0 0 4px
         rgba(22,163,74,0.10);
 }
 
+
 /* =========================================================
    PASSWORD
 ========================================================= */
 
 .password-input {
-    padding-right: 75px;
+
+    padding-right:
+        75px;
 }
 
 .password-toggle {
+
     position: absolute;
 
     right: 9px;
     top: 50%;
 
-    transform: translateY(-50%);
+    transform:
+        translateY(-50%);
 
     border: none;
 
-    background: transparent;
+    background:
+        transparent;
 
-    color: #166534;
+    color:
+        #166534;
 
     font-size: 12px;
 
     font-weight: 800;
 
-    padding: 7px 9px;
+    padding:
+        7px 9px;
 
     border-radius: 7px;
 
@@ -367,15 +443,20 @@ body {
 }
 
 .password-toggle:hover {
-    background: #f0fdf4;
+
+    background:
+        #f0fdf4;
 }
+
 
 /* =========================================================
    LOGIN BUTTON
 ========================================================= */
 
 .login-button {
+
     width: 100%;
+
     height: 52px;
 
     margin-top: 3px;
@@ -391,13 +472,15 @@ body {
             #15803d
         );
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     font-size: 15px;
 
     font-weight: 800;
 
-    letter-spacing: 0.2px;
+    letter-spacing:
+        0.2px;
 
     cursor: pointer;
 
@@ -406,13 +489,20 @@ body {
         rgba(22,163,74,0.25);
 
     transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        opacity 0.15s ease;
+        transform
+        0.15s ease,
+
+        box-shadow
+        0.15s ease,
+
+        opacity
+        0.15s ease;
 }
 
 .login-button:hover {
-    transform: translateY(-1px);
+
+    transform:
+        translateY(-1px);
 
     box-shadow:
         0 12px 28px
@@ -420,33 +510,44 @@ body {
 }
 
 .login-button:active {
-    transform: translateY(0);
+
+    transform:
+        translateY(0);
 }
 
 .login-button:disabled {
-    opacity: 0.65;
 
-    cursor: not-allowed;
+    opacity:
+        0.65;
 
-    transform: none;
+    cursor:
+        not-allowed;
 
-    box-shadow: none;
+    transform:
+        none;
+
+    box-shadow:
+        none;
 }
+
 
 /* =========================================================
    LOADING
 ========================================================= */
 
 .button-content {
+
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 9px;
 }
 
 .spinner {
+
     width: 17px;
     height: 17px;
 
@@ -460,26 +561,35 @@ body {
     border-radius: 50%;
 
     animation:
-        spin 0.7s linear infinite;
+        spin
+        0.7s
+        linear
+        infinite;
 }
 
 @keyframes spin {
 
     to {
-        transform: rotate(360deg);
+
+        transform:
+            rotate(360deg);
     }
 }
 
+
 /* =========================================================
-   MESSAGES
+   MESSAGE
 ========================================================= */
 
 .message {
+
     display: none;
 
     margin-top: 15px;
 
-    padding: 11px 13px;
+    padding:
+        11px
+        13px;
 
     border-radius: 9px;
 
@@ -491,45 +601,59 @@ body {
 }
 
 .message.show {
+
     display: block;
 }
 
 .error-message {
-    background: #fef2f2;
+
+    background:
+        #fef2f2;
 
     border:
-        1px solid #fecaca;
+        1px solid
+        #fecaca;
 
-    color: #b91c1c;
+    color:
+        #b91c1c;
 }
 
 .success-message {
-    background: #f0fdf4;
+
+    background:
+        #f0fdf4;
 
     border:
-        1px solid #bbf7d0;
+        1px solid
+        #bbf7d0;
 
-    color: #166534;
+    color:
+        #166534;
 }
+
 
 /* =========================================================
    LINKS
 ========================================================= */
 
 .links {
+
     margin-top: 21px;
 
     text-align: center;
 }
 
 .link {
+
     display: block;
 
     margin-top: 10px;
 
-    color: #166534;
+    color:
+        #166534;
 
-    text-decoration: none;
+    text-decoration:
+        none;
 
     font-size: 13px;
 
@@ -537,19 +661,25 @@ body {
 }
 
 .link:hover {
-    color: #15803d;
 
-    text-decoration: underline;
+    color:
+        #15803d;
+
+    text-decoration:
+        underline;
 }
+
 
 /* =========================================================
    SECURITY
 ========================================================= */
 
 .security {
+
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 7px;
@@ -559,20 +689,24 @@ body {
     padding-top: 18px;
 
     border-top:
-        1px solid #e2e8f0;
+        1px solid
+        #e2e8f0;
 
-    color: #64748b;
+    color:
+        #64748b;
 
     font-size: 11px;
 
     text-align: center;
 }
 
+
 /* =========================================================
    FOOTER
 ========================================================= */
 
 .footer {
+
     margin-top: 16px;
 
     text-align: center;
@@ -583,6 +717,7 @@ body {
     font-size: 11px;
 }
 
+
 /* =========================================================
    MOBILE
 ========================================================= */
@@ -590,29 +725,44 @@ body {
 @media (max-width: 480px) {
 
     body {
-        padding: 14px;
+
+        padding:
+            14px;
     }
 
     .login-card {
-        padding:
-            28px 20px 24px;
 
-        border-radius: 20px;
+        padding:
+            28px
+            20px
+            24px;
+
+        border-radius:
+            20px;
     }
 
     .brand-icon {
-        width: 58px;
-        height: 58px;
 
-        font-size: 27px;
+        width:
+            58px;
+
+        height:
+            58px;
+
+        font-size:
+            27px;
     }
 
     .brand-name {
-        font-size: 23px;
+
+        font-size:
+            23px;
     }
 
     .login-title h1 {
-        font-size: 21px;
+
+        font-size:
+            21px;
     }
 }
 
@@ -624,11 +774,7 @@ body {
 <body>
 
 
-<!-- =========================================================
-     BACKGROUND
-========================================================= -->
-
-<div class="background-glow">
+<div class="background">
 
     <div class="glow glow-one"></div>
 
@@ -637,16 +783,11 @@ body {
 </div>
 
 
-<!-- =========================================================
-     LOGIN
-========================================================= -->
-
 <div class="login-wrapper">
+
 
     <div class="login-card">
 
-
-        <!-- BRAND -->
 
         <div class="brand">
 
@@ -664,8 +805,6 @@ body {
 
         </div>
 
-
-        <!-- TITLE -->
 
         <div class="login-title">
 
@@ -691,6 +830,7 @@ body {
                 Mobile Number
 
             </label>
+
 
             <div class="input-wrapper">
 
@@ -724,6 +864,7 @@ body {
 
             </label>
 
+
             <div class="input-wrapper">
 
                 <span class="input-icon">
@@ -751,7 +892,7 @@ body {
         </div>
 
 
-        <!-- LOGIN -->
+        <!-- LOGIN BUTTON -->
 
         <button
             id="loginButton"
@@ -769,23 +910,17 @@ body {
         </button>
 
 
-        <!-- ERROR -->
-
         <div
             id="errorMessage"
             class="message error-message">
         </div>
 
 
-        <!-- SUCCESS -->
-
         <div
             id="successMessage"
             class="message success-message">
         </div>
 
-
-        <!-- LINKS -->
 
         <div class="links">
 
@@ -796,6 +931,7 @@ body {
                 Create New Account
 
             </a>
+
 
             <a
                 class="link"
@@ -808,8 +944,6 @@ body {
         </div>
 
 
-        <!-- SECURITY -->
-
         <div class="security">
 
             <span>
@@ -817,7 +951,7 @@ body {
             </span>
 
             <span>
-                Secure login powered by Firebase Authentication
+                Secure account access
             </span>
 
         </div>
@@ -835,11 +969,7 @@ body {
 
 
 <!-- =========================================================
-     FIREBASE + LOGIN SYSTEM
-
-     IMPORTANT:
-     This entire section MUST remain inside
-     the <script type="module"> tag.
+     FIREBASE
 ========================================================= -->
 
 <script type="module">
@@ -849,14 +979,6 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-
-import {
-    getAuth,
-    signInWithEmailAndPassword
-}
-from
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
 import {
@@ -901,43 +1023,56 @@ const firebaseConfig = {
 
 
 /* =========================================================
-   FIREBASE INITIALIZATION
+   FIREBASE
 ========================================================= */
 
 const app =
-    initializeApp(firebaseConfig);
-
-const auth =
-    getAuth(app);
+    initializeApp(
+        firebaseConfig
+    );
 
 const db =
     getFirestore(app);
 
 
 /* =========================================================
-   DOM ELEMENTS
+   ELEMENTS
 ========================================================= */
 
 const mobileInput =
-    document.getElementById("mobile");
+    document.getElementById(
+        "mobile"
+    );
 
 const passwordInput =
-    document.getElementById("password");
+    document.getElementById(
+        "password"
+    );
 
 const passwordToggle =
-    document.getElementById("passwordToggle");
+    document.getElementById(
+        "passwordToggle"
+    );
 
 const loginButton =
-    document.getElementById("loginButton");
+    document.getElementById(
+        "loginButton"
+    );
 
 const buttonContent =
-    document.getElementById("buttonContent");
+    document.getElementById(
+        "buttonContent"
+    );
 
 const errorMessage =
-    document.getElementById("errorMessage");
+    document.getElementById(
+        "errorMessage"
+    );
 
 const successMessage =
-    document.getElementById("successMessage");
+    document.getElementById(
+        "successMessage"
+    );
 
 
 /* =========================================================
@@ -949,10 +1084,12 @@ passwordToggle.addEventListener(
     function () {
 
         if (
-            passwordInput.type === "password"
+            passwordInput.type ===
+            "password"
         ) {
 
-            passwordInput.type = "text";
+            passwordInput.type =
+                "text";
 
             passwordToggle.textContent =
                 "Hide";
@@ -964,7 +1101,6 @@ passwordToggle.addEventListener(
 
             passwordToggle.textContent =
                 "Show";
-
         }
 
     }
@@ -972,8 +1108,7 @@ passwordToggle.addEventListener(
 
 
 /* =========================================================
-   MOBILE NUMBER
-   ONLY NUMBERS
+   MOBILE INPUT
 ========================================================= */
 
 mobileInput.addEventListener(
@@ -982,22 +1117,24 @@ mobileInput.addEventListener(
 
         this.value =
             this.value
-            .replace(/\D/g, "")
-            .slice(0, 10);
+                .replace(/\D/g, "")
+                .slice(0, 10);
 
     }
 );
 
 
 /* =========================================================
-   MESSAGE HELPERS
+   MESSAGES
 ========================================================= */
 
 function clearMessages() {
 
-    errorMessage.textContent = "";
+    errorMessage.textContent =
+        "";
 
-    successMessage.textContent = "";
+    successMessage.textContent =
+        "";
 
     errorMessage.classList.remove(
         "show"
@@ -1006,7 +1143,6 @@ function clearMessages() {
     successMessage.classList.remove(
         "show"
     );
-
 }
 
 
@@ -1022,7 +1158,6 @@ function showError(message) {
     successMessage.classList.remove(
         "show"
     );
-
 }
 
 
@@ -1038,7 +1173,6 @@ function showSuccess(message) {
     errorMessage.classList.remove(
         "show"
     );
-
 }
 
 
@@ -1046,7 +1180,9 @@ function showSuccess(message) {
    LOADING
 ========================================================= */
 
-function setLoading(loading) {
+function setLoading(
+    loading
+) {
 
     loginButton.disabled =
         loading;
@@ -1060,24 +1196,18 @@ function setLoading(loading) {
 
         buttonContent.textContent =
             "Login";
-
     }
-
 }
 
 
 /* =========================================================
-   LOGIN FUNCTION
+   LOGIN
 ========================================================= */
 
 async function loginUser() {
 
     clearMessages();
 
-
-    /* -------------------------------------------------------
-       GET VALUES
-    ------------------------------------------------------- */
 
     const mobile =
         mobileInput.value.trim();
@@ -1087,11 +1217,13 @@ async function loginUser() {
 
 
     /* -------------------------------------------------------
-       VALIDATE MOBILE
+       MOBILE VALIDATION
     ------------------------------------------------------- */
 
     if (
-        !/^[0-9]{10}$/.test(mobile)
+        !/^[0-9]{10}$/.test(
+            mobile
+        )
     ) {
 
         showError(
@@ -1101,17 +1233,14 @@ async function loginUser() {
         mobileInput.focus();
 
         return;
-
     }
 
 
     /* -------------------------------------------------------
-       VALIDATE PASSWORD
+       PASSWORD VALIDATION
     ------------------------------------------------------- */
 
-    if (
-        !password
-    ) {
+    if (!password) {
 
         showError(
             "Please enter your password."
@@ -1120,7 +1249,6 @@ async function loginUser() {
         passwordInput.focus();
 
         return;
-
     }
 
 
@@ -1129,19 +1257,11 @@ async function loginUser() {
 
     try {
 
-
         /* ===================================================
            FIND USER
         =================================================== */
 
-        let snapshot;
-
-
-        /* ---------------------------------------------------
-           MOBILE STORED AS STRING
-        --------------------------------------------------- */
-
-        const stringQuery =
+        const userQuery =
             query(
                 collection(
                     db,
@@ -1156,41 +1276,10 @@ async function loginUser() {
             );
 
 
-        snapshot =
+        const snapshot =
             await getDocs(
-                stringQuery
+                userQuery
             );
-
-
-        /* ---------------------------------------------------
-           MOBILE STORED AS NUMBER
-        --------------------------------------------------- */
-
-        if (
-            snapshot.empty
-        ) {
-
-            const numberQuery =
-                query(
-                    collection(
-                        db,
-                        "users"
-                    ),
-
-                    where(
-                        "mobile",
-                        "==",
-                        Number(mobile)
-                    )
-                );
-
-
-            snapshot =
-                await getDocs(
-                    numberQuery
-                );
-
-        }
 
 
         /* ===================================================
@@ -1203,4 +1292,51 @@ async function loginUser() {
 
             showError(
                 "No account was found with this mobile number."
-   
+            );
+
+            setLoading(false);
+
+            return;
+        }
+
+
+        /* ===================================================
+           GET USER
+        =================================================== */
+
+        const userDoc =
+            snapshot.docs[0];
+
+        const userData =
+            userDoc.data();
+
+
+        /* ===================================================
+           PASSWORD CHECK
+        =================================================== */
+
+        const savedPassword =
+            String(
+                userData.password ??
+                ""
+            );
+
+
+        if (
+            savedPassword !==
+            password
+        ) {
+
+            showError(
+                "Incorrect password. Please try again."
+            );
+
+            setLoading(false);
+
+            return;
+        }
+
+
+        /* ===================================================
+           SAVE LOGIN SESSION
+        ======================================
