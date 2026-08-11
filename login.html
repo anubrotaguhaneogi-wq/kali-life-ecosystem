@@ -20,21 +20,12 @@
 }
 
 body {
-
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     padding: 20px;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
     background:
         linear-gradient(
@@ -46,15 +37,10 @@ body {
 }
 
 .login-card {
-
     width: 100%;
-
     max-width: 430px;
-
     padding: 32px;
-
     background: #ffffff;
-
     border-radius: 22px;
 
     box-shadow:
@@ -63,85 +49,56 @@ body {
 }
 
 .logo {
-
     text-align: center;
-
     color: #166534;
-
     font-size: 27px;
-
     font-weight: 800;
-
     margin-bottom: 5px;
 }
 
 .subtitle {
-
     text-align: center;
-
     color: #64748b;
-
     font-size: 12px;
-
     letter-spacing: 2px;
-
     font-weight: bold;
-
     margin-bottom: 28px;
 }
 
 h1 {
-
     text-align: center;
-
     color: #0f172a;
-
     font-size: 23px;
-
     margin-bottom: 24px;
 }
 
 .form-group {
-
     margin-bottom: 18px;
 }
 
 label {
-
     display: block;
-
     margin-bottom: 7px;
-
     color: #334155;
-
     font-size: 14px;
-
     font-weight: bold;
 }
 
 input {
-
     width: 100%;
-
     height: 50px;
-
     padding: 0 14px;
 
     border: 1px solid #cbd5e1;
-
     border-radius: 10px;
-
     outline: none;
 
     font-size: 15px;
-
     color: #0f172a;
-
     background: #ffffff;
 }
 
 input:focus {
-
     border-color: #16a34a;
 
     box-shadow:
@@ -150,51 +107,41 @@ input:focus {
 }
 
 .password-box {
-
     position: relative;
 }
 
 .password-box input {
-
     padding-right: 70px;
 }
 
 .show-password {
-
     position: absolute;
-
     right: 8px;
-
     top: 50%;
 
     transform:
         translateY(-50%);
 
     border: none;
-
     background: transparent;
 
     color: #166534;
-
     font-size: 12px;
-
     font-weight: bold;
 
     cursor: pointer;
-
     padding: 8px;
 }
 
-.login-button {
+.login-button,
+.reset-button {
 
     width: 100%;
-
     height: 52px;
 
     margin-top: 5px;
 
     border: none;
-
     border-radius: 10px;
 
     background:
@@ -207,7 +154,6 @@ input:focus {
     color: #ffffff;
 
     font-size: 16px;
-
     font-weight: bold;
 
     cursor: pointer;
@@ -215,19 +161,92 @@ input:focus {
     transition: 0.2s;
 }
 
-.login-button:hover {
+.login-button:hover,
+.reset-button:hover {
 
     transform:
         translateY(-1px);
 }
 
-.login-button:disabled {
+.login-button:disabled,
+.reset-button:disabled {
 
     opacity: 0.65;
-
     cursor: not-allowed;
 
     transform: none;
+}
+
+.forgot-button {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 14px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #166534;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.forgot-button:hover {
+
+    text-decoration: underline;
+}
+
+.reset-panel {
+
+    display: none;
+
+    margin-top: 18px;
+
+    padding: 18px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+}
+
+.reset-panel.show {
+
+    display: block;
+}
+
+.reset-title {
+
+    text-align: center;
+
+    color: #0f172a;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    margin-bottom: 12px;
+}
+
+.reset-text {
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    margin-bottom: 14px;
 }
 
 .message {
@@ -418,6 +437,71 @@ input:focus {
     </button>
 
 
+    <!-- FORGOT PASSWORD -->
+
+    <button
+        type="button"
+        id="forgotButton"
+        class="forgot-button">
+
+        Forgot Password?
+
+    </button>
+
+
+    <!-- RESET PANEL -->
+
+    <div
+        id="resetPanel"
+        class="reset-panel">
+
+        <div class="reset-title">
+
+            Reset Your Password
+
+        </div>
+
+        <div class="reset-text">
+
+            Enter your registered 10 digit mobile number.
+            We will find your account email and send a
+            password reset link.
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="resetMobile">
+
+                Mobile Number
+
+            </label>
+
+            <input
+                id="resetMobile"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                autocomplete="tel"
+                placeholder="Enter 10 digit mobile number"
+            >
+
+        </div>
+
+
+        <button
+            type="button"
+            id="resetButton"
+            class="reset-button">
+
+            Send Reset Link
+
+        </button>
+
+    </div>
+
+
     <!-- ERROR -->
 
     <div
@@ -450,22 +534,20 @@ input:focus {
 
 
     <div class="security">
+
         🔒 Secure account access
+
     </div>
 
 </div>
 
 
-<!-- ======================================================
-     AUTH SESSION SYSTEM
-====================================================== -->
+<!-- AUTH SESSION SYSTEM -->
 
 <script src="auth.js"></script>
 
 
-<!-- ======================================================
-     FIREBASE LOGIN
-====================================================== -->
+<!-- FIREBASE -->
 
 <script type="module">
 
@@ -477,7 +559,8 @@ import {
 
 import {
     getAuth,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail
 } from
 "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
@@ -552,6 +635,11 @@ const passwordInput =
         "password"
     );
 
+const resetMobile =
+    document.getElementById(
+        "resetMobile"
+    );
+
 const showPassword =
     document.getElementById(
         "showPassword"
@@ -560,6 +648,21 @@ const showPassword =
 const loginButton =
     document.getElementById(
         "loginButton"
+    );
+
+const forgotButton =
+    document.getElementById(
+        "forgotButton"
+    );
+
+const resetPanel =
+    document.getElementById(
+        "resetPanel"
+    );
+
+const resetButton =
+    document.getElementById(
+        "resetButton"
     );
 
 const errorMessage =
@@ -571,6 +674,145 @@ const successMessage =
     document.getElementById(
         "successMessage"
     );
+
+
+/* ======================================================
+   HELPERS
+====================================================== */
+
+function clearMessages() {
+
+    errorMessage.textContent =
+        "";
+
+    successMessage.textContent =
+        "";
+
+    errorMessage.classList.remove(
+        "show"
+    );
+
+    successMessage.classList.remove(
+        "show"
+    );
+}
+
+
+function showError(message) {
+
+    errorMessage.textContent =
+        message;
+
+    errorMessage.classList.add(
+        "show"
+    );
+
+    successMessage.classList.remove(
+        "show"
+    );
+}
+
+
+function showSuccess(message) {
+
+    successMessage.textContent =
+        message;
+
+    successMessage.classList.add(
+        "show"
+    );
+
+    errorMessage.classList.remove(
+        "show"
+    );
+}
+
+
+function cleanMobile(value) {
+
+    return String(value || "")
+        .replace(/\D/g, "")
+        .slice(0, 10);
+}
+
+
+/* ======================================================
+   LOADING
+====================================================== */
+
+function setLoginLoading(loading) {
+
+    loginButton.disabled =
+        loading;
+
+    loginButton.textContent =
+        loading
+            ? "Signing in..."
+            : "Login";
+}
+
+
+function setResetLoading(loading) {
+
+    resetButton.disabled =
+        loading;
+
+    resetButton.textContent =
+        loading
+            ? "Sending..."
+            : "Send Reset Link";
+}
+
+
+/* ======================================================
+   FIND USER BY MOBILE
+====================================================== */
+
+async function findUserByMobile(mobile) {
+
+    const userQuery =
+        query(
+            collection(
+                db,
+                "users"
+            ),
+
+            where(
+                "mobile",
+                "==",
+                mobile
+            )
+        );
+
+
+    const snapshot =
+        await getDocs(
+            userQuery
+        );
+
+
+    if (
+        snapshot.empty
+    ) {
+
+        return null;
+    }
+
+
+    const userDoc =
+        snapshot.docs[0];
+
+
+    return {
+
+        id:
+            userDoc.id,
+
+        data:
+            userDoc.data()
+
+    };
+}
 
 
 /* ======================================================
@@ -615,88 +857,61 @@ mobileInput.addEventListener(
     function () {
 
         this.value =
-            this.value
-                .replace(/\D/g, "")
-                .slice(0, 10);
+            cleanMobile(
+                this.value
+            );
+
+    }
+);
+
+
+resetMobile.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            cleanMobile(
+                this.value
+            );
 
     }
 );
 
 
 /* ======================================================
-   MESSAGE HELPERS
+   FORGOT PASSWORD PANEL
 ====================================================== */
 
-function clearMessages() {
+forgotButton.addEventListener(
+    "click",
+    function () {
 
-    errorMessage.textContent =
-        "";
+        clearMessages();
 
-    successMessage.textContent =
-        "";
-
-    errorMessage.classList.remove(
-        "show"
-    );
-
-    successMessage.classList.remove(
-        "show"
-    );
-
-}
+        resetPanel.classList.toggle(
+            "show"
+        );
 
 
-function showError(message) {
+        if (
+            resetPanel.classList.contains(
+                "show"
+            )
+        ) {
 
-    errorMessage.textContent =
-        message;
+            resetMobile.value =
+                mobileInput.value;
 
-    errorMessage.classList.add(
-        "show"
-    );
+            resetMobile.focus();
 
-    successMessage.classList.remove(
-        "show"
-    );
+        }
 
-}
-
-
-function showSuccess(message) {
-
-    successMessage.textContent =
-        message;
-
-    successMessage.classList.add(
-        "show"
-    );
-
-    errorMessage.classList.remove(
-        "show"
-    );
-
-}
+    }
+);
 
 
 /* ======================================================
-   LOADING
-====================================================== */
-
-function setLoading(loading) {
-
-    loginButton.disabled =
-        loading;
-
-    loginButton.textContent =
-        loading
-            ? "Signing in..."
-            : "Login";
-
-}
-
-
-/* ======================================================
-   LOGIN FUNCTION
+   LOGIN
 ====================================================== */
 
 async function loginUser() {
@@ -705,15 +920,14 @@ async function loginUser() {
 
 
     const mobile =
-        mobileInput.value.trim();
+        cleanMobile(
+            mobileInput.value
+        );
+
 
     const password =
         passwordInput.value;
 
-
-    /* --------------------------------------------------
-       VALIDATION
-    -------------------------------------------------- */
 
     if (
         !/^[0-9]{10}$/.test(
@@ -743,64 +957,36 @@ async function loginUser() {
     }
 
 
-    setLoading(true);
+    setLoginLoading(
+        true
+    );
 
 
     try {
 
-        /* ==================================================
-           FIND PROFILE BY MOBILE
-        ================================================== */
-
-        const userQuery =
-            query(
-                collection(
-                    db,
-                    "users"
-                ),
-
-                where(
-                    "mobile",
-                    "==",
-                    mobile
-                )
+        const result =
+            await findUserByMobile(
+                mobile
             );
 
 
-        const snapshot =
-            await getDocs(
-                userQuery
-            );
-
-
-        if (
-            snapshot.empty
-        ) {
+        if (!result) {
 
             showError(
                 "No account found with this mobile number."
             );
 
-            setLoading(false);
+            setLoginLoading(
+                false
+            );
 
             return;
         }
 
 
-        /* ==================================================
-           USER PROFILE
-        ================================================== */
-
-        const userDoc =
-            snapshot.docs[0];
-
         const userData =
-            userDoc.data();
+            result.data;
 
-
-        /* ==================================================
-           ACCOUNT STATUS
-        ================================================== */
 
         if (
             userData.status &&
@@ -812,19 +998,18 @@ async function loginUser() {
                 "This account is inactive."
             );
 
-            setLoading(false);
+            setLoginLoading(
+                false
+            );
 
             return;
         }
 
 
-        /* ==================================================
-           GET EMAIL
-        ================================================== */
-
         const email =
             String(
-                userData.email || ""
+                userData.email ||
+                ""
             )
             .trim()
             .toLowerCase();
@@ -833,18 +1018,16 @@ async function loginUser() {
         if (!email) {
 
             showError(
-                "Account email information is missing."
+                "This account has no email address. An administrator must add the account email before login or password reset can work."
             );
 
-            setLoading(false);
+            setLoginLoading(
+                false
+            );
 
             return;
         }
 
-
-        /* ==================================================
-           FIREBASE AUTHENTICATION
-        ================================================== */
 
         const credential =
             await signInWithEmailAndPassword(
@@ -858,34 +1041,24 @@ async function loginUser() {
             credential.user;
 
 
-        /* ==================================================
-           VERSION 1 ROLE
-           
-           ONLY:
-           Super Admin
-           Admin
-           User
-        ================================================== */
-
         let role =
             userData.role ||
             "User";
 
 
         if (
-            role !== "Super Admin" &&
-            role !== "Admin" &&
-            role !== "User"
+            role !==
+                "Super Admin" &&
+            role !==
+                "Admin" &&
+            role !==
+                "User"
         ) {
 
             role =
                 "User";
         }
 
-
-        /* ==================================================
-           SAVE SESSION
-        ================================================== */
 
         if (
             typeof createSession !==
@@ -931,18 +1104,10 @@ async function loginUser() {
         });
 
 
-        /* ==================================================
-           SUCCESS
-        ================================================== */
-
         showSuccess(
             "Login successful!"
         );
 
-
-        /* ==================================================
-           REDIRECT
-        ================================================== */
 
         setTimeout(
             function () {
@@ -976,18 +1141,10 @@ async function loginUser() {
 
         if (
             error.code ===
-            "auth/invalid-credential"
-        ) {
+                "auth/invalid-credential" ||
 
-            showError(
-                "Incorrect mobile number or password."
-            );
-
-        }
-
-        else if (
             error.code ===
-            "auth/invalid-login-credentials"
+                "auth/invalid-login-credentials"
         ) {
 
             showError(
@@ -1018,19 +1175,41 @@ async function loginUser() {
 
         }
 
+        else if (
+            error.code ===
+                "auth/api-key-not-valid" ||
+
+            error.code ===
+                "auth/invalid-api-key"
+        ) {
+
+            showError(
+                "Firebase configuration error: the Firebase Web API key is not valid."
+            );
+
+        }
+
         else {
 
-    showError(
-        "Firebase Error: " +
-        (error.code || "unknown") +
-        " — " +
-        (error.message || "Unknown error")
-    );
+            showError(
+                "Firebase Error: " +
+                (
+                    error.code ||
+                    "unknown"
+                ) +
+                " — " +
+                (
+                    error.message ||
+                    "Unknown error"
+                )
+            );
 
-    }
+        }
 
 
-        setLoading(false);
+        setLoginLoading(
+            false
+        );
 
     }
 
@@ -1067,8 +1246,78 @@ passwordInput.addEventListener(
     }
 );
 
-</script>
 
-</body>
+/* ======================================================
+   FORGOT PASSWORD
+====================================================== */
 
-</html>
+async function resetPassword() {
+
+    clearMessages();
+
+
+    const mobile =
+        cleanMobile(
+            resetMobile.value
+        );
+
+
+    if (
+        !/^[0-9]{10}$/.test(
+            mobile
+        )
+    ) {
+
+        showError(
+            "Please enter a valid 10 digit mobile number."
+        );
+
+        resetMobile.focus();
+
+        return;
+    }
+
+
+    setResetLoading(
+        true
+    );
+
+
+    try {
+
+        const result =
+            await findUserByMobile(
+                mobile
+            );
+
+
+        if (!result) {
+
+            showError(
+                "No account found with this mobile number."
+            );
+
+            setResetLoading(
+                false
+            );
+
+            return;
+        }
+
+
+        const userData =
+            result.data;
+
+
+        if (
+            userData.status &&
+            userData.status !==
+            "Active"
+        ) {
+
+            showError(
+                "This account is inactive."
+            );
+
+            setResetLoading(
+               
