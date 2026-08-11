@@ -5,19 +5,15 @@
 KALI LIFE ECOSYSTEM
 Page     : View Admin
 File     : view-admin.html
-Version  : 2.2
+Version  : 3.0
 Status   : Completed
-Updated  : 08-08-2026
+Updated  : 11-08-2026
 ==========================================
 -->
 
 <html lang="en">
 
 <head>
-
-    <!-- ==========================================
-         BASIC PAGE SETTINGS
-    ========================================== -->
 
     <meta charset="UTF-8">
 
@@ -46,6 +42,7 @@ Updated  : 08-08-2026
             box-sizing: border-box;
         }
 
+
         body {
             margin: 0;
             padding: 0;
@@ -54,58 +51,76 @@ Updated  : 08-08-2026
             color: #1f2937;
         }
 
+
         .page-container {
             max-width: 700px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 20px;
         }
+
 
         .admin-card {
             background: #ffffff;
             border: 1px solid #d1d5db;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             overflow: hidden;
         }
+
+
+        /* ==========================================
+           HEADER
+        ========================================== */
 
         .card-header {
             background: #1f2937;
             color: #ffffff;
-            padding: 22px;
+            padding: 25px;
         }
+
 
         .card-header h1 {
             margin: 0;
             font-size: 26px;
         }
 
+
         .card-header p {
-            margin: 7px 0 0;
+            margin: 8px 0 0;
             font-size: 14px;
             color: #d1d5db;
         }
 
+
+        /* ==========================================
+           ADMIN DETAILS
+        ========================================== */
+
         .admin-details {
             padding: 25px;
         }
+
 
         .detail-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
-            padding: 16px 0;
+            padding: 17px 0;
             border-bottom: 1px solid #e5e7eb;
         }
+
 
         .detail-row:last-child {
             border-bottom: none;
         }
 
+
         .detail-label {
             font-weight: bold;
             color: #374151;
         }
+
 
         .detail-value {
             text-align: right;
@@ -113,9 +128,14 @@ Updated  : 08-08-2026
             word-break: break-word;
         }
 
+
+        /* ==========================================
+           STATUS
+        ========================================== */
+
         .status-active {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             background: #dcfce7;
             color: #166534;
@@ -123,9 +143,10 @@ Updated  : 08-08-2026
             font-weight: bold;
         }
 
+
         .status-inactive {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             background: #fee2e2;
             color: #991b1b;
@@ -133,17 +154,39 @@ Updated  : 08-08-2026
             font-weight: bold;
         }
 
+
+        /* ==========================================
+           ERROR MESSAGE
+        ========================================== */
+
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            display: none;
+            font-weight: bold;
+        }
+
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+
         .card-footer {
             padding: 20px 25px;
             background: #f9fafb;
             border-top: 1px solid #e5e7eb;
         }
 
+
         .back-button {
             width: 100%;
-            padding: 12px 18px;
+            padding: 13px 18px;
             border: none;
-            border-radius: 6px;
+            border-radius: 7px;
             background: #1f2937;
             color: #ffffff;
             font-size: 15px;
@@ -151,40 +194,56 @@ Updated  : 08-08-2026
             cursor: pointer;
         }
 
+
         .back-button:hover {
             background: #374151;
         }
 
-        .message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-            color: #9a3412;
-            display: none;
-        }
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
 
         @media (max-width: 600px) {
 
             .page-container {
-                margin: 20px auto;
+                margin: 15px auto;
                 padding: 12px;
             }
 
-            .detail-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 7px;
+
+            .card-header {
+                padding: 20px;
             }
 
-            .detail-value {
-                text-align: left;
-            }
 
             .card-header h1 {
                 font-size: 22px;
             }
+
+
+            .admin-details {
+                padding: 20px;
+            }
+
+
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+
+            .detail-value {
+                text-align: left;
+                width: 100%;
+            }
+
+
+            .card-footer {
+                padding: 15px 20px;
+            }
+
         }
 
     </style>
@@ -197,33 +256,30 @@ Updated  : 08-08-2026
 
     <!-- ==========================================
          LOGIN & ROLE SECURITY
-         Only Super Admin can access this page
+         ONLY SUPER ADMIN CAN ACCESS
     ========================================== -->
 
     <script>
 
         checkLogin();
+
         checkRole("Super Admin");
 
     </script>
 
 
     <!-- ==========================================
-         MAIN PAGE CONTAINER
+         MAIN CONTAINER
     ========================================== -->
 
     <div class="page-container">
 
 
-        <!-- ==========================================
-             ADMIN CARD
-        ========================================== -->
-
         <div class="admin-card">
 
 
             <!-- ==========================================
-                 CARD HEADER
+                 HEADER
             ========================================== -->
 
             <div class="card-header">
@@ -243,13 +299,16 @@ Updated  : 08-08-2026
 
             <div class="admin-details">
 
+
+                <!-- ERROR -->
+
                 <div
                     id="errorMessage"
                     class="message"
                 ></div>
 
 
-                <!-- Admin ID -->
+                <!-- ADMIN ID -->
 
                 <div class="detail-row">
 
@@ -267,7 +326,7 @@ Updated  : 08-08-2026
                 </div>
 
 
-                <!-- Admin Name -->
+                <!-- NAME -->
 
                 <div class="detail-row">
 
@@ -285,7 +344,7 @@ Updated  : 08-08-2026
                 </div>
 
 
-                <!-- Admin Role -->
+                <!-- ROLE -->
 
                 <div class="detail-row">
 
@@ -303,7 +362,25 @@ Updated  : 08-08-2026
                 </div>
 
 
-                <!-- Admin Status -->
+                <!-- REPORTS TO -->
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Reports To
+                    </span>
+
+                    <span
+                        id="adminReportsTo"
+                        class="detail-value"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- STATUS -->
 
                 <div class="detail-row">
 
@@ -320,11 +397,12 @@ Updated  : 08-08-2026
 
                 </div>
 
+
             </div>
 
 
             <!-- ==========================================
-                 BACK TO ADMIN LIST
+                 FOOTER
             ========================================== -->
 
             <div class="card-footer">
@@ -334,10 +412,11 @@ Updated  : 08-08-2026
                     class="back-button"
                     onclick="goBack()"
                 >
-                    Back to Admin List
+                    ← Back to Admin List
                 </button>
 
             </div>
+
 
         </div>
 
@@ -352,78 +431,143 @@ Updated  : 08-08-2026
 
 
         // ==========================================
-        // GET ADMIN ID FROM URL
+        // GET INDEX FROM URL
         // ==========================================
 
         const params =
-            new URLSearchParams(window.location.search);
-
-        const adminId =
-            params.get("id");
-
-
-        // ==========================================
-        // DEFAULT ADMIN INFORMATION
-        // ==========================================
-
-        let adminName = "Super Admin";
-
-        let adminRole = "Super Admin";
-
-        let adminStatus = "Active";
-
-
-        // ==========================================
-        // DISPLAY ADMIN INFORMATION
-        // ==========================================
-
-        document.getElementById("adminId")
-            .textContent = adminId || "Not Available";
-
-        document.getElementById("adminName")
-            .textContent = adminName;
-
-        document.getElementById("adminRole")
-            .textContent = adminRole;
-
-
-        // ==========================================
-        // DISPLAY ADMIN STATUS
-        // ==========================================
-
-        const statusElement =
-            document.getElementById("adminStatus");
-
-        statusElement.textContent = adminStatus;
-
-        if (adminStatus === "Active") {
-
-            statusElement.classList.add(
-                "status-active"
+            new URLSearchParams(
+                window.location.search
             );
+
+
+        const adminIndex =
+            Number(params.get("id"));
+
+
+        // ==========================================
+        // GET ADMIN DATA
+        // ==========================================
+
+        const admins =
+            JSON.parse(
+                localStorage.getItem("admins")
+            ) || [];
+
+
+        // ==========================================
+        // ERROR ELEMENT
+        // ==========================================
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+
+        // ==========================================
+        // CHECK ADMIN INDEX
+        // ==========================================
+
+        if (
+            !Number.isInteger(adminIndex) ||
+            adminIndex < 0 ||
+            adminIndex >= admins.length
+        ) {
+
+            errorMessage.textContent =
+                "Admin information was not found.";
+
+            errorMessage.style.display =
+                "block";
 
         } else {
 
-            statusElement.classList.add(
-                "status-inactive"
-            );
 
-        }
+            // ==========================================
+            // GET SELECTED ADMIN
+            // ==========================================
+
+            const admin =
+                admins[adminIndex];
 
 
-        // ==========================================
-        // CHECK ADMIN ID
-        // ==========================================
+            // ==========================================
+            // ADMIN ID
+            // ==========================================
 
-        if (!adminId) {
+            document.getElementById(
+                "adminId"
+            ).textContent =
+                admin.id || "-";
 
-            const errorMessage =
-                document.getElementById("errorMessage");
 
-            errorMessage.textContent =
-                "Admin ID was not provided.";
+            // ==========================================
+            // ADMIN NAME
+            // ==========================================
 
-            errorMessage.style.display = "block";
+            document.getElementById(
+                "adminName"
+            ).textContent =
+                admin.fullName || "-";
+
+
+            // ==========================================
+            // ADMIN ROLE
+            // ==========================================
+
+            document.getElementById(
+                "adminRole"
+            ).textContent =
+                admin.role || "-";
+
+
+            // ==========================================
+            // REPORTS TO
+            // ==========================================
+
+            document.getElementById(
+                "adminReportsTo"
+            ).textContent =
+                admin.reportsTo || "-";
+
+
+            // ==========================================
+            // ADMIN STATUS
+            // ==========================================
+
+            const statusElement =
+                document.getElementById(
+                    "adminStatus"
+                );
+
+
+            const status =
+                admin.status || "Inactive";
+
+
+            statusElement.textContent =
+                status;
+
+
+            // ==========================================
+            // STATUS STYLE
+            // ==========================================
+
+            if (
+                status.toLowerCase() === "active"
+            ) {
+
+                statusElement.classList.add(
+                    "status-active"
+                );
+
+            } else {
+
+                statusElement.classList.add(
+                    "status-inactive"
+                );
+
+            }
 
         }
 
