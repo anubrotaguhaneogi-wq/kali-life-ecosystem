@@ -1321,3 +1321,193 @@ async function resetPassword() {
 
             setResetLoading(
                
+        if (
+            userData.status &&
+            userData.status !==
+            "Active"
+        ) {
+
+            showError(
+                "This account is inactive."
+            );
+
+            setResetLoading(
+                false
+            );
+
+            return;
+
+        }
+
+
+        /* ======================================================
+           GET ACCOUNT EMAIL
+        ====================================================== */
+
+        const email =
+            String(
+                userData.email ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (!email) {
+
+            showError(
+                "This account has no email address. Please contact the administrator to add an email address."
+            );
+
+            setResetLoading(
+                false
+            );
+
+            return;
+
+        }
+
+
+        /* ======================================================
+           SEND FIREBASE PASSWORD RESET EMAIL
+        ====================================================== */
+
+        await sendPasswordResetEmail(
+            auth,
+            email
+        );
+
+
+        showSuccess(
+            "Password reset link has been sent to your registered email address."
+        );
+
+
+        setResetLoading(
+            false
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Password Reset Error:",
+            error
+        );
+
+
+        /* ======================================================
+           PASSWORD RESET ERROR HANDLING
+        ====================================================== */
+
+        if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            showError(
+                "No Firebase account was found for this email address."
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            showError(
+                "The account email address is invalid."
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            showError(
+                "Too many reset requests. Please try again later."
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/network-request-failed"
+        ) {
+
+            showError(
+                "Network error. Please check your internet connection and try again."
+            );
+
+        }
+
+        else {
+
+            showError(
+                "Password reset failed: " +
+                (
+                    error.code ||
+                    "unknown"
+                ) +
+                " — " +
+                (
+                    error.message ||
+                    "Unknown error"
+                )
+            );
+
+        }
+
+
+        setResetLoading(
+            false
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   RESET BUTTON
+====================================================== */
+
+resetButton.addEventListener(
+    "click",
+    resetPassword
+);
+
+
+/* ======================================================
+   ENTER KEY FOR RESET PASSWORD
+====================================================== */
+
+resetMobile.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key ===
+            "Enter"
+        ) {
+
+            resetPassword();
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   FINISH
+====================================================== */
+
+</script>
+
+</body>
+
+</html>
