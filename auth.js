@@ -268,7 +268,10 @@ if (loginForm) {
           "kaliUserRole",
           user.role || "user"
         );
-
+localStorage.setItem(
+  "kaliUserStatus",
+  user.status || "Active"
+);
 
         // ----------------------------------------------
         // LOGIN SUCCESS
