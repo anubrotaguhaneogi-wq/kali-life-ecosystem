@@ -343,3 +343,123 @@ window.logoutUser = function () {
   window.location.href =
     "login.html";
 };
+// ======================================================
+// CURRENT USER
+// ======================================================
+
+function getCurrentUser() {
+
+  const loggedIn =
+    localStorage.getItem("kaliUserLoggedIn");
+
+  if (loggedIn !== "true") {
+    return null;
+  }
+
+  return {
+    id: localStorage.getItem("kaliUserId") || "",
+    mobile: localStorage.getItem("kaliUserMobile") || "",
+    name: localStorage.getItem("kaliUserName") || "",
+    role: localStorage.getItem("kaliUserRole") || "user",
+    status: localStorage.getItem("kaliUserStatus") || "Active"
+  };
+}
+
+
+// ======================================================
+// CHECK ADMIN ACCESS
+// ======================================================
+
+function checkAdminAccess() {
+
+  const user = getCurrentUser();
+
+  if (!user) {
+
+    window.location.href =
+      "login.html";
+
+    return false;
+  }
+
+  const role =
+    String(user.role || "")
+      .trim()
+      .toLowerCase();
+
+  if (!role || role === "user") {
+
+    alert(
+      "Admin access required."
+    );
+
+    window.location.href =
+      "dashboard.html";
+
+    return false;
+  }
+
+  if (
+    String(user.status || "")
+      .trim()
+      .toLowerCase() === "blocked"
+  ) {
+
+    alert(
+      "Your account is blocked."
+    );
+
+    window.location.href =
+      "login.html";
+
+    return false;
+  }
+
+  return true;
+}
+
+
+// ======================================================
+// GENERAL LOGOUT
+// ======================================================
+
+function logout() {
+
+  localStorage.removeItem(
+    "kaliUserLoggedIn"
+  );
+
+  localStorage.removeItem(
+    "kaliUserId"
+  );
+
+  localStorage.removeItem(
+    "kaliUserMobile"
+  );
+
+  localStorage.removeItem(
+    "kaliUserName"
+  );
+
+  localStorage.removeItem(
+    "kaliUserRole"
+  );
+
+  localStorage.removeItem(
+    "kaliUserStatus"
+  );
+
+  window.location.href =
+    "login.html";
+}
+
+
+// ======================================================
+// EXPORT AUTH FUNCTIONS
+// ======================================================
+
+export {
+  getCurrentUser,
+  checkAdminAccess,
+  logout
+};
