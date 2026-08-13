@@ -1,32 +1,59 @@
 // ======================================================
 // KALI LIFE ECOSYSTEM
-// GENERAL USER LOGIN
-// Mobile Number + Password
+// GENERAL USER AUTHENTICATION
+// Mobile Number + Firebase Authentication
 // ======================================================
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+// ======================================================
+// FIREBASE IMPORTS
+// ======================================================
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
   getFirestore,
   collection,
   getDocs
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
 // ======================================================
-// FIREBASE CONFIG
-// ======================================================
-// আপনার পুরনো auth.js-এর firebaseConfig-এর আসল
-// values এখানে বসান.
+// FIREBASE CONFIGURATION
+// Same configuration used by register.html
 // ======================================================
 
 const firebaseConfig = {
-  apiKey: "YOUR_EXISTING_API_KEY",
-  authDomain: "kali-life-ecosystem.firebaseapp.com",
-  projectId: "kali-life-ecosystem",
-  storageBucket: "YOUR_EXISTING_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_EXISTING_MESSAGING_SENDER_ID",
-  appId: "YOUR_EXISTING_APP_ID"
+
+  apiKey:
+    "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+
+  authDomain:
+    "kali-life-ecosystem.firebaseapp.com",
+
+  projectId:
+    "kali-life-ecosystem",
+
+  storageBucket:
+    "kali-life-ecosystem.firebasestorage.app",
+
+  messagingSenderId:
+    "734170546737",
+
+  appId:
+    "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+  measurementId:
+    "G-LBEY0W7RX3"
+
 };
 
 
@@ -34,397 +61,237 @@ const firebaseConfig = {
 // FIREBASE INITIALIZE
 // ======================================================
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
 
 
 // ======================================================
-// MOBILE NORMALIZE
+// NORMALIZE MOBILE
 // ======================================================
 
 function normalizeMobile(value) {
 
-  let mobile = String(value || "")
-    .trim()
-    .replace(/\D/g, "");
+  let mobile =
+    String(value || "")
+      .trim()
+      .replace(/\D/g, "");
 
-  // +91XXXXXXXXXX
-  if (mobile.startsWith("91") && mobile.length === 12) {
-    mobile = mobile.substring(2);
+  // Convert +91XXXXXXXXXX to XXXXXXXXXX
+  if (
+    mobile.startsWith("91") &&
+    mobile.length === 12
+  ) {
+
+    mobile =
+      mobile.substring(2);
+
   }
 
   return mobile;
+
 }
 
 
 // ======================================================
-// FIND USER
+// FIND USER BY MOBILE
 // ======================================================
 
 async function findUserByMobile(mobile) {
 
-  const usersRef = collection(db, "users");
+  const usersRef =
+    collection(db, "users");
 
-  const snapshot = await getDocs(usersRef);
+  const snapshot =
+    await getDocs(usersRef);
 
-  for (const userDoc of snapshot.docs) {
+  for (
+    const userDoc of snapshot.docs
+  ) {
 
-    const userData = userDoc.data();
+    const data =
+      userDoc.data();
 
-    if (!userData.mobile) {
+    if (!data.mobile) {
       continue;
     }
 
     const storedMobile =
-      normalizeMobile(userData.mobile);
+      normalizeMobile(
+        data.mobile
+      );
 
-    if (storedMobile === mobile) {
+    if (
+      storedMobile === mobile
+    ) {
 
       return {
         id: userDoc.id,
-        ...userData
+        ...data
       };
 
     }
+
   }
 
   return null;
+
 }
 
 
 // ======================================================
-// LOGIN FORM
+// SAVE USER SESSION
 // ======================================================
 
-const loginForm =
-  document.getElementById("loginForm");
-
-const message =
-  document.getElementById("message");
-
-
-if (loginForm) {
-
-  loginForm.addEventListener(
-    "submit",
-    async function (event) {
-
-      event.preventDefault();
-
-
-      // ------------------------------------------------
-      // GET INPUT
-      // ------------------------------------------------
-
-      const mobileInput =
-        document.getElementById("mobile").value;
-
-      const passwordInput =
-        document.getElementById("password").value;
-
-
-      const mobile =
-        normalizeMobile(mobileInput);
-
-
-      // ------------------------------------------------
-      // CLEAR MESSAGE
-      // ------------------------------------------------
-
-      message.textContent = "";
-      message.style.color = "#d00";
-
-
-      // ------------------------------------------------
-      // MOBILE VALIDATION
-      // ------------------------------------------------
-
-      if (!/^\d{10}$/.test(mobile)) {
-
-        message.textContent =
-          "Please enter a valid 10-digit mobile number.";
-
-        return;
-      }
-
-
-      // ------------------------------------------------
-      // PASSWORD VALIDATION
-      // ------------------------------------------------
-
-      if (!passwordInput) {
-
-        message.textContent =
-          "Please enter your password.";
-
-        return;
-      }
-
-
-      message.style.color = "#555";
-
-      message.textContent =
-        "Checking login...";
-
-
-      try {
-
-        // ----------------------------------------------
-        // FIND USER BY MOBILE
-        // ----------------------------------------------
-
-        const user =
-          await findUserByMobile(mobile);
-
-
-        if (!user) {
-
-          message.style.color = "#d00";
-
-          message.textContent =
-            "Mobile number not found.";
-
-          return;
-        }
-
-
-        // ----------------------------------------------
-        // CHECK PASSWORD
-        // ----------------------------------------------
-
-        if (
-          user.password === undefined ||
-          user.password === null
-        ) {
-
-          message.style.color = "#d00";
-
-          message.textContent =
-            "Password information is missing.";
-
-          return;
-        }
-
-
-        if (
-          String(user.password) !==
-          String(passwordInput)
-        ) {
-
-          message.style.color = "#d00";
-
-          message.textContent =
-            "Incorrect password.";
-
-          return;
-        }
-
-
-        // ----------------------------------------------
-        // ACCOUNT STATUS
-        // ----------------------------------------------
-
-        if (
-          user.status &&
-          String(user.status).toLowerCase() ===
-          "blocked"
-        ) {
-
-          message.style.color = "#d00";
-
-          message.textContent =
-            "This account is blocked.";
-
-          return;
-        }
-
-
-        // ----------------------------------------------
-        // SAVE GENERAL USER SESSION
-        // ----------------------------------------------
-
-        localStorage.setItem(
-          "kaliUserLoggedIn",
-          "true"
-        );
-
-        localStorage.setItem(
-          "kaliUserId",
-          user.id
-        );
-
-        localStorage.setItem(
-          "kaliUserMobile",
-          mobile
-        );
-
-        localStorage.setItem(
-          "kaliUserName",
-          user.name || ""
-        );
-
-        localStorage.setItem(
-          "kaliUserRole",
-          user.role || "user"
-        );
-localStorage.setItem(
-  "kaliUserStatus",
-  user.status || "Active"
-);
-
-        // ----------------------------------------------
-        // LOGIN SUCCESS
-        // ----------------------------------------------
-
-        message.style.color = "green";
-
-        message.textContent =
-          "Login successful. Opening system...";
-
-
-        // ----------------------------------------------
-        // GENERAL USER DASHBOARD
-        // ----------------------------------------------
-
-        setTimeout(function () {
-
-          window.location.href =
-            "dashboard.html";
-
-        }, 500);
-
-
-      } catch (error) {
-
-        console.error(
-          "GENERAL LOGIN ERROR:",
-          error
-        );
-
-        message.style.color = "#d00";
-
-        message.textContent =
-          "Login failed. Please try again.";
-
-      }
-
-    }
-  );
-}
-
-
-// ======================================================
-// GENERAL USER LOGOUT
-// ======================================================
-
-window.logoutUser = function () {
-
-  localStorage.removeItem(
-    "kaliUserLoggedIn"
-  );
-
-  localStorage.removeItem(
-    "kaliUserId"
-  );
-
-  localStorage.removeItem(
-    "kaliUserMobile"
-  );
-
-  localStorage.removeItem(
-    "kaliUserName"
-  );
-
-  localStorage.removeItem(
-    "kaliUserRole"
-  );
-
-  window.location.href =
-    "login.html";
-};
-// ======================================================
-// CURRENT USER
-// ======================================================
-
-function getCurrentUser() {
-
-  const loggedIn =
-    localStorage.getItem("kaliUserLoggedIn");
-
-  if (loggedIn !== "true") {
-    return null;
-  }
-
-  return {
-    id: localStorage.getItem("kaliUserId") || "",
-    mobile: localStorage.getItem("kaliUserMobile") || "",
-    name: localStorage.getItem("kaliUserName") || "",
-    role: localStorage.getItem("kaliUserRole") || "user",
-    status: localStorage.getItem("kaliUserStatus") || "Active"
-  };
-}
-
-
-// ======================================================
-// CHECK ADMIN ACCESS
-// ======================================================
-
-function checkAdminAccess() {
-
-  const user = getCurrentUser();
-
-  if (!user) {
-
-    window.location.href =
-      "login.html";
-
-    return false;
-  }
+function saveUserSession(
+  userData,
+  firebaseUser
+) {
+
+  const name =
+    userData.name ||
+    firebaseUser.displayName ||
+    "";
+
+  const mobile =
+    normalizeMobile(
+      userData.mobile || ""
+    );
+
+  const email =
+    userData.email ||
+    firebaseUser.email ||
+    "";
 
   const role =
-    String(user.role || "")
-      .trim()
-      .toLowerCase();
+    userData.role ||
+    "User";
 
-  if (!role || role === "user") {
+  const status =
+    userData.status ||
+    "Active";
 
-    alert(
-      "Admin access required."
-    );
 
-    window.location.href =
-      "dashboard.html";
+  // ----------------------------------------------------
+  // CURRENT DASHBOARD SESSION
+  // ----------------------------------------------------
 
-    return false;
-  }
+  localStorage.setItem(
+    "isLoggedIn",
+    "true"
+  );
 
-  if (
-    String(user.status || "")
-      .trim()
-      .toLowerCase() === "blocked"
-  ) {
+  localStorage.setItem(
+    "userUid",
+    firebaseUser.uid
+  );
 
-    alert(
-      "Your account is blocked."
-    );
+  localStorage.setItem(
+    "userName",
+    name
+  );
 
-    window.location.href =
-      "login.html";
+  localStorage.setItem(
+    "userMobile",
+    mobile
+  );
 
-    return false;
-  }
+  localStorage.setItem(
+    "userEmail",
+    email
+  );
 
-  return true;
+  localStorage.setItem(
+    "userRole",
+    role
+  );
+
+  localStorage.setItem(
+    "userStatus",
+    status
+  );
+
+
+  // ----------------------------------------------------
+  // COMPATIBILITY SESSION
+  // Keeps older KALI USER pages working
+  // ----------------------------------------------------
+
+  localStorage.setItem(
+    "kaliUserLoggedIn",
+    "true"
+  );
+
+  localStorage.setItem(
+    "kaliUserId",
+    firebaseUser.uid
+  );
+
+  localStorage.setItem(
+    "kaliUserMobile",
+    mobile
+  );
+
+  localStorage.setItem(
+    "kaliUserName",
+    name
+  );
+
+  localStorage.setItem(
+    "kaliUserRole",
+    role
+  );
+
+  localStorage.setItem(
+    "kaliUserStatus",
+    status
+  );
+
 }
 
 
 // ======================================================
-// GENERAL LOGOUT
+// CLEAR USER SESSION
 // ======================================================
 
-function logout() {
+function clearUserSession() {
 
+  // Current session
+  localStorage.removeItem(
+    "isLoggedIn"
+  );
+
+  localStorage.removeItem(
+    "userUid"
+  );
+
+  localStorage.removeItem(
+    "userName"
+  );
+
+  localStorage.removeItem(
+    "userMobile"
+  );
+
+  localStorage.removeItem(
+    "userEmail"
+  );
+
+  localStorage.removeItem(
+    "userRole"
+  );
+
+  localStorage.removeItem(
+    "userStatus"
+  );
+
+
+  // Older session
   localStorage.removeItem(
     "kaliUserLoggedIn"
   );
@@ -449,17 +316,574 @@ function logout() {
     "kaliUserStatus"
   );
 
-  window.location.href =
-    "login.html";
 }
 
 
 // ======================================================
-// EXPORT AUTH FUNCTIONS
+// LOGIN FORM
+// ======================================================
+
+const loginForm =
+  document.getElementById(
+    "loginForm"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+
+if (loginForm) {
+
+  loginForm.addEventListener(
+    "submit",
+    async function (event) {
+
+      event.preventDefault();
+
+
+      // ------------------------------------------------
+      // GET INPUT
+      // ------------------------------------------------
+
+      const mobileInput =
+        document.getElementById(
+          "mobile"
+        ).value;
+
+      const passwordInput =
+        document.getElementById(
+          "password"
+        ).value;
+
+
+      const mobile =
+        normalizeMobile(
+          mobileInput
+        );
+
+
+      // ------------------------------------------------
+      // CLEAR MESSAGE
+      // ------------------------------------------------
+
+      message.textContent = "";
+
+      message.style.color =
+        "#d00";
+
+
+      // ------------------------------------------------
+      // MOBILE VALIDATION
+      // ------------------------------------------------
+
+      if (
+        !/^\d{10}$/.test(mobile)
+      ) {
+
+        message.textContent =
+          "Please enter a valid 10-digit mobile number.";
+
+        return;
+
+      }
+
+
+      // ------------------------------------------------
+      // PASSWORD VALIDATION
+      // ------------------------------------------------
+
+      if (!passwordInput) {
+
+        message.textContent =
+          "Please enter your password.";
+
+        return;
+
+      }
+
+
+      message.style.color =
+        "#555";
+
+      message.textContent =
+        "Checking account...";
+
+
+      try {
+
+        // ----------------------------------------------
+        // FIND FIRESTORE USER PROFILE
+        // ----------------------------------------------
+
+        const user =
+          await findUserByMobile(
+            mobile
+          );
+
+
+        if (!user) {
+
+          message.style.color =
+            "#d00";
+
+          message.textContent =
+            "Mobile number not found.";
+
+          return;
+
+        }
+
+
+        // ----------------------------------------------
+        // STATUS CHECK
+        // ----------------------------------------------
+
+        const status =
+          String(
+            user.status ||
+            "Active"
+          )
+          .trim()
+          .toLowerCase();
+
+
+        if (
+          status === "blocked"
+        ) {
+
+          message.style.color =
+            "#d00";
+
+          message.textContent =
+            "This account is blocked.";
+
+          return;
+
+        }
+
+
+        // ----------------------------------------------
+        // EMAIL REQUIRED
+        // Firebase Authentication uses email/password
+        // ----------------------------------------------
+
+        const email =
+          String(
+            user.email || ""
+          )
+          .trim()
+          .toLowerCase();
+
+
+        if (!email) {
+
+          message.style.color =
+            "#d00";
+
+          message.textContent =
+            "This account needs to be migrated to secure login.";
+
+          return;
+
+        }
+
+
+        // ----------------------------------------------
+        // FIREBASE AUTH LOGIN
+        // ----------------------------------------------
+
+        message.style.color =
+          "#555";
+
+        message.textContent =
+          "Signing in securely...";
+
+
+        const userCredential =
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            passwordInput
+          );
+
+
+        const firebaseUser =
+          userCredential.user;
+
+
+        // ----------------------------------------------
+        // UID CHECK
+        // ----------------------------------------------
+
+        if (
+          user.uid &&
+          String(user.uid) !==
+          String(firebaseUser.uid)
+        ) {
+
+          await signOut(auth);
+
+          message.style.color =
+            "#d00";
+
+          message.textContent =
+            "Account security verification failed.";
+
+          return;
+
+        }
+
+
+        // ----------------------------------------------
+        // SAVE SESSION
+        // ----------------------------------------------
+
+        saveUserSession(
+          user,
+          firebaseUser
+        );
+
+
+        // ----------------------------------------------
+        // SUCCESS
+        // ----------------------------------------------
+
+        message.style.color =
+          "green";
+
+        message.textContent =
+          "Login successful. Opening system...";
+
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "dashboard.html";
+
+          },
+          500
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "GENERAL USER LOGIN ERROR:",
+          error
+        );
+
+
+        message.style.color =
+          "#d00";
+
+
+        // ----------------------------------------------
+        // FIREBASE ERROR HANDLING
+        // ----------------------------------------------
+
+        if (
+          error.code ===
+          "auth/invalid-credential"
+        ) {
+
+          message.textContent =
+            "Incorrect password or login information.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/wrong-password"
+        ) {
+
+          message.textContent =
+            "Incorrect password.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/user-not-found"
+        ) {
+
+          message.textContent =
+            "Firebase account not found.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/user-disabled"
+        ) {
+
+          message.textContent =
+            "This account has been disabled.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/too-many-requests"
+        ) {
+
+          message.textContent =
+            "Too many login attempts. Please try again later.";
+
+        }
+
+        else {
+
+          message.textContent =
+            "Login failed. Please try again.";
+
+        }
+
+      }
+
+    }
+  );
+
+}
+
+
+// ======================================================
+// CHECK LOGIN
+// ======================================================
+
+function checkLogin() {
+
+  const loggedIn =
+    localStorage.getItem(
+      "isLoggedIn"
+    );
+
+  const uid =
+    localStorage.getItem(
+      "userUid"
+    );
+
+
+  if (
+    loggedIn !== "true" ||
+    !uid
+  ) {
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+// ======================================================
+// GET CURRENT USER
+// ======================================================
+
+function getCurrentUser() {
+
+  const loggedIn =
+    localStorage.getItem(
+      "isLoggedIn"
+    );
+
+
+  if (
+    loggedIn !== "true"
+  ) {
+
+    return null;
+
+  }
+
+
+  return {
+
+    uid:
+      localStorage.getItem(
+        "userUid"
+      ) || "",
+
+    name:
+      localStorage.getItem(
+        "userName"
+      ) || "",
+
+    mobile:
+      localStorage.getItem(
+        "userMobile"
+      ) || "",
+
+    email:
+      localStorage.getItem(
+        "userEmail"
+      ) || "",
+
+    role:
+      localStorage.getItem(
+        "userRole"
+      ) || "User",
+
+    status:
+      localStorage.getItem(
+        "userStatus"
+      ) || "Active"
+
+  };
+
+}
+
+
+// ======================================================
+// CHECK ADMIN ACCESS
+// ======================================================
+
+function checkAdminAccess() {
+
+  const user =
+    getCurrentUser();
+
+
+  if (!user) {
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  const role =
+    String(
+      user.role || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  if (
+    !role ||
+    role === "user"
+  ) {
+
+    alert(
+      "Admin access required."
+    );
+
+    window.location.href =
+      "dashboard.html";
+
+    return false;
+
+  }
+
+
+  if (
+    String(
+      user.status || ""
+    )
+    .trim()
+    .toLowerCase() ===
+    "blocked"
+  ) {
+
+    alert(
+      "Your account is blocked."
+    );
+
+    clearUserSession();
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+// ======================================================
+// LOGOUT
+// ======================================================
+
+async function logout() {
+
+  try {
+
+    await signOut(
+      auth
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Firebase logout error:",
+      error
+    );
+
+  }
+
+
+  clearUserSession();
+
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+// ======================================================
+// GLOBAL FUNCTIONS
+// ======================================================
+
+window.checkLogin =
+  checkLogin;
+
+window.getCurrentUser =
+  getCurrentUser;
+
+window.checkAdminAccess =
+  checkAdminAccess;
+
+window.logout =
+  logout;
+
+window.logoutUser =
+  logout;
+
+
+// ======================================================
+// EXPORT FUNCTIONS
 // ======================================================
 
 export {
+
+  checkLogin,
+
   getCurrentUser,
+
   checkAdminAccess,
-  logout
+
+  logout,
+
+  findUserByMobile,
+
+  normalizeMobile
+
 };
