@@ -1,140 +1,1283 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Core Admin Dashboard - KALI LIFE ECOSYSTEM</title>
+<html lang="bn">
 
-<script src="auth.js"></script>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#166534">
+
+<title>Create Admin - KALI LIFE ECOSYSTEM</title>
+
 
 <style>
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#0f172a;
-color:white;
+* {
+    box-sizing: border-box;
 }
 
-header{
-background:#008000;
-padding:20px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    padding: 25px 15px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #052e16,
+            #064e3b,
+            #0f172a
+        );
+
+    color: #0f172a;
 }
 
-.container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-padding:20px;
+
+.container {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: 0 auto;
 }
 
-.card{
-background:#1f2937;
-padding:20px;
-border-radius:12px;
-text-align:center;
-cursor:pointer;
-transition:0.3s;
+
+.header {
+
+    text-align: center;
+
+    color: #ffffff;
+
+    margin-bottom: 22px;
 }
 
-.card:hover{
-background:#2563eb;
-transform:scale(1.03);
+.header h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    font-weight: 800;
 }
 
-.card h3{
-margin:10px 0;
+.header p {
+
+    margin: 7px 0 0;
+
+    color:
+        rgba(255,255,255,0.75);
+
+    font-size: 13px;
 }
 
-.card p{
-font-size:14px;
-color:#d1d5db;
+
+.card {
+
+    background: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,0.28);
+}
+
+
+.section-title {
+
+    margin: 0 0 20px;
+
+    padding-bottom: 10px;
+
+    border-bottom:
+        2px solid
+        #dcfce7;
+
+    color: #166534;
+
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+
+.form-group {
+
+    margin-bottom: 18px;
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 13px;
+
+    border:
+        1px solid
+        #cbd5e1;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+input:focus,
+select:focus {
+
+    border-color:
+        #16a34a;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(22,163,74,0.12);
+}
+
+
+.password-box {
+
+    position: relative;
+}
+
+.password-box input {
+
+    padding-right: 70px;
+}
+
+.password-toggle {
+
+    position: absolute;
+
+    right: 7px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #166534;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    padding: 7px 9px;
+}
+
+
+.role-info {
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    border-radius: 9px;
+
+    background:
+        #f0fdf4;
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    color: #166534;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+.security-info {
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    border-radius: 9px;
+
+    background:
+        #eff6ff;
+
+    border:
+        1px solid
+        #bfdbfe;
+
+    color: #1e40af;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+.buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+button {
+
+    flex: 1;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.create-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
+        );
+
+    color: #ffffff;
+}
+
+.create-button:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+.reset-button {
+
+    background:
+        #64748b;
+
+    color: #ffffff;
+}
+
+
+.message {
+
+    display: none;
+
+    margin-top: 18px;
+
+    padding: 12px;
+
+    border-radius: 9px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.45;
+}
+
+.message.show {
+
+    display: block;
+}
+
+.error {
+
+    background:
+        #fef2f2;
+
+    border:
+        1px solid
+        #fecaca;
+
+    color:
+        #b91c1c;
+}
+
+.success {
+
+    background:
+        #f0fdf4;
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    color:
+        #166534;
+}
+
+
+.links {
+
+    margin-top: 22px;
+
+    text-align: center;
+}
+
+.links a {
+
+    display: inline-block;
+
+    margin: 5px 10px;
+
+    color: #166534;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding:
+            15px 10px;
+    }
+
+    .card {
+
+        padding:
+            22px 18px;
+
+        border-radius:
+            14px;
+    }
+
+    .header h1 {
+
+        font-size: 24px;
+    }
+
+    .buttons {
+
+        flex-direction: column;
+    }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<script>
-checkLogin();
-checkRole("Core Admin");
-</script>
 
-<header>
-CORE ADMIN DASHBOARD
-</header>
-<div style="background:#1e293b;padding:15px;border-radius:10px;margin:20px;text-align:center;">
-<h2>Welcome, Core Admin</h2>
-<p>Manage your departments, customers, sales and reports from one dashboard.</p>
-</div>
-  <div style="display:flex;gap:15px;margin:20px;flex-wrap:wrap;justify-content:center;">
-
-<div style="background:#16a34a;padding:15px;border-radius:10px;min-width:180px;text-align:center;">
-<h3>Total Departments</h3>
-<h2>0</h2>
-</div>
-
-<div style="background:#2563eb;padding:15px;border-radius:10px;min-width:180px;text-align:center;">
-<h3>Total Customers</h3>
-<h2>0</h2>
-</div>
-
-<div style="background:#f59e0b;padding:15px;border-radius:10px;min-width:180px;text-align:center;">
-<h3>Total Sales</h3>
-<h2>₹0</h2>
-</div>
-
-<div style="background:#dc2626;padding:15px;border-radius:10px;min-width:180px;text-align:center;">
-<h3>Pending Agreements</h3>
-<h2>0</h2>
-</div>
-
-  </div>
 <div class="container">
-  <div class="card" onclick="location.href='department-admin-list.html'">
-<h3>👥 Department Admin</h3>
-<p>Create, View, Edit and Manage Department Admins</p>
+
+
+    <div class="header">
+
+        <h1>
+            🔐 Create Admin
+        </h1>
+
+        <p>
+            KALI LIFE ECOSYSTEM — Admin Management
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <h2 class="section-title">
+            Admin Information
+        </h2>
+
+
+        <div class="role-info">
+
+            <strong>Admin Creation:</strong>
+            Only Super Admin can create a new Admin account.
+
+        </div>
+
+
+        <div
+            id="securityInfo"
+            class="security-info">
+
+            Checking Super Admin authorization...
+
+        </div>
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+            <label for="name">
+                Full Name
+            </label>
+
+            <input
+                id="name"
+                type="text"
+                autocomplete="name"
+                placeholder="Enter admin full name">
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                id="email"
+                type="email"
+                autocomplete="email"
+                placeholder="Enter admin email">
+
+        </div>
+
+
+        <!-- MOBILE -->
+
+        <div class="form-group">
+
+            <label for="mobile">
+                Mobile Number
+            </label>
+
+            <input
+                id="mobile"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                autocomplete="tel"
+                placeholder="Enter 10 digit mobile number">
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-box">
+
+                <input
+                    id="password"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Minimum 8 characters">
+
+                <button
+                    type="button"
+                    id="passwordToggle"
+                    class="password-toggle">
+
+                    Show
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- DEPARTMENT / POST -->
+
+        <div class="form-group">
+
+            <label for="department">
+                Department / Post
+            </label>
+
+            <select id="department">
+
+                <option value="">
+                    Select Department / Post
+                </option>
+
+                <option value="Sales / Marketplace">
+                    Sales / Marketplace
+                </option>
+
+                <option value="Marketing">
+                    Marketing
+                </option>
+
+                <option value="Service">
+                    Service
+                </option>
+
+                <option value="Agriculture">
+                    Agriculture
+                </option>
+
+                <option value="Astrology">
+                    Astrology
+                </option>
+
+                <option value="Education">
+                    Education
+                </option>
+
+                <option value="Technical">
+                    Technical
+                </option>
+
+                <option value="Accounts & Finance">
+                    Accounts & Finance
+                </option>
+
+                <option value="Customer Service">
+                    Customer Service
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="form-group">
+
+            <label for="status">
+                Account Status
+            </label>
+
+            <select id="status">
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Inactive">
+                    Inactive
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button
+                type="button"
+                id="createButton"
+                class="create-button"
+                disabled>
+
+                Checking Authorization...
+
+            </button>
+
+
+            <button
+                type="button"
+                id="resetButton"
+                class="reset-button">
+
+                Reset
+
+            </button>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <!-- LINKS -->
+
+        <div class="links">
+
+            <a href="admin-dashboard.html">
+                ← Admin Dashboard
+            </a>
+
+            <a href="admin-list.html">
+                Admin List
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="card" onclick="location.href='customer-list.html'">
-<h3>👤 Customer Management</h3>
-<p>Manage Customer Registration & Information</p>
-</div>
 
-<div class="card" onclick="location.href='purchase.html'">
-<h3>📦 Purchase</h3>
-<p>Manage Purchase Records</p>
-</div>
+<script type="module">
 
-<div class="card" onclick="location.href='sales.html'">
-<h3>💰 Sales</h3>
-<p>Manage Sales Records</p>
-</div>
 
-<div class="card" onclick="location.href='agreement-list.html'">
-<h3>📄 Agreements</h3>
-<p>Manage All Agreements</p>
-</div>
+/* ======================================================
+   FIREBASE IMPORTS
+====================================================== */
 
-<div class="card" onclick="location.href='reports.html'">
-<h3>📊 Reports</h3>
-<p>Business Reports & Analytics</p>
-</div>
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-<div class="card" onclick="location.href='settings.html'">
-<h3>⚙️ Settings</h3>
-<p>Core Admin Settings</p>
-</div>
 
-<div class="card" onclick="location.href='logout.html'">
-<h3>🚪 Logout</h3>
-<p>Secure Logout</p>
-</div>
-</div>
+import {
+    getAuth,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signOut
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-</body>
-</html>
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* ======================================================
+   FIREBASE CONFIG
+====================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+
+};
+
+
+/* ======================================================
+   MAIN APP
+====================================================== */
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const auth =
+    getAuth(
+        app
+    );
+
+
+const db =
+    getFirestore(
+        app
+    );
+
+
+/* ======================================================
+   SECONDARY APP
+   Used only for creating the new Admin.
+====================================================== */
+
+const adminApp =
+    initializeApp(
+        firebaseConfig,
+        "AdminCreationApp"
+    );
+
+
+const adminAuth =
+    getAuth(
+        adminApp
+    );
+
+
+/* ======================================================
+   ELEMENTS
+====================================================== */
+
+const nameInput =
+    document.getElementById(
+        "name"
+    );
+
+const emailInput =
+    document.getElementById(
+        "email"
+    );
+
+const mobileInput =
+    document.getElementById(
+        "mobile"
+    );
+
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
+
+const passwordToggle =
+    document.getElementById(
+        "passwordToggle"
+    );
+
+const departmentInput =
+    document.getElementById(
+        "department"
+    );
+
+const statusInput =
+    document.getElementById(
+        "status"
+    );
+
+const createButton =
+    document.getElementById(
+        "createButton"
+    );
+
+const resetButton =
+    document.getElementById(
+        "resetButton"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+const securityInfo =
+    document.getElementById(
+        "securityInfo"
+    );
+
+
+/* ======================================================
+   SUPER ADMIN STATE
+====================================================== */
+
+let superAdminAuthorized =
+    false;
+
+
+/* ======================================================
+   MESSAGE
+====================================================== */
+
+function showMessage(
+    text,
+    type
+) {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message show " +
+        type;
+
+}
+
+
+function clearMessage() {
+
+    message.textContent =
+        "";
+
+    message.className =
+        "message";
+
+}
+
+
+/* ======================================================
+   PASSWORD SHOW / HIDE
+====================================================== */
+
+passwordToggle.addEventListener(
+    "click",
+    function () {
+
+        if (
+            passwordInput.type ===
+            "password"
+        ) {
+
+            passwordInput.type =
+                "text";
+
+            passwordToggle.textContent =
+                "Hide";
+
+        } else {
+
+            passwordInput.type =
+                "password";
+
+            passwordToggle.textContent =
+                "Show";
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   MOBILE INPUT
+====================================================== */
+
+mobileInput.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
+
+    }
+);
+
+
+/* ======================================================
+   RESET
+====================================================== */
+
+resetButton.addEventListener(
+    "click",
+    function () {
+
+        nameInput.value =
+            "";
+
+        emailInput.value =
+            "";
+
+        mobileInput.value =
+            "";
+
+        passwordInput.value =
+            "";
+
+        departmentInput.value =
+            "";
+
+        statusInput.value =
+            "Active";
+
+        clearMessage();
+
+    }
+);
+
+
+/* ======================================================
+   SUPER ADMIN AUTHORIZATION CHECK
+====================================================== */
+
+onAuthStateChanged(
+    auth,
+    async function (user) {
+
+        superAdminAuthorized =
+            false;
+
+
+        createButton.disabled =
+            true;
+
+        createButton.textContent =
+            "Checking Authorization...";
+
+
+        if (!user) {
+
+            securityInfo.textContent =
+                "You are not logged in. Only Super Admin can create Admin accounts.";
+
+            securityInfo.style.color =
+                "#b91c1c";
+
+            securityInfo.style.background =
+                "#fef2f2";
+
+            createButton.textContent =
+                "Super Admin Login Required";
+
+            return;
+
+        }
+
+
+        try {
+
+            const adminDoc =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if (
+                !adminDoc.exists()
+            ) {
+
+                securityInfo.textContent =
+                    "Access denied. Admin profile not found.";
+
+                securityInfo.style.color =
+                    "#b91c1c";
+
+                securityInfo.style.background =
+                    "#fef2f2";
+
+                createButton.textContent =
+                    "Access Denied";
+
+                return;
+
+            }
+
+
+            const adminData =
+                adminDoc.data();
+
+
+            if (
+                adminData.role !==
+                "Super Admin"
+            ) {
+
+                securityInfo.textContent =
+                    "Access denied. Only Super Admin can create Admin accounts.";
+
+                securityInfo.style.color =
+                    "#b91c1c";
+
+                securityInfo.style.background =
+                    "#fef2f2";
+
+                createButton.textContent =
+                    "Super Admin Only";
+
+                return;
+
+            }
+
+
+            if (
+                adminData.status ===
+                "Inactive"
+            ) {
+
+                securityInfo.textContent =
+                    "This Super Admin account is inactive.";
+
+                securityInfo.style.color =
+                    "#b91c1c";
+
+                securityInfo.style.background =
+                    "#fef2f2";
+
+                createButton.textContent =
+                    "Account Inactive";
+
+                return;
+
+            }
+
+
+            /* ==========================================
+               AUTHORIZED
+            ========================================== */
+
+            superAdminAuthorized =
+                true;
+
+
+            securityInfo.textContent =
+                "✓ Super Admin verified. You can create a new Admin.";
+
+            securityInfo.style.color =
+                "#166534";
+
+            securityInfo.style.background =
+                "#f0fdf4";
+
+
+            createButton.disabled =
+                false;
+
+            createButton.textContent =
+                "Create Admin";
+
+
+        } catch (error) {
+
+            console.error(
+                "SUPER ADMIN CHECK ERROR:",
+                error
+            );
+
+
+            securityInfo.textContent =
+                "Unable to verify Super Admin authorization.";
+
+            securityInfo.style.color =
+                "#b91c1c";
+
+            securityInfo.style.background =
+                "#fef2f2";
+
+            createButton.textContent =
+                "Authorization Error";
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   CREATE ADMIN
+====================================================== */
+
+createButton.addEventListener(
+    "click",
+    createAdmin
+);
+
+
+async function createAdmin() {
+
+    clearMessage();
+
+
+    /* ==================================================
+       FINAL AUTHORIZATION CHECK
+    ================================================== */
+
+    if (
+        !superAdminAuthorized
+    ) {
+
+        showMessage(
+            "Access denied. Only Super Admin can create Admin accounts.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const currentUser =
+        auth.currentUser;
+
+
+    if (!currentUser) {
+
+        showMessage(
+            "Super Admin login is required.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* ==================================================
+       RE-CHECK SUPER ADMIN
+    ================================================== */
+
+    try {
+
+        const superAdminDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
+            );
+
+
+        if (
+            !superAdminDoc.exists()
+        ) {
+
+            showMessage(
+                "Super Admin profile not found.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const superAdminData =
+            superAdminDoc.data();
+
+
+        if (
+            superAdminData.role !==
+            "Super Admin"
+        ) {
+
+            showMessage(
+                "Access denied. Super Admin authorization required.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            superAdminData.status ===
+            "Inactive"
+        ) {
+
+            showMessage(
+                "Super Admin account is inactive.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "FINAL AUTHORIZATION ERROR:",
+            error
+        );
+
+        showMessage(
+            "Super Admin authorization failed.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* ==================================================
+       GET FORM DATA
+    ================================================== */
+
+    const name =
+        nameInput.value.trim();
+
+    const email =
+        emailInput.value
+            .trim()
+            .toLowerCase();
+
+    const mobile =
+        mobileInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+    const depart
