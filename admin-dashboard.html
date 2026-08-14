@@ -14,18 +14,7 @@
 <title>Admin Dashboard - KALI LIFE ECOSYSTEM</title>
 
 
-<!-- ======================================================
-     AUTHENTICATION SYSTEM
-====================================================== -->
-
-<script src="auth.js"></script>
-
-
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
 
 * {
     box-sizing: border-box;
@@ -42,11 +31,9 @@ body {
         Helvetica,
         sans-serif;
 
-    background:
-        #f1f5f9;
+    background: #f1f5f9;
 
-    color:
-        #0f172a;
+    color: #0f172a;
 }
 
 
@@ -63,14 +50,11 @@ header {
             #15803d
         );
 
-    color:
-        #ffffff;
+    color: #ffffff;
 
-    padding:
-        22px 15px;
+    padding: 22px 15px;
 
-    text-align:
-        center;
+    text-align: center;
 
     box-shadow:
         0 4px 15px
@@ -98,7 +82,7 @@ header p {
 
 
 /* =========================================================
-   MAIN CONTAINER
+   MAIN
 ========================================================= */
 
 .container {
@@ -107,35 +91,29 @@ header p {
 
     max-width: 720px;
 
-    margin:
-        30px auto;
+    margin: 30px auto;
 
-    padding:
-        0 15px 35px;
+    padding: 0 15px 35px;
 }
 
 
 /* =========================================================
-   ADMIN CARD
+   CARD
 ========================================================= */
 
 .card {
 
-    background:
-        #ffffff;
+    background: #ffffff;
 
-    padding:
-        25px;
+    padding: 25px;
 
-    margin-bottom:
-        22px;
+    margin-bottom: 22px;
 
     border:
         1px solid
         #e2e8f0;
 
-    border-radius:
-        16px;
+    border-radius: 16px;
 
     box-shadow:
         0 8px 25px
@@ -144,14 +122,11 @@ header p {
 
 .card h2 {
 
-    margin:
-        0 0 20px;
+    margin: 0 0 20px;
 
-    color:
-        #166534;
+    color: #166534;
 
-    font-size:
-        21px;
+    font-size: 21px;
 }
 
 
@@ -161,185 +136,120 @@ header p {
 
 .info {
 
-    display:
-        grid;
+    display: grid;
 
-    gap:
-        10px;
+    gap: 10px;
 }
 
 .info-row {
 
-    padding:
-        12px 13px;
+    padding: 12px 13px;
 
-    background:
-        #f8fafc;
+    background: #f8fafc;
 
-    border-radius:
-        8px;
+    border-radius: 8px;
 
-    font-size:
-        14px;
+    font-size: 14px;
 
-    color:
-        #475569;
+    color: #475569;
 }
 
 .info-row strong {
 
-    color:
-        #0f172a;
+    color: #0f172a;
 }
-
-
-/* =========================================================
-   ROLE BADGE
-========================================================= */
 
 .role-badge {
 
-    display:
-        inline-block;
+    display: inline-block;
 
-    margin-top:
-        5px;
+    margin-top: 5px;
 
-    padding:
-        6px 12px;
+    padding: 6px 12px;
 
-    border-radius:
-        20px;
+    border-radius: 20px;
 
-    background:
-        #dcfce7;
+    background: #dcfce7;
 
-    color:
-        #166534;
+    color: #166534;
 
-    font-size:
-        12px;
+    font-size: 12px;
 
-    font-weight:
-        800;
+    font-weight: 800;
 }
 
 
 /* =========================================================
-   DASHBOARD BUTTONS
+   BUTTONS
 ========================================================= */
 
 .button-grid {
 
-    display:
-        grid;
+    display: grid;
 
-    gap:
-        12px;
+    gap: 12px;
 }
 
 .dashboard-button {
 
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        center;
+    justify-content: center;
 
-    min-height:
-        52px;
+    min-height: 52px;
 
-    padding:
-        14px 18px;
+    padding: 14px 18px;
 
-    border:
-        none;
+    border: none;
 
-    border-radius:
-        10px;
+    border-radius: 10px;
 
-    background:
-        #16a34a;
+    background: #16a34a;
 
-    color:
-        #ffffff;
+    color: #ffffff;
 
-    text-decoration:
-        none;
+    text-decoration: none;
 
-    font-size:
-        15px;
+    font-size: 15px;
 
-    font-weight:
-        800;
+    font-weight: 800;
 
-    text-align:
-        center;
+    text-align: center;
 
-    cursor:
-        pointer;
+    cursor: pointer;
 
     box-shadow:
         0 4px 12px
         rgba(22,163,74,0.16);
-
-    transition:
-        0.2s;
 }
 
 .dashboard-button:hover {
 
-    background:
-        #15803d;
-
-    transform:
-        translateY(-1px);
+    background: #15803d;
 }
-
-.dashboard-button:active {
-
-    transform:
-        scale(0.98);
-}
-
-
-/* =========================================================
-   SECONDARY BUTTON
-========================================================= */
 
 .secondary {
 
-    background:
-        #475569;
+    background: #475569;
 }
 
 .secondary:hover {
 
-    background:
-        #334155;
+    background: #334155;
 }
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
 
 .logout {
 
-    background:
-        #dc2626;
+    background: #dc2626;
 
-    margin-top:
-        5px;
+    margin-top: 5px;
 }
 
 .logout:hover {
 
-    background:
-        #b91c1c;
+    background: #b91c1c;
 }
 
 
@@ -349,8 +259,44 @@ header p {
 
 .hidden {
 
-    display:
-        none !important;
+    display: none !important;
+}
+
+
+/* =========================================================
+   LOADING / ERROR
+========================================================= */
+
+#loadingMessage {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #475569;
+
+    font-weight: 700;
+}
+
+#errorMessage {
+
+    display: none;
+
+    padding: 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 10px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    color: #b91c1c;
+
+    text-align: center;
+
+    font-weight: 700;
 }
 
 
@@ -360,17 +306,13 @@ header p {
 
 .footer {
 
-    text-align:
-        center;
+    text-align: center;
 
-    color:
-        #64748b;
+    color: #64748b;
 
-    font-size:
-        11px;
+    font-size: 11px;
 
-    margin-top:
-        20px;
+    margin-top: 20px;
 }
 
 
@@ -382,14 +324,12 @@ header p {
 
     header h1 {
 
-        font-size:
-            21px;
+        font-size: 21px;
     }
 
     .container {
 
-        margin-top:
-            20px;
+        margin-top: 20px;
 
         padding:
             0 10px 25px;
@@ -397,26 +337,21 @@ header p {
 
     .card {
 
-        padding:
-            19px;
+        padding: 19px;
 
-        border-radius:
-            13px;
+        border-radius: 13px;
     }
 
     .card h2 {
 
-        font-size:
-            19px;
+        font-size: 19px;
     }
 
     .dashboard-button {
 
-        min-height:
-            50px;
+        min-height: 50px;
 
-        font-size:
-            14px;
+        font-size: 14px;
     }
 
 }
@@ -428,29 +363,6 @@ header p {
 
 <body>
 
-
-<!-- ======================================================
-     LOGIN PROTECTION
-====================================================== -->
-
-<script>
-
-if (
-    !checkAdminAccess()
-) {
-
-    throw new Error(
-        "Admin access required."
-    );
-
-}
-
-</script>
-
-
-<!-- ======================================================
-     HEADER
-====================================================== -->
 
 <header>
 
@@ -468,214 +380,245 @@ if (
 <div class="container">
 
 
-    <!-- ==================================================
-         ADMIN INFORMATION
-    ================================================== -->
-
-    <div class="card">
-
-        <h2>
-            Welcome,
-            <span id="welcomeName">
-                Admin
-            </span>
-        </h2>
-
-
-        <div class="info">
-
-
-            <div class="info-row">
-
-                <strong>
-                    Name:
-                </strong>
-
-                <span id="adminName">
-                    -
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <strong>
-                    Mobile:
-                </strong>
-
-                <span id="adminMobile">
-                    -
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <strong>
-                    Email:
-                </strong>
-
-                <span id="adminEmail">
-                    -
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <strong>
-                    Role:
-                </strong>
-
-                <span
-                    id="adminRole"
-                    class="role-badge">
-
-                    -
-
-                </span>
-
-            </div>
-
-
-        </div>
-
+    <div id="loadingMessage">
+        Checking Admin authentication...
     </div>
 
-
-    <!-- ==================================================
-         SUPER ADMIN CONTROLS
-    ================================================== -->
 
     <div
-        id="superAdminCard"
-        class="card hidden">
-
-        <h2>
-            ⚙️ Super Admin Control
-        </h2>
-
-
-        <div class="button-grid">
-
-
-            <a
-                class="dashboard-button"
-                href="create-admin.html">
-
-                ➕ Create Admin
-
-            </a>
-
-
-            <a
-                class="dashboard-button"
-                href="admin-list.html">
-
-                👥 Admin List
-
-            </a>
-
-
-            <a
-                class="dashboard-button"
-                href="reports.html">
-
-                📊 Reports
-
-            </a>
-
-
-        </div>
-
+        id="errorMessage">
     </div>
 
 
-    <!-- ==================================================
-         ADMIN BUSINESS CONTROLS
-    ================================================== -->
-
-    <div class="card">
-
-        <h2>
-            📋 Business Management
-        </h2>
+    <div
+        id="dashboardContent"
+        class="hidden">
 
 
-        <div class="button-grid">
+        <!-- ==================================================
+             ADMIN INFORMATION
+        ================================================== -->
+
+        <div class="card">
+
+            <h2>
+                Welcome,
+                <span id="welcomeName">
+                    Admin
+                </span>
+            </h2>
 
 
-            <a
-                class="dashboard-button"
-                href="purchase.html">
-
-                🛒 Purchase
-
-            </a>
+            <div class="info">
 
 
-            <a
-                class="dashboard-button"
-                href="sales.html">
+                <div class="info-row">
 
-                💰 Sales
+                    <strong>
+                        Name:
+                    </strong>
 
-            </a>
+                    <span id="adminName">
+                        -
+                    </span>
+
+                </div>
 
 
-            <a
-                class="dashboard-button"
-                href="reports.html">
+                <div class="info-row">
 
-                📊 Reports
+                    <strong>
+                        Email:
+                    </strong>
 
-            </a>
+                    <span id="adminEmail">
+                        -
+                    </span>
 
+                </div>
+
+
+                <div class="info-row">
+
+                    <strong>
+                        Department / Post:
+                    </strong>
+
+                    <span id="adminDepartment">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <strong>
+                        Role:
+                    </strong>
+
+                    <span
+                        id="adminRole"
+                        class="role-badge">
+
+                        -
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <strong>
+                        Status:
+                    </strong>
+
+                    <span id="adminStatus">
+                        -
+                    </span>
+
+                </div>
+
+
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- ==================================================
+             SUPER ADMIN CONTROLS
+        ================================================== -->
+
+        <div
+            id="superAdminCard"
+            class="card hidden">
+
+            <h2>
+                ⚙️ Super Admin Control
+            </h2>
 
 
-    <!-- ==================================================
-         COMMON CONTROLS
-    ================================================== -->
-
-    <div class="card">
-
-        <div class="button-grid">
+            <div class="button-grid">
 
 
-            <a
-                class="dashboard-button secondary"
-                href="index.html">
+                <a
+                    class="dashboard-button"
+                    href="create-admin.html">
 
-                🏠 Home
+                    ➕ Create Admin
 
-            </a>
+                </a>
 
 
-            <button
-                type="button"
-                id="logoutButton"
-                class="dashboard-button logout">
+                <a
+                    class="dashboard-button"
+                    href="admin-list.html">
 
-                🚪 Logout
+                    👥 Admin List
 
-            </button>
+                </a>
 
+
+                <a
+                    class="dashboard-button"
+                    href="reports.html">
+
+                    📊 Reports
+
+                </a>
+
+
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- ==================================================
+             BUSINESS MANAGEMENT
+        ================================================== -->
+
+        <div class="card">
+
+            <h2>
+                📋 Business Management
+            </h2>
 
 
-    <div class="footer">
+            <div class="button-grid">
 
-        © KALI LIFE ECOSYSTEM
+
+                <a
+                    class="dashboard-button"
+                    href="purchase.html">
+
+                    🛒 Purchase
+
+                </a>
+
+
+                <a
+                    class="dashboard-button"
+                    href="sales.html">
+
+                    💰 Sales
+
+                </a>
+
+
+                <a
+                    class="dashboard-button"
+                    href="reports.html">
+
+                    📊 Reports
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================================
+             COMMON CONTROLS
+        ================================================== -->
+
+        <div class="card">
+
+            <div class="button-grid">
+
+
+                <a
+                    class="dashboard-button secondary"
+                    href="index.html">
+
+                    🏠 Home
+
+                </a>
+
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="dashboard-button logout">
+
+                    🚪 Logout
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+
+            © KALI LIFE ECOSYSTEM
+
+        </div>
+
 
     </div>
 
@@ -683,75 +626,375 @@ if (
 
 
 <!-- ======================================================
-     DASHBOARD LOGIC
+     FIREBASE
 ====================================================== -->
 
-<script>
+<script type="module">
+
+
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
 /* ======================================================
-   CURRENT USER
+   FIREBASE CONFIG
 ====================================================== */
 
-const currentUser =
-    getCurrentUser();
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+
+};
 
 
 /* ======================================================
-   DISPLAY USER INFORMATION
+   FIREBASE
 ====================================================== */
 
-document.getElementById(
-    "welcomeName"
-).textContent =
-    currentUser.name ||
-    "Admin";
+const app =
+    initializeApp(
+        firebaseConfig
+    );
 
 
-document.getElementById(
-    "adminName"
-).textContent =
-    currentUser.name ||
-    "-";
+const auth =
+    getAuth(
+        app
+    );
 
 
-document.getElementById(
-    "adminMobile"
-).textContent =
-    currentUser.mobile ||
-    "-";
-
-
-document.getElementById(
-    "adminEmail"
-).textContent =
-    currentUser.email ||
-    "-";
-
-
-document.getElementById(
-    "adminRole"
-).textContent =
-    currentUser.role ||
-    "-";
+const db =
+    getFirestore(
+        app
+    );
 
 
 /* ======================================================
-   SUPER ADMIN CONTROLS
+   ELEMENTS
 ====================================================== */
 
-if (
-    currentUser.role ===
-    "Super Admin"
+const loadingMessage =
+    document.getElementById(
+        "loadingMessage"
+    );
+
+const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+const dashboardContent =
+    document.getElementById(
+        "dashboardContent"
+    );
+
+
+/* ======================================================
+   ERROR
+====================================================== */
+
+function showError(
+    text
 ) {
 
-    document.getElementById(
-        "superAdminCard"
-    ).classList.remove(
+    loadingMessage.style.display =
+        "none";
+
+    dashboardContent.classList.add(
         "hidden"
     );
 
+    errorMessage.textContent =
+        text;
+
+    errorMessage.style.display =
+        "block";
+
 }
+
+
+/* ======================================================
+   AUTHENTICATION
+====================================================== */
+
+onAuthStateChanged(
+    auth,
+    async function(user) {
+
+
+        /* ==============================================
+           NOT LOGGED IN
+        ============================================== */
+
+        if (!user) {
+
+            window.location.href =
+                "admin.html";
+
+            return;
+
+        }
+
+
+        try {
+
+
+            /* ==========================================
+               FIRESTORE PROFILE
+            ========================================== */
+
+            const userDoc =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if (
+                !userDoc.exists()
+            ) {
+
+                await signOut(
+                    auth
+                );
+
+                showError(
+                    "Admin profile not found."
+                );
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "admin.html";
+
+                    },
+                    1500
+                );
+
+                return;
+
+            }
+
+
+            const userData =
+                userDoc.data();
+
+
+            /* ==========================================
+               ROLE
+            ========================================== */
+
+            const role =
+                String(
+                    userData.role || ""
+                )
+                .trim();
+
+
+            if (
+                role !== "Admin" &&
+                role !== "Super Admin"
+            ) {
+
+                await signOut(
+                    auth
+                );
+
+                showError(
+                    "Access denied. This account is not an Admin account."
+                );
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "admin.html";
+
+                    },
+                    1500
+                );
+
+                return;
+
+            }
+
+
+            /* ==========================================
+               STATUS
+            ========================================== */
+
+            const status =
+                String(
+                    userData.status ||
+                    "Active"
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+                status !== "active"
+            ) {
+
+                await signOut(
+                    auth
+                );
+
+                showError(
+                    "This Admin account is inactive."
+                );
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "admin.html";
+
+                    },
+                    1500
+                );
+
+                return;
+
+            }
+
+
+            /* ==========================================
+               DISPLAY DATA
+            ========================================== */
+
+            document.getElementById(
+                "welcomeName"
+            ).textContent =
+                userData.name ||
+                "Admin";
+
+
+            document.getElementById(
+                "adminName"
+            ).textContent =
+                userData.name ||
+                "-";
+
+
+            document.getElementById(
+                "adminEmail"
+            ).textContent =
+                userData.email ||
+                user.email ||
+                "-";
+
+
+            document.getElementById(
+                "adminDepartment"
+            ).textContent =
+                userData.department ||
+                "-";
+
+
+            document.getElementById(
+                "adminRole"
+            ).textContent =
+                role ||
+                "-";
+
+
+            document.getElementById(
+                "adminStatus"
+            ).textContent =
+                userData.status ||
+                "Active";
+
+
+            /* ==========================================
+               SUPER ADMIN
+            ========================================== */
+
+            if (
+                role ===
+                "Super Admin"
+            ) {
+
+                document.getElementById(
+                    "superAdminCard"
+                ).classList.remove(
+                    "hidden"
+                );
+
+            }
+
+
+            /* ==========================================
+               SHOW DASHBOARD
+            ========================================== */
+
+            loadingMessage.style.display =
+                "none";
+
+            errorMessage.style.display =
+                "none";
+
+            dashboardContent.classList.remove(
+                "hidden"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "ADMIN DASHBOARD ERROR:",
+                error
+            );
+
+            showError(
+                "Unable to load Admin Dashboard."
+            );
+
+        }
+
+    }
+);
 
 
 /* ======================================================
@@ -762,12 +1005,36 @@ document.getElementById(
     "logoutButton"
 ).addEventListener(
     "click",
-    function () {
+    async function() {
 
-        logout();
+
+        try {
+
+            await signOut(
+                auth
+            );
+
+
+            window.location.href =
+                "admin.html";
+
+
+        } catch (error) {
+
+            console.error(
+                "LOGOUT ERROR:",
+                error
+            );
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+        }
 
     }
 );
+
 
 </script>
 
