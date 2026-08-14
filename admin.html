@@ -4,17 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Admin Login - KALI LIFE ECOSYSTEM</title>
 
 <style>
-
-/* ==========================================
-   KALI LIFE ECOSYSTEM
-   ADMIN LOGIN
-   PREMIUM FINAL DESIGN
-========================================== */
 
 * {
     margin: 0;
@@ -24,10 +20,13 @@
 }
 
 body {
+
     min-height: 100vh;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     padding: 20px;
@@ -41,13 +40,10 @@ body {
         );
 }
 
-/* ==========================================
-   LOGIN CARD
-========================================== */
-
 .login-box {
 
     width: 100%;
+
     max-width: 430px;
 
     background: #ffffff;
@@ -57,14 +53,11 @@ body {
     border-radius: 20px;
 
     box-shadow:
-        0 20px 50px rgba(0,0,0,0.28);
+        0 20px 50px
+        rgba(0,0,0,0.28);
 
     text-align: center;
 }
-
-/* ==========================================
-   BRAND
-========================================== */
 
 .logo {
 
@@ -73,8 +66,6 @@ body {
     font-size: 28px;
 
     font-weight: bold;
-
-    letter-spacing: 0.5px;
 
 }
 
@@ -88,13 +79,10 @@ body {
 
 }
 
-/* ==========================================
-   TITLE
-========================================== */
-
 .login-title {
 
     margin-top: 25px;
+
     margin-bottom: 22px;
 
     color: #0f172a;
@@ -102,10 +90,6 @@ body {
     font-size: 22px;
 
 }
-
-/* ==========================================
-   FORM GROUP
-========================================== */
 
 .form-group {
 
@@ -129,17 +113,14 @@ label {
 
 }
 
-/* ==========================================
-   INPUT
-========================================== */
-
 input {
 
     width: 100%;
 
     padding: 14px;
 
-    border: 1px solid #cbd5e1;
+    border:
+        1px solid #cbd5e1;
 
     border-radius: 9px;
 
@@ -150,15 +131,6 @@ input {
     font-size: 15px;
 
     outline: none;
-
-    transition: 0.2s;
-
-}
-
-input::placeholder {
-
-    color: #94a3b8;
-
 }
 
 input:focus {
@@ -166,24 +138,18 @@ input:focus {
     border-color: #16a34a;
 
     box-shadow:
-        0 0 0 3px rgba(22,163,74,0.12);
-
+        0 0 0 3px
+        rgba(22,163,74,0.12);
 }
-
-/* ==========================================
-   PASSWORD
-========================================== */
 
 .password-box {
 
     position: relative;
-
 }
 
 .password-box input {
 
     padding-right: 70px;
-
 }
 
 .show-password {
@@ -194,7 +160,8 @@ input:focus {
 
     top: 50%;
 
-    transform: translateY(-50%);
+    transform:
+        translateY(-50%);
 
     border: none;
 
@@ -207,12 +174,7 @@ input:focus {
     font-weight: bold;
 
     cursor: pointer;
-
 }
-
-/* ==========================================
-   LOGIN BUTTON
-========================================== */
 
 .login-btn {
 
@@ -235,15 +197,6 @@ input:focus {
     font-weight: bold;
 
     cursor: pointer;
-
-    transition: 0.2s;
-
-}
-
-.login-btn:hover {
-
-    background: #15803d;
-
 }
 
 .login-btn:disabled {
@@ -251,12 +204,7 @@ input:focus {
     background: #94a3b8;
 
     cursor: not-allowed;
-
 }
-
-/* ==========================================
-   ERROR
-========================================== */
 
 #error {
 
@@ -269,12 +217,12 @@ input:focus {
     font-size: 14px;
 
     font-weight: bold;
-
 }
 
-/* ==========================================
-   SECURITY MESSAGE
-========================================== */
+.success {
+
+    color: #166534 !important;
+}
 
 .security-box {
 
@@ -291,12 +239,7 @@ input:focus {
     font-size: 12px;
 
     line-height: 1.5;
-
 }
-
-/* ==========================================
-   BACK HOME
-========================================== */
 
 .back-btn {
 
@@ -311,18 +254,7 @@ input:focus {
     font-size: 14px;
 
     font-weight: bold;
-
 }
-
-.back-btn:hover {
-
-    text-decoration: underline;
-
-}
-
-/* ==========================================
-   FOOTER
-========================================== */
 
 .footer {
 
@@ -331,19 +263,13 @@ input:focus {
     color: #94a3b8;
 
     font-size: 11px;
-
 }
-
-/* ==========================================
-   MOBILE
-========================================== */
 
 @media (max-width: 500px) {
 
     body {
 
         padding: 12px;
-
     }
 
     .login-box {
@@ -351,19 +277,16 @@ input:focus {
         padding: 25px 20px;
 
         border-radius: 16px;
-
     }
 
     .logo {
 
         font-size: 24px;
-
     }
 
     .login-title {
 
         font-size: 20px;
-
     }
 
 }
@@ -379,64 +302,45 @@ input:focus {
 <div class="login-box">
 
 
-    <!-- ======================================
-         BRAND
-    ======================================= -->
-
     <div class="logo">
-
         KALI LIFE ECOSYSTEM
-
     </div>
 
 
     <div class="subtitle">
-
         Administration & Management System
-
     </div>
 
 
     <h2 class="login-title">
-
         🔐 Admin Login
-
     </h2>
 
 
-    <!-- ======================================
-         USERNAME / EMAIL / MOBILE
-    ======================================= -->
+    <!-- EMAIL -->
 
     <div class="form-group">
 
-        <label for="username">
-
-            Admin Email or Mobile
-
+        <label for="email">
+            Admin Email ID
         </label>
 
         <input
-            type="text"
-            id="username"
-            placeholder="Enter Email or Mobile"
+            type="email"
+            id="email"
+            placeholder="Enter Admin Email ID"
             autocomplete="username">
 
     </div>
 
 
-    <!-- ======================================
-         PASSWORD
-    ======================================= -->
+    <!-- PASSWORD -->
 
     <div class="form-group">
 
         <label for="password">
-
             Password
-
         </label>
-
 
         <div class="password-box">
 
@@ -446,12 +350,10 @@ input:focus {
                 placeholder="Enter Admin Password"
                 autocomplete="current-password">
 
-
             <button
                 type="button"
                 class="show-password"
-                id="showPasswordBtn"
-                onclick="togglePassword()">
+                id="showPasswordBtn">
 
                 Show
 
@@ -462,15 +364,12 @@ input:focus {
     </div>
 
 
-    <!-- ======================================
-         LOGIN
-    ======================================= -->
+    <!-- LOGIN -->
 
     <button
         type="button"
         class="login-btn"
-        id="loginBtn"
-        onclick="login()">
+        id="loginBtn">
 
         Login
 
@@ -480,18 +379,13 @@ input:focus {
     <p id="error"></p>
 
 
-    <!-- ======================================
-         SECURITY
-    ======================================= -->
-
     <div class="security-box">
 
         🔐 Authorized Admin Access Only
 
         <br>
 
-        Your role determines which
-        dashboard and features you can access.
+        Admin Email ID and Password are required.
 
     </div>
 
@@ -516,89 +410,212 @@ input:focus {
 </div>
 
 
-<script>
+<!-- ======================================================
+     FIREBASE
+====================================================== -->
 
-/* ==========================================
-   PASSWORD SHOW / HIDE
-========================================== */
-
-function togglePassword() {
-
-    const password =
-        document.getElementById("password");
-
-    const button =
-        document.getElementById(
-            "showPasswordBtn"
-        );
+<script type="module">
 
 
-    if (
-        password.type === "password"
-    ) {
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-        password.type = "text";
 
-        button.innerText = "Hide";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* ======================================================
+   FIREBASE CONFIG
+====================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+
+};
+
+
+/* ======================================================
+   FIREBASE INITIALIZATION
+====================================================== */
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const auth =
+    getAuth(
+        app
+    );
+
+
+const db =
+    getFirestore(
+        app
+    );
+
+
+/* ======================================================
+   ELEMENTS
+====================================================== */
+
+const emailInput =
+    document.getElementById(
+        "email"
+    );
+
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
+
+const showPasswordBtn =
+    document.getElementById(
+        "showPasswordBtn"
+    );
+
+const loginBtn =
+    document.getElementById(
+        "loginBtn"
+    );
+
+const errorBox =
+    document.getElementById(
+        "error"
+    );
+
+
+/* ======================================================
+   SHOW / HIDE PASSWORD
+====================================================== */
+
+showPasswordBtn.addEventListener(
+    "click",
+    function () {
+
+        if (
+            passwordInput.type ===
+            "password"
+        ) {
+
+            passwordInput.type =
+                "text";
+
+            showPasswordBtn.textContent =
+                "Hide";
+
+        } else {
+
+            passwordInput.type =
+                "password";
+
+            showPasswordBtn.textContent =
+                "Show";
+
+        }
 
     }
+);
 
-    else {
 
-        password.type = "password";
+/* ======================================================
+   MESSAGE
+====================================================== */
 
-        button.innerText = "Show";
+function showError(
+    message
+) {
 
-    }
+    errorBox.className = "";
+
+    errorBox.textContent =
+        message;
 
 }
 
 
-/* ==========================================
-   ADMIN LOGIN
-========================================== */
+function showSuccess(
+    message
+) {
 
-function login() {
+    errorBox.className =
+        "success";
 
-    const username =
-        document.getElementById(
-            "username"
-        )
-        .value
-        .trim()
-        .toLowerCase();
+    errorBox.textContent =
+        message;
 
+}
+
+
+/* ======================================================
+   LOGIN
+====================================================== */
+
+async function login() {
+
+    errorBox.textContent =
+        "";
+
+    errorBox.className =
+        "";
+
+
+    const email =
+        emailInput.value
+            .trim()
+            .toLowerCase();
 
     const password =
-        document.getElementById(
-            "password"
-        )
-        .value;
+        passwordInput.value;
 
 
-    const error =
-        document.getElementById(
-            "error"
-        );
-
-
-    const button =
-        document.getElementById(
-            "loginBtn"
-        );
-
-
-    error.innerText = "";
-
-
-    /* ======================================
+    /* ==================================================
        VALIDATION
-    ======================================= */
+    ================================================== */
 
-    if (!username) {
+    if (!email) {
 
-        error.innerText =
-            "Please enter Admin Email or Mobile.";
+        showError(
+            "Please enter Admin Email ID."
+        );
+
+        emailInput.focus();
 
         return;
 
@@ -607,209 +624,296 @@ function login() {
 
     if (!password) {
 
-        error.innerText =
-            "Please enter Admin Password.";
+        showError(
+            "Please enter Admin Password."
+        );
+
+        passwordInput.focus();
 
         return;
 
     }
 
 
-    /* ======================================
-       LOAD ADMINS
-    ======================================= */
+    /* ==================================================
+       LOADING
+    ================================================== */
 
-    let admins = [];
+    loginBtn.disabled =
+        true;
 
-    try {
-
-        admins =
-            JSON.parse(
-                localStorage.getItem(
-                    "admins"
-                )
-            ) || [];
-
-    }
-
-    catch (e) {
-
-        error.innerText =
-            "Admin data could not be loaded.";
-
-        return;
-
-    }
-
-
-    /* ======================================
-       FIND ADMIN
-    ======================================= */
-
-    const admin =
-        admins.find(function(item) {
-
-            const email =
-                String(
-                    item.email || ""
-                )
-                .trim()
-                .toLowerCase();
-
-
-            const mobile =
-                String(
-                    item.mobile || ""
-                )
-                .trim();
-
-
-            return (
-                email === username ||
-                mobile === username
-            );
-
-        });
-
-
-    if (!admin) {
-
-        error.innerText =
-            "Admin account not found.";
-
-        return;
-
-    }
-
-
-    /* ======================================
-       STATUS CHECK
-    ======================================= */
-
-    if (
-        String(
-            admin.status || ""
-        ).toLowerCase() !== "active"
-    ) {
-
-        error.innerText =
-            "This Admin account is inactive.";
-
-        return;
-
-    }
-
-
-    /* ======================================
-       PASSWORD CHECK
-    ======================================= */
-
-    if (
-        String(
-            admin.password || ""
-        ) !== password
-    ) {
-
-        error.innerText =
-            "Incorrect Admin password.";
-
-        return;
-
-    }
-
-
-    /* ======================================
-       LOGIN SESSION
-    ======================================= */
-
-    button.disabled = true;
-
-    button.innerText =
+    loginBtn.textContent =
         "Logging in...";
 
 
-    localStorage.setItem(
-        "isLoggedIn",
-        "true"
-    );
+    try {
+
+        /* ==============================================
+           FIREBASE AUTHENTICATION
+        ============================================== */
+
+        const credential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
 
-    localStorage.setItem(
-        "userName",
-        admin.fullName || "Administrator"
-    );
+        const user =
+            credential.user;
 
 
-    localStorage.setItem(
-        "userMobile",
-        admin.mobile || ""
-    );
+        /* ==============================================
+           FIRESTORE ADMIN PROFILE
+        ============================================== */
 
+        const userDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                )
+            );
 
-    localStorage.setItem(
-        "userEmail",
-        admin.email || ""
-    );
-
-
-    localStorage.setItem(
-        "userRole",
-        admin.role || "Admin"
-    );
-
-
-    localStorage.setItem(
-        "adminId",
-        admin.id || ""
-    );
-
-
-    localStorage.setItem(
-        "adminReportsTo",
-        admin.reportsTo || ""
-    );
-
-
-    /* ======================================
-       ROLE BASED REDIRECT
-    ======================================= */
-
-    setTimeout(function() {
 
         if (
-            admin.role ===
-            "Super Admin"
+            !userDoc.exists()
         ) {
 
-            window.location.href =
-                "super-admin-dashboard.html";
+            await signOut(
+                auth
+            );
+
+            showError(
+                "Admin profile not found."
+            );
+
+            return;
+
+        }
+
+
+        const userData =
+            userDoc.data();
+
+
+        /* ==============================================
+           ROLE CHECK
+        ============================================== */
+
+        const role =
+            String(
+                userData.role || ""
+            )
+            .trim();
+
+
+        if (
+            role !== "Admin" &&
+            role !== "Super Admin"
+        ) {
+
+            await signOut(
+                auth
+            );
+
+            showError(
+                "Access denied. This account is not an Admin account."
+            );
+
+            return;
+
+        }
+
+
+        /* ==============================================
+           STATUS CHECK
+        ============================================== */
+
+        const status =
+            String(
+                userData.status || "Active"
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (
+            status !== "active"
+        ) {
+
+            await signOut(
+                auth
+            );
+
+            showError(
+                "This Admin account is inactive."
+            );
+
+            return;
+
+        }
+
+
+        /* ==============================================
+           SAVE NON-SENSITIVE SESSION INFO
+        ============================================== */
+
+        sessionStorage.setItem(
+            "adminName",
+            userData.name || ""
+        );
+
+        sessionStorage.setItem(
+            "adminEmail",
+            userData.email || email
+        );
+
+        sessionStorage.setItem(
+            "adminRole",
+            role
+        );
+
+        sessionStorage.setItem(
+            "adminDepartment",
+            userData.department || ""
+        );
+
+
+        /* ==============================================
+           SUCCESS
+        ============================================== */
+
+        showSuccess(
+            "Login successful. Opening Admin Dashboard..."
+        );
+
+
+        /* ==============================================
+           REDIRECT
+        ============================================== */
+
+        setTimeout(
+            function () {
+
+                if (
+                    role ===
+                    "Super Admin"
+                ) {
+
+                    window.location.href =
+                        "super-admin-dashboard.html";
+
+                } else {
+
+                    window.location.href =
+                        "admin-dashboard.html";
+
+                }
+
+            },
+            500
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "ADMIN LOGIN ERROR:",
+            error
+        );
+
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            showError(
+                "Incorrect Email ID or Password."
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            showError(
+                "Admin account not found."
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/wrong-password"
+        ) {
+
+            showError(
+                "Incorrect Admin password."
+            );
+
+        }
+
+        else if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            showError(
+                "Please enter a valid Email ID."
+            );
 
         }
 
         else {
 
-            window.location.href =
-                "admin-dashboard.html";
+            showError(
+                "Login failed. Please try again."
+            );
 
         }
 
-    }, 500);
+    }
+
+    finally {
+
+        loginBtn.disabled =
+            false;
+
+        loginBtn.textContent =
+            "Login";
+
+    }
 
 }
 
 
-/* ==========================================
-   ENTER KEY LOGIN
-========================================== */
+/* ======================================================
+   LOGIN BUTTON
+====================================================== */
 
-document.getElementById(
-    "password"
-).addEventListener(
+loginBtn.addEventListener(
+    "click",
+    login
+);
+
+
+/* ======================================================
+   ENTER KEY
+====================================================== */
+
+passwordInput.addEventListener(
     "keydown",
     function(event) {
 
         if (
-            event.key === "Enter"
+            event.key ===
+            "Enter"
         ) {
 
             login();
@@ -818,6 +922,7 @@ document.getElementById(
 
     }
 );
+
 
 </script>
 
