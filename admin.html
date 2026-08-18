@@ -872,11 +872,14 @@ async function login() {
 
         else {
 
-            showError(
-                "Login failed. Please try again."
-            );
+    showError(
+        "ERROR: " +
+        error.code +
+        " | " +
+        error.message
+    );
 
-        }
+                  }
 
     }
 
