@@ -8,15 +8,7 @@
 
 <title>Super Admin Dashboard - KALI LIFE ECOSYSTEM</title>
 
-<script src="auth.js"></script>
-
 <style>
-
-/* ==========================================
-   KALI LIFE ECOSYSTEM
-   SUPER ADMIN DASHBOARD
-   PREMIUM FINAL DESIGN
-========================================== */
 
 * {
     box-sizing: border-box;
@@ -28,10 +20,6 @@ body {
     background: #f1f5f9;
     color: #0f172a;
 }
-
-/* ==========================================
-   HEADER
-========================================== */
 
 header {
     background: #166534;
@@ -70,20 +58,12 @@ header {
     white-space: nowrap;
 }
 
-/* ==========================================
-   MAIN CONTAINER
-========================================== */
-
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 15px 45px;
 }
-
-/* ==========================================
-   WELCOME
-========================================== */
 
 .welcome-card {
     background: #ffffff;
@@ -110,17 +90,10 @@ header {
     font-size: 14px;
 }
 
-/* ==========================================
-   STATISTICS
-========================================== */
-
 .stats-grid {
     display: grid;
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-
     margin-bottom: 30px;
 }
 
@@ -152,31 +125,17 @@ header {
     font-weight: bold;
 }
 
-/* ==========================================
-   SECTION TITLE
-========================================== */
-
 .section-title {
     margin: 0 0 15px;
     color: #166534;
     font-size: 21px;
 }
 
-/* ==========================================
-   MENU GRID
-========================================== */
-
 .menu-grid {
     display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
-
-/* ==========================================
-   MENU CARD
-========================================== */
 
 .menu-card {
     min-height: 145px;
@@ -244,20 +203,13 @@ header {
     line-height: 1.5;
 }
 
-/* ==========================================
-   QUICK ACTIONS
-========================================== */
-
 .quick-actions {
     margin-top: 30px;
 }
 
 .action-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
 }
 
@@ -295,10 +247,6 @@ header {
     background: #334155;
 }
 
-/* ==========================================
-   SYSTEM STATUS
-========================================== */
-
 .status-card {
     margin-top: 30px;
 
@@ -329,10 +277,6 @@ header {
     font-weight: bold;
 }
 
-/* ==========================================
-   LOGOUT
-========================================== */
-
 .logout-btn {
     width: 100%;
 
@@ -361,10 +305,6 @@ header {
     background: #b91c1c;
 }
 
-/* ==========================================
-   FOOTER
-========================================== */
-
 .footer {
     margin-top: 30px;
 
@@ -375,32 +315,25 @@ header {
     font-size: 12px;
 }
 
-/* ==========================================
-   TABLET
-========================================== */
+.loading {
+    opacity: 0.6;
+}
 
 @media (max-width: 900px) {
 
     .stats-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .menu-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .action-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
 }
-
-/* ==========================================
-   MOBILE
-========================================== */
 
 @media (max-width: 600px) {
 
@@ -444,38 +377,19 @@ header {
 
 </head>
 
-
 <body>
-
-<script>
-
-/* ==========================================
-   SUPER ADMIN SECURITY
-========================================== */
-
-if (!checkRole("Super Admin")) {
-
-    /* checkRole handles redirect */
-
-}
-
-</script>
-
 
 <header>
 
     <div class="brand">
 
-        <h1>
-            KALI LIFE ECOSYSTEM
-        </h1>
+        <h1>KALI LIFE ECOSYSTEM</h1>
 
         <p>
             Super Admin Control Center
         </p>
 
     </div>
-
 
     <div class="admin-badge">
         🔐 SUPER ADMIN
@@ -486,18 +400,11 @@ if (!checkRole("Super Admin")) {
 
 <div class="container">
 
-
-    <!-- ======================================
-         WELCOME
-    ======================================= -->
-
     <div class="welcome-card">
 
         <h2>
             Welcome,
-            <span id="adminName">
-                Super Admin
-            </span>
+            <span id="adminName">Super Admin</span>
             👋
         </h2>
 
@@ -509,18 +416,13 @@ if (!checkRole("Super Admin")) {
     </div>
 
 
-    <!-- ======================================
-         SYSTEM STATISTICS
-    ======================================= -->
+    <!-- SYSTEM STATISTICS -->
 
     <div class="stats-grid">
 
-
         <div class="stat-card">
 
-            <div class="stat-icon">
-                👑
-            </div>
+            <div class="stat-icon">👑</div>
 
             <div class="stat-title">
                 Super Admin
@@ -535,16 +437,14 @@ if (!checkRole("Super Admin")) {
 
         <div class="stat-card">
 
-            <div class="stat-icon">
-                🛡️
-            </div>
+            <div class="stat-icon">🛡️</div>
 
             <div class="stat-title">
                 Core Admin
             </div>
 
             <div
-                class="stat-value"
+                class="stat-value loading"
                 id="coreAdminCount">
 
                 0
@@ -556,16 +456,14 @@ if (!checkRole("Super Admin")) {
 
         <div class="stat-card">
 
-            <div class="stat-icon">
-                🏢
-            </div>
+            <div class="stat-icon">🏢</div>
 
             <div class="stat-title">
                 Department Admin
             </div>
 
             <div
-                class="stat-value"
+                class="stat-value loading"
                 id="departmentAdminCount">
 
                 0
@@ -577,53 +475,42 @@ if (!checkRole("Super Admin")) {
 
         <div class="stat-card">
 
-            <div class="stat-icon">
-                👥
-            </div>
+            <div class="stat-icon">👥</div>
 
             <div class="stat-title">
                 Total Admin
             </div>
 
             <div
-                class="stat-value"
+                class="stat-value loading"
                 id="totalAdminCount">
 
-                0
+                1
 
             </div>
 
         </div>
 
-
     </div>
 
 
-    <!-- ======================================
-         ADMIN MANAGEMENT
-    ======================================= -->
+    <!-- ADMIN MANAGEMENT -->
 
     <h2 class="section-title">
         👥 Admin Management
     </h2>
 
-
     <div class="menu-grid">
-
 
         <a
             class="menu-card"
             href="create-admin.html">
 
-            <div class="menu-icon">
-                ➕
-            </div>
+            <div class="menu-icon">➕</div>
 
             <div>
 
-                <h3>
-                    Create Admin
-                </h3>
+                <h3>Create Admin</h3>
 
                 <p>
                     Create and register a new
@@ -639,15 +526,11 @@ if (!checkRole("Super Admin")) {
             class="menu-card"
             href="admin-list.html">
 
-            <div class="menu-icon">
-                👥
-            </div>
+            <div class="menu-icon">👥</div>
 
             <div>
 
-                <h3>
-                    Admin List
-                </h3>
+                <h3>Admin List</h3>
 
                 <p>
                     View, edit and manage
@@ -663,15 +546,11 @@ if (!checkRole("Super Admin")) {
             class="menu-card"
             href="admin-roles.html">
 
-            <div class="menu-icon">
-                🛡️
-            </div>
+            <div class="menu-icon">🛡️</div>
 
             <div>
 
-                <h3>
-                    Admin Roles
-                </h3>
+                <h3>Admin Roles</h3>
 
                 <p>
                     Review available roles
@@ -687,15 +566,11 @@ if (!checkRole("Super Admin")) {
             class="menu-card"
             href="permission-management.html">
 
-            <div class="menu-icon">
-                🔑
-            </div>
+            <div class="menu-icon">🔑</div>
 
             <div>
 
-                <h3>
-                    Permission Management
-                </h3>
+                <h3>Permission Management</h3>
 
                 <p>
                     Manage administrative
@@ -711,15 +586,11 @@ if (!checkRole("Super Admin")) {
             class="menu-card"
             href="reports.html">
 
-            <div class="menu-icon">
-                📊
-            </div>
+            <div class="menu-icon">📊</div>
 
             <div>
 
-                <h3>
-                    Reports & Analytics
-                </h3>
+                <h3>Reports & Analytics</h3>
 
                 <p>
                     View business reports
@@ -735,15 +606,11 @@ if (!checkRole("Super Admin")) {
             class="menu-card"
             href="admin-dashboard.html">
 
-            <div class="menu-icon">
-                ⚙️
-            </div>
+            <div class="menu-icon">⚙️</div>
 
             <div>
 
-                <h3>
-                    Admin Dashboard
-                </h3>
+                <h3>Admin Dashboard</h3>
 
                 <p>
                     Open the operational
@@ -754,13 +621,10 @@ if (!checkRole("Super Admin")) {
 
         </a>
 
-
     </div>
 
 
-    <!-- ======================================
-         BUSINESS MANAGEMENT
-    ======================================= -->
+    <!-- BUSINESS MANAGEMENT -->
 
     <div style="margin-top:30px;">
 
@@ -768,23 +632,17 @@ if (!checkRole("Super Admin")) {
             🏢 Business Management
         </h2>
 
-
         <div class="menu-grid">
-
 
             <a
                 class="menu-card"
                 href="purchase.html">
 
-                <div class="menu-icon">
-                    🛒
-                </div>
+                <div class="menu-icon">🛒</div>
 
                 <div>
 
-                    <h3>
-                        Purchase Management
-                    </h3>
+                    <h3>Purchase Management</h3>
 
                     <p>
                         Manage purchase entries,
@@ -800,15 +658,11 @@ if (!checkRole("Super Admin")) {
                 class="menu-card"
                 href="sales.html">
 
-                <div class="menu-icon">
-                    💰
-                </div>
+                <div class="menu-icon">💰</div>
 
                 <div>
 
-                    <h3>
-                        Sales Management
-                    </h3>
+                    <h3>Sales Management</h3>
 
                     <p>
                         Manage sales, invoices,
@@ -824,15 +678,11 @@ if (!checkRole("Super Admin")) {
                 class="menu-card"
                 href="reports.html">
 
-                <div class="menu-icon">
-                    📈
-                </div>
+                <div class="menu-icon">📈</div>
 
                 <div>
 
-                    <h3>
-                        Business Reports
-                    </h3>
+                    <h3>Business Reports</h3>
 
                     <p>
                         Review sales and
@@ -843,22 +693,18 @@ if (!checkRole("Super Admin")) {
 
             </a>
 
-
         </div>
 
     </div>
 
 
-    <!-- ======================================
-         QUICK ACTIONS
-    ======================================= -->
+    <!-- QUICK ACTIONS -->
 
     <div class="quick-actions">
 
         <h2 class="section-title">
             ⚡ Quick Actions
         </h2>
-
 
         <div class="action-grid">
 
@@ -920,9 +766,7 @@ if (!checkRole("Super Admin")) {
     </div>
 
 
-    <!-- ======================================
-         SYSTEM STATUS
-    ======================================= -->
+    <!-- STATUS -->
 
     <div class="status-card">
 
@@ -930,20 +774,22 @@ if (!checkRole("Super Admin")) {
             🟢 System Status
         </h3>
 
-        <p class="status-text">
-            KALI LIFE ECOSYSTEM is running successfully.
+        <p
+            class="status-text"
+            id="systemStatus">
+
+            Checking authentication...
+
         </p>
 
     </div>
 
 
-    <!-- ======================================
-         LOGOUT
-    ======================================= -->
+    <!-- LOGOUT -->
 
     <button
         class="logout-btn"
-        onclick="logout()">
+        id="logoutButton">
 
         🚪 Logout Super Admin
 
@@ -957,30 +803,112 @@ if (!checkRole("Super Admin")) {
 
     </div>
 
-
 </div>
 
 
-<script>
+<!-- ==================================================
+     FIREBASE AUTH MODULE
+================================================== -->
+
+<script type="module">
+
+import {
+    getCurrentUser,
+    logout
+} from "./auth.js";
+
 
 /* ==========================================
-   LOAD CURRENT ADMIN
+   SUPER ADMIN SECURITY
 ========================================== */
 
-const currentAdminName =
-    localStorage.getItem(
-        "userName"
-    ) || "Super Admin";
+const user = getCurrentUser();
 
 
-document.getElementById(
-    "adminName"
-).innerText =
-    currentAdminName;
+if (!user) {
+
+    window.location.replace("login.html");
+
+} else {
+
+    const role =
+        String(user.role || "")
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        String(user.status || "")
+        .trim()
+        .toLowerCase();
+
+
+    if (status === "blocked") {
+
+        alert("Your account is blocked.");
+
+        await logout();
+
+    }
+
+
+    else if (role !== "super admin") {
+
+        alert("Super Admin access required.");
+
+        window.location.replace("dashboard.html");
+
+    }
+
+
+    else {
+
+        /* ==========================================
+           LOAD ADMIN NAME
+        ========================================== */
+
+        document.getElementById(
+            "adminName"
+        ).textContent =
+            user.name || "Super Admin";
+
+
+        document.getElementById(
+            "systemStatus"
+        ).textContent =
+            "Super Admin authentication verified.";
+
+
+        /* ==========================================
+           LOGOUT
+        ========================================== */
+
+        document.getElementById(
+            "logoutButton"
+        ).addEventListener(
+            "click",
+            async function() {
+
+                await logout();
+
+            }
+        );
+
+
+        /* ==========================================
+           LOAD LOCAL ADMIN STATISTICS
+           TEMPORARY
+        ========================================== */
+
+        loadAdminStatistics();
+
+    }
+
+}
 
 
 /* ==========================================
-   LOAD ADMIN STATISTICS
+   ADMIN STATISTICS
 ========================================== */
 
 function loadAdminStatistics() {
@@ -991,9 +919,7 @@ function loadAdminStatistics() {
 
         admins =
             JSON.parse(
-                localStorage.getItem(
-                    "admins"
-                )
+                localStorage.getItem("admins")
             ) || [];
 
     }
@@ -1009,59 +935,73 @@ function loadAdminStatistics() {
     let departmentCount = 0;
 
 
-    admins.forEach(function(admin) {
+    admins.forEach(
+        function(admin) {
 
-        const role =
-            String(
-                admin.role || ""
-            ).trim();
+            const role =
+                String(
+                    admin.role || ""
+                )
+                .trim()
+                .toLowerCase();
 
 
-        if (
-            role === "Core Admin"
-        ) {
+            if (
+                role === "core admin"
+            ) {
 
-            coreCount++;
+                coreCount++;
+
+            }
+
+            else if (
+                role &&
+                role !== "super admin"
+            ) {
+
+                departmentCount++;
+
+            }
 
         }
-
-        else if (
-            role !== "Super Admin"
-            &&
-            role !== ""
-        ) {
-
-            departmentCount++;
-
-        }
-
-    });
+    );
 
 
     document.getElementById(
         "coreAdminCount"
-    ).innerText =
+    ).textContent =
         coreCount;
 
 
     document.getElementById(
         "departmentAdminCount"
-    ).innerText =
+    ).textContent =
         departmentCount;
 
 
     document.getElementById(
         "totalAdminCount"
-    ).innerText =
+    ).textContent =
         admins.length + 1;
+
+
+    document.getElementById(
+        "coreAdminCount"
+    ).classList.remove("loading");
+
+
+    document.getElementById(
+        "departmentAdminCount"
+    ).classList.remove("loading");
+
+
+    document.getElementById(
+        "totalAdminCount"
+    ).classList.remove("loading");
 
 }
 
-
-loadAdminStatistics();
-
 </script>
-
 
 </body>
 
