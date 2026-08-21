@@ -1,306 +1,95 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KALI LIFE ECOSYSTEM | Healthy Life</title>
+    <style>
+        /* প্রিমিয়াম গ্লোবাল স্টাইল */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #050505; color: #fff; line-height: 1.7; overflow-x: hidden; }
 
-<title>KALI LIFE ECOSYSTEM | Healthy Life • Organic Farming • Cast Iron Cookware</title>
+        /* হেডার - স্টিকি ও গ্লাস ইফেক্ট */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #222;
+        }
+        .logo { font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; color: #00ff88; }
+        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: #00ff88; }
 
-<style>
+        /* হিরো ইমেজ সেকশন */
+        .hero-banner {
+            width: 100%; height: 60vh; background: url('45982.jpg') center/cover no-repeat;
+            position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        /* ডাইনামিক কন্টেন্ট সেকশন */
+        .content-box {
+            padding: 60px 10%; text-align: center; background: linear-gradient(180deg, #050505 0%, #0d1a14 100%);
+        }
+        .main-dialogue { font-size: 2.8rem; margin-bottom: 20px; background: linear-gradient(to right, #00ff88, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub-dialogue { font-size: 1.2rem; color: #aaa; margin-bottom: 40px; }
 
-body{
-    font-family:Arial, sans-serif;
-    background:#0d1117;
-    color:white;
-    line-height:1.6;
-}
+        /* সার্ভিস গ্রিড - আধুনিক কার্ড */
+        .services-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 50px 5%; }
+        .card {
+            background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.4s; text-align: center;
+        }
+        .card:hover { transform: translateY(-15px); background: rgba(0, 255, 136, 0.05); border-color: #00ff88; }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
 
-.hero{
-    min-height:60vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    background-size:cover;
-    text-align:center;
-    padding:80px 30px 30px;
-    background-image: url('file_0000000069c88208a7880a58490cd15b (2).png');
-background-size:contain;
-background-repeat:no-repeat;
-background-position:center top;
-background-color:#0d1117;
- margin-top:0;   
-}
+        /* ভিডিও সেকশন */
+        .video-wrapper { padding: 50px; text-align: center; }
+        iframe { border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.8); }
 
-.hero h1{
-    font-size:2.2rem;
-    margin-bottom:11px;
-}
-
-.hero-subtitle{
-    max-width:800px;
-    font-size:.95rem;
-    margin-bottom:15px;
-}
-
-.join-btn{
-    display:inline-block;
-    background:#00c853;
-    color:#fff;
-    text-decoration:none;
-    padding:14px 28px;
-    border-radius:12px;
-    font-size:1rem;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-.hero-buttons{
-width:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:0;
-gap:12px;
-margin-top:10px;
-}
-
-.hero-buttons .join-btn{
-padding:8px 15px;
-font-size:0.85rem;
-margin:0;
-}
-.join-btn:hover{
-    transform:scale(1.05);
-}
-
-.contact-box{
-    background:rgba(255,255,255,0.08);
-padding:25px;
-    border-radius:15px;
-    backdrop-filter:blur(8px);
-}
-
-<nav>
-    <a href="login.html" class="login-btn">🔐 Login</a>
-</nav>
-}
-
-.service-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-}
-
-.card{
-    background:linear-gradient(145deg,#161b22,#1f2937);
-    padding:25px;
-    border-radius:15px;
-    text-align:center;
-transition:0.3s ease;
-border:1px solid rgba(0,255,136,0.15);
-}
-
-    .card:hover{
-    transform:translateY(-8px);
-    
-    }
-.card .icon{
-    font-size:45px;
-    margin-bottom:15px;
-}
-.card-image{
-width:100%;
-    height:180px;
-  object-fit: cover;
-    border-radius:10px;
-    margin-bottom:15px;
-}   
-    .card h3{
-    margin-bottom:10px;
-    }
-
-.about p{
-    max-width:900px;
-    margin:auto;
-}
-
-.footer{
-    text-align:center;
-    padding:25px;
-    background:#0a0d12;
-}
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 25px;
-    background:#0b3d2e;
-    position:sticky;
-    top:0;
-    z-index:999;
-}
-
-.logo{
-    font-size:1.3rem;
-    font-weight:bold;
-    color:#ffffff;
-}
-
-.navbar nav{
-    display:flex;
-    gap:15px;
-}
-
-.navbar nav a{
-    color:#ffffff;
-    text-decoration:none;
-    font-size:0.95rem;
-    transition:0.3s;
-}
-
-.navbar nav a:hover{
-    color:#00c853;
-}
-.login-btn{
-    background:#00c853;
-    color:#fff !important;
-    padding:10px 18px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.login-btn:hover{
-    background:#009624;
-}
-</style>
+        /* ফুটার */
+        footer { padding: 40px; text-align: center; background: #000; border-top: 1px solid #222; }
+        .contact-btn {
+            display: inline-block; padding: 15px 30px; background: #00ff88; color: #000;
+            border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-<header class="navbar">
-    <div class="logo">KALI LIFE ECOSYSTEM</div>
 
-    <nav>
-    <a href="login.html" class="login-btn">🔐 Login</a>
-        <a href="admin.html" class="login-btn">🛡️ Admin</a>
-    </nav>
-</header>
-<section class="hero">
+    <header class="navbar">
+        <div class="logo">KALI LIFE</div>
+        <nav class="nav-links">
+            <a href="login.html">Login</a>
+            <a href="admin.html">Admin</a>
+        </nav>
+    </header>
 
-<h1>KALI LIFE ECOSYSTEM</h1>
-<p class="hero-subtitle">
-সুস্থ মানুষই দেশের প্রকৃত সম্পদ। বিশুদ্ধ খাদ্য, অর্গানিক কৃষি ও স্বাস্থ্যকর জীবনযাপনের মাধ্যমে প্রতিটি পরিবারে সুস্থতা, সচেতনতা ও সমৃদ্ধির আলো পৌঁছে দেওয়াই KALI LIFE ECOSYSTEM-এর অঙ্গীকার।
-</p>
+    <div class="hero-banner"></div>
 
-<p class="welcome-text">
-    Welcome to KALI LIFE ECOSYSTEM – Please login to access your dashboard.
-</p>
-</section>
-<section class="video-section" style="padding:40px 20px; text-align:center;">
-  <h2>আমাদের ভিডিও</h2>
+    <section class="content-box">
+        <h1 class="main-dialogue">আপনার স্বাস্থ্য, আপনার হাতের মুঠোয়</h1>
+        <p class="sub-dialogue">বিশুদ্ধ খাদ্য • স্বাস্থ্যকর জীবন • সচেতন ভবিষ্যৎ</p>
+    </section>
 
-  <iframe
-    width="315"
-    height="560"
-    src="https://www.youtube.com/embed/o1qc56jwbEQ"
-    title="YouTube Shorts"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</section>
-<section class="services" id="products">
+    <div class="video-wrapper">
+        <iframe width="320" height="570" src="https://www.youtube.com/embed/o1qc56jwbEQ" frameborder="0" allowfullscreen></iframe>
+    </div>
 
-<h2 class="section-title">আমাদের সেবা</h2>
+    <section class="services-container">
+        <div class="card"><img src="file_00000000b994720b998de4210b14eef1.png"><h3>Premium Cast Iron</h3><p>প্রাকৃতিক রান্নার অভিজ্ঞতা</p></div>
+        <div class="card"><img src="file_0000000040847208822286af3545954b.png"><h3>Business Network</h3><p>স্মার্ট ব্যবসায়িক সংযোগ</p></div>
+        <div class="card"><img src="file_0000000026c8720690a3807402f5be0d.png"><h3>Astrology Services</h3><p>সঠিক জীবনের নির্দেশনা</p></div>
+    </section>
 
-<div class="service-grid">
-<div class="card">
-    
-    <img class="card-image" src="file_00000000b994720b998de4210b14eef1.png" alt="Cast Iron Kadai">
-<h3>Premium Cast Iron Kadai</h3>
-<p>Premium cast iron cookware designed for healthy cooking, excellent heat retention and long-lasting durability. Manufactured using natural cast iron.</p>
-</div>
+    <footer>
+        <p>© 2026 KALI LIFE ECOSYSTEM</p>
+        <a href="https://wa.me/917063213090" class="contact-btn">WhatsApp যোগাযোগ</a>
+    </footer>
 
-
-
-<div class="card">
-    
-    <img src="file_0000000040847208822286af3545954b.png" class="card-image" alt="Business Network">
-    <h3>Business Network</h3>
-    <p>ব্যবসায়িক সংযোগ ও সুযোগ</p>
-</div>
-<div class="card">
-    <img class="card-image" src="file_00000000ea6472089feecbf6.png" alt="Community Support">
-    <h3>Community Support</h3>
-    <p>একটি শক্তিশালী সামাজিক পরিবার</p>
-</div>
-
-<div class="card">
-<img src="file_0000000026c8720690a3807402f5be0d.png" class="card-image" alt="Astrology Services">
-<h3>Astrology Services</h3>
-<p>জ্যোতিষ ও পরামর্শ সেবা</p>
-</div>
-
-<div class="card">
-<img class="card-image" src="file_00000000a3007209a2c6a269bda65196.png">
-<h3>Marriage Network</h3>
-<p>বিশ্বস্ত বিবাহ পরিচয় সেবা</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="about">
-
-<h2>আমাদের সম্পর্কে</h2>
-
-<br>
-
-<p>
-KALI LIFE ECOSYSTEM একটি সমন্বিত ডিজিটাল প্ল্যাটফর্ম যেখানে কৃষি,
-ব্যবসা, শিক্ষা, কর্মসংস্থান, সামাজিক সংযোগ, জ্যোতিষ সেবা এবং
-বিবাহ পরিচয় সেবাকে এক ছাতার নিচে আনার প্রচেষ্টা করা হচ্ছে।
-</p>
-
-</section>
-
-<footer class="footer">
-
-<p>© 2026 KALI LIFE ECOSYSTEM</p>
-
-<p>
-<a href="https://wa.me/917063213090" style="color:white;text-decoration:none;">
-📱 WhatsApp: +91 7063213090
-</a>
-</p>
-
-<p>📩 Free Registration Open</p>
-
-</footer> 
     <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-  authDomain: "kali-life-ecosystem.firebaseapp.com",
-  projectId: "kali-life-ecosystem",
-  storageBucket: "kali-life-ecosystem.firebasestorage.app",
-  messagingSenderId: "734170546737",
-  appId: "1:734170546737:web:f0034e627c0212cbfe0b10",
-  measurementId: "G-D8K1W61F6K"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-console.log("Firebase Connected Successfully");
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+        // Firebase code...
     </script>
 </body>
 </html>
