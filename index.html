@@ -116,17 +116,50 @@
             margin-bottom: 20px; 
         }
 
-        /* ভিডিও সেকশন */
-        .video-wrapper { 
-            padding: 50px 5%; 
-            text-align: center; 
-        }
+            /* নতুন ভিডিও কার্ড সেকশন */
+    .clean-video-card {
+        text-align: center;
+        padding: 35px 20px;
+        background: rgba(255, 255, 255, 0.03); 
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        max-width: 500px;
+        margin: 40px auto; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    .video-title {
+        font-size: 1.5rem;
+        color: #00ff88;
+        margin-bottom: 12px;
+    }
 
-        iframe { 
-            border-radius: 20px; 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-            max-width: 100%;
-        }
+    .video-desc {
+        font-size: 1rem;
+        color: #ccc;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+    
+    .watch-btn {
+        display: inline-flex;
+        background: rgba(0, 255, 136, 0.1);
+        color: #00ff88;
+        border: 1px solid #00ff88;
+        padding: 12px 30px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    
+    .watch-btn:hover {
+        background: #00ff88;
+        color: #050505;
+        transform: translateY(-3px);
+    }
+        
 
         /* ফুটার */
         footer { 
