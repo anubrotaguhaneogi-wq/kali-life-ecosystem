@@ -120,6 +120,44 @@ button:hover {
 </div>
 
 <script type="module" src="auth.js"></script>
+<script>
+window.addEventListener("error", function(event) {
 
+    const messageBox = document.getElementById("message");
+
+    if (messageBox) {
+        messageBox.style.color = "#dc2626";
+        messageBox.textContent =
+            "Login System Error: " +
+            (event.message || "JavaScript Error");
+    }
+
+    console.error(
+        "LOGIN ERROR:",
+        event.message,
+        event.filename,
+        event.lineno
+    );
+});
+
+window.addEventListener("unhandledrejection", function(event) {
+
+    const messageBox = document.getElementById("message");
+
+    if (messageBox) {
+        messageBox.style.color = "#dc2626";
+        messageBox.textContent =
+            "Login Error: " +
+            (event.reason?.message ||
+             event.reason ||
+             "Unknown Error");
+    }
+
+    console.error(
+        "LOGIN PROMISE ERROR:",
+        event.reason
+    );
+});
+</script>
 </body>
 </html>
