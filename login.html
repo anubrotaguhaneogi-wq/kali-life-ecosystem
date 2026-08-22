@@ -3,160 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALI LIFE ECOSYSTEM - Login</title>
+<title>KALI LIFE ECOSYSTEM - Secure Login</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+/* ==========================================
+   PREMIUM DYNAMIC UI STYLES
+========================================== */
+* { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #064e3b, #0f766e);
-  font-family: Arial, sans-serif;
+  margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center;
+  background: linear-gradient(135deg, #064e3b, #0f766e, #022c22); background-size: 200% 200%;
+  animation: gradientFlow 10s ease infinite;
 }
 
-.login-box {
-  width: 90%;
-  max-width: 380px;
-  background: white;
-  padding: 30px 25px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+@keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+.login-card {
+  width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.98);
+  padding: 40px 30px; border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
+  transform: translateY(0); transition: 0.3s ease;
 }
 
-h1 {
-  text-align: center;
-  color: #065f46;
-  font-size: 24px;
-  margin-bottom: 8px;
-}
+.login-card:hover { transform: translateY(-5px); box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
 
-.subtitle {
-  text-align: center;
-  color: #777;
-  margin-bottom: 25px;
-  font-size: 14px;
-}
+.brand-title { text-align: center; color: #065f46; font-size: 26px; font-weight: 800; margin-bottom: 5px; letter-spacing: 1px; }
+.brand-subtitle { text-align: center; color: #64748b; font-size: 13px; margin-bottom: 30px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
 
-input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-  outline: none;
+.input-group { margin-bottom: 20px; position: relative; }
+.input-group label { display: block; margin-bottom: 8px; color: #334155; font-size: 13px; font-weight: 700; }
+.input-group input {
+  width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px;
+  font-size: 15px; outline: none; transition: all 0.3s ease; background: #f8fafc;
 }
+.input-group input:focus { border-color: #059669; background: #ffffff; box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1); }
 
-input:focus {
-  border-color: #059669;
+/* Dynamic Button & Spinner */
+.auth-btn {
+  width: 100%; padding: 15px; border: none; border-radius: 12px; background: #059669;
+  color: white; font-size: 16px; font-weight: bold; cursor: pointer;
+  transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px;
 }
+.auth-btn:hover { background: #047857; transform: scale(1.02); }
+.auth-btn:active { transform: scale(0.98); }
+.auth-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
 
-button {
-  width: 100%;
-  padding: 14px;
-  border: 0;
-  border-radius: 10px;
-  background: #059669;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.spinner {
+  width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite; display: none;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-button:hover {
-  background: #047857;
+.error-message {
+  color: #ef4444; text-align: center; font-size: 13px; margin-top: 15px;
+  font-weight: 600; min-height: 20px; opacity: 0; transition: opacity 0.3s ease;
 }
+.error-message.show { opacity: 1; }
 
-#message {
-  text-align: center;
-  margin-top: 15px;
-  color: #d00;
-  font-size: 14px;
-}
+.footer-link { text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+.footer-link a { color: #059669; text-decoration: none; font-size: 14px; font-weight: 700; transition: 0.2s; }
+.footer-link a:hover { color: #047857; text-decoration: underline; }
 </style>
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="login-card">
+  <div class="brand-title">KALI LIFE</div>
+  <div class="brand-subtitle">Secure Gateway</div>
 
-  <h1>KALI LIFE ECOSYSTEM</h1>
-
-  <div class="subtitle">
-    User Login
+  <div class="input-group">
+      <label>Mobile Number / Email / Admin ID</label>
+      <input type="text" id="loginId" placeholder="Enter ID or Mobile Number" autocomplete="username">
   </div>
 
-  <form id="loginForm">
+  <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+  </div>
 
-    <input
-      type="tel"
-      id="mobile"
-      placeholder="Mobile Number"
-      inputmode="numeric"
-      required
-    >
+  <button class="auth-btn" id="loginBtn">
+      <span id="btnText">Secure Login</span>
+      <div class="spinner" id="btnSpinner"></div>
+  </button>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-      required
-    >
+  <div class="error-message" id="errorMsg"></div>
 
-    <button type="submit">
-      Login
-    </button>
-
-  </form>
-
-  <div id="message"></div>
-
+  <div class="footer-link">
+      <a href="register.html">New to Ecosystem? Create Account</a>
+  </div>
 </div>
 
-<script type="module" src="auth.js"></script>
-<script>
-window.addEventListener("error", function(event) {
+<!-- ==========================================
+   MODULAR FIREBASE & DYNAMIC LOGIC
+========================================== -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    const messageBox = document.getElementById("message");
+const firebaseConfig = {
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10"
+};
 
-    if (messageBox) {
-        messageBox.style.color = "#dc2626";
-        messageBox.textContent =
-            "Login System Error: " +
-            (event.message || "JavaScript Error");
-    }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-    console.error(
-        "LOGIN ERROR:",
-        event.message,
-        event.filename,
-        event.lineno
-    );
+// DOM Elements
+const loginIdInput = document.getElementById("loginId");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const btnText = document.getElementById("btnText");
+const btnSpinner = document.getElementById("btnSpinner");
+const errorMsg = document.getElementById("errorMsg");
+
+// Clear error on user typing (Dynamic UX feature)
+[loginIdInput, passwordInput].forEach(input => {
+    input.addEventListener('input', () => {
+        errorMsg.classList.remove('show');
+    });
 });
 
-window.addEventListener("unhandledrejection", function(event) {
+// Helper function to manage UI state
+const setUIState = (isLoading) => {
+    loginBtn.disabled = isLoading;
+    btnText.style.display = isLoading ? 'none' : 'block';
+    btnSpinner.style.display = isLoading ? 'block' : 'none';
+};
 
-    const messageBox = document.getElementById("message");
+// Main Login Logic (Event Listener approach)
+loginBtn.addEventListener("click", async () => {
+    let loginId = loginIdInput.value.trim();
+    const password = passwordInput.value;
 
-    if (messageBox) {
-        messageBox.style.color = "#dc2626";
-        messageBox.textContent =
-            "Login Error: " +
-            (event.reason?.message ||
-             event.reason ||
-             "Unknown Error");
+    if (!loginId || !password) {
+        errorMsg.innerText = "Please fill in all fields.";
+        errorMsg.classList.add('show');
+        return;
     }
 
-    console.error(
-        "LOGIN PROMISE ERROR:",
-        event.reason
-    );
+    // Smart Input Logic: Convert 10-digit mobile to Firebase email
+    if (/^[0-9]{10}$/.test(loginId)) {
+        loginId = `${loginId}@kalilife.com`;
+    }
+
+    try {
+        setUIState(true);
+
+        // 1. Authenticate User
+        const userCredential = await signInWithEmailAndPassword(auth, loginId, password);
+        const user = userCredential.user;
+
+        // 2. Fetch Role Data
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+            const userRole = userDoc.data().role;
+
+            // 3. Dynamic Routing based on Role
+            const routeMap = {
+                "Super Admin": "super_admin_dashboard.html",
+                "Core Admin": "core_admin_dashboard.html",
+                "Departmental Admin": "dept_admin_dashboard.html"
+            };
+            
+            // Redirect to mapped route, default to customer dashboard
+            window.location.href = routeMap[userRole] || "customer_dashboard.html";
+        } else {
+            throw new Error("profile-missing");
+        }
+
+    } catch (error) {
+        console.error("Auth Error:", error);
+        setUIState(false);
+        errorMsg.classList.add('show');
+        
+        // Advanced Error Handling
+        if (error.code === 'auth/invalid-credential') {
+            errorMsg.innerText = "Incorrect ID, Mobile Number, or Password.";
+        } else if (error.message === "profile-missing") {
+            errorMsg.innerText = "User profile setup is incomplete. Contact support.";
+        } else {
+            errorMsg.innerText = "Connection error. Please try again.";
+        }
+    }
 });
 </script>
 </body>
