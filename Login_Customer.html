@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login - Kali Life Ecosystem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0fdf4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .login-card h2 {
+            text-align: center;
+            color: #16a34a;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .login-card p {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #16a34a;
+        }
+        /* মোবাইল নম্বরের জন্য বিশেষ স্টাইল যাতে শুধুমাত্র নম্বর টাইপ করা যায় */
+        input[type="tel"] {
+            letter-spacing: 1px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .login-btn:hover {
+            background-color: #15803d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>Customer Login</h2>
+        <p>Kali Life Ecosystem</p>
+        
+        <form action="#" method="POST">
+            <div class="input-group">
+                <label for="mobile">Mobile Number</label>
+                <!-- pattern="[0-9]{10}" ব্যবহার করা হয়েছে যাতে শুধুমাত্র ১০ ডিজিটের নম্বর দেওয়া যায় -->
+                <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required title="Please enter a valid 10-digit mobile number">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+
+</body>
+</html>
