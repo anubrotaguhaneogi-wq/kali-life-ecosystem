@@ -105,7 +105,7 @@ import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12
 
 const firebaseConfig = {
     apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
     projectId: "kali-life-ecosystem",
     storageBucket: "kali-life-ecosystem.firebasestorage.app",
     messagingSenderId: "734170546737",
@@ -149,13 +149,31 @@ loginBtn.addEventListener("click", async () => {
         errorMsg.classList.add('show');
         return;
     }
+try {
+    // Smart Input Logic: Find Firebase email from Firestore by mobile
+if (/^[0-9]{10}$/.test(loginId)) {
 
-    // Smart Input Logic: Convert 10-digit mobile to Firebase email
-    if (/^[0-9]{10}$/.test(loginId)) {
-        loginId = `${loginId}@kalilife.com`;
+    const mobileQuery = query(
+        collection(db, "users"),
+        where("mobile", "==", loginId)
+    );
+
+    const mobileSnapshot = await getDocs(mobileQuery);
+
+    if (mobileSnapshot.empty) {
+        throw new Error("mobile-not-found");
     }
 
-    try {
+    const userData = mobileSnapshot.docs[0].data();
+
+    if (!userData.email) {
+        throw new Error("email-missing");
+    }
+
+    loginId = userData.email;
+   }
+
+    
         setUIState(true);
 
         // 1. Authenticate User
