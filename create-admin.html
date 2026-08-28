@@ -336,7 +336,16 @@ const app = initializeApp(firebaseConfig);
 const adminApp = initializeApp(firebaseConfig, "AdminCreationApp");
 const adminAuth = getAuth(adminApp);
 const db = getFirestore(app);
-
+alert(
+  "FIREBASE DEBUG\n\n" +
+  "Project ID: " + firebaseConfig.projectId + "\n" +
+  "Auth Domain: " + firebaseConfig.authDomain + "\n" +
+  "API Key: " +
+    firebaseConfig.apiKey.substring(0, 6) +
+    "..." +
+    firebaseConfig.apiKey.slice(-4) + "\n\n" +
+  "Firebase initialization: SUCCESS"
+);
 /* ======================================================
    ELEMENTS
 ====================================================== */
