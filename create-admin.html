@@ -497,7 +497,28 @@ async function createAdmin() {
         }
 
         /* ---------- CREATE AUTH ACCOUNT ---------- */
-        const credential = await createUserWithEmailAndPassword(adminAuth, email, password);
+        const testUrl =
+    "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
+    firebaseConfig.apiKey;
+
+const testResponse = await fetch(testUrl, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        email: "",
+        password: "x",
+        returnSecureToken: true
+    })
+});
+
+const testData = await testResponse.json();
+
+throw new Error(
+    "FIREBASE RAW TEST: " +
+    JSON.stringify(testData)
+);
         const adminUser = credential.user;
 
         /* ---------- CREATE FIRESTORE PROFILE ---------- */
