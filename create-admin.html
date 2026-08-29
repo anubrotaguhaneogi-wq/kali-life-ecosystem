@@ -333,8 +333,8 @@ const firebaseConfig = {
    MAIN + SECONDARY APP
 ====================================================== */
 const app = initializeApp(firebaseConfig);
-const adminApp = initializeApp(firebaseConfig, "AdminCreationApp");
-const adminAuth = getAuth(adminApp);
+const adminAuth = getAuth(app);
+
 const db = getFirestore(app);
 alert(
   "FIREBASE DEBUG\n\n" +
