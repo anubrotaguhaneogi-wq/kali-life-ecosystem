@@ -957,10 +957,45 @@ async function createAdmin() {
         );
 
 
-        /* ==================================================
-    
-createButton.addEventListener("click", async function () {
-    console.log("Create Admin button clicked");
-    await createAdmin();
-});
-console.log("Create Admin click handler attached");
+            /* ==================================================
+       ERROR HANDLING
+    ================================================== */
+
+    } catch (error) {
+
+        console.error("CREATE ADMIN ERROR:", error);
+
+        showMessage(
+            "Admin creation failed.\n\n" +
+            "Error Code: " + (error.code || "Unknown") + "\n" +
+            "Error Message: " + (error.message || "Unknown error"),
+            "error"
+        );
+
+        alert(
+            "ADMIN CREATION ERROR\n\n" +
+            "Code: " + (error.code || "Unknown") + "\n\n" +
+            "Message: " + (error.message || "Unknown error")
+        );
+
+    } finally {
+
+        resetButtonState();
+
+    }
+
+}
+
+
+/* ======================================================
+   CREATE ADMIN BUTTON
+====================================================== */
+
+createButton.addEventListener(
+    "click",
+    createAdmin
+);
+
+</script>
+</body>
+</html>
