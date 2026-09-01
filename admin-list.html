@@ -64,61 +64,245 @@ Create Admin
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
 
 <!-- Admin List JavaScript -->
-<script>
-// Load All Admins
-function loadAdmins(){
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    deleteDoc,
+    doc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
-// View Admin Details
-function viewUser(id){
-window.location.href="view-admin.html?id="+id;
+/* Firebase Configuration */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+    measurementId: "G-LBEY0W7RX3"
+};
+
+
+/* Firebase */
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+/* Load All Admins */
+
+async function loadAdmins() {
+
+    const table =
+        document.getElementById("adminTableBody");
+
+    table.innerHTML = `
+        <tr>
+            <td colspan="9" style="text-align:center;">
+                Loading admins...
+            </td>
+        </tr>
+    `;
+
+    try {
+
+        const snapshot =
+            await getDocs(collection(db, "users"));
+
+        table.innerHTML = "";
+
+        let index = 0;
+
+        snapshot.forEach(function(adminDoc) {
+
+            const admin = adminDoc.data();
+
+            const role =
+                admin.role ||
+                admin.roleType ||
+                "";
+
+            const reportsTo =
+                admin.createdByRole ||
+                "Super Admin";
+
+            const status =
+                admin.status ||
+                "Active";
+
+            table.innerHTML += `
+                <tr>
+
+                    <td>${++index}</td>
+
+                    <td>${admin.uid || adminDoc.id}</td>
+
+                    <td>${admin.name || ""}</td>
+
+                    <td>${role}</td>
+
+                    <td>${reportsTo}</td>
+
+                    <td>${status}</td>
+
+                    <td>
+                        <button onclick="viewUser('${adminDoc.id}')">
+                            View
+                        </button>
+                    </td>
+
+                    <td>
+                        <button onclick="editUser('${adminDoc.id}')">
+                            Edit
+                        </button>
+                    </td>
+
+                    <td>
+                        <button onclick="deleteUser('${adminDoc.id}')">
+                            Delete
+                        </button>
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+        if (index === 0) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="9" style="text-align:center;">
+                        No admin accounts found.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Admin List Error:",
+            error
+        );
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="9" style="text-align:center;color:red;">
+                    Failed to load admin accounts.
+                </td>
+            </tr>
+        `;
+
+    }
+
 }
-// Edit Admin Details
-function editUser(id){
-window.location.href="edit-admin.html?id="+id;
-}
-// Delete Admin
-function deleteUser(id){
 
-let admins = JSON.parse(localStorage.getItem("admins")) || [];
 
-if(confirm("Are you sure you want to delete this admin?")){
+/* View Admin */
 
-admins.splice(id,1);
+window.viewUser = function(id) {
 
-localStorage.setItem("admins",JSON.stringify(admins));
+    window.location.href =
+        "view-admin.html?id=" + id;
+
+};
+
+
+/* Edit Admin */
+
+window.editUser = function(id) {
+
+    window.location.href =
+        "edit-admin.html?id=" + id;
+
+};
+
+
+/* Delete Admin */
+
+window.deleteUser = async function(id) {
+
+    if (
+        !confirm(
+            "Are you sure you want to delete this admin?"
+        )
+    ) {
+        return;
+    }
+
+    try {
+
+        await deleteDoc(
+            doc(db, "users", id)
+        );
+
+        alert(
+            "Admin deleted successfully."
+        );
+
+        loadAdmins();
+
+    } catch (error) {
+
+        console.error(
+            "Delete Admin Error:",
+            error
+        );
+
+        alert(
+            "Failed to delete admin."
+        );
+
+    }
+
+};
+
+
+/* Search Admin */
+
+window.searchAdmin = function() {
+
+    const input =
+        document
+        .getElementById("searchAdmin")
+        .value
+        .toLowerCase();
+
+    const rows =
+        document.querySelectorAll(
+            "#adminTableBody tr"
+        );
+
+    rows.forEach(function(row) {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(input)
+                ? ""
+                : "none";
+
+    });
+
+};
+
+
+/* Initialize */
 
 loadAdmins();
 
-}
-
-}
-// Initialize Admin List
-loadAdmins();
-    // Search Admin
-function searchAdmin(){
-
-let input=document.getElementById("searchAdmin").value.toLowerCase();
-
-let rows=document.querySelectorAll("#adminTableBody tr");
-
-rows.forEach(function(row){
-
-let text=row.innerText.toLowerCase();
-
-if(text.indexOf(input)>-1){
-
-row.style.display="";
-
-}else{
-
-row.style.display="none";
-
-}
-
-});
-
-}
 </script>
 </body>
 
