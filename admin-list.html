@@ -68,32 +68,7 @@ Create Admin
 // Load All Admins
 function loadAdmins(){
 
-let admins = JSON.parse(localStorage.getItem("admins")) || [];
 
-let table = document.getElementById("adminTableBody");
-
-table.innerHTML = "";
-
-admins.forEach(function(admin,index){
-
-table.innerHTML += `
-<tr>
-<td>${index+1}</td>
-
-<td>${admin.id}</td>
-<td>${admin.fullName}</td>
-<td>${admin.role}</td>
-<td>${admin.reportsTo}</td>
-<td>${admin.status}</td>
-<td><button onclick="viewUser(${index})">View</button></td>
-<td><button onclick="editUser(${index})">Edit</button></td>
-<td><button onclick="deleteUser(${index})">Delete</button></td>
-</tr>
-`;
-
-});
-
-}
 // View Admin Details
 function viewUser(id){
 window.location.href="view-admin.html?id="+id;
