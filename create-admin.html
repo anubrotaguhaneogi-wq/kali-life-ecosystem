@@ -778,14 +778,7 @@ const superAdminStatus = String(
     ""
 ).trim().toLowerCase();
 
-const isSuperAdmin =
-    (
-   superAdminRole === "super admin" ||
-superAdminRole === "superadmin"   
-        superAdminRole === "super admin" ||
-        superAdminRole === "superadmin"
-    ) &&
-    superAdminStatus === "active";
+
         if (!isSuperAdmin) {
 
             showMessage(
@@ -793,9 +786,7 @@ superAdminRole === "superadmin"
                 "error"
             );
 
-            return;
-        }
-
+           
 
         /* ==================================================
            DUPLICATE MOBILE CHECK
