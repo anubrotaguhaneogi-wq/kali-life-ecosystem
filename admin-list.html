@@ -126,11 +126,20 @@ async function loadAdmins() {
 
             const admin = adminDoc.data();
 
-            const role =
-                admin.role ||
-                admin.roleType ||
-                "";
+const role =
+    admin.roleType ||
+    admin.role ||
+    "";
 
+const adminRoles = [
+    "Super Admin",
+    "Core Admin",
+    "Departmental Admin"
+];
+
+if (!adminRoles.includes(role)) {
+    return;
+}
             const reportsTo =
                 admin.createdByRole ||
                 "Super Admin";
