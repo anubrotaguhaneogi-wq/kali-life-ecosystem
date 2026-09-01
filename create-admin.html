@@ -766,15 +766,21 @@ async function createAdmin() {
 
 
         const superAdminRole =
-    superAdminData.roleType || superAdminData.role;
+    String(
+        superAdminData.roleType ||
+        superAdminData.role ||
+        ""
+    ).trim();
 
 const superAdminStatus =
-    String(superAdminData.status || "").toLowerCase();
+    String(
+        superAdminData.status ||
+        ""
+    ).trim().toLowerCase();
 
 const isSuperAdmin =
-    superAdminRole === "Super Admin" &&
+    superAdminRole.toLowerCase() === "super admin" &&
     superAdminStatus === "active";
-
 
         if (!isSuperAdmin) {
 
