@@ -693,7 +693,21 @@ async function createAdmin() {
         return;
     }
 
+/* ==================================================
+   SUPER ADMIN CREATION RESTRICTION
+================================================== */
 
+if (role === "Super Admin") {
+
+    showMessage(
+        "Super Admin account cannot be created from this page.",
+        "error"
+    );
+
+    roleInput.focus();
+
+    return;
+}
     /* ==================================================
        ROLE / DEPARTMENT VALIDATION
     ================================================== */
