@@ -953,4 +953,52 @@ const superAdminStatus = String(
         ================================================== */
 
         showMessage(
-            `Admin successfully created as "${ful
+            `Admin সফলভাবে তৈরি হয়েছে "${name}" হিসেবে (${fullRole})।`,
+            "success"
+        );
+
+        nameInput.value = "";
+        emailInput.value = "";
+        mobileInput.value = "";
+        passwordInput.value = "";
+        departmentInput.value = "";
+        roleInput.value = "";
+        statusInput.value = "Active";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        let errorText = "কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন।";
+
+        if (error.code === "auth/email-already-in-use") {
+            errorText = "এই ইমেইল দিয়ে ইতিমধ্যে একটি অ্যাকাউন্ট আছে।";
+        } else if (error.code === "auth/invalid-email") {
+            errorText = "ইমেইল ঠিকানাটি সঠিক নয়।";
+        } else if (error.code === "auth/weak-password") {
+            errorText = "পাসওয়ার্ড খুবই দুর্বল। কমপক্ষে ৮ ক্যারেক্টার দিন।";
+        } else if (error.code === "auth/api-key-not-valid") {
+            errorText = "Firebase API key সঠিক নয়। কনফিগারেশন চেক করুন।";
+        }
+
+        showMessage(errorText, "error");
+
+    } finally {
+
+        try {
+            await deleteApp(secondaryApp);
+        } catch (cleanupError) {
+            console.error("Secondary app cleanup failed:", cleanupError);
+        }
+
+        resetButtonState();
+
+    }
+
+}
+
+</script>
+</body>
+</html>
+            
