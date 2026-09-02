@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="bn"><head>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#166534">
-<title>Create Admin - KALI LIFE ECOSYSTEM</title><style>
+<title>Create Admin - KALI LIFE ECOSYSTEM</title>
+<style>
 * { box-sizing: border-box; }
 
 body {
@@ -219,171 +222,140 @@ button {
         flex-direction: column;
     }
 }
-</style></head><body><div class="container"><div class="header">
-    <h1>🔐 Create Admin</h1>
-    <p>KALI LIFE ECOSYSTEM — Admin Management</p>
-</div>
-
-<div class="card">
-
-    <h2 class="section-title">Admin Information</h2>
-
-    <div class="role-info">
-        <strong>Admin Structure:</strong><br>
-        Super Admin → ৫টি Department → প্রতিটি Department-এ সর্বোচ্চ ৫ জন Core Admin + ৫ জন Departmental Admin
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🔐 Create Admin</h1>
+        <p>KALI LIFE ECOSYSTEM — Admin Management</p>
     </div>
 
-    <!-- NAME -->
-    <div class="form-group">
-        <label for="name">Full Name</label>
-        <input
-            id="name"
-            type="text"
-            autocomplete="name"
-            placeholder="Enter admin full name"
-        >
-    </div>
+    <div class="card">
+        <h2 class="section-title">Admin Information</h2>
 
-    <!-- EMAIL -->
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input
-            id="email"
-            type="email"
-            autocomplete="email"
-            placeholder="Enter admin email"
-        >
-    </div>
+        <div class="role-info">
+            <strong>Admin Structure:</strong><br>
+            Super Admin → ৫টি Department → প্রতিটি Department-এ সর্বোচ্চ ৫ জন Core Admin + ৫ জন Departmental Admin
+        </div>
 
-    <!-- MOBILE -->
-    <div class="form-group">
-        <label for="mobile">Mobile Number</label>
-        <input
-            id="mobile"
-            type="tel"
-            inputmode="numeric"
-            maxlength="10"
-            autocomplete="tel"
-            placeholder="Enter 10 digit mobile number"
-        >
-    </div>
-
-    <!-- PASSWORD -->
-    <div class="form-group">
-        <label for="password">Password</label>
-
-        <div class="password-box">
+        <!-- NAME -->
+        <div class="form-group">
+            <label for="name">Full Name</label>
             <input
-                id="password"
-                type="password"
-                autocomplete="new-password"
-                placeholder="Minimum 8 characters"
+                id="name"
+                type="text"
+                autocomplete="name"
+                placeholder="Enter admin full name"
             >
+        </div>
 
-            <button
-                type="button"
-                id="passwordToggle"
-                class="password-toggle"
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+                id="email"
+                type="email"
+                autocomplete="email"
+                placeholder="Enter admin email"
             >
-                Show
+        </div>
+
+        <!-- MOBILE -->
+        <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input
+                id="mobile"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                autocomplete="tel"
+                placeholder="Enter 10 digit mobile number"
+            >
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-box">
+                <input
+                    id="password"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Minimum 8 characters"
+                >
+                <button type="button" id="passwordToggle" class="password-toggle">
+                    Show
+                </button>
+            </div>
+        </div>
+
+        <!-- DEPARTMENT -->
+        <div class="form-group">
+            <label for="department">Department</label>
+            <select id="department">
+                <option value="">-- Select Department --</option>
+                <option value="Product">Product</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="Technology">Technology</option>
+                <option value="Marriage">Marriage</option>
+                <option value="Education">Education</option>
+                <option value="None">None (for Super Admin)</option>
+            </select>
+        </div>
+
+        <!-- ROLE -->
+        <div class="form-group">
+            <label for="role">Account Role</label>
+            <select id="role">
+                <option value="">-- Select Role --</option>
+                <option value="Super Admin">Super Admin</option>
+                <option value="Core Admin">Core Admin</option>
+                <option value="Departmental Admin">Departmental Admin</option>
+            </select>
+        </div>
+
+        <!-- STATUS -->
+        <div class="form-group">
+            <label for="status">Account Status</label>
+            <select id="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="buttons">
+            <button type="button" id="createButton" class="create-button">
+                Create Admin
+            </button>
+            <button type="button" id="resetButton" class="reset-button">
+                Reset
             </button>
         </div>
+
+        <!-- MESSAGE -->
+        <div id="message" class="message"></div>
+
+        <!-- LINKS -->
+        <div class="links">
+            <a href="admin-dashboard.html">← Admin Dashboard</a>
+            <a href="admin-list.html">Admin List</a>
+        </div>
     </div>
-
-    <!-- DEPARTMENT -->
-    <div class="form-group">
-        <label for="department">Department</label>
-
-        <select id="department">
-            <option value="">-- Select Department --</option>
-
-            <option value="Product">Product</option>
-            <option value="Agriculture">Agriculture</option>
-            <option value="Technology">Technology</option>
-            <option value="Marriage">Marriage</option>
-            <option value="Education">Education</option>
-
-            <option value="None">None (for Super Admin)</option>
-        </select>
-    </div>
-
-    <!-- ROLE -->
-    <div class="form-group">
-        <label for="role">Account Role</label>
-
-        <select id="role">
-            <option value="">-- Select Role --</option>
-
-            <option value="Super Admin">Super Admin</option>
-            <option value="Core Admin">Core Admin</option>
-            <option value="Departmental Admin">
-                Departmental Admin
-            </option>
-        </select>
-    </div>
-
-    <!-- STATUS -->
-    <div class="form-group">
-        <label for="status">Account Status</label>
-
-        <select id="status">
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-        </select>
-    </div>
-
-    <!-- BUTTONS -->
-    <div class="buttons">
-
-        <button
-            type="button"
-            id="createButton"
-            class="create-button"
-        >
-            Create Admin
-        </button>
-
-        <button
-            type="button"
-            id="resetButton"
-            class="reset-button"
-        >
-            Reset
-        </button>
-
-    </div>
-
-    <!-- MESSAGE -->
-    <div id="message" class="message"></div>
-
-    <!-- LINKS -->
-    <div class="links">
-        <a href="admin-dashboard.html">
-            ← Admin Dashboard
-        </a>
-
-        <a href="admin-list.html">
-            Admin List
-        </a>
-    </div>
-
 </div>
 
-</div><script type="module">
+<script type="module">
 
 /* ======================================================
    FIREBASE IMPORTS
 ====================================================== */
-
-import {
-    initializeApp,
-    deleteApp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
     getAuth,
     createUserWithEmailAndPassword,
-    signOut,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
@@ -402,7 +374,6 @@ import {
 /* ======================================================
    FIREBASE CONFIG
 ====================================================== */
-
 const firebaseConfig = {
     apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
     authDomain: "kali-life-ecosystem.firebaseapp.com",
@@ -416,558 +387,277 @@ const firebaseConfig = {
 
 /* ======================================================
    MAIN FIREBASE APP
-   Existing Super Admin session lives here.
+   (Current Super Admin session stays here)
 ====================================================== */
-
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
-
 const mainAuth = getAuth(app);
 
 
 /* ======================================================
    SECONDARY FIREBASE APP
-   Used ONLY for creating the new Admin.
-   
-   This prevents the Super Admin's login session
-   from being replaced by the new Admin account.
+   (Only used to create new Admin without logging out Super Admin)
 ====================================================== */
-
-const secondaryApp = initializeApp(
-    firebaseConfig,
-    "AdminCreatorApp"
-);
-
+const secondaryApp = initializeApp(firebaseConfig, "AdminCreatorApp");
 const secondaryAuth = getAuth(secondaryApp);
 
 
 /* ======================================================
    ELEMENTS
 ====================================================== */
-
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const mobileInput = document.getElementById("mobile");
-const passwordInput = document.getElementById("password");
-
-const passwordToggle =
-    document.getElementById("passwordToggle");
-
-const departmentInput =
-    document.getElementById("department");
-
-const roleInput =
-    document.getElementById("role");
-
-const statusInput =
-    document.getElementById("status");
-
-const createButton =
-    document.getElementById("createButton");
-
-const resetButton =
-    document.getElementById("resetButton");
-
-const message =
-    document.getElementById("message");
+const nameInput        = document.getElementById("name");
+const emailInput       = document.getElementById("email");
+const mobileInput      = document.getElementById("mobile");
+const passwordInput    = document.getElementById("password");
+const passwordToggle   = document.getElementById("passwordToggle");
+const departmentInput  = document.getElementById("department");
+const roleInput        = document.getElementById("role");
+const statusInput      = document.getElementById("status");
+const createButton     = document.getElementById("createButton");
+const resetButton      = document.getElementById("resetButton");
+const message          = document.getElementById("message");
 
 
 /* ======================================================
    PASSWORD SHOW / HIDE
 ====================================================== */
-
 passwordToggle.addEventListener("click", function () {
-
     if (passwordInput.type === "password") {
-
         passwordInput.type = "text";
         passwordToggle.textContent = "Hide";
-
     } else {
-
         passwordInput.type = "password";
         passwordToggle.textContent = "Show";
-
     }
-
 });
 
 
 /* ======================================================
-   MOBILE INPUT
+   MOBILE INPUT (only numbers, max 10 digits)
 ====================================================== */
-
 mobileInput.addEventListener("input", function () {
-
-    this.value = this.value
-        .replace(/\D/g, "")
-        .slice(0, 10);
-
+    this.value = this.value.replace(/\D/g, "").slice(0, 10);
 });
 
 
 /* ======================================================
-   MESSAGE
+   MESSAGE HELPERS
 ====================================================== */
-
 function showMessage(text, type) {
-
     message.textContent = text;
-
-    message.className =
-        "message show " + type;
-
+    message.className = "message show " + type;
 }
 
-
 function clearMessage() {
-
     message.textContent = "";
-
     message.className = "message";
-
 }
 
 
 /* ======================================================
    BUTTON STATE
 ====================================================== */
-
 function resetButtonState() {
-
     createButton.disabled = false;
-
-    createButton.textContent =
-        "Create Admin";
-
+    createButton.textContent = "Create Admin";
 }
 
 
 /* ======================================================
    RESET FORM
 ====================================================== */
-
 resetButton.addEventListener("click", function () {
-
     nameInput.value = "";
     emailInput.value = "";
     mobileInput.value = "";
     passwordInput.value = "";
-
     departmentInput.value = "";
     roleInput.value = "";
-
     statusInput.value = "Active";
-
     clearMessage();
-
     resetButtonState();
-
 });
 
 
 /* ======================================================
-   CREATE ADMIN
+   CREATE ADMIN FUNCTION
 ====================================================== */
-
-createButton.addEventListener(
-    "click",
-    createAdmin
-);
-
-
 async function createAdmin() {
-
     clearMessage();
 
-
-    /* ==================================================
-       CURRENT SUPER ADMIN CHECK
-    ================================================== */
-
+    // 1. Check if Super Admin is logged in
     const currentUser = mainAuth.currentUser;
-
     if (!currentUser) {
-
-        showMessage(
-            "You must be logged in as Super Admin.",
-            "error"
-        );
-
+        showMessage("You must be logged in as Super Admin.", "error");
         return;
     }
 
+    // 2. Read form values
+    const name       = nameInput.value.trim();
+    const email      = emailInput.value.trim().toLowerCase();
+    const mobile     = mobileInput.value.trim();
+    const password   = passwordInput.value;
+    const department = departmentInput.value;
+    const role       = roleInput.value;
+    const status     = statusInput.value;
 
-    /* ==================================================
-       READ FORM
-    ================================================== */
-
-    const name =
-        nameInput.value.trim();
-
-    const email =
-        emailInput.value.trim().toLowerCase();
-
-    const mobile =
-        mobileInput.value.trim();
-
-    const password =
-        passwordInput.value;
-
-    const department =
-        departmentInput.value;
-
-    const role =
-        roleInput.value;
-
-    const status =
-        statusInput.value;
-
-
-    /* ==================================================
-       BASIC VALIDATION
-    ================================================== */
-
+    // 3. Basic Validation
     if (name.length < 3) {
-
-        showMessage(
-            "Please enter the admin's full name (minimum 3 characters).",
-            "error"
-        );
-
+        showMessage("Please enter the admin's full name (minimum 3 characters).", "error");
         nameInput.focus();
-
         return;
     }
-
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-
-        showMessage(
-            "Please enter a valid email address.",
-            "error"
-        );
-
+        showMessage("Please enter a valid email address.", "error");
         emailInput.focus();
-
         return;
     }
-
 
     if (!/^[0-9]{10}$/.test(mobile)) {
-
-        showMessage(
-            "Mobile number must contain exactly 10 digits.",
-            "error"
-        );
-
+        showMessage("Mobile number must contain exactly 10 digits.", "error");
         mobileInput.focus();
-
         return;
     }
-
 
     if (password.length < 8) {
-
-        showMessage(
-            "Password must be at least 8 characters.",
-            "error"
-        );
-
+        showMessage("Password must be at least 8 characters.", "error");
         passwordInput.focus();
-
         return;
     }
-
 
     if (!role) {
-
-        showMessage(
-            "Please select an Account Role.",
-            "error"
-        );
-
+        showMessage("Please select an Account Role.", "error");
         roleInput.focus();
-
         return;
     }
 
-/* ==================================================
-   SUPER ADMIN CREATION RESTRICTION
-================================================== */
+    // 4. Super Admin creation is not allowed from this page
+    if (role === "Super Admin") {
+        showMessage("Super Admin account cannot be created from this page.", "error");
+        roleInput.focus();
+        return;
+    }
 
-if (role === "Super Admin") {
-
-    showMessage(
-        "Super Admin account cannot be created from this page.",
-        "error"
-    );
-
-    roleInput.focus();
-
-    return;
-}
-    /* ==================================================
-       ROLE / DEPARTMENT VALIDATION
-    ================================================== */
-
-    if (
-        role === "Super Admin" &&
-        department !== "None"
-    ) {
-
-        showMessage(
-            "Super Admin-এর জন্য Department = None নির্বাচন করুন।",
-            "error"
-        );
-
+    // 5. Role + Department validation
+    if ((role === "Core Admin" || role === "Departmental Admin") &&
+        (!department || department === "None")) {
+        showMessage("Core Admin বা Departmental Admin-এর জন্য একটি Department নির্বাচন করুন।", "error");
         departmentInput.focus();
-
         return;
     }
 
-
-    if (
-        (role === "Core Admin" ||
-         role === "Departmental Admin") &&
-        (!department || department === "None")
-    ) {
-
-        showMessage(
-            "Core Admin বা Departmental Admin-এর জন্য একটি Department নির্বাচন করুন।",
-            "error"
-        );
-
-        departmentInput.focus();
-
-        return;
-    }
-
-
-    /* ==================================================
-       SUPER ADMIN DATABASE VERIFICATION
-    ================================================== */
-
+    // Start process
     createButton.disabled = true;
-
-    createButton.textContent =
-        "Checking Authorization...";
-
+    createButton.textContent = "Checking Authorization...";
 
     try {
-
-        const superAdminRef =
-            doc(db, "users", currentUser.uid);
-
-        const superAdminSnapshot =
-            await getDoc(superAdminRef);
-
+        // 6. Verify current user is Active Super Admin
+        const superAdminRef = doc(db, "users", currentUser.uid);
+        const superAdminSnapshot = await getDoc(superAdminRef);
 
         if (!superAdminSnapshot.exists()) {
-
-            showMessage(
-                "Your administrator profile was not found in Firestore.",
-                "error"
-            );
-
+            showMessage("Your administrator profile was not found in Firestore.", "error");
             return;
         }
 
-
-        const superAdminData =
-            superAdminSnapshot.data();
-
+        const superAdminData = superAdminSnapshot.data();
 
         const superAdminRole = String(
-    superAdminData.roleType ||
-    superAdminData.role ||
-    superAdminData.accountRole ||
-    ""
-).trim().toLowerCase();
+            superAdminData.roleType ||
+            superAdminData.role ||
+            superAdminData.accountRole ||
+            ""
+        ).trim().toLowerCase();
 
-const superAdminStatus = String(
-    superAdminData.status ||
-    superAdminData.accountStatus ||
-    ""
-).trim().toLowerCase();
+        const superAdminStatus = String(
+            superAdminData.status ||
+            superAdminData.accountStatus ||
+            ""
+        ).trim().toLowerCase();
 
+        const isSuperAdmin = (superAdminRole === "super admin") && (superAdminStatus === "active");
 
         if (!isSuperAdmin) {
+            showMessage("Access denied. Only an active Super Admin can create Admin accounts.", "error");
+            return;
+        }
 
-            showMessage(
-                "Access denied. Only an active Super Admin can create Admin accounts.",
-                "error"
-            );
-
-           
-
-        /* ==================================================
-           DUPLICATE MOBILE CHECK
-        ================================================== */
-
-        createButton.textContent =
-            "Checking Mobile...";
-
+        // 7. Check duplicate mobile
+        createButton.textContent = "Checking Mobile...";
 
         const mobileQuery = query(
             collection(db, "users"),
             where("mobile", "==", mobile)
         );
-
-
-        const mobileSnapshot =
-            await getDocs(mobileQuery);
-
+        const mobileSnapshot = await getDocs(mobileQuery);
 
         if (!mobileSnapshot.empty) {
-
-            showMessage(
-                "This mobile number is already registered.",
-                "error"
-            );
-
+            showMessage("This mobile number is already registered.", "error");
             return;
         }
 
-
-        /* ==================================================
-           DEPARTMENT / ROLE SEAT CHECK
-           
-           Maximum:
-           5 Core Admin per Department
-           5 Departmental Admin per Department
-        ================================================== */
-
-        if (
-            role === "Core Admin" ||
-            role === "Departmental Admin"
-        ) {
-
-            createButton.textContent =
-                "Checking Admin Capacity...";
-
+        // 8. Check department capacity (max 5 Active Core Admin + 5 Active Departmental Admin)
+        if (role === "Core Admin" || role === "Departmental Admin") {
+            createButton.textContent = "Checking Admin Capacity...";
 
             const roleQuery = query(
                 collection(db, "users"),
                 where("department", "==", department),
                 where("roleType", "==", role)
             );
+            const roleSnapshot = await getDocs(roleQuery);
 
-
-            const roleSnapshot =
-                await getDocs(roleQuery);
-
-
-            const activeRoleCount =
-                roleSnapshot.docs.filter(
-                    adminDoc =>
-                        adminDoc.data().status === "Active"
-                ).length;
-
+            const activeRoleCount = roleSnapshot.docs.filter(
+                adminDoc => adminDoc.data().status === "Active"
+            ).length;
 
             if (activeRoleCount >= 5) {
-
                 showMessage(
                     `${department} Department-এ ${role}-এর সর্বোচ্চ ৫টি Active position ইতিমধ্যেই পূর্ণ হয়েছে।`,
                     "error"
                 );
-
                 return;
             }
         }
 
+        // 9. Create Firebase Auth account using secondary app
+        createButton.textContent = "Creating Firebase Account...";
 
-        /* ==================================================
-           CREATE AUTH ACCOUNT
-           USING SECONDARY AUTH
-        ================================================== */
-
-        createButton.textContent =
-            "Creating Firebase Account...";
-
-
-        const credential =
-            await createUserWithEmailAndPassword(
-                secondaryAuth,
-                email,
-                password
-            );
-
-
-        const newAdminUser =
-            credential.user;
-
-
-        const fullRole =
-            role === "Super Admin"
-                ? "Super Admin"
-                : `${department} ${role}`;
-
-
-        /* ==================================================
-           CREATE FIRESTORE PROFILE
-        ================================================== */
-
-        createButton.textContent =
-            "Saving Admin Profile...";
-
-
-        const adminRef =
-            doc(db, "users", newAdminUser.uid);
-
-
-        await setDoc(adminRef, {
-
-            uid: newAdminUser.uid,
-
-            name: name,
-
-            email: email,
-
-            mobile: mobile,
-
-            role: fullRole,
-
-            department:
-                department === "None"
-                    ? null
-                    : department,
-
-            roleType: role,
-
-            status: status,
-
-            createdAt:
-                serverTimestamp(),
-
-            createdBy:
-                currentUser.uid,
-
-            createdByRole:
-                "Super Admin"
-
-        });
-
-
-        /* ==================================================
-           SIGN OUT SECONDARY ACCOUNT
-           
-           Main Super Admin account remains untouched.
-        ================================================== */
-
-        await signOut(secondaryAuth);
-
-
-        /* ==================================================
-           SUCCESS
-        ================================================== */
-
-        showMessage(
-            `Admin successfully created as "${fullRole}".`,
-            "success"
+        const credential = await createUserWithEmailAndPassword(
+            secondaryAuth,
+            email,
+            password
         );
 
+        const newAdminUser = credential.user;
+
+        const fullRole = `${department} ${role}`;
+
+        // 10. Create Firestore profile
+        createButton.textContent = "Saving Admin Profile...";
+
+        const adminRef = doc(db, "users", newAdminUser.uid);
+
+        await setDoc(adminRef, {
+            uid: newAdminUser.uid,
+            name: name,
+            email: email,
+            mobile: mobile,
+            role: fullRole,
+            department: department,
+            roleType: role,
+            status: status,
+            createdAt: serverTimestamp(),
+            createdBy: currentUser.uid,
+            createdByRole: "Super Admin"
+        });
+
+        // 11. Sign out from secondary app (main Super Admin session remains intact)
+        await signOut(secondaryAuth);
+
+        // 12. Success
+        showMessage(`Admin successfully created as "${fullRole}".`, "success");
 
         alert(
             "Admin Created Successfully!\n\n" +
@@ -977,13 +667,10 @@ const superAdminStatus = String(
             "Role: " + fullRole
         );
 
-
-            /* ==================================================
-       ERROR HANDLING
-    ================================================== */
+        // Optional: clear form after success
+        // resetButton.click();
 
     } catch (error) {
-
         console.error("CREATE ADMIN ERROR:", error);
 
         showMessage(
@@ -1000,22 +687,15 @@ const superAdminStatus = String(
         );
 
     } finally {
-
         resetButtonState();
-
     }
-
 }
 
 
 /* ======================================================
-   CREATE ADMIN BUTTON
+   EVENT LISTENER (only once)
 ====================================================== */
-
-createButton.addEventListener(
-    "click",
-    createAdmin
-);
+createButton.addEventListener("click", createAdmin);
 
 </script>
 </body>
