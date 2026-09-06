@@ -5,9 +5,9 @@
 KALI LIFE ECOSYSTEM
 Page     : View Admin
 File     : view-admin.html
-Version  : 3.0
+Version  : 4.0 (Firebase Fixed)
 Status   : Completed
-Updated  : 11-08-2026
+Updated  : 06-09-2026
 ==========================================
 -->
 
@@ -260,11 +260,8 @@ Updated  : 11-08-2026
     ========================================== -->
 
     <script>
-
         checkLogin();
-
         checkRole("Super Admin");
-
     </script>
 
 
@@ -274,22 +271,15 @@ Updated  : 11-08-2026
 
     <div class="page-container">
 
-
         <div class="admin-card">
-
 
             <!-- ==========================================
                  HEADER
             ========================================== -->
 
             <div class="card-header">
-
                 <h1>Admin Details</h1>
-
-                <p>
-                    KALI LIFE ECOSYSTEM - Admin Management
-                </p>
-
+                <p>KALI LIFE ECOSYSTEM - Admin Management</p>
             </div>
 
 
@@ -299,104 +289,38 @@ Updated  : 11-08-2026
 
             <div class="admin-details">
 
-
                 <!-- ERROR -->
-
-                <div
-                    id="errorMessage"
-                    class="message"
-                ></div>
-
+                <div id="errorMessage" class="message"></div>
 
                 <!-- ADMIN ID -->
-
                 <div class="detail-row">
-
-                    <span class="detail-label">
-                        Admin ID
-                    </span>
-
-                    <span
-                        id="adminId"
-                        class="detail-value"
-                    >
-                        -
-                    </span>
-
+                    <span class="detail-label">Admin ID</span>
+                    <span id="adminId" class="detail-value">-</span>
                 </div>
-
 
                 <!-- NAME -->
-
                 <div class="detail-row">
-
-                    <span class="detail-label">
-                        Name
-                    </span>
-
-                    <span
-                        id="adminName"
-                        class="detail-value"
-                    >
-                        -
-                    </span>
-
+                    <span class="detail-label">Name</span>
+                    <span id="adminName" class="detail-value">-</span>
                 </div>
-
 
                 <!-- ROLE -->
-
                 <div class="detail-row">
-
-                    <span class="detail-label">
-                        Role
-                    </span>
-
-                    <span
-                        id="adminRole"
-                        class="detail-value"
-                    >
-                        -
-                    </span>
-
+                    <span class="detail-label">Role</span>
+                    <span id="adminRole" class="detail-value">-</span>
                 </div>
-
 
                 <!-- REPORTS TO -->
-
                 <div class="detail-row">
-
-                    <span class="detail-label">
-                        Reports To
-                    </span>
-
-                    <span
-                        id="adminReportsTo"
-                        class="detail-value"
-                    >
-                        -
-                    </span>
-
+                    <span class="detail-label">Reports To</span>
+                    <span id="adminReportsTo" class="detail-value">-</span>
                 </div>
-
 
                 <!-- STATUS -->
-
                 <div class="detail-row">
-
-                    <span class="detail-label">
-                        Status
-                    </span>
-
-                    <span
-                        id="adminStatus"
-                        class="detail-value"
-                    >
-                        -
-                    </span>
-
+                    <span class="detail-label">Status</span>
+                    <span id="adminStatus" class="detail-value">-</span>
                 </div>
-
 
             </div>
 
@@ -406,17 +330,10 @@ Updated  : 11-08-2026
             ========================================== -->
 
             <div class="card-footer">
-
-                <button
-                    type="button"
-                    class="back-button"
-                    onclick="goBack()"
-                >
+                <button type="button" class="back-button" onclick="goBack()">
                     ← Back to Admin List
                 </button>
-
             </div>
-
 
         </div>
 
@@ -424,168 +341,100 @@ Updated  : 11-08-2026
 
 
     <!-- ==========================================
-         VIEW ADMIN JAVASCRIPT
+         VIEW ADMIN JAVASCRIPT (Firebase)
     ========================================== -->
 
-    <script>
+    <script type="module">
 
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-        // ==========================================
-        // GET INDEX FROM URL
-        // ==========================================
+        /* Firebase Configuration */
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+            authDomain: "kali-life-ecosystem.firebaseapp.com",
+            projectId: "kali-life-ecosystem",
+            storageBucket: "kali-life-ecosystem.firebasestorage.app",
+            messagingSenderId: "734170546737",
+            appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+            measurementId: "G-LBEY0W7RX3"
+        };
 
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
+        /* Get Admin ID from URL */
+        const params = new URLSearchParams(window.location.search);
+        const adminId = params.get("id");
 
-        const adminIndex =
-            Number(params.get("id"));
+        const errorMessage = document.getElementById("errorMessage");
 
+        /* Load Admin Data from Firebase */
+        async function loadAdmin() {
 
-        // ==========================================
-        // GET ADMIN DATA
-        // ==========================================
-
-        const admins =
-            JSON.parse(
-                localStorage.getItem("admins")
-            ) || [];
-
-
-        // ==========================================
-        // ERROR ELEMENT
-        // ==========================================
-
-        const errorMessage =
-            document.getElementById(
-                "errorMessage"
-            );
-
-
-        // ==========================================
-        // CHECK ADMIN INDEX
-        // ==========================================
-
-        if (
-            !Number.isInteger(adminIndex) ||
-            adminIndex < 0 ||
-            adminIndex >= admins.length
-        ) {
-
-            errorMessage.textContent =
-                "Admin information was not found.";
-
-            errorMessage.style.display =
-                "block";
-
-        } else {
-
-
-            // ==========================================
-            // GET SELECTED ADMIN
-            // ==========================================
-
-            const admin =
-                admins[adminIndex];
-
-
-            // ==========================================
-            // ADMIN ID
-            // ==========================================
-
-            document.getElementById(
-                "adminId"
-            ).textContent =
-                admin.id || "-";
-
-
-            // ==========================================
-            // ADMIN NAME
-            // ==========================================
-
-            document.getElementById(
-                "adminName"
-            ).textContent =
-                admin.fullName || "-";
-
-
-            // ==========================================
-            // ADMIN ROLE
-            // ==========================================
-
-            document.getElementById(
-                "adminRole"
-            ).textContent =
-                admin.role || "-";
-
-
-            // ==========================================
-            // REPORTS TO
-            // ==========================================
-
-            document.getElementById(
-                "adminReportsTo"
-            ).textContent =
-                admin.reportsTo || "-";
-
-
-            // ==========================================
-            // ADMIN STATUS
-            // ==========================================
-
-            const statusElement =
-                document.getElementById(
-                    "adminStatus"
-                );
-
-
-            const status =
-                admin.status || "Inactive";
-
-
-            statusElement.textContent =
-                status;
-
-
-            // ==========================================
-            // STATUS STYLE
-            // ==========================================
-
-            if (
-                status.toLowerCase() === "active"
-            ) {
-
-                statusElement.classList.add(
-                    "status-active"
-                );
-
-            } else {
-
-                statusElement.classList.add(
-                    "status-inactive"
-                );
-
+            if (!adminId) {
+                showError("Admin information was not found.");
+                return;
             }
 
+            try {
+                const docRef = doc(db, "users", adminId);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    showError("Admin information was not found.");
+                    return;
+                }
+
+                const admin = docSnap.data();
+
+                // Admin ID
+                document.getElementById("adminId").textContent =
+                    admin.uid || adminId || "-";
+
+                // Name
+                document.getElementById("adminName").textContent =
+                    admin.name || admin.fullName || "-";
+
+                // Role
+                document.getElementById("adminRole").textContent =
+                    admin.roleType || admin.role || "-";
+
+                // Reports To
+                document.getElementById("adminReportsTo").textContent =
+                    admin.createdByRole || admin.reportsTo || "Super Admin";
+
+                // Status
+                const status = admin.status || "Active";
+                const statusElement = document.getElementById("adminStatus");
+                statusElement.textContent = status;
+
+                if (status.toLowerCase() === "active") {
+                    statusElement.classList.add("status-active");
+                } else {
+                    statusElement.classList.add("status-inactive");
+                }
+
+            } catch (error) {
+                console.error("View Admin Error:", error);
+                showError("Admin information was not found.");
+            }
         }
 
-
-        // ==========================================
-        // BACK TO ADMIN LIST
-        // ==========================================
-
-        function goBack() {
-
-            window.location.href =
-                "admin-list.html";
-
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = "block";
         }
 
+        /* Back Button */
+        window.goBack = function () {
+            window.location.href = "admin-list.html";
+        };
+
+        /* Initialize */
+        loadAdmin();
 
     </script>
-
 
 </body>
 
