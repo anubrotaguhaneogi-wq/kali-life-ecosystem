@@ -6,9 +6,6 @@
 <title>KALI LIFE ECOSYSTEM - Secure Login</title>
 
 <style>
-/* ==========================================
-   PREMIUM DYNAMIC UI STYLES
-========================================== */
 * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
 body {
@@ -17,7 +14,11 @@ body {
   animation: gradientFlow 10s ease infinite;
 }
 
-@keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes gradientFlow { 
+  0% { background-position: 0% 50%; } 
+  50% { background-position: 100% 50%; } 
+  100% { background-position: 0% 50%; } 
+}
 
 .login-card {
   width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.98);
@@ -39,7 +40,6 @@ body {
 }
 .input-group input:focus { border-color: #059669; background: #ffffff; box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1); }
 
-/* Dynamic Button & Spinner */
 .auth-btn {
   width: 100%; padding: 15px; border: none; border-radius: 12px; background: #059669;
   color: white; font-size: 16px; font-weight: bold; cursor: pointer;
@@ -95,9 +95,9 @@ body {
   </div>
 </div>
 
-<!-- ==========================================
-   MODULAR FIREBASE & DYNAMIC LOGIC
-========================================== -->
+<!-- auth.js অবশ্যই আগে লোড করতে হবে -->
+<script src="auth.js"></script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
@@ -105,19 +105,17 @@ import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "ht
 
 const firebaseConfig = {
     apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-   authDomain: "kali-life-ecosystem.firebaseapp.com", 
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
     projectId: "kali-life-ecosystem",
     storageBucket: "kali-life-ecosystem.firebasestorage.app",
     messagingSenderId: "734170546737",
     appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// DOM Elements
 const loginIdInput = document.getElementById("loginId");
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
@@ -125,21 +123,18 @@ const btnText = document.getElementById("btnText");
 const btnSpinner = document.getElementById("btnSpinner");
 const errorMsg = document.getElementById("errorMsg");
 
-// Clear error on user typing (Dynamic UX feature)
 [loginIdInput, passwordInput].forEach(input => {
     input.addEventListener('input', () => {
         errorMsg.classList.remove('show');
     });
 });
 
-// Helper function to manage UI state
 const setUIState = (isLoading) => {
     loginBtn.disabled = isLoading;
     btnText.style.display = isLoading ? 'none' : 'block';
     btnSpinner.style.display = isLoading ? 'block' : 'none';
 };
 
-// Main Login Logic (Event Listener approach)
 loginBtn.addEventListener("click", async () => {
     let loginId = loginIdInput.value.trim();
     const password = passwordInput.value;
@@ -149,89 +144,87 @@ loginBtn.addEventListener("click", async () => {
         errorMsg.classList.add('show');
         return;
     }
-try {
-    // Smart Input Logic: Find Firebase email from Firestore by mobile
-if (/^[0-9]{10}$/.test(loginId)) {
 
-    const mobileQuery = query(
-        collection(db, "users"),
-        where("mobile", "==", loginId)
-    );
+    setUIState(true);
 
-    const mobileSnapshot = await getDocs(mobileQuery);
+    try {
+        // যদি ১০ ডিজিটের মোবাইল নাম্বার হয়, তাহলে Firestore থেকে ইমেইল বের করো
+        if (/^[0-9]{10}$/.test(loginId)) {
+            const mobileQuery = query(
+                collection(db, "users"),
+                where("mobile", "==", loginId)
+            );
 
-    if (mobileSnapshot.empty) {
-        throw new Error("mobile-not-found");
-    }
+            const mobileSnapshot = await getDocs(mobileQuery);
 
-    const userData = mobileSnapshot.docs[0].data();
+            if (mobileSnapshot.empty) {
+                throw new Error("mobile-not-found");
+            }
 
-    if (!userData.email) {
-        throw new Error("email-missing");
-    }
+            const userData = mobileSnapshot.docs[0].data();
 
-    loginId = userData.email;
-   }
+            if (!userData.email) {
+                throw new Error("email-missing");
+            }
 
-    
-        setUIState(true);
+            loginId = userData.email;
+        }
 
-        // 1. Authenticate User
+        // Firebase Authentication
         const userCredential = await signInWithEmailAndPassword(auth, loginId, password);
         const user = userCredential.user;
 
-        // 2. Fetch Role Data
+        // ইউজারের প্রোফাইল ডেটা আনো
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
-        
-        if (userDoc.exists()) {
-            const userRole = userDoc.data().role;
 
-            // 3. Dynamic Routing based on Role
-            const routeMap = {
-                "Super Admin": "super_admin_dashboard.html",
-                "Core Admin": "core_admin_dashboard.html",
-                "Departmental Admin": "dept_admin_dashboard.html"
-            };
-            
-            // Redirect to mapped route, default to customer dashboard
-            window.location.href = routeMap[userRole] || "customer_dashboard.html";
-        } else {
+        if (!userDoc.exists()) {
             throw new Error("profile-missing");
+        }
+
+        const userData = userDoc.data();
+        const userRole = (userData.role || "User").trim();
+
+        // Session তৈরি করো (এটা খুব জরুরি)
+        createSession({
+            name: userData.name || "User",
+            mobile: userData.mobile || "",
+            email: userData.email || user.email || "",
+            role: userRole,
+            uid: user.uid,
+            adminId: userData.adminId || "",
+            reportsTo: userData.reportsTo || ""
+        });
+
+        // Role অনুযায়ী সঠিক পেজে পাঠাও
+        if (userRole === "Super Admin") {
+            window.location.href = "super-admin-dashboard.html";
+        } else if (userRole === "Core Admin") {
+            window.location.href = "core-admin-dashboard.html";
+        } else if (userRole === "Departmental Admin") {
+            window.location.href = "dept-admin-dashboard.html";
+        } else if (userRole === "Admin") {
+            window.location.href = "admin-dashboard.html";
+        } else {
+            window.location.href = "dashboard.html";
         }
 
     } catch (error) {
         console.error("Auth Error:", error);
         setUIState(false);
         errorMsg.classList.add('show');
-                // Advanced Error Handling
 
         if (error.message === "mobile-not-found") {
-
-            errorMsg.innerText =
-                "No account found with this mobile number.";
-
+            errorMsg.innerText = "No account found with this mobile number.";
         } else if (error.message === "email-missing") {
-
-            errorMsg.innerText =
-                "Account email information is missing.";
-
-        } else if (error.code === "auth/invalid-credential") {
-
-            errorMsg.innerText =
-                "Incorrect ID, Mobile Number, or Password.";
-
+            errorMsg.innerText = "Account email information is missing.";
+        } else if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+            errorMsg.innerText = "Incorrect ID, Mobile Number, or Password.";
         } else if (error.message === "profile-missing") {
-
-            errorMsg.innerText =
-                "User profile setup is incomplete. Contact support.";
-
+            errorMsg.innerText = "User profile setup is incomplete. Contact support.";
         } else {
-
-            errorMsg.innerText =
-                "Connection error. Please try again.";
-
-                          }
+            errorMsg.innerText = "Connection error. Please try again.";
+        }
     }
 });
 </script>
