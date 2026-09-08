@@ -1,106 +1,128 @@
-// auth.js - Mobile + Password Login (Mobile Friendly)
+// auth.js
+// KALI LIFE ECOSYSTEM - Session & Dashboard Management
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+"use strict";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
-    authDomain: "kali-life-ecosystem.firebaseapp.com",
-    projectId: "kali-life-ecosystem",
-    storageBucket: "kali-life-ecosystem.firebasestorage.app",
-    messagingSenderId: "734170546737",
-    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-    measurementId: "G-LBEY0W7RX3"
-};
+/* ================================
+   CREATE LOGIN SESSION
+================================ */
+function createSession(data) {
+    const session = {
+        name: data?.name || "User",
+        mobile: data?.mobile || "",
+        email: data?.email || "",
+        role: data?.role || "User",
+        uid: data?.uid || "",
+        adminId: data?.adminId || "",
+        reportsTo: data?.reportsTo || "",
+        createdAt: Date.now()
+    };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    // Main session
+    localStorage.setItem(
+        "kaliLifeSession",
+        JSON.stringify(session)
+    );
 
-const loginForm = document.getElementById("loginForm");
-const messageBox = document.getElementById("message");
+    // Backward-compatible login data
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userUid", session.uid);
+    localStorage.setItem("userMobile", session.mobile);
+    localStorage.setItem("userName", session.name);
+    localStorage.setItem("userRole", session.role);
 
-function showMessage(text, isError = true) {
-    if (!messageBox) return;
-    messageBox.style.color = isError ? "#dc2626" : "#059669";
-    messageBox.textContent = text;
+    return session;
 }
 
-if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
 
-        const mobileInput = document.getElementById("mobile");
-        const passwordInput = document.getElementById("password");
+/* ================================
+   GET LOGIN SESSION
+================================ */
+function getSession() {
+    try {
+        const savedSession = localStorage.getItem("kaliLifeSession");
 
-        let mobile = mobileInput.value.trim();
-        const password = passwordInput.value;
-
-        // শুধু নাম্বার রাখা
-        mobile = mobile.replace(/\D/g, "");
-
-        if (!mobile || mobile.length < 10) {
-            showMessage("সঠিক মোবাইল নাম্বার দিন");
-            return;
+        if (savedSession) {
+            return JSON.parse(savedSession);
         }
+    } catch (error) {
+        console.error("Session read error:", error);
+    }
 
-        if (!password) {
-            showMessage("পাসওয়ার্ড দিন");
-            return;
-        }
+    // Old session format support
+    if (localStorage.getItem("isLoggedIn") === "true") {
+        return {
+            name: localStorage.getItem("userName") || "",
+            mobile: localStorage.getItem("userMobile") || "",
+            email: "",
+            role: localStorage.getItem("userRole") || "User",
+            uid: localStorage.getItem("userUid") || "",
+            adminId: "",
+            reportsTo: ""
+        };
+    }
 
-        showMessage("লগইন হচ্ছে...", false);
-
-        try {
-            // Firestore থেকে মোবাইল নাম্বার দিয়ে ইউজার খোঁজা
-            const q = query(
-                collection(db, "users"),
-                where("mobile", "==", mobile)
-            );
-
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                showMessage("এই মোবাইল নাম্বারে কোনো অ্যাকাউন্ট নেই");
-                return;
-            }
-
-            const userDoc = querySnapshot.docs[0];
-            const userData = userDoc.data();
-
-            // ইমেইল না থাকলে মোবাইল দিয়ে বানানো
-            const email = userData.email || (mobile + "@kalilife.com");
-
-            // Firebase Auth দিয়ে লগইন
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            // Session সেভ করা
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userUid", user.uid);
-            localStorage.setItem("userMobile", mobile);
-            localStorage.setItem("userName", userData.name || "");
-            localStorage.setItem("userRole", userData.role || "User");
-
-            showMessage("লগইন সফল!", false);
-
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 800);
-
-        } catch (error) {
-            console.error("Login Error:", error);
-
-            if (
-                error.code === "auth/wrong-password" ||
-                error.code === "auth/invalid-credential" ||
-                error.code === "auth/user-not-found"
-            ) {
-                showMessage("মোবাইল নাম্বার বা পাসওয়ার্ড ভুল");
-            } else {
-                showMessage("লগইন ব্যর্থ। আবার চেষ্টা করুন");
-            }
-        }
-    });
+    return null;
 }
+
+
+/* ================================
+   CHECK LOGIN
+================================ */
+function isUserLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
+}
+
+
+/* ================================
+   REDIRECT TO CORRECT DASHBOARD
+================================ */
+function redirectToDashboard() {
+
+    const session = getSession();
+
+    const role = String(
+        session?.role || "User"
+    ).trim();
+
+    // Admin roles
+    if (
+        role === "Super Admin" ||
+        role === "Core Admin" ||
+        role === "Departmental Admin" ||
+        role === "Admin"
+    ) {
+        window.location.replace("admin-dashboard.html");
+        return;
+    }
+
+    // Normal customer/user
+    window.location.replace("dashboard.html");
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+function logoutUser() {
+
+    localStorage.removeItem("kaliLifeSession");
+
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userUid");
+    localStorage.removeItem("userMobile");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userRole");
+
+    window.location.replace("login.html");
+}
+
+
+/* ================================
+   GLOBAL ACCESS
+================================ */
+window.createSession = createSession;
+window.getSession = getSession;
+window.isUserLoggedIn = isUserLoggedIn;
+window.redirectToDashboard = redirectToDashboard;
+window.logoutUser = logoutUser;
