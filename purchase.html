@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Copy Code</title>
+<title>এক ক্লিকে কপি</title>
 <style>
 *{box-sizing:border-box;font-family:Arial,sans-serif;margin:0;padding:0;}
 body{background:#eef3f8;padding:16px;color:#1a2320;}
@@ -12,8 +12,8 @@ h1{color:#006400;font-size:22px;margin-bottom:14px;text-align:center;}
 .box{background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 0 12px rgba(0,0,0,.1);}
 h2{font-size:17px;margin-bottom:6px;}
 p{font-size:14px;color:#4b5b53;margin-bottom:8px;}
-textarea{width:100%;padding:10px;font-size:13px;border:1px solid #c9d3de;border-radius:8px;font-family:monospace;}
-button{width:100%;margin-top:10px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
+textarea{width:100%;padding:10px;font-size:13px;border:1px solid #c9d3de;border-radius:8px;font-family:monospace;resize:vertical;}
+button{width:100%;margin-top:10px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;cursor:pointer;}
 button.alt{background:#0055aa;font-size:15px;padding:11px;}
 button:focus-visible,textarea:focus{outline:2px solid #006400;outline-offset:1px;}
 .msg{min-height:20px;margin-top:6px;font-weight:bold;color:#006400;font-size:14px;}
@@ -33,4 +33,513 @@ button:focus-visible,textarea:focus{outline:2px solid #006400;outline-offset:1px
 </main>
 
 <script>
-const FILES = {"sales": {"name": "sales.html", "code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>KALI LIFE ECOSYSTEM - Sales<\/title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}\nbody{background:#eef3f8;padding:20px;}\n.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}\nh1{text-align:center;color:#006400;margin-bottom:10px;}\nh2{text-align:center;color:#0055aa;margin-bottom:25px;}\nh3{margin:18px 0 6px;color:#1a2320;}\nhr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}\nlabel{display:block;font-weight:bold;margin:12px 0 4px;}\ninput,textarea,select{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}\ninput[readonly]{background:#f1f4f7;}\ninput:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}\n.row{display:flex;gap:12px;}\n.row>div{flex:1;}\n.calc{display:flex;justify-content:space-between;margin-top:12px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}\nbutton{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}\nbutton:disabled{opacity:.6;}\n.sum{display:flex;gap:10px;}\n.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}\n.sum b{display:block;font-size:18px;margin-top:4px;}\n.item{padding:10px 0;border-top:1px solid #dde3ea;}\n.item small{display:block;color:#5b6b63;margin-top:2px;}\n.empty{color:#5b6b63;padding:8px 0;}\n@media(max-width:600px){.row{flex-direction:column;gap:0;}}\n<\/style>\n<\/head>\n<body>\n\n<div class=\"container\">\n<h1>KALI LIFE ECOSYSTEM<\/h1>\n<h2>Sales<\/h2>\n\n<div class=\"row\">\n  <div>\n    <label>Invoice Number<\/label>\n    <input type=\"text\" id=\"invoiceNumber\" readonly>\n  <\/div>\n  <div>\n    <label>Date<\/label>\n    <input type=\"text\" id=\"invoiceDate\" readonly>\n  <\/div>\n<\/div>\n\n<label>Sold By (Admin)<\/label>\n<input type=\"text\" id=\"soldByName\" readonly>\n\n<hr>\n\n<h3>Customer<\/h3>\n\n<label>Customer Name *<\/label>\n<input type=\"text\" id=\"customerName\" placeholder=\"Enter Customer Name\" autocomplete=\"off\">\n\n<label>Mobile Number *<\/label>\n<input type=\"tel\" id=\"customerMobile\" placeholder=\"Enter Mobile Number\">\n\n<label>Address<\/label>\n<textarea id=\"customerAddress\" rows=\"2\" placeholder=\"Enter Address\"><\/textarea>\n\n<hr>\n\n<h3>Product<\/h3>\n\n<label>Product Name *<\/label>\n<input type=\"text\" id=\"productName\" placeholder=\"Enter Product Name\" autocomplete=\"off\">\n\n<label>Quantity *<\/label>\n<input type=\"number\" id=\"quantity\" inputmode=\"decimal\" min=\"0\" step=\"any\" placeholder=\"Enter Quantity\">\n\n<div class=\"row\">\n  <div>\n    <label>Buying Price (per piece) *<\/label>\n    <input type=\"number\" id=\"buyPrice\" inputmode=\"decimal\" min=\"0\" step=\"any\" placeholder=\"Bought at\">\n  <\/div>\n  <div>\n    <label>Selling Price (per piece) *<\/label>\n    <input type=\"number\" id=\"sellingPrice\" inputmode=\"decimal\" min=\"0\" step=\"any\" placeholder=\"Sold at\">\n  <\/div>\n<\/div>\n\n<div class=\"calc\"><span>Total Sale<\/span><span id=\"totalView\">₹0<\/span><\/div>\n<div class=\"calc\"><span>Profit<\/span><span id=\"profitView\">₹0<\/span><\/div>\n<label>Your Role &amp; Commission Level<\/label>\n<input type=\"text\" id=\"roleView\" readonly value=\"Checking...\">\n\n<div class=\"calc\"><span id=\"commLabel\">Your Commission<\/span><span id=\"commView\">₹0<\/span><\/div>\n\n<label>Remarks<\/label>\n<textarea id=\"remarks\" rows=\"2\" placeholder=\"Remarks\"><\/textarea>\n\n<button type=\"button\" id=\"saveSales\">Save Sale<\/button>\n\n<hr>\n\n<h3>My Sales<\/h3>\n<div class=\"sum\">\n  <div>Total Sale<b id=\"sumSales\">₹0<\/b><\/div>\n  <div>Total Profit<b id=\"sumProfit\">₹0<\/b><\/div>\n  <div>Total Commission<b id=\"sumComm\">₹0<\/b><\/div>\n<\/div>\n<div id=\"list\"><p class=\"empty\">Loading...<\/p><\/div>\n\n<button type=\"button\" id=\"backBtn\" style=\"background:#1a2320;\">Back to Dashboard<\/button>\n<\/div>\n\n<script type=\"module\">\nimport { initializeApp } from \"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js\";\nimport { getAuth, onAuthStateChanged } from \"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js\";\nimport { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }\n  from \"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js\";\n\n// 1) Paste your firebaseConfig from login.html here (exactly the same)\nconst firebaseConfig = {\n  apiKey: \"PASTE_HERE\",\n  authDomain: \"kali-life-ecosystem.firebaseapp.com\",\n  projectId: \"PASTE_HERE\",\n  storageBucket: \"PASTE_HERE\",\n  messagingSenderId: \"PASTE_HERE\",\n  appId: \"PASTE_HERE\"\n};\n\n// 2) Commission is on the TOTAL SALE amount, decided by the admin's role:\n//    Super Admin = 5%, Core Admin = 10%, Departmental Admin = 20%\nlet commPercent = 0;\nlet roleName = \"\";\nconst pct = () => commPercent;\n\nconst app = initializeApp(firebaseConfig);\nconst auth = getAuth(app);\nconst db = getFirestore(app);\n\nconst $ = (id) => document.getElementById(id);\nconst num = (id) => parseFloat($(id).value) || 0;\nconst money = (n) => \"₹\" + (Math.round(n * 100) / 100).toLocaleString(\"en-IN\");\nlet user = null;\n\n$(\"invoiceNumber\").value = \"INV-\" + Date.now();\n$(\"invoiceDate\").value = new Date().toLocaleString(\"en-IN\");\n$(\"backBtn\").addEventListener(\"click\", () => { location.href = \"admin-dashboard.html\"; });\n\nfunction calc() {\n  const qty = num(\"quantity\");\n  const total = qty * num(\"sellingPrice\");\n  const profit = total - qty * num(\"buyPrice\");\n  const comm = total * pct() / 100;\n  $(\"commLabel\").textContent = \"Your Commission (\" + pct() + \"% of total sale)\";\n  $(\"totalView\").textContent = money(total);\n  $(\"profitView\").textContent = money(profit);\n  $(\"commView\").textContent = money(comm);\n  return { total, profit, comm };\n}\n[\"quantity\", \"buyPrice\", \"sellingPrice\"].forEach(id => $(id).addEventListener(\"input\", calc));\ncalc();\n\nasync function detectRole() {\n  let data = null;\n  try {\n    const d = await getDoc(doc(db, \"users\", user.uid));\n    if (d.exists()) data = d.data();\n    if (!data && user.email) {\n      const q = await getDocs(query(collection(db, \"users\"), where(\"email\", \"==\", user.email)));\n      if (!q.empty) data = q.docs[0].data();\n    }\n  } catch (e) {\n    alert(\"Role not loaded: \" + e.code + \" - \" + e.message);\n  }\n  const raw = String((data && (data.role || data.userRole || data.adminRole || data.type)) || localStorage.getItem(\"userRole\") || \"\");\n  const r = raw.toLowerCase().replace(/[^a-z]/g, \"\");\n  roleName = raw;\n  if (r.includes(\"super\")) commPercent = 5;\n  else if (r.includes(\"core\")) commPercent = 10;\n  else if (r.includes(\"depart\")) commPercent = 20;\n  else commPercent = 0;\n  const nm = (data && (data.name || data.fullName)) || localStorage.getItem(\"userName\");\n  if (nm) $(\"soldByName\").value = nm;\n  $(\"roleView\").value = commPercent ? raw + \" - \" + commPercent + \"%\" : \"Role not found - cannot save\";\n  calc();\n}\n\nonAuthStateChanged(auth, async (u) => {\n  if (!u) { location.href = \"login.html\"; return; }\n  user = u;\n  $(\"soldByName\").value = u.displayName || u.email || u.uid;\n  await detectRole();\n  loadList();\n});\n\nasync function loadList() {\n  try {\n    const snap = await getDocs(query(collection(db, \"sales\"), where(\"soldBy\", \"==\", user.uid)));\n    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));\n    let s = 0, p = 0, c = 0;\n    const list = $(\"list\");\n    list.innerHTML = \"\";\n    if (!rows.length) list.innerHTML = '<p class=\"empty\">No sales yet.<\/p>';\n    rows.forEach(r => {\n      s += r.totalSale || 0; p += r.profit || 0; c += r.commissionAmount || 0;\n      const div = document.createElement(\"div\");\n      div.className = \"item\";\n      const t = document.createElement(\"div\");\n      t.textContent = r.customerName + \" - \" + r.productName + \" x \" + r.quantity + \" = \" + money(r.totalSale);\n      const sm = document.createElement(\"small\");\n      sm.textContent = r.dateText + \" | Profit \" + money(r.profit) + \" | Commission \" + money(r.commissionAmount);\n      div.append(t, sm);\n      list.appendChild(div);\n    });\n    $(\"sumSales\").textContent = money(s);\n    $(\"sumProfit\").textContent = money(p);\n    $(\"sumComm\").textContent = money(c);\n  } catch (e) {\n    $(\"list\").innerHTML = \"\";\n    alert(\"List not loaded: \" + e.code + \" - \" + e.message);\n  }\n}\n\n$(\"saveSales\").addEventListener(\"click\", async () => {\n  const customerName = $(\"customerName\").value.trim();\n  const customerMobile = $(\"customerMobile\").value.trim();\n  const productName = $(\"productName\").value.trim();\n  const quantity = num(\"quantity\");\n  const buyPrice = num(\"buyPrice\");\n  const sellingPrice = num(\"sellingPrice\");\n\n  if (!customerName) return alert(\"Enter customer name\");\n  if (!customerMobile) return alert(\"Enter mobile number\");\n  if (!productName) return alert(\"Enter product name\");\n  if (!(quantity > 0)) return alert(\"Enter quantity\");\n  if (!(buyPrice > 0)) return alert(\"Enter buying price\");\n  if (!(sellingPrice > 0)) return alert(\"Enter selling price\");\n  if (!user) return alert(\"Please login again\");\n  if (!(pct() > 0)) return alert(\"Your role was not found, so commission cannot be set. Sale not saved.\");\n\n  const { total, profit, comm } = calc();\n  const now = new Date();\n  const btn = $(\"saveSales\");\n  btn.disabled = true;\n  btn.textContent = \"Saving...\";\n  try {\n    await addDoc(collection(db, \"sales\"), {\n      invoiceNumber: $(\"invoiceNumber\").value,\n      customerName, customerMobile,\n      customerAddress: $(\"customerAddress\").value.trim(),\n      productName, quantity, buyPrice, sellingPrice,\n      totalSale: total,\n      profit: profit,\n      commissionPercent: pct(),\n      commissionAmount: Math.round(comm * 100) / 100,\n      commissionStatus: \"pending\",\n      remarks: $(\"remarks\").value.trim(),\n      soldBy: user.uid,\n      soldByName: $(\"soldByName\").value,\n      soldByRole: roleName,\n      createdAt: now.getTime(),\n      dateText: now.toLocaleDateString(\"en-IN\")\n    });\n    alert(\"Sale saved successfully!\");\n    [\"customerName\",\"customerMobile\",\"customerAddress\",\"productName\",\"quantity\",\"buyPrice\",\"sellingPrice\",\"remarks\"]\n      .forEach(id => $(id).value = \"\");\n    $(\"invoiceNumber\").value = \"INV-\" + Date.now();\n    $(\"invoiceDate\").value = new Date().toLocaleString(\"en-IN\");\n    calc();\n    loadList();\n  } catch (e) {\n    alert(\"NOT saved: \" + e.code + \" - \" + e.message);\n  } finally {\n    btn.disabled = false;\n    btn.textContent = \"Save Sale\";\n  }\n});\n<\/script>\n<\/body>\n<\/html>\n", "commit": "Rebuild sales page: save to Firestore, sold-by admin, role-based commission (Super 5%, Core 10%, Dept 20%)"}, "purchase": {"name": "purchase.html", "code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>KALI LIFE ECOSYSTEM - Purchase<\/title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}\nbody{background:#eef3f8;padding:20px;}\n.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}\nh1{text-align:center;color:#006400;margin-bottom:10px;}\nh2{text-align:center;color:#0055aa;margin-bottom:25px;}\nh3{margin:18px 0 6px;color:#1a2320;}\nhr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}\nlabel{display:block;font-weight:bold;margin:12px 0 4px;}\ninput,textarea{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}\ninput[readonly]{background:#f1f4f7;}\ninput:focus,textarea:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}\n.row{display:flex;gap:12px;}\n.row>div{flex:1;}\n.calc{display:flex;justify-content:space-between;margin-top:12px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}\nbutton{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}\nbutton:disabled{opacity:.6;}\n.sum{display:flex;gap:10px;}\n.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}\n.sum b{display:block;font-size:18px;margin-top:4px;}\n.item{padding:10px 0;border-top:1px solid #dde3ea;}\n.item small{display:block;color:#5b6b63;margin-top:2px;}\n.empty{color:#5b6b63;padding:8px 0;}\n@media(max-width:600px){.row{flex-direction:column;gap:0;}}\n<\/style>\n<\/head>\n<body>\n\n<div class=\"container\">\n<h1>KALI LIFE ECOSYSTEM<\/h1>\n<h2>Purchase<\/h2>\n\n<div class=\"row\">\n  <div>\n    <label>Purchase ID<\/label>\n    <input type=\"text\" id=\"purchaseId\" readonly>\n  <\/div>\n  <div>\n    <label>Date<\/label>\n    <input type=\"text\" id=\"purchaseDate\" readonly>\n  <\/div>\n<\/div>\n\n<label>Entered By (Admin)<\/label>\n<input type=\"text\" id=\"enteredBy\" readonly>\n\n<hr>\n\n<label>Bought From (Supplier Name) *<\/label>\n<input type=\"text\" id=\"supplierName\" placeholder=\"Enter Supplier Name\" autocomplete=\"off\">\n\n<label>Item Name *<\/label>\n<input type=\"text\" id=\"itemName\" placeholder=\"Enter Item Name\" autocomplete=\"off\">\n\n<div class=\"row\">\n  <div>\n    <label>Quantity (Pieces) *<\/label>\n    <input type=\"number\" id=\"quantity\" inputmode=\"decimal\" min=\"0\" step=\"any\" placeholder=\"How many pieces\">\n  <\/div>\n  <div>\n    <label>Buying Price (per piece) *<\/label>\n    <input type=\"number\" id=\"buyPrice\" inputmode=\"decimal\" min=\"0\" step=\"any\" placeholder=\"Bought at\">\n  <\/div>\n<\/div>\n\n<div class=\"calc\"><span>Total Cost<\/span><span id=\"totalView\">₹0<\/span><\/div>\n\n<label>Remarks<\/label>\n<textarea id=\"remarks\" rows=\"2\" placeholder=\"Remarks\"><\/textarea>\n\n<button type=\"button\" id=\"savePurchase\">Save Purchase<\/button>\n\n<hr>\n\n<h3>My Purchases<\/h3>\n<div class=\"sum\">\n  <div>Entries<b id=\"sumCount\">0<\/b><\/div>\n  <div>Total Cost<b id=\"sumCost\">₹0<\/b><\/div>\n<\/div>\n<div id=\"list\"><p class=\"empty\">Loading...<\/p><\/div>\n\n<button type=\"button\" id=\"backBtn\" style=\"background:#1a2320;\">Back to Dashboard<\/button>\n<\/div>\n\n<script type=\"module\">\nimport { initializeApp } from \"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js\";\nimport { getAuth, onAuthStateChanged } from \"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js\";\nimport { getFirestore, collection, addDoc, getDocs, query, where }\n  from \"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js\";\n\n// Paste your firebaseConfig from login.html here (exactly the same)\nconst firebaseConfig = {\n  apiKey: \"PASTE_HERE\",\n  authDomain: \"kali-life-ecosystem.firebaseapp.com\",\n  projectId: \"PASTE_HERE\",\n  storageBucket: \"PASTE_HERE\",\n  messagingSenderId: \"PASTE_HERE\",\n  appId: \"PASTE_HERE\"\n};\n\n// Only Super Admin can enter purchases (same rule as the old page)\nif ((localStorage.getItem(\"userRole\") || \"\") !== \"Super Admin\") {\n  alert(\"Access Denied!\");\n  location.href = \"admin-dashboard.html\";\n}\n\nconst app = initializeApp(firebaseConfig);\nconst auth = getAuth(app);\nconst db = getFirestore(app);\n\nconst $ = (id) => document.getElementById(id);\nconst num = (id) => parseFloat($(id).value) || 0;\nconst money = (n) => \"₹\" + (Math.round(n * 100) / 100).toLocaleString(\"en-IN\");\nlet user = null;\n\n$(\"purchaseId\").value = \"PUR-\" + Date.now();\n$(\"purchaseDate\").value = new Date().toLocaleString(\"en-IN\");\n$(\"backBtn\").addEventListener(\"click\", () => { location.href = \"admin-dashboard.html\"; });\n\nfunction calc() {\n  const total = num(\"quantity\") * num(\"buyPrice\");\n  $(\"totalView\").textContent = money(total);\n  return total;\n}\n[\"quantity\", \"buyPrice\"].forEach(id => $(id).addEventListener(\"input\", calc));\n\nonAuthStateChanged(auth, (u) => {\n  if (!u) { location.href = \"login.html\"; return; }\n  user = u;\n  $(\"enteredBy\").value = u.displayName || u.email || u.uid;\n  loadList();\n});\n\nasync function loadList() {\n  try {\n    const snap = await getDocs(query(collection(db, \"purchases\"), where(\"purchasedBy\", \"==\", user.uid)));\n    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));\n    let cost = 0;\n    const list = $(\"list\");\n    list.innerHTML = \"\";\n    if (!rows.length) list.innerHTML = '<p class=\"empty\">No purchases yet.<\/p>';\n    rows.forEach(r => {\n      cost += r.totalCost || 0;\n      const div = document.createElement(\"div\");\n      div.className = \"item\";\n      const t = document.createElement(\"div\");\n      t.textContent = r.itemName + \" x \" + r.quantity + \" @ \" + money(r.buyPrice) + \" = \" + money(r.totalCost);\n      const sm = document.createElement(\"small\");\n      sm.textContent = \"From \" + r.supplierName + \" | \" + r.dateText;\n      div.append(t, sm);\n      list.appendChild(div);\n    });\n    $(\"sumCount\").textContent = rows.length;\n    $(\"sumCost\").textContent = money(cost);\n  } catch (e) {\n    $(\"list\").innerHTML = \"\";\n    alert(\"List not loaded: \" + e.code + \" - \" + e.message);\n  }\n}\n\n$(\"savePurchase\").addEventListener(\"click\", async () => {\n  const supplierName = $(\"supplierName\").value.trim();\n  const itemName = $(\"itemName\").value.trim();\n  const quantity = num(\"quantity\");\n  const buyPrice = num(\"buyPrice\");\n\n  if (!supplierName) return alert(\"Enter supplier name\");\n  if (!itemName) return alert(\"Enter item name\");\n  if (!(quantity > 0)) return alert(\"Enter quantity\");\n  if (!(buyPrice > 0)) return alert(\"Enter buying price\");\n  if (!user) return alert(\"Please login again\");\n\n  const now = new Date();\n  const btn = $(\"savePurchase\");\n  btn.disabled = true;\n  btn.textContent = \"Saving...\";\n  try {\n    await addDoc(collection(db, \"purchas
+const FILES = {
+  "sales": {
+    "name": "sales.html",
+    "commit": "Rebuild sales page: save to Firestore, sold-by admin, role-based commission (Super 5%, Core 10%, Dept 20%)",
+    "code": `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KALI LIFE ECOSYSTEM - Sales</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#eef3f8;padding:20px;}
+.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
+h1{text-align:center;color:#006400;margin-bottom:10px;}
+h2{text-align:center;color:#0055aa;margin-bottom:25px;}
+h3{margin:18px 0 6px;color:#1a2320;}
+hr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}
+label{display:block;font-weight:bold;margin:12px 0 4px;}
+input,textarea,select{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
+input[readonly]{background:#f1f4f7;}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}
+.row{display:flex;gap:12px;}
+.row>div{flex:1;}
+.calc{display:flex;justify-content:space-between;margin-top:12px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
+button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
+button:disabled{opacity:.6;}
+.sum{display:flex;gap:10px;}
+.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}
+.sum b{display:block;font-size:18px;margin-top:4px;}
+.item{padding:10px 0;border-top:1px solid #dde3ea;}
+.item small{display:block;color:#5b6b63;margin-top:2px;}
+.empty{color:#5b6b63;padding:8px 0;}
+@media(max-width:600px){.row{flex-direction:column;gap:0;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>KALI LIFE ECOSYSTEM</h1>
+<h2>Sales</h2>
+
+<div class="row">
+  <div>
+    <label>Invoice Number</label>
+    <input type="text" id="invoiceNumber" readonly>
+  </div>
+  <div>
+    <label>Date</label>
+    <input type="text" id="invoiceDate" readonly>
+  </div>
+</div>
+
+<label>Sold By (Admin)</label>
+<input type="text" id="soldByName" readonly>
+
+<hr>
+
+<h3>Customer</h3>
+
+<label>Customer Name *</label>
+<input type="text" id="customerName" placeholder="Enter Customer Name" autocomplete="off">
+
+<label>Mobile Number *</label>
+<input type="tel" id="customerMobile" placeholder="Enter Mobile Number">
+
+<label>Address</label>
+<textarea id="customerAddress" rows="2" placeholder="Enter Address"></textarea>
+
+<hr>
+
+<h3>Product</h3>
+
+<label>Product Name *</label>
+<input type="text" id="productName" placeholder="Enter Product Name" autocomplete="off">
+
+<label>Quantity *</label>
+<input type="number" id="quantity" inputmode="decimal" min="0" step="any" placeholder="Enter Quantity">
+
+<div class="row">
+  <div>
+    <label>Buying Price (per piece) *</label>
+    <input type="number" id="buyPrice" inputmode="decimal" min="0" step="any" placeholder="Bought at">
+  </div>
+  <div>
+    <label>Selling Price (per piece) *</label>
+    <input type="number" id="sellingPrice" inputmode="decimal" min="0" step="any" placeholder="Sold at">
+  </div>
+</div>
+
+<div class="calc"><span>Total Sale</span><span id="totalView">₹0</span></div>
+<div class="calc"><span>Profit</span><span id="profitView">₹0</span></div>
+<label>Your Role &amp; Commission Level</label>
+<input type="text" id="roleView" readonly value="Checking...">
+
+<div class="calc"><span id="commLabel">Your Commission</span><span id="commView">₹0</span></div>
+
+<label>Remarks</label>
+<textarea id="remarks" rows="2" placeholder="Remarks"></textarea>
+
+<button type="button" id="saveSales">Save Sale</button>
+
+<hr>
+
+<h3>My Sales</h3>
+<div class="sum">
+  <div>Total Sale<b id="sumSales">₹0</b></div>
+  <div>Total Profit<b id="sumProfit">₹0</b></div>
+  <div>Total Commission<b id="sumComm">₹0</b></div>
+</div>
+<div id="list"><p class="empty">Loading...</p></div>
+
+<button type="button" id="backBtn" style="background:#1a2320;">Back to Dashboard</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// 1) Paste your firebaseConfig from login.html here (exactly the same)
+const firebaseConfig = {
+  apiKey: "PASTE_HERE",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "PASTE_HERE",
+  storageBucket: "PASTE_HERE",
+  messagingSenderId: "PASTE_HERE",
+  appId: "PASTE_HERE"
+};
+
+// 2) Commission is on the TOTAL SALE amount, decided by the admin's role:
+//    Super Admin = 5%, Core Admin = 10%, Departmental Admin = 20%
+let commPercent = 0;
+let roleName = "";
+const pct = () => commPercent;
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = (id) => document.getElementById(id);
+const num = (id) => parseFloat($(id).value) || 0;
+const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN");
+let user = null;
+
+$("invoiceNumber").value = "INV-" + Date.now();
+$("invoiceDate").value = new Date().toLocaleString("en-IN");
+$("backBtn").addEventListener("click", () => { location.href = "admin-dashboard.html"; });
+
+function calc() {
+  const qty = num("quantity");
+  const total = qty * num("sellingPrice");
+  const profit = total - qty * num("buyPrice");
+  const comm = total * pct() / 100;
+  $("commLabel").textContent = "Your Commission (" + pct() + "% of total sale)";
+  $("totalView").textContent = money(total);
+  $("profitView").textContent = money(profit);
+  $("commView").textContent = money(comm);
+  return { total, profit, comm };
+}
+["quantity", "buyPrice", "sellingPrice"].forEach(id => $(id).addEventListener("input", calc));
+calc();
+
+async function detectRole() {
+  let data = null;
+  try {
+    const d = await getDoc(doc(db, "users", user.uid));
+    if (d.exists()) data = d.data();
+    if (!data && user.email) {
+      const q = await getDocs(query(collection(db, "users"), where("email", "==", user.email)));
+      if (!q.empty) data = q.docs[0].data();
+    }
+  } catch (e) {
+    alert("Role not loaded: " + e.code + " - " + e.message);
+  }
+  const raw = String((data && (data.role || data.userRole || data.adminRole || data.type)) || localStorage.getItem("userRole") || "");
+  const r = raw.toLowerCase().replace(/[^a-z]/g, "");
+  roleName = raw;
+  if (r.includes("super")) commPercent = 5;
+  else if (r.includes("core")) commPercent = 10;
+  else if (r.includes("depart")) commPercent = 20;
+  else commPercent = 0;
+  const nm = (data && (data.name || data.fullName)) || localStorage.getItem("userName");
+  if (nm) $("soldByName").value = nm;
+  $("roleView").value = commPercent ? raw + " - " + commPercent + "%" : "Role not found - cannot save";
+  calc();
+}
+
+onAuthStateChanged(auth, async (u) => {
+  if (!u) { location.href = "login.html"; return; }
+  user = u;
+  $("soldByName").value = u.displayName || u.email || u.uid;
+  await detectRole();
+  loadList();
+});
+
+async function loadList() {
+  try {
+    const snap = await getDocs(query(collection(db, "sales"), where("soldBy", "==", user.uid)));
+    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    let s = 0, p = 0, c = 0;
+    const list = $("list");
+    list.innerHTML = "";
+    if (!rows.length) list.innerHTML = '<p class="empty">No sales yet.</p>';
+    rows.forEach(r => {
+      s += r.totalSale || 0; p += r.profit || 0; c += r.commissionAmount || 0;
+      const div = document.createElement("div");
+      div.className = "item";
+      const t = document.createElement("div");
+      t.textContent = r.customerName + " - " + r.productName + " x " + r.quantity + " = " + money(r.totalSale);
+      const sm = document.createElement("small");
+      sm.textContent = r.dateText + " | Profit " + money(r.profit) + " | Commission " + money(r.commissionAmount);
+      div.append(t, sm);
+      list.appendChild(div);
+    });
+    $("sumSales").textContent = money(s);
+    $("sumProfit").textContent = money(p);
+    $("sumComm").textContent = money(c);
+  } catch (e) {
+    $("list").innerHTML = "";
+    alert("List not loaded: " + e.code + " - " + e.message);
+  }
+}
+
+$("saveSales").addEventListener("click", async () => {
+  const customerName = $("customerName").value.trim();
+  const customerMobile = $("customerMobile").value.trim();
+  const productName = $("productName").value.trim();
+  const quantity = num("quantity");
+  const buyPrice = num("buyPrice");
+  const sellingPrice = num("sellingPrice");
+
+  if (!customerName) return alert("Enter customer name");
+  if (!customerMobile) return alert("Enter mobile number");
+  if (!productName) return alert("Enter product name");
+  if (!(quantity > 0)) return alert("Enter quantity");
+  if (!(buyPrice > 0)) return alert("Enter buying price");
+  if (!(sellingPrice > 0)) return alert("Enter selling price");
+  if (!user) return alert("Please login again");
+  if (!(pct() > 0)) return alert("Your role was not found, so commission cannot be set. Sale not saved.");
+
+  const { total, profit, comm } = calc();
+  const now = new Date();
+  const btn = $("saveSales");
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+  try {
+    await addDoc(collection(db, "sales"), {
+      invoiceNumber: $("invoiceNumber").value,
+      customerName, customerMobile,
+      customerAddress: $("customerAddress").value.trim(),
+      productName, quantity, buyPrice, sellingPrice,
+      totalSale: total,
+      profit: profit,
+      commissionPercent: pct(),
+      commissionAmount: Math.round(comm * 100) / 100,
+      commissionStatus: "pending",
+      remarks: $("remarks").value.trim(),
+      soldBy: user.uid,
+      soldByName: $("soldByName").value,
+      soldByRole: roleName,
+      createdAt: now.getTime(),
+      dateText: now.toLocaleDateString("en-IN")
+    });
+    alert("Sale saved successfully!");
+    ["customerName","customerMobile","customerAddress","productName","quantity","buyPrice","sellingPrice","remarks"]
+      .forEach(id => $(id).value = "");
+    $("invoiceNumber").value = "INV-" + Date.now();
+    $("invoiceDate").value = new Date().toLocaleString("en-IN");
+    calc();
+    loadList();
+  } catch (e) {
+    alert("NOT saved: " + e.code + " - " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Save Sale";
+  }
+});
+</script>
+</body>
+</html>`
+  },
+
+  "purchase": {
+    "name": "purchase.html",
+    "commit": "Purchase page for Super Admin only",
+    "code": `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KALI LIFE ECOSYSTEM - Purchase</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#eef3f8;padding:20px;}
+.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
+h1{text-align:center;color:#006400;margin-bottom:10px;}
+h2{text-align:center;color:#0055aa;margin-bottom:25px;}
+h3{margin:18px 0 6px;color:#1a2320;}
+hr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}
+label{display:block;font-weight:bold;margin:12px 0 4px;}
+input,textarea{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
+input[readonly]{background:#f1f4f7;}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}
+.row{display:flex;gap:12px;}
+.row>div{flex:1;}
+.calc{display:flex;justify-content:space-between;margin-top:12px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
+button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
+button:disabled{opacity:.6;}
+.sum{display:flex;gap:10px;}
+.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}
+.sum b{display:block;font-size:18px;margin-top:4px;}
+.item{padding:10px 0;border-top:1px solid #dde3ea;}
+.item small{display:block;color:#5b6b63;margin-top:2px;}
+.empty{color:#5b6b63;padding:8px 0;}
+@media(max-width:600px){.row{flex-direction:column;gap:0;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>KALI LIFE ECOSYSTEM</h1>
+<h2>Purchase</h2>
+
+<div class="row">
+  <div>
+    <label>Purchase ID</label>
+    <input type="text" id="purchaseId" readonly>
+  </div>
+  <div>
+    <label>Date</label>
+    <input type="text" id="purchaseDate" readonly>
+  </div>
+</div>
+
+<label>Entered By (Admin)</label>
+<input type="text" id="enteredBy" readonly>
+
+<hr>
+
+<label>Bought From (Supplier Name) *</label>
+<input type="text" id="supplierName" placeholder="Enter Supplier Name" autocomplete="off">
+
+<label>Item Name *</label>
+<input type="text" id="itemName" placeholder="Enter Item Name" autocomplete="off">
+
+<div class="row">
+  <div>
+    <label>Quantity (Pieces) *</label>
+    <input type="number" id="quantity" inputmode="decimal" min="0" step="any" placeholder="How many pieces">
+  </div>
+  <div>
+    <label>Buying Price (per piece) *</label>
+    <input type="number" id="buyPrice" inputmode="decimal" min="0" step="any" placeholder="Bought at">
+  </div>
+</div>
+
+<div class="calc"><span>Total Cost</span><span id="totalView">₹0</span></div>
+
+<label>Remarks</label>
+<textarea id="remarks" rows="2" placeholder="Remarks"></textarea>
+
+<button type="button" id="savePurchase">Save Purchase</button>
+
+<hr>
+
+<h3>My Purchases</h3>
+<div class="sum">
+  <div>Entries<b id="sumCount">0</b></div>
+  <div>Total Cost<b id="sumCost">₹0</b></div>
+</div>
+<div id="list"><p class="empty">Loading...</p></div>
+
+<button type="button" id="backBtn" style="background:#1a2320;">Back to Dashboard</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, where }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Paste your firebaseConfig from login.html here (exactly the same)
+const firebaseConfig = {
+  apiKey: "PASTE_HERE",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "PASTE_HERE",
+  storageBucket: "PASTE_HERE",
+  messagingSenderId: "PASTE_HERE",
+  appId: "PASTE_HERE"
+};
+
+// Only Super Admin can enter purchases
+if ((localStorage.getItem("userRole") || "") !== "Super Admin") {
+  alert("Access Denied!");
+  location.href = "admin-dashboard.html";
+}
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = (id) => document.getElementById(id);
+const num = (id) => parseFloat($(id).value) || 0;
+const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN");
+let user = null;
+
+$("purchaseId").value = "PUR-" + Date.now();
+$("purchaseDate").value = new Date().toLocaleString("en-IN");
+$("backBtn").addEventListener("click", () => { location.href = "admin-dashboard.html"; });
+
+function calc() {
+  const total = num("quantity") * num("buyPrice");
+  $("totalView").textContent = money(total);
+  return total;
+}
+["quantity", "buyPrice"].forEach(id => $(id).addEventListener("input", calc));
+
+onAuthStateChanged(auth, (u) => {
+  if (!u) { location.href = "login.html"; return; }
+  user = u;
+  $("enteredBy").value = u.displayName || u.email || u.uid;
+  loadList();
+});
+
+async function loadList() {
+  try {
+    const snap = await getDocs(query(collection(db, "purchases"), where("purchasedBy", "==", user.uid)));
+    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    let cost = 0;
+    const list = $("list");
+    list.innerHTML = "";
+    if (!rows.length) list.innerHTML = '<p class="empty">No purchases yet.</p>';
+    rows.forEach(r => {
+      cost += r.totalCost || 0;
+      const div = document.createElement("div");
+      div.className = "item";
+      const t = document.createElement("div");
+      t.textContent = r.itemName + " x " + r.quantity + " @ " + money(r.buyPrice) + " = " + money(r.totalCost);
+      const sm = document.createElement("small");
+      sm.textContent = "From " + r.supplierName + " | " + r.dateText;
+      div.append(t, sm);
+      list.appendChild(div);
+    });
+    $("sumCount").textContent = rows.length;
+    $("sumCost").textContent = money(cost);
+  } catch (e) {
+    $("list").innerHTML = "";
+    alert("List not loaded: " + e.code + " - " + e.message);
+  }
+}
+
+$("savePurchase").addEventListener("click", async () => {
+  const supplierName = $("supplierName").value.trim();
+  const itemName = $("itemName").value.trim();
+  const quantity = num("quantity");
+  const buyPrice = num("buyPrice");
+
+  if (!supplierName) return alert("Enter supplier name");
+  if (!itemName) return alert("Enter item name");
+  if (!(quantity > 0)) return alert("Enter quantity");
+  if (!(buyPrice > 0)) return alert("Enter buying price");
+  if (!user) return alert("Please login again");
+
+  const total = calc();
+  const now = new Date();
+  const btn = $("savePurchase");
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+  try {
+    await addDoc(collection(db, "purchases"), {
+      purchaseId: $("purchaseId").value,
+      supplierName,
+      itemName,
+      quantity,
+      buyPrice,
+      totalCost: total,
+      remarks: $("remarks").value.trim(),
+      purchasedBy: user.uid,
+      enteredByName: $("enteredBy").value,
+      createdAt: now.getTime(),
+      dateText: now.toLocaleDateString("en-IN")
+    });
+    alert("Purchase saved successfully!");
+    ["supplierName","itemName","quantity","buyPrice","remarks"].forEach(id => $(id).value = "");
+    $("purchaseId").value = "PUR-" + Date.now();
+    $("purchaseDate").value = new Date().toLocaleString("en-IN");
+    calc();
+    loadList();
+  } catch (e) {
+    alert("NOT saved: " + e.code + " - " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Save Purchase";
+  }
+});
+</script>
+</body>
+</html>`
+  }
+};
+
+function injectConfig(code) {
+  const cfg = document.getElementById("cfg").value.trim();
+  if (!cfg) return code;
+  return code.replace(/const firebaseConfig = \{[\s\S]*?\};/, cfg);
+}
+
+const cards = document.getElement
