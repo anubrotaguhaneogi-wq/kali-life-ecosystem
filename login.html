@@ -183,7 +183,7 @@ loginBtn.addEventListener("click", async () => {
         }
 
         const userData = userDoc.data();
-        const userRole = (userData.role || "User").trim();
+        const userRole = (userData.roleType || userData.role || "User").trim();
 
         // Session তৈরি করো (এটা খুব জরুরি)
         createSession({
@@ -193,7 +193,8 @@ loginBtn.addEventListener("click", async () => {
             role: userRole,
             uid: user.uid,
             adminId: userData.adminId || "",
-            reportsTo: userData.reportsTo || ""
+            reportsTo: userData.reportsTo || "",
+department: userData.department || ""
         });
 
         // Role অনুযায়ী সঠিক পেজে পাঠাও
