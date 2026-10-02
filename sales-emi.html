@@ -1,185 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>KALI LIFE ECOSYSTEM - Sales EMI System</title>
-
+<title>KALI LIFE ECOSYSTEM - Sales</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#eef3f8;
-padding:20px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-background:#ffffff;
-padding:25px;
-border-radius:15px;
-box-shadow:0 0 20px rgba(0,0,0,.15);
-}
-
-h1{
-text-align:center;
-color:#006400;
-margin-bottom:10px;
-}
-
-h2{
-text-align:center;
-color:#0055aa;
-margin-bottom:25px;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#eef3f8;padding:20px;}
+.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
+.hidden{display:none;}
+h1{text-align:center;color:#006400;margin-bottom:10px;}
+h2{text-align:center;color:#0055aa;margin-bottom:25px;}
+h3{margin:18px 0 6px;color:#1a2320;}
+hr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}
+label{display:block;font-weight:bold;margin:12px 0 4px;}
+input,textarea{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
+input[readonly]{background:#f1f4f7;}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}
+.row{display:flex;gap:12px;}
+.row>div{flex:1;}
+.calc{display:flex;justify-content:space-between;margin-top:10px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
+button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
+button:disabled{opacity:.6;}
+.sum{display:flex;gap:10px;}
+.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}
+.sum b{display:block;font-size:18px;margin-top:4px;}
+.item{padding:10px 0;border-top:1px solid #dde3ea;}
+.item small{display:block;color:#5b6b63;margin-top:2px;}
+.empty{color:#5b6b63;padding:8px 0;}
+#status{text-align:center;padding:30px;color:#5b6b63;font-size:15px;}
+@media(max-width:600px){.row{flex-direction:column;gap:0;}.sum{flex-direction:column;}}
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
+<div id="status" class="container">Loading...</div>
 
+<div class="container hidden" id="page">
 <h1>KALI LIFE ECOSYSTEM</h1>
+<h2>Sales</h2>
 
-<h2>Sales & EMI System</h2>
-<label>Invoice Date & Time</label>
-<input type="datetime-local" id="invoiceDateTime" readonly>
+<div class="row">
+  <div>
+    <label>Sale ID</label>
+    <input type="text" id="saleId" readonly>
+  </div>
+  <div>
+    <label>Date</label>
+    <input type="text" id="saleDate" readonly>
+  </div>
+</div>
 
-<label>Invoice Number</label>
-<input type="text" id="invoiceNumber" readonly>
-
-<label>Customer ID</label>
-<input type="text" id="customerId" readonly>
+<div class="row">
+  <div>
+    <label>Sold By</label>
+    <input type="text" id="soldBy" readonly>
+  </div>
+  <div>
+    <label>Your Role / Commission</label>
+    <input type="text" id="roleView" readonly>
+  </div>
+</div>
 
 <hr>
-
-<h3>Customer Information</h3>
 
 <label>Customer Name *</label>
-<input type="text" id="customerName" placeholder="Enter Customer Name">
+<input type="text" id="customerName" placeholder="Enter Customer Name" autocomplete="off">
 
-<label>Father / Husband Name</label>
-<input type="text" id="fatherName" placeholder="Enter Father / Husband Name">
+<label>Customer Mobile</label>
+<input type="tel" id="customerMobile" placeholder="Enter Mobile Number" autocomplete="off">
 
-<label>Mobile Number *</label>
-<input type="tel" id="customerMobile" placeholder="Enter Mobile Number">
+<label>Item Name *</label>
+<input type="text" id="itemName" placeholder="Enter Item Name" autocomplete="off">
 
-<label>WhatsApp Number</label>
-<input type="tel" id="customerWhatsapp" placeholder="Enter WhatsApp Number">
+<div class="row">
+  <div>
+    <label>Quantity (Pieces) *</label>
+    <input type="number" id="quantity" inputmode="decimal" min="0" step="any" placeholder="How many pieces">
+  </div>
+  <div>
+    <label>Buying Price (per piece) *</label>
+    <input type="number" id="buyPrice" inputmode="decimal" min="0" step="any" placeholder="Bought at">
+  </div>
+  <div>
+    <label>Selling Price (per piece) *</label>
+    <input type="number" id="sellPrice" inputmode="decimal" min="0" step="any" placeholder="Sold at">
+  </div>
+</div>
 
-<label>Email</label>
-<input type="email" id="customerEmail" placeholder="Enter Email">
-
-<label>Full Address *</label>
-<textarea id="customerAddress" rows="3" placeholder="Enter Full Address"></textarea>
-
-<label>District</label>
-<input type="text" id="district" placeholder="Enter District">
-
-<label>State</label>
-<input type="text" id="state" placeholder="Enter State">
-
-<label>PIN Code</label>
-<input type="text" id="pinCode" placeholder="Enter PIN Code">
-
-<hr>
-
-<h3>Customer KYC</h3>
-
-<label>Aadhaar Number *</label>
-<input type="text" id="aadhaarNumber" placeholder="Enter Aadhaar Number">
-
-<label>PAN Number</label>
-<input type="text" id="panNumber" placeholder="Enter PAN Number">
-
-<label>Customer Photo</label>
-<input type="file" id="customerPhoto">
-
-<label>Aadhaar Copy</label>
-<input type="file" id="aadhaarCopy">
-
-<label>PAN Copy</label>
-<input type="file" id="panCopy">
-<hr>
-
-<h3>Product Information</h3>
-
-<label>Product Name *</label>
-<input type="text" id="productName" placeholder="Enter Product Name">
-
-<label>Quantity *</label>
-<input type="number" id="quantity" placeholder="Enter Quantity">
-
-<label>Selling Price (Per Piece) *</label>
-<input type="number" id="sellingPrice" placeholder="Enter Selling Price">
-
-<label>Discount</label>
-<input type="number" id="discount" placeholder="Enter Discount">
-
-<label>Transportation Charge</label>
-<input type="number" id="transportCharge" placeholder="Enter Transportation Charge">
-
-<hr>
-
-<h3>Billing Information</h3>
-
-<label>Grand Total</label>
-<input type="number" id="grandTotal" readonly>
-
-<label>Down Payment (Minimum 40%)</label>
-<input type="number" id="downPayment" placeholder="Minimum 40% Required">
-
-<label>Remaining Amount</label>
-<input type="number" id="dueAmount" readonly>
-
-<label>Payment Mode</label>
-<select id="paymentMode">
-<option value="">Select Payment Mode</option>
-<option value="cash">Full Cash Payment</option>
-<option value="emi">12 Weeks EMI</option>
-</select>
-
-<label>Weekly EMI Amount</label>
-<input type="number" id="weeklyEmi" readonly>
+<div class="calc"><span>Total Sale</span><span id="totalView">₹0</span></div>
+<div class="calc"><span>Profit</span><span id="profitView">₹0</span></div>
+<div class="calc"><span>Your Commission</span><span id="commView">₹0</span></div>
 
 <label>Remarks</label>
-<textarea id="remarks" rows="4" placeholder="Remarks"></textarea>
+<textarea id="remarks" rows="2" placeholder="Remarks"></textarea>
 
-<button type="button" id="saveSales">Save Sales & EMI</button>
-  
+<button type="button" id="saveSale">Save Sale</button>
+
 <hr>
 
-<h3>EMI Schedule</h3>
+<h3>My Sales</h3>
+<div class="sum">
+  <div>Entries<b id="sumCount">0</b></div>
+  <div>Total Sold<b id="sumSold">₹0</b></div>
+  <div>Commission Earned<b id="sumComm">₹0</b></div>
+</div>
+<div id="list"><p class="empty">Loading...</p></div>
 
-<label>EMI Start Date</label>
-<input type="date" id="emiStartDate">
+<button type="button" id="backBtn" style="background:#1a2320;">Back to Dashboard</button>
+</div>
 
-<label>Total Installments</label>
-<input type="text" id="totalInstallments" value="12 Weeks" readonly>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }
+  from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-<label>EMI Status</label>
-<input type="text" id="emiStatus" value="Pending" readonly>
+const firebaseConfig = {
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+  measurementId: "G-LBEY0W7RX3"
+};
 
-<div id="emiScheduleTable"></div>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-<br>
+// Commission % on TOTAL sale amount, by seller's role
+const RATES = { "super admin": 5, "core admin": 10, "departmental admin": 20 };
 
-<button type="button" id="printInvoice">
-Print Invoice
-</button>
+const $ = (id) => document.getElementById(id);
+const num = (id) => parseFloat($(id).value) || 0;
+const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN");
+let user = null;
+let role = "";
+let rate = 0;
+let dept = "";
 
-<button type="button" id="printAgreement">
-Print EMI Agreement
-</button>
+$("saleId").value = "SAL-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+$("saleDate").value = new Date().toLocaleString("en-IN");
+$("backBtn").addEventListener("click", () => {
+  if (role === "super admin") location.href = "super-admin-dashboard.html";
+  else history.back();
+});
+
+function calc() {
+  const q = num("quantity");
+  const total = q * num("sellPrice");
+  const profit = total - q * num("buyPrice");
+  const comm = total * rate / 100;
+  $("totalView").textContent = money(total);
+  $("profitView").textContent = money(profit);
+  $("commView").textContent = money(comm);
+  return { total, profit, comm };
+}
+["quantity", "buyPrice", "sellPrice"].forEach(id => $(id).addEventListener("input", calc));
+
+onAuthStateChanged(auth, async (u) => {
+  if (!u) { location.href = "login.html"; return; }
+
+  try {
+    const snap = await getDoc(doc(db, "users", u.uid));
+    const d = snap.exists() ? snap.data() : {};
+    role = String(d.roleType || d.role || "").trim().toLowerCase();
+    const active = String(d.status || "").trim().toLowerCase() === "active";
+
+    if (!(role in RATES) || !active) {
+      alert("Access Denied! Only active admins can enter sales.");
+      history.back();
+      return;
+    }
+
+    user = u;
+    rate = RATES[role];
+    dept = d.department || "";
+    $("soldBy").value = d.name || u.displayName || u.email || u.uid;
+    $("roleView").value = (d.roleType || d.role || role) + " - " + rate + "%";
+    $("status").classList.add("hidden");
+    $("page").classList.remove("hidden");
+    calc();
+    loadList();
+
+  } catch (e) {
+    $("status").textContent = "Could not verify access: " + (e.code || "") + " " + e.message;
+  }
+});
+
+async function loadList() {
+  try {
+    const snap = await getDocs(query(collection(db, "sales"), where("soldBy", "==", user.uid)));
+    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    let sold = 0, comm = 0;
+    const list = $("list");
+    list.innerHTML = "";
+    if (!rows.length) list.innerHTML = '<p class="empty">No sales yet.</p>';
+    rows.forEach(r => {
+      sold += r.totalSale || 0;
+      comm += r.commission || 0;
+      const div = document.createElement("div");
+      div.className = "item";
+      const t = document.createElement("div");
+      t.textContent = r.itemName + " x " + r.quantity + " @ " + money(r.sellPrice) + " = " + money(r.totalSale);
+      const sm = document.createElement("small");
+      sm.textContent = "To " + r.customerName + " | Commission " + money(r.commission) + " | " + r.dateText;
+      div.append(t, sm);
+      list.appendChild(div);
+    });
+    $("sumCount").textContent = rows.length;
+    $("sumSold").textContent = money(sold);
+    $("sumComm").textContent = money(comm);
+  } catch (e) {
+    $("list").innerHTML = "";
+    alert("List not loaded: " + e.code + " - " + e.message);
+  }
+}
+
+$("saveSale").addEventListener("click", async () => {
+  const customerName = $("customerName").value.trim();
+  const itemName = $("itemName").value.trim();
+  const quantity = num("quantity");
+  const buyPrice = num("buyPrice");
+  const sellPrice = num("sellPrice");
+
+  if (!customerName) return alert("Enter customer name");
+  if (!itemName) return alert("Enter item name");
+  if (!(quantity > 0)) return alert("Enter quantity");
+  if (!(buyPrice > 0)) return alert("Enter buying price");
+  if (!(sellPrice > 0)) return alert("Enter selling price");
+  if (!user) return alert("Please login again");
+
+  const { total, profit, comm } = calc();
+  const now = new Date();
+  const btn = $("saveSale");
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+  try {
+    await addDoc(collection(db, "sales"), {
+      saleId: $("saleId").value,
+      customerName,
+      customerMobile: $("customerMobile").value.trim(),
+      itemName,
+      quantity,
+      buyPrice,
+      sellPrice,
+      totalSale: total,
+      profit,
+      commissionRate: rate,
+      commission: comm,
+      remarks: $("remarks").value.trim(),
+      soldBy: user.uid,
+      soldByName: $("soldBy").value,
+      soldByRole: role,
+      department: dept,
+      createdAt: now.getTime(),
+      dateText: now.toLocaleDateString("en-IN")
+    });
+    alert("Sale saved successfully!");
+    ["customerName","customerMobile","itemName","quantity","buyPrice","sellPrice","remarks"].forEach(id => $(id).value = "");
+    $("saleId").value = "SAL-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    $("saleDate").value = new Date().toLocaleString("en-IN");
+    calc();
+    loadList();
+  } catch (e) {
+    alert("NOT saved: " + e.code + " - " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Save Sale";
+  }
+});
+</script>
+</body>
+</html>
