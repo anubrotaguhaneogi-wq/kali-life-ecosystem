@@ -1,326 +1,4 @@
 <!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>এক ক্লিকে কপি</title>
-<style>
-*{box-sizing:border-box;font-family:Arial,sans-serif;margin:0;padding:0;}
-body{background:#eef3f8;padding:16px;color:#1a2320;}
-main{max-width:640px;margin:auto;}
-h1{color:#006400;font-size:22px;margin-bottom:14px;text-align:center;}
-.box{background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 0 12px rgba(0,0,0,.1);}
-h2{font-size:17px;margin-bottom:6px;}
-p{font-size:14px;color:#4b5b53;margin-bottom:8px;}
-textarea{width:100%;padding:10px;font-size:13px;border:1px solid #c9d3de;border-radius:8px;font-family:monospace;resize:vertical;}
-button{width:100%;margin-top:10px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;cursor:pointer;}
-button.alt{background:#0055aa;font-size:15px;padding:11px;}
-button:focus-visible,textarea:focus{outline:2px solid #006400;outline-offset:1px;}
-.msg{min-height:20px;margin-top:6px;font-weight:bold;color:#006400;font-size:14px;}
-</style>
-</head>
-<body>
-<main>
-<h1>এক ক্লিকে কপি</h1>
-
-<div class="box">
-  <h2>ধাপ ১ (একবারই): Firebase config</h2>
-  <p>login.html থেকে <b>const firebaseConfig = { ... };</b> অংশটা কপি করে নিচে বসান। বসালে নিচের দুটো কোডেই নিজে থেকে ঢুকে যাবে। ফাঁকা রাখলে কোডে PASTE_HERE-ই থাকবে।</p>
-  <textarea id="cfg" rows="7" placeholder="const firebaseConfig = { apiKey: ..., projectId: ... };"></textarea>
-</div>
-
-<div id="cards"></div>
-</main>
-
-<script>
-const FILES = {
-  "sales": {
-    "name": "sales.html",
-    "commit": "Rebuild sales page: save to Firestore, sold-by admin, role-based commission (Super 5%, Core 10%, Dept 20%)",
-    "code": `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALI LIFE ECOSYSTEM - Sales</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#eef3f8;padding:20px;}
-.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
-h1{text-align:center;color:#006400;margin-bottom:10px;}
-h2{text-align:center;color:#0055aa;margin-bottom:25px;}
-h3{margin:18px 0 6px;color:#1a2320;}
-hr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}
-label{display:block;font-weight:bold;margin:12px 0 4px;}
-input,textarea,select{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
-input[readonly]{background:#f1f4f7;}
-input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}
-.row{display:flex;gap:12px;}
-.row>div{flex:1;}
-.calc{display:flex;justify-content:space-between;margin-top:12px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
-button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
-button:disabled{opacity:.6;}
-.sum{display:flex;gap:10px;}
-.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}
-.sum b{display:block;font-size:18px;margin-top:4px;}
-.item{padding:10px 0;border-top:1px solid #dde3ea;}
-.item small{display:block;color:#5b6b63;margin-top:2px;}
-.empty{color:#5b6b63;padding:8px 0;}
-@media(max-width:600px){.row{flex-direction:column;gap:0;}}
-</style>
-</head>
-<body>
-
-<div class="container">
-<h1>KALI LIFE ECOSYSTEM</h1>
-<h2>Sales</h2>
-
-<div class="row">
-  <div>
-    <label>Invoice Number</label>
-    <input type="text" id="invoiceNumber" readonly>
-  </div>
-  <div>
-    <label>Date</label>
-    <input type="text" id="invoiceDate" readonly>
-  </div>
-</div>
-
-<label>Sold By (Admin)</label>
-<input type="text" id="soldByName" readonly>
-
-<hr>
-
-<h3>Customer</h3>
-
-<label>Customer Name *</label>
-<input type="text" id="customerName" placeholder="Enter Customer Name" autocomplete="off">
-
-<label>Mobile Number *</label>
-<input type="tel" id="customerMobile" placeholder="Enter Mobile Number">
-
-<label>Address</label>
-<textarea id="customerAddress" rows="2" placeholder="Enter Address"></textarea>
-
-<hr>
-
-<h3>Product</h3>
-
-<label>Product Name *</label>
-<input type="text" id="productName" placeholder="Enter Product Name" autocomplete="off">
-
-<label>Quantity *</label>
-<input type="number" id="quantity" inputmode="decimal" min="0" step="any" placeholder="Enter Quantity">
-
-<div class="row">
-  <div>
-    <label>Buying Price (per piece) *</label>
-    <input type="number" id="buyPrice" inputmode="decimal" min="0" step="any" placeholder="Bought at">
-  </div>
-  <div>
-    <label>Selling Price (per piece) *</label>
-    <input type="number" id="sellingPrice" inputmode="decimal" min="0" step="any" placeholder="Sold at">
-  </div>
-</div>
-
-<div class="calc"><span>Total Sale</span><span id="totalView">₹0</span></div>
-<div class="calc"><span>Profit</span><span id="profitView">₹0</span></div>
-<label>Your Role &amp; Commission Level</label>
-<input type="text" id="roleView" readonly value="Checking...">
-
-<div class="calc"><span id="commLabel">Your Commission</span><span id="commView">₹0</span></div>
-
-<label>Remarks</label>
-<textarea id="remarks" rows="2" placeholder="Remarks"></textarea>
-
-<button type="button" id="saveSales">Save Sale</button>
-
-<hr>
-
-<h3>My Sales</h3>
-<div class="sum">
-  <div>Total Sale<b id="sumSales">₹0</b></div>
-  <div>Total Profit<b id="sumProfit">₹0</b></div>
-  <div>Total Commission<b id="sumComm">₹0</b></div>
-</div>
-<div id="list"><p class="empty">Loading...</p></div>
-
-<button type="button" id="backBtn" style="background:#1a2320;">Back to Dashboard</button>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// 1) Paste your firebaseConfig from login.html here (exactly the same)
-const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "kali-life-ecosystem.firebaseapp.com",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
-};
-
-// 2) Commission is on the TOTAL SALE amount, decided by the admin's role:
-//    Super Admin = 5%, Core Admin = 10%, Departmental Admin = 20%
-let commPercent = 0;
-let roleName = "";
-const pct = () => commPercent;
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const $ = (id) => document.getElementById(id);
-const num = (id) => parseFloat($(id).value) || 0;
-const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN");
-let user = null;
-
-$("invoiceNumber").value = "INV-" + Date.now();
-$("invoiceDate").value = new Date().toLocaleString("en-IN");
-$("backBtn").addEventListener("click", () => { location.href = "admin-dashboard.html"; });
-
-function calc() {
-  const qty = num("quantity");
-  const total = qty * num("sellingPrice");
-  const profit = total - qty * num("buyPrice");
-  const comm = total * pct() / 100;
-  $("commLabel").textContent = "Your Commission (" + pct() + "% of total sale)";
-  $("totalView").textContent = money(total);
-  $("profitView").textContent = money(profit);
-  $("commView").textContent = money(comm);
-  return { total, profit, comm };
-}
-["quantity", "buyPrice", "sellingPrice"].forEach(id => $(id).addEventListener("input", calc));
-calc();
-
-async function detectRole() {
-  let data = null;
-  try {
-    const d = await getDoc(doc(db, "users", user.uid));
-    if (d.exists()) data = d.data();
-    if (!data && user.email) {
-      const q = await getDocs(query(collection(db, "users"), where("email", "==", user.email)));
-      if (!q.empty) data = q.docs[0].data();
-    }
-  } catch (e) {
-    alert("Role not loaded: " + e.code + " - " + e.message);
-  }
-  const raw = String((data && (data.role || data.userRole || data.adminRole || data.type)) || localStorage.getItem("userRole") || "");
-  const r = raw.toLowerCase().replace(/[^a-z]/g, "");
-  roleName = raw;
-  if (r.includes("super")) commPercent = 5;
-  else if (r.includes("core")) commPercent = 10;
-  else if (r.includes("depart")) commPercent = 20;
-  else commPercent = 0;
-  const nm = (data && (data.name || data.fullName)) || localStorage.getItem("userName");
-  if (nm) $("soldByName").value = nm;
-  $("roleView").value = commPercent ? raw + " - " + commPercent + "%" : "Role not found - cannot save";
-  calc();
-}
-
-onAuthStateChanged(auth, async (u) => {
-  if (!u) { location.href = "login.html"; return; }
-  user = u;
-  $("soldByName").value = u.displayName || u.email || u.uid;
-  await detectRole();
-  loadList();
-});
-
-async function loadList() {
-  try {
-    const snap = await getDocs(query(collection(db, "sales"), where("soldBy", "==", user.uid)));
-    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-    let s = 0, p = 0, c = 0;
-    const list = $("list");
-    list.innerHTML = "";
-    if (!rows.length) list.innerHTML = '<p class="empty">No sales yet.</p>';
-    rows.forEach(r => {
-      s += r.totalSale || 0; p += r.profit || 0; c += r.commissionAmount || 0;
-      const div = document.createElement("div");
-      div.className = "item";
-      const t = document.createElement("div");
-      t.textContent = r.customerName + " - " + r.productName + " x " + r.quantity + " = " + money(r.totalSale);
-      const sm = document.createElement("small");
-      sm.textContent = r.dateText + " | Profit " + money(r.profit) + " | Commission " + money(r.commissionAmount);
-      div.append(t, sm);
-      list.appendChild(div);
-    });
-    $("sumSales").textContent = money(s);
-    $("sumProfit").textContent = money(p);
-    $("sumComm").textContent = money(c);
-  } catch (e) {
-    $("list").innerHTML = "";
-    alert("List not loaded: " + e.code + " - " + e.message);
-  }
-}
-
-$("saveSales").addEventListener("click", async () => {
-  const customerName = $("customerName").value.trim();
-  const customerMobile = $("customerMobile").value.trim();
-  const productName = $("productName").value.trim();
-  const quantity = num("quantity");
-  const buyPrice = num("buyPrice");
-  const sellingPrice = num("sellingPrice");
-
-  if (!customerName) return alert("Enter customer name");
-  if (!customerMobile) return alert("Enter mobile number");
-  if (!productName) return alert("Enter product name");
-  if (!(quantity > 0)) return alert("Enter quantity");
-  if (!(buyPrice > 0)) return alert("Enter buying price");
-  if (!(sellingPrice > 0)) return alert("Enter selling price");
-  if (!user) return alert("Please login again");
-  if (!(pct() > 0)) return alert("Your role was not found, so commission cannot be set. Sale not saved.");
-
-  const { total, profit, comm } = calc();
-  const now = new Date();
-  const btn = $("saveSales");
-  btn.disabled = true;
-  btn.textContent = "Saving...";
-  try {
-    await addDoc(collection(db, "sales"), {
-      invoiceNumber: $("invoiceNumber").value,
-      customerName, customerMobile,
-      customerAddress: $("customerAddress").value.trim(),
-      productName, quantity, buyPrice, sellingPrice,
-      totalSale: total,
-      profit: profit,
-      commissionPercent: pct(),
-      commissionAmount: Math.round(comm * 100) / 100,
-      commissionStatus: "pending",
-      remarks: $("remarks").value.trim(),
-      soldBy: user.uid,
-      soldByName: $("soldByName").value,
-      soldByRole: roleName,
-      createdAt: now.getTime(),
-      dateText: now.toLocaleDateString("en-IN")
-    });
-    alert("Sale saved successfully!");
-    ["customerName","customerMobile","customerAddress","productName","quantity","buyPrice","sellingPrice","remarks"]
-      .forEach(id => $(id).value = "");
-    $("invoiceNumber").value = "INV-" + Date.now();
-    $("invoiceDate").value = new Date().toLocaleString("en-IN");
-    calc();
-    loadList();
-  } catch (e) {
-    alert("NOT saved: " + e.code + " - " + e.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Save Sale";
-  }
-});
-</script>
-</body>
-</html>`
-  },
-
-  "purchase": {
-    "name": "purchase.html",
-    "commit": "Purchase page for Super Admin only",
-    "code": `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -330,6 +8,7 @@ $("saveSales").addEventListener("click", async () => {
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 body{background:#eef3f8;padding:20px;}
 .container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
+.hidden{display:none;}
 h1{text-align:center;color:#006400;margin-bottom:10px;}
 h2{text-align:center;color:#0055aa;margin-bottom:25px;}
 h3{margin:18px 0 6px;color:#1a2320;}
@@ -349,12 +28,15 @@ button:disabled{opacity:.6;}
 .item{padding:10px 0;border-top:1px solid #dde3ea;}
 .item small{display:block;color:#5b6b63;margin-top:2px;}
 .empty{color:#5b6b63;padding:8px 0;}
+#status{text-align:center;padding:30px;color:#5b6b63;font-size:15px;}
 @media(max-width:600px){.row{flex-direction:column;gap:0;}}
 </style>
 </head>
 <body>
 
-<div class="container">
+<div id="status" class="container">Loading...</div>
+
+<div class="container hidden" id="page">
 <h1>KALI LIFE ECOSYSTEM</h1>
 <h2>Purchase</h2>
 
@@ -411,26 +93,20 @@ button:disabled{opacity:.6;}
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }
+  from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// Paste your firebaseConfig from login.html here (exactly the same)
 const firebaseConfig = {
-  apiKey: "PASTE_HERE",
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
   authDomain: "kali-life-ecosystem.firebaseapp.com",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+  measurementId: "G-LBEY0W7RX3"
 };
-
-// Only Super Admin can enter purchases
-if ((localStorage.getItem("userRole") || "") !== "Super Admin") {
-  alert("Access Denied!");
-  location.href = "admin-dashboard.html";
-}
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -443,7 +119,7 @@ let user = null;
 
 $("purchaseId").value = "PUR-" + Date.now();
 $("purchaseDate").value = new Date().toLocaleString("en-IN");
-$("backBtn").addEventListener("click", () => { location.href = "admin-dashboard.html"; });
+$("backBtn").addEventListener("click", () => { location.href = "super-admin-dashboard.html"; });
 
 function calc() {
   const total = num("quantity") * num("buyPrice");
@@ -452,11 +128,31 @@ function calc() {
 }
 ["quantity", "buyPrice"].forEach(id => $(id).addEventListener("input", calc));
 
-onAuthStateChanged(auth, (u) => {
+// Login + Super Admin check (read from Firestore, not localStorage)
+onAuthStateChanged(auth, async (u) => {
   if (!u) { location.href = "login.html"; return; }
-  user = u;
-  $("enteredBy").value = u.displayName || u.email || u.uid;
-  loadList();
+
+  try {
+    const snap = await getDoc(doc(db, "users", u.uid));
+    const d = snap.exists() ? snap.data() : {};
+    const role = String(d.roleType || d.role || "").trim().toLowerCase();
+    const active = String(d.status || "").trim().toLowerCase() === "active";
+
+    if (role !== "super admin" || !active) {
+      alert("Access Denied! Only Super Admin can enter purchases.");
+      location.href = "super-admin-dashboard.html";
+      return;
+    }
+
+    user = u;
+    $("enteredBy").value = d.name || u.displayName || u.email || u.uid;
+    $("status").classList.add("hidden");
+    $("page").classList.remove("hidden");
+    loadList();
+
+  } catch (e) {
+    $("status").textContent = "Could not verify access: " + (e.code || "") + " " + e.message;
+  }
 });
 
 async function loadList() {
@@ -532,14 +228,4 @@ $("savePurchase").addEventListener("click", async () => {
 });
 </script>
 </body>
-</html>`
-  }
-};
-
-function injectConfig(code) {
-  const cfg = document.getElementById("cfg").value.trim();
-  if (!cfg) return code;
-  return code.replace(/const firebaseConfig = \{[\s\S]*?\};/, cfg);
-}
-
-const cards = document.getElement
+</html>
