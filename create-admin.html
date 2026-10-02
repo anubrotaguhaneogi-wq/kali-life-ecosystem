@@ -17,328 +17,266 @@ body {
     color: #0f172a;
 }
 
-.container {
-    width: 100%;
-    max-width: 650px;
-    margin: 0 auto;
-}
+.container { width: 100%; max-width: 650px; margin: 0 auto; }
 
-.header {
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 22px;
-}
+.header { text-align: center; color: #fff; margin-bottom: 20px; }
+.header h1 { margin: 0; font-size: 28px; font-weight: 800; }
+.header p { margin: 7px 0 0; color: rgba(255,255,255,0.75); font-size: 13px; }
 
-.header h1 {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 800;
+.tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.tab {
+    flex: 1; height: 44px; border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08); color: #fff;
+    border-radius: 9px; font-size: 14px; font-weight: 800; cursor: pointer;
 }
-
-.header p {
-    margin: 7px 0 0;
-    color: rgba(255,255,255,0.75);
-    font-size: 13px;
-}
+.tab.active { background: #fff; color: #166534; }
 
 .card {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 18px;
+    background: #fff; padding: 30px; border-radius: 18px;
     box-shadow: 0 25px 70px rgba(0,0,0,0.28);
 }
 
 .section-title {
-    margin: 0 0 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #dcfce7;
-    color: #166534;
-    font-size: 19px;
-    font-weight: 800;
+    margin: 0 0 20px; padding-bottom: 10px;
+    border-bottom: 2px solid #dcfce7; color: #166534;
+    font-size: 19px; font-weight: 800;
 }
 
-.form-group {
-    margin-bottom: 18px;
-}
+.form-group { margin-bottom: 18px; }
+.hidden { display: none !important; }
 
-label {
-    display: block;
-    margin-bottom: 7px;
-    color: #334155;
-    font-size: 14px;
-    font-weight: 700;
-}
+label { display: block; margin-bottom: 7px; color: #334155; font-size: 14px; font-weight: 700; }
 
-input,
-select {
-    width: 100%;
-    height: 48px;
-    padding: 0 13px;
-    border: 1px solid #cbd5e1;
-    border-radius: 9px;
-    background: #ffffff;
-    color: #0f172a;
-    font-size: 15px;
-    outline: none;
-    transition: 0.2s;
+input, select {
+    width: 100%; height: 48px; padding: 0 13px;
+    border: 1px solid #cbd5e1; border-radius: 9px;
+    background: #fff; color: #0f172a; font-size: 15px; outline: none;
 }
+input:focus, select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
+input[readonly], input:disabled, select:disabled { background: #f1f5f9; color: #64748b; }
 
-input:focus,
-select:focus {
-    border-color: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-}
-
-.password-box {
-    position: relative;
-}
-
-.password-box input {
-    padding-right: 70px;
-}
-
+.password-box { position: relative; }
+.password-box input { padding-right: 70px; }
 .password-toggle {
-    position: absolute;
-    right: 7px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: transparent;
-    color: #166534;
-    font-size: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    padding: 7px 9px;
+    position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
+    border: none; background: transparent; color: #166534;
+    font-size: 12px; font-weight: 800; cursor: pointer; padding: 7px 9px;
+    flex: none; height: auto; width: auto;
 }
 
 .role-info {
-    padding: 12px;
-    margin-bottom: 18px;
-    border-radius: 9px;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-    font-size: 13px;
-    line-height: 1.5;
+    padding: 12px; margin-bottom: 18px; border-radius: 9px;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    color: #166534; font-size: 13px; line-height: 1.6;
 }
 
-.buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 25px;
-}
+.hint { margin-top: 6px; color: #64748b; font-size: 12px; line-height: 1.4; }
 
-button {
-    flex: 1;
-    height: 48px;
-    border: none;
-    border-radius: 9px;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.2s;
+.buttons { display: flex; gap: 10px; margin-top: 25px; }
+button.main {
+    flex: 1; height: 48px; border: none; border-radius: 9px;
+    font-size: 15px; font-weight: 800; cursor: pointer;
 }
-
-.create-button {
-    background: linear-gradient(135deg, #16a34a, #15803d);
-    color: #ffffff;
-}
-
-.create-button:hover {
-    transform: translateY(-1px);
-}
-
-.create-button:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.reset-button {
-    background: #64748b;
-    color: #ffffff;
-}
+.create-button { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
+.create-button:disabled { opacity: 0.65; cursor: not-allowed; }
+.reset-button { background: #64748b; color: #fff; }
 
 .message {
-    display: none;
-    margin-top: 18px;
-    padding: 12px;
-    border-radius: 9px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.45;
+    display: none; margin-top: 18px; padding: 12px; border-radius: 9px;
+    text-align: center; font-size: 13px; font-weight: 700; line-height: 1.45;
 }
+.message.show { display: block; }
+.error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
 
-.message.show {
-    display: block;
+.lock-note {
+    display: none; margin-bottom: 18px; padding: 12px; border-radius: 9px;
+    background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+    font-size: 13px; font-weight: 700; line-height: 1.5;
 }
+.lock-note.show { display: block; }
 
-.error {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #b91c1c;
+/* Admin list */
+.admin-item {
+    padding: 14px; margin-bottom: 10px; border: 1px solid #e2e8f0;
+    border-radius: 12px; display: flex; gap: 10px; align-items: center;
 }
+.admin-info { flex: 1; min-width: 0; }
+.admin-name { font-size: 15px; font-weight: 800; color: #0f172a; word-break: break-word; }
+.admin-meta { margin-top: 4px; font-size: 12px; color: #475569; line-height: 1.5; word-break: break-word; }
+.badge {
+    display: inline-block; padding: 2px 8px; border-radius: 99px;
+    font-size: 11px; font-weight: 800; margin-right: 4px;
+}
+.badge.active { background: #dcfce7; color: #166534; }
+.badge.inactive { background: #fee2e2; color: #b91c1c; }
+.edit-btn {
+    flex: none; width: 64px; height: 38px; border: 1px solid #16a34a;
+    background: #fff; color: #166534; border-radius: 8px;
+    font-size: 13px; font-weight: 800; cursor: pointer;
+}
+.empty { text-align: center; color: #64748b; font-size: 14px; padding: 20px 0; }
 
-.success {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-}
+.links { margin-top: 22px; text-align: center; }
+.links a { display: inline-block; margin: 5px 10px; color: #166534; text-decoration: none; font-size: 13px; font-weight: 700; }
+.links a:hover { text-decoration: underline; }
 
-.links {
-    margin-top: 22px;
-    text-align: center;
-}
-
-.links a {
-    display: inline-block;
-    margin: 5px 10px;
-    color: #166534;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.links a:hover {
-    text-decoration: underline;
-}
+:focus-visible { outline: 3px solid #86efac; outline-offset: 2px; }
 
 @media (max-width: 600px) {
-    body {
-        padding: 15px 10px;
-    }
-
-    .card {
-        padding: 22px 18px;
-        border-radius: 14px;
-    }
-
-    .header h1 {
-        font-size: 24px;
-    }
-
-    .buttons {
-        flex-direction: column;
-    }
+    body { padding: 15px 10px; }
+    .card { padding: 22px 18px; border-radius: 14px; }
+    .header h1 { font-size: 24px; }
+    .buttons { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 <div class="container">
+
     <div class="header">
-        <h1>🔐 Create Admin</h1>
-        <p>KALI LIFE ECOSYSTEM — Admin Management</p>
+        <h1>🔐 Admin Management</h1>
+        <p>KALI LIFE ECOSYSTEM</p>
+    </div>
+
+    <div class="tabs">
+        <button type="button" class="tab active" id="tabCreate">নতুন Admin</button>
+        <button type="button" class="tab" id="tabList">Admin তালিকা ও Edit</button>
     </div>
 
     <div class="card">
 
-        <h2 class="section-title">Admin Information</h2>
+        <div id="lockNote" class="lock-note"></div>
 
-        <div class="role-info">
-            <strong>Admin Structure:</strong><br>
-            Super Admin → ৫টি Department → প্রতিটি Department-এ সর্বোচ্চ ৫ জন Core Admin + ৫ জন Departmental Admin
-        </div>
+        <!-- ================= CREATE VIEW ================= -->
+        <div id="createView">
+            <h2 class="section-title">নতুন Admin তৈরি</h2>
 
-        <!-- NAME -->
-        <div class="form-group">
-            <label for="name">Full Name</label>
-            <input
-                id="name"
-                type="text"
-                autocomplete="name"
-                placeholder="Enter admin full name"
-            >
-        </div>
-
-        <!-- EMAIL -->
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input
-                id="email"
-                type="email"
-                autocomplete="email"
-                placeholder="Enter admin email"
-            >
-        </div>
-
-        <!-- MOBILE -->
-        <div class="form-group">
-            <label for="mobile">Mobile Number</label>
-            <input
-                id="mobile"
-                type="tel"
-                inputmode="numeric"
-                maxlength="10"
-                autocomplete="tel"
-                placeholder="Enter 10 digit mobile number"
-            >
-        </div>
-
-        <!-- PASSWORD -->
-        <div class="form-group">
-            <label for="password">Password</label>
-            <div class="password-box">
-                <input
-                    id="password"
-                    type="password"
-                    autocomplete="new-password"
-                    placeholder="Minimum 8 characters"
-                >
-                <button type="button" id="passwordToggle" class="password-toggle">
-                    Show
-                </button>
+            <div class="role-info">
+                <strong>নিয়ম:</strong><br>
+                Core Admin: Department ফাঁকা, Reports To = Super Admin, সর্বোচ্চ ৫ জন Active।<br>
+                Departmental Admin: Department বাধ্যতামূলক, Reports To = একজন Core Admin, প্রতি Department-এ সর্বোচ্চ ৫ জন Active।
             </div>
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input id="name" type="text" autocomplete="name" placeholder="Admin-এর পূর্ণ নাম">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input id="email" type="email" autocomplete="email" placeholder="Admin-এর ইমেইল">
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input id="mobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="১০ ডিজিটের মোবাইল নম্বর">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-box">
+                    <input id="password" type="password" autocomplete="new-password" placeholder="কমপক্ষে ৮ অক্ষর">
+                    <button type="button" id="passwordToggle" class="password-toggle">Show</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role">
+                    <option value="">-- Role বাছুন --</option>
+                    <option value="Core Admin">Core Admin</option>
+                    <option value="Departmental Admin">Departmental Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group hidden" id="deptGroup">
+                <label for="department">Department</label>
+                <select id="department"></select>
+            </div>
+
+            <div class="form-group hidden" id="reportsGroup">
+                <label for="reportsTo">Reports To</label>
+                <select id="reportsTo"></select>
+                <div class="hint" id="reportsHint"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button type="button" id="createButton" class="main create-button">Create Admin</button>
+                <button type="button" id="resetButton" class="main reset-button">Reset</button>
+            </div>
+
+            <div id="message" class="message"></div>
         </div>
 
-        <!-- DEPARTMENT -->
-        <div class="form-group">
-            <label for="department">Department</label>
-            <select id="department">
-                <option value="">-- Select Department --</option>
-                <option value="Product">Product</option>
-                <option value="Agriculture">Agriculture</option>
-                <option value="Technology">Technology</option>
-                <option value="Marriage">Marriage</option>
-                <option value="Education">Education</option>
-                <option value="None">None (for Super Admin)</option>
-            </select>
+        <!-- ================= LIST VIEW ================= -->
+        <div id="listView" class="hidden">
+            <h2 class="section-title">Admin তালিকা</h2>
+            <div id="adminList"></div>
         </div>
 
-        <!-- ROLE -->
-        <div class="form-group">
-            <label for="role">Account Role</label>
-            <select id="role">
-                <option value="">-- Select Role --</option>
-                <option value="Super Admin">Super Admin</option>
-                <option value="Core Admin">Core Admin</option>
-                <option value="Departmental Admin">Departmental Admin</option>
-            </select>
+        <!-- ================= EDIT VIEW ================= -->
+        <div id="editView" class="hidden">
+            <h2 class="section-title">Admin Edit / পদ পরিবর্তন</h2>
+
+            <div class="form-group">
+                <label for="eName">Full Name</label>
+                <input id="eName" type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="eEmail">Email (বদলানো যাবে না)</label>
+                <input id="eEmail" type="email" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="eMobile">Mobile (বদলানো যাবে না)</label>
+                <input id="eMobile" type="tel" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="eRole">Role</label>
+                <select id="eRole">
+                    <option value="Core Admin">Core Admin</option>
+                    <option value="Departmental Admin">Departmental Admin</option>
+                </select>
+                <div class="hint">প্রমোশন বা ডিমোশনের জন্য এখানে Role বদলান। পরের লগইনে সে নতুন পদের ড্যাশবোর্ডে ঢুকবে।</div>
+            </div>
+
+            <div class="form-group hidden" id="eDeptGroup">
+                <label for="eDepartment">Department</label>
+                <select id="eDepartment"></select>
+            </div>
+
+            <div class="form-group hidden" id="eReportsGroup">
+                <label for="eReportsTo">Reports To</label>
+                <select id="eReportsTo"></select>
+            </div>
+
+            <div class="form-group">
+                <label for="eStatus">Status</label>
+                <select id="eStatus">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button type="button" id="saveEditButton" class="main create-button">Save changes</button>
+                <button type="button" id="cancelEditButton" class="main reset-button">Cancel</button>
+            </div>
+
+            <div id="editMessage" class="message"></div>
         </div>
 
-        <!-- STATUS -->
-        <div class="form-group">
-            <label for="status">Account Status</label>
-            <select id="status">
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-            </select>
-        </div>
-
-        <!-- BUTTONS -->
-        <div class="buttons">
-            <button type="button" id="createButton" class="create-button">
-                Create Admin
-            </button>
-            <button type="button" id="resetButton" class="reset-button">
-                Reset
-            </button>
-        </div>
-
-        <!-- MESSAGE -->
-        <div id="message" class="message"></div>
-
-        <!-- LINKS -->
         <div class="links">
             <a href="admin-dashboard.html">← Admin Dashboard</a>
             <a href="admin-list.html">Admin List</a>
@@ -349,18 +287,13 @@ button {
 
 <script type="module">
 
-/* ======================================================
-   FIREBASE IMPORTS
-====================================================== */
-
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
     getAuth,
+    onAuthStateChanged,
     createUserWithEmailAndPassword,
-    signOut,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
@@ -372,13 +305,12 @@ import {
     doc,
     getDoc,
     setDoc,
+    updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
-/* ======================================================
-   FIREBASE CONFIG
-====================================================== */
+/* ================= CONFIG ================= */
 
 const firebaseConfig = {
     apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
@@ -390,329 +322,252 @@ const firebaseConfig = {
     measurementId: "G-LBEY0W7RX3"
 };
 
-
-/* ======================================================
-   MAIN FIREBASE APP
-====================================================== */
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const mainAuth = getAuth(app);
 
-
-/* ======================================================
-   SECONDARY FIREBASE APP
-   নতুন অ্যাডমিন তৈরির সময় সুপার অ্যাডমিনের সেশন যাতে নষ্ট না হয়
-====================================================== */
-
+// নতুন Admin তৈরির সময় Super Admin যাতে লগআউট না হয়
 const secondaryApp = initializeApp(firebaseConfig, "AdminCreatorApp");
 const secondaryAuth = getAuth(secondaryApp);
 
-
-/* ======================================================
-   ELEMENTS
-====================================================== */
-
-const nameInput        = document.getElementById("name");
-const emailInput       = document.getElementById("email");
-const mobileInput      = document.getElementById("mobile");
-const passwordInput    = document.getElementById("password");
-const passwordToggle   = document.getElementById("passwordToggle");
-const departmentInput  = document.getElementById("department");
-const roleInput        = document.getElementById("role");
-const statusInput      = document.getElementById("status");
-const createButton     = document.getElementById("createButton");
-const resetButton      = document.getElementById("resetButton");
-const message          = document.getElementById("message");
+const USERS = "users";
+const MAX_ACTIVE = 5;
+const DEPARTMENTS = ["Product", "Agriculture", "Technology", "Marriage", "Education"];
+const CORE = "Core Admin";
+const DEPT = "Departmental Admin";
 
 
-/* ======================================================
-   PASSWORD SHOW / HIDE
-====================================================== */
+/* ================= HELPERS ================= */
 
-passwordToggle.addEventListener("click", function () {
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        passwordToggle.textContent = "Hide";
-    } else {
-        passwordInput.type = "password";
-        passwordToggle.textContent = "Show";
+const $ = id => document.getElementById(id);
+
+function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, c =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function isActive(data) {
+    return String(data.status || "").trim().toLowerCase() === "active";
+}
+
+function showMsg(el, text, type) {
+    el.textContent = text;
+    el.className = "message show " + type;
+}
+
+function clearMsg(el) {
+    el.textContent = "";
+    el.className = "message";
+}
+
+function fillDepartments(select) {
+    select.innerHTML = '<option value="">-- Department বাছুন --</option>' +
+        DEPARTMENTS.map(d => `<option value="${d}">${d}</option>`).join("");
+}
+
+fillDepartments($("department"));
+fillDepartments($("eDepartment"));
+
+
+/* ================= STATE ================= */
+
+let currentUser = null;
+let superAdminOk = false;
+let activeCores = [];     // Active Core Admin list [{uid, name}]
+let editingUid = null;
+let editingData = null;
+
+
+/* ================= AUTH + SUPER ADMIN CHECK ================= */
+
+async function verifySuperAdmin(user) {
+    const snap = await getDoc(doc(db, USERS, user.uid));
+    if (!snap.exists()) return false;
+    const d = snap.data();
+    const r1 = String(d.roleType || "").trim().toLowerCase();
+    const r2 = String(d.role || "").trim().toLowerCase();
+    return (r1 === "super admin" || r2 === "super admin") && isActive(d);
+}
+
+onAuthStateChanged(mainAuth, async user => {
+    currentUser = user;
+    superAdminOk = false;
+
+    if (!user) {
+        setLock("Super Admin হিসেবে লগইন করুন, তারপর এই পেজ খুলুন।");
+        return;
     }
+
+    try {
+        superAdminOk = await verifySuperAdmin(user);
+    } catch (e) {
+        console.error(e);
+    }
+
+    if (!superAdminOk) {
+        setLock("অ্যাক্সেস নেই। শুধু Active Super Admin Admin তৈরি বা Edit করতে পারবেন।");
+        return;
+    }
+
+    setLock("");
+    await loadCores();
 });
 
+function setLock(text) {
+    const n = $("lockNote");
+    n.textContent = text;
+    n.classList.toggle("show", !!text);
+    $("createButton").disabled = !!text;
+    $("saveEditButton").disabled = !!text;
+}
 
-/* ======================================================
-   মোবাইল ইনপুট (শুধু সংখ্যা, সর্বোচ্চ ১০ ডিজিট)
-====================================================== */
 
-mobileInput.addEventListener("input", function () {
+/* ================= LOAD ACTIVE CORE ADMINS ================= */
+
+async function loadCores() {
+    const snap = await getDocs(query(collection(db, USERS), where("roleType", "==", CORE)));
+    activeCores = snap.docs
+        .filter(d => isActive(d.data()))
+        .map(d => ({ uid: d.id, name: d.data().name || d.data().email || d.id }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    fillCoreSelect($("reportsTo"), null);
+    if (editingUid) fillCoreSelect($("eReportsTo"), editingUid, editingData && editingData.reportsTo);
+}
+
+function fillCoreSelect(select, excludeUid, selected) {
+    const list = activeCores.filter(c => c.uid !== excludeUid);
+    select.innerHTML = '<option value="">-- Core Admin বাছুন --</option>' +
+        list.map(c => `<option value="${esc(c.uid)}">${esc(c.name)}</option>`).join("");
+    if (selected) select.value = selected;
+}
+
+
+/* ================= ROLE-BASED FORM UI ================= */
+
+function applyRoleUI(role, deptGroup, reportsGroup, hintEl) {
+    deptGroup.classList.toggle("hidden", role !== DEPT);
+    reportsGroup.classList.toggle("hidden", role !== DEPT);
+    if (hintEl) {
+        hintEl.textContent = role === CORE
+            ? "Reports To: Super Admin (অটো)"
+            : "";
+    }
+}
+
+$("role").addEventListener("change", () => {
+    const role = $("role").value;
+    applyRoleUI(role, $("deptGroup"), $("reportsGroup"), null);
+    $("reportsHint").textContent = role === DEPT && activeCores.length === 0
+        ? "আগে অন্তত একজন Active Core Admin তৈরি করুন।" : "";
+});
+
+$("eRole").addEventListener("change", () => {
+    applyRoleUI($("eRole").value, $("eDeptGroup"), $("eReportsGroup"), null);
+});
+
+$("passwordToggle").addEventListener("click", () => {
+    const p = $("password");
+    const show = p.type === "password";
+    p.type = show ? "text" : "password";
+    $("passwordToggle").textContent = show ? "Hide" : "Show";
+});
+
+$("mobile").addEventListener("input", function () {
     this.value = this.value.replace(/\D/g, "").slice(0, 10);
 });
 
 
-/* ======================================================
-   মেসেজ দেখানোর ফাংশন
-====================================================== */
+/* ================= TABS ================= */
 
-function showMessage(text, type) {
-    message.textContent = text;
-    message.className = "message show " + type;
+function showView(name) {
+    $("createView").classList.toggle("hidden", name !== "create");
+    $("listView").classList.toggle("hidden", name !== "list");
+    $("editView").classList.toggle("hidden", name !== "edit");
+    $("tabCreate").classList.toggle("active", name === "create");
+    $("tabList").classList.toggle("active", name === "list" || name === "edit");
 }
 
-function clearMessage() {
-    message.textContent = "";
-    message.className = "message";
-}
-
-
-/* ======================================================
-   বাটন স্টেট রিসেট
-====================================================== */
-
-function resetButtonState() {
-    createButton.disabled = false;
-    createButton.textContent = "Create Admin";
-}
-
-
-/* ======================================================
-   ফর্ম রিসেট
-====================================================== */
-
-resetButton.addEventListener("click", function () {
-    nameInput.value = "";
-    emailInput.value = "";
-    mobileInput.value = "";
-    passwordInput.value = "";
-    departmentInput.value = "";
-    roleInput.value = "";
-    statusInput.value = "Active";
-    clearMessage();
-    resetButtonState();
+$("tabCreate").addEventListener("click", () => showView("create"));
+$("tabList").addEventListener("click", async () => {
+    showView("list");
+    await renderList();
 });
 
 
-/* ======================================================
-   অ্যাডমিন তৈরি করার মূল ফাংশন
-====================================================== */
+/* ================= CAPACITY CHECK ================= */
 
-createButton.addEventListener("click", createAdmin);
+async function activeCount(role, department, excludeUid) {
+    const q = role === CORE
+        ? query(collection(db, USERS), where("roleType", "==", CORE))
+        : query(collection(db, USERS),
+            where("roleType", "==", DEPT),
+            where("department", "==", department));
 
-async function createAdmin() {
-
-    clearMessage();
-
-    // বর্তমান ইউজার চেক
-    const currentUser = mainAuth.currentUser;
-
-    if (!currentUser) {
-        showMessage("আপনাকে সুপার অ্যাডমিন হিসেবে লগইন করতে হবে।", "error");
-        return;
-    }
-
-    // ফর্ম থেকে ডেটা নেওয়া
-    const name       = nameInput.value.trim();
-    const email      = emailInput.value.trim().toLowerCase();
-    const mobile     = mobileInput.value.trim();
-    const password   = passwordInput.value;
-    const department = departmentInput.value;
-    const role       = roleInput.value;
-    const status     = statusInput.value;
-
-    // বেসিক ভ্যালিডেশন
-    if (name.length < 3) {
-        showMessage("অ্যাডমিনের পূর্ণ নাম কমপক্ষে ৩ অক্ষরের হতে হবে।", "error");
-        nameInput.focus();
-        return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showMessage("সঠিক ইমেইল অ্যাড্রেস দিন।", "error");
-        emailInput.focus();
-        return;
-    }
-
-    if (!/^[0-9]{10}$/.test(mobile)) {
-        showMessage("মোবাইল নম্বর অবশ্যই ১০ ডিজিটের হতে হবে।", "error");
-        mobileInput.focus();
-        return;
-    }
-
-    if (password.length < 8) {
-        showMessage("পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।", "error");
-        passwordInput.focus();
-        return;
-    }
-
-    if (!role) {
-        showMessage("অ্যাকাউন্ট রোল সিলেক্ট করুন।", "error");
-        roleInput.focus();
-        return;
-    }
-
-    // সুপার অ্যাডমিন এই পেজ থেকে তৈরি করা যাবে না
-    if (role === "Super Admin") {
-        showMessage("সুপার অ্যাডমিন অ্যাকাউন্ট এই পেজ থেকে তৈরি করা যাবে না।", "error");
-        roleInput.focus();
-        return;
-    }
-
-    // রোল ও ডিপার্টমেন্ট চেক
-    if ((role === "Core Admin" || role === "Departmental Admin") &&
-        (!department || department === "None")) {
-        showMessage("Core Admin বা Departmental Admin-এর জন্য একটি Department নির্বাচন করুন।", "error");
-        departmentInput.focus();
-        return;
-    }
-
-    // প্রসেস শুরু
-    createButton.disabled = true;
-    createButton.textContent = "অনুমোদন যাচাই করা হচ্ছে...";
-
-    try {
-        // সুপার অ্যাডমিন ভেরিফিকেশন
-        const superAdminRef = doc(db, "users", currentUser.uid);
-        const superAdminSnapshot = await getDoc(superAdminRef);
-
-        if (!superAdminSnapshot.exists()) {
-            showMessage("আপনার অ্যাডমিনিস্ট্রেটর প্রোফাইল Firestore-এ পাওয়া যায়নি।", "error");
-            return;
-        }
-
-        const superAdminData = superAdminSnapshot.data();
-
-        const superAdminRole = String(
-            superAdminData.roleType ||
-            superAdminData.role ||
-            superAdminData.accountRole ||
-            ""
-        ).trim().toLowerCase();
-
-        const superAdminStatus = String(
-            superAdminData.status ||
-            superAdminData.accountStatus ||
-            ""
-        ).trim().toLowerCase();
-
-        const isSuperAdmin =
-            superAdminRole === "super admin" &&
-            superAdminStatus === "active";
-
-        if (!isSuperAdmin) {
-            showMessage("অ্যাক্সেস অস্বীকৃত। শুধুমাত্র Active সুপার অ্যাডমিন অ্যাডমিন অ্যাকাউন্ট তৈরি করতে পারবেন।", "error");
-            return;
-        }
-
-        // ডুপ্লিকেট মোবাইল চেক
-        createButton.textContent = "মোবাইল নম্বর চেক করা হচ্ছে...";
-
-        const mobileQuery = query(
-            collection(db, "users"),
-            where("mobile", "==", mobile)
-        );
-
-        const mobileSnapshot = await getDocs(mobileQuery);
-
-        if (!mobileSnapshot.empty) {
-            showMessage("এই মোবাইল নম্বর ইতিমধ্যেই রেজিস্টার্ড আছে।", "error");
-            return;
-        }
-
-        // সিট ক্যাপাসিটি চেক (প্রতি ডিপার্টমেন্টে প্রতি রোলে সর্বোচ্চ ৫জন)
-        if (role === "Core Admin" || role === "Departmental Admin") {
-            createButton.textContent = "অ্যাডমিন ক্যাপাসিটি চেক করা হচ্ছে...";
-
-            const roleQuery = query(
-                collection(db, "users"),
-                where("department", "==", department),
-                where("roleType", "==", role)
-            );
-
-            const roleSnapshot = await getDocs(roleQuery);
-
-            const activeRoleCount = roleSnapshot.docs.filter(
-                adminDoc => adminDoc.data().status === "Active"
-            ).length;
-
-            if (activeRoleCount >= 5) {
-                showMessage(
-                    `${department} Department-এ ${role}-এর সর্বোচ্চ ৫টি Active position ইতিমধ্যেই পূর্ণ হয়েছে।`,
-                    "error"
-                );
-                return;
-            }
-        }
-
-        // Firebase Auth অ্যাকাউন্ট তৈরি (Secondary App দিয়ে)
-        createButton.textContent = "Firebase অ্যাকাউন্ট তৈরি হচ্ছে...";
-
-        const credential = await createUserWithEmailAndPassword(
-            secondaryAuth,
-            email,
-            password
-        );
-
-        const newAdminUser = credential.user;
-        const fullRole = `${department} ${role}`;
-
-        // Firestore-এ প্রোফাইল সেভ
-        createButton.textContent = "অ্যাডমিন প্রোফাইল সেভ হচ্ছে...";
-
-        const adminRef = doc(db, "users", newAdminUser.uid);
-
-        await setDoc(adminRef, {
-            uid: newAdminUser.uid,
-            name: name,
-            email: email,
-            mobile: mobile,
-            role: fullRole,
-            department: department === "None" ? null : department,
-            roleType: role,
-            status: status,
-            createdAt: serverTimestamp(),
-            createdBy: currentUser.uid,
-            createdByRole: "Super Admin"
-        });
-
-        // Secondary সেশন সাইন আউট
-        await signOut(secondaryAuth);
-
-        // সফল মেসেজ
-        showMessage(
-            `অ্যাডমিন সফলভাবে তৈরি হয়েছে: "\( {name}" ( \){fullRole})`,
-            "success"
-        );
-
-        // ফর্ম ক্লিয়ার
-        nameInput.value = "";
-        emailInput.value = "";
-        mobileInput.value = "";
-        passwordInput.value = "";
-        departmentInput.value = "";
-        roleInput.value = "";
-        statusInput.value = "Active";
-
-    } catch (error) {
-        console.error("Create Admin Error:", error);
-
-        let errorMsg = "কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।";
-
-        if (error.code === "auth/email-already-in-use") {
-            errorMsg = "এই ইমেইল ইতিমধ্যেই রেজিস্টার্ড আছে।";
-        } else if (error.code === "auth/invalid-email") {
-            errorMsg = "ইমেইল অ্যাড্রেস সঠিক নয়।";
-        } else if (error.code === "auth/weak-password") {
-            errorMsg = "পাসওয়ার্ড খুব দুর্বল।";
-        } else if (error.message) {
-            errorMsg = error.message;
-        }
-
-        showMessage(errorMsg, "error");
-    } finally {
-        resetButtonState();
-    }
+    const snap = await getDocs(q);
+    return snap.docs.filter(d => d.id !== excludeUid && isActive(d.data())).length;
 }
 
-</script>
-</body>
-</html>
+function capacityError(role, department) {
+    return role === CORE
+        ? `Core Admin-এর সর্বোচ্চ ${MAX_ACTIVE}টি Active পদ পূর্ণ।`
+        : `${department} Department-এ Departmental Admin-এর সর্বোচ্চ ${MAX_ACTIVE}টি Active পদ পূর্ণ।`;
+}
+
+async function getActiveCore(uid) {
+    const snap = await getDoc(doc(db, USERS, uid));
+    if (!snap.exists()) return null;
+    const d = snap.data();
+    if (d.roleType !== CORE || !isActive(d)) return null;
+    return { uid, name: d.name || d.email || uid };
+}
+
+
+/* ================= CREATE ADMIN ================= */
+
+$("resetButton").addEventListener("click", resetCreateForm);
+
+function resetCreateForm() {
+    ["name", "email", "mobile", "password"].forEach(id => $(id).value = "");
+    $("role").value = "";
+    $("department").value = "";
+    $("reportsTo").value = "";
+    $("status").value = "Active";
+    applyRoleUI("", $("deptGroup"), $("reportsGroup"), null);
+    clearMsg($("message"));
+}
+
+$("createButton").addEventListener("click", createAdmin);
+
+async function createAdmin() {
+    const msg = $("message");
+    clearMsg(msg);
+
+    if (!currentUser || !superAdminOk) {
+        showMsg(msg, "Active Super Admin হিসেবে লগইন করুন।", "error");
+        return;
+    }
+
+    const name = $("name").value.trim();
+    const email = $("email").value.trim().toLowerCase();
+    const mobile = $("mobile").value.trim();
+    const password = $("password").value;
+    const role = $("role").value;
+    const department = $("department").value;
+    const reportsToUid = $("reportsTo").value;
+    const status = $("status").value;
+
+    if (name.length < 3) return showMsg(msg, "নাম কমপক্ষে ৩ অক্ষরের হতে হবে।", "error");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showMsg(msg, "সঠিক ইমেইল দিন।", "error");
+    if (!/^[0-9]{10}$/.test(mobile)) return showMsg(msg, "মোবাইল নম্বর ১০ ডিজিটের হতে হবে।", "error");
+    if (password.length < 8) return showMsg(msg, "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।", "error");
+    if (role !== CORE && role !== DEPT) return showMsg(msg, "Role বাছুন (Core Admin বা Departmental Admin)।", "error");
+    if (role === DEPT && !department) return showMsg(msg, "Departmental Admin-এর জন্য Department বাছাই বাধ্যতামূলক।", "error");
+    if (role === DEPT && !reportsToUid) return showMsg(msg, "Reports To-তে একজন Core Admin বাছুন।", "error");
+
+    const btn = $("createButton");
+    btn.disabled = true;
+    let newUser = null;
+
+    try {
+        btn.textContent = "Super Admin যাচাই হচ্ছে...
