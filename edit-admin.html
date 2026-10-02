@@ -1,236 +1,416 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Admin - KALI LIFE ECOSYSTEM</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#166534">
+<title>Edit Admin - KALI LIFE ECOSYSTEM</title>
+<style>
+* { box-sizing: border-box; }
 
-    <style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 25px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #052e16, #064e3b, #0f172a);
+    color: #0f172a;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+.container { width: 100%; max-width: 650px; margin: 0 auto; }
 
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background: #f1f5f9;
-            color: #0f172a;
-        }
+.header { text-align: center; color: #fff; margin-bottom: 20px; }
+.header h1 { margin: 0; font-size: 28px; font-weight: 800; }
+.header p { margin: 7px 0 0; color: rgba(255,255,255,0.75); font-size: 13px; }
 
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
+.card { background: #fff; padding: 30px; border-radius: 18px; box-shadow: 0 25px 70px rgba(0,0,0,0.28); }
 
-        h1 {
-            margin: 0 0 10px;
-            text-align: center;
-            color: #166534;
-            font-size: 28px;
-        }
+.section-title {
+    margin: 0 0 20px; padding-bottom: 10px;
+    border-bottom: 2px solid #dcfce7; color: #166534;
+    font-size: 19px; font-weight: 800;
+}
 
-        hr {
-            border: 0;
-            height: 1px;
-            background: #e2e8f0;
-            margin: 20px 0 25px;
-        }
+.form-group { margin-bottom: 18px; }
+.hidden { display: none !important; }
 
-        form {
-            width: 100%;
-        }
+label { display: block; margin-bottom: 7px; color: #334155; font-size: 14px; font-weight: 700; }
 
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: bold;
-            color: #334155;
-        }
+input, select {
+    width: 100%; height: 48px; padding: 0 13px;
+    border: 1px solid #cbd5e1; border-radius: 9px;
+    background: #fff; color: #0f172a; font-size: 15px; outline: none;
+}
+input:focus, select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
+input[readonly] { background: #f1f5f9; color: #64748b; }
 
-        input,
-        select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-            background: #ffffff;
-            transition: 0.2s;
-        }
+.hint { margin-top: 6px; color: #64748b; font-size: 12px; line-height: 1.4; }
 
-        input:focus,
-        select:focus {
-            border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-        }
+.buttons { display: flex; gap: 10px; margin-top: 25px; }
+button {
+    flex: 1; height: 48px; border: none; border-radius: 9px;
+    font-size: 15px; font-weight: 800; cursor: pointer;
+}
+.save-button { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
+.save-button:disabled { opacity: 0.65; cursor: not-allowed; }
+.back-button { background: #64748b; color: #fff; }
 
-        input[readonly] {
-            background: #f8fafc;
-            color: #64748b;
-            cursor: not-allowed;
-        }
+.message {
+    display: none; margin-top: 18px; padding: 12px; border-radius: 9px;
+    text-align: center; font-size: 13px; font-weight: 700; line-height: 1.45;
+}
+.message.show { display: block; }
+.error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
 
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
+.lock-note {
+    display: none; margin-bottom: 18px; padding: 12px; border-radius: 9px;
+    background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+    font-size: 13px; font-weight: 700; line-height: 1.5;
+}
+.lock-note.show { display: block; }
 
-        button {
-            flex: 1;
-            padding: 13px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+:focus-visible { outline: 3px solid #86efac; outline-offset: 2px; }
 
-        .save-btn {
-            background: #16a34a;
-            color: #ffffff;
-        }
-
-        .save-btn:hover {
-            background: #15803d;
-        }
-
-        .back-btn {
-            background: #64748b;
-            color: #ffffff;
-        }
-
-        .back-btn:hover {
-            background: #475569;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        @media (max-width: 600px) {
-
-            body {
-                padding: 12px;
-            }
-
-            .container {
-                margin: 20px auto;
-                padding: 20px;
-                border-radius: 12px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-        }
-
-    </style>
+@media (max-width: 600px) {
+    body { padding: 15px 10px; }
+    .card { padding: 22px 18px; border-radius: 14px; }
+    .header h1 { font-size: 24px; }
+    .buttons { flex-direction: column; }
+}
+</style>
 </head>
-
 <body>
-
 <div class="container">
 
-    <h1>Edit Admin</h1>
+    <div class="header">
+        <h1>✏ Edit Admin</h1>
+        <p>KALI LIFE ECOSYSTEM</p>
+    </div>
 
-    <hr>
+    <div class="card">
 
-    <form>
+        <h2 class="section-title">Admin Edit / পদ পরিবর্তন</h2>
 
-        <label>Admin ID</label>
-        <input type="text" id="adminId" readonly>
+        <div id="lockNote" class="lock-note show">লোড হচ্ছে...</div>
 
-        <br><br>
+        <div id="formBox" class="hidden">
 
-        <label>Name</label>
-        <input type="text" id="adminName" value="Super Admin">
+            <div class="form-group">
+                <label for="adminId">Admin ID</label>
+                <input id="adminId" type="text" readonly>
+            </div>
 
-        <br><br>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input id="name" type="text">
+            </div>
 
-        <label>Role</label>
-        <input type="text" id="adminRole" value="Super Admin">
+            <div class="form-group">
+                <label for="email">Email (বদলানো যাবে না)</label>
+                <input id="email" type="text" readonly>
+            </div>
 
-        <br><br>
+            <div class="form-group">
+                <label for="mobile">Mobile (বদলানো যাবে না)</label>
+                <input id="mobile" type="text" readonly>
+            </div>
 
-        <label>Status</label>
-        <select id="adminStatus">
-            <option>Active</option>
-            <option>Inactive</option>
-        </select>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role">
+                    <option value="Core Admin">Core Admin</option>
+                    <option value="Departmental Admin">Departmental Admin</option>
+                </select>
+                <div class="hint">প্রমোশন বা পদ বদলাতে এখানে Role বদলান। পরের লগইনে সে নতুন পদের ড্যাশবোর্ডে ঢুকবে।</div>
+            </div>
 
-        <div class="button-group">
-            <button type="button" class="save-btn" onclick="saveAdmin()">
-                Save Changes
-            </button>
+            <div class="form-group hidden" id="deptGroup">
+                <label for="department">Department</label>
+                <select id="department">
+                    <option value="">-- Department বাছুন --</option>
+                    <option value="Product">Product</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Marriage">Marriage</option>
+                    <option value="Education">Education</option>
+                </select>
+            </div>
 
-            <button type="button" class="back-btn" onclick="goBack()">
-                Back
-            </button>
+            <div class="form-group hidden" id="reportsGroup">
+                <label for="reportsTo">Reports To</label>
+                <select id="reportsTo"></select>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button type="button" id="saveButton" class="save-button">Save changes</button>
+                <button type="button" id="backButton" class="back-button">Back</button>
+            </div>
         </div>
 
-    </form>
+        <div id="message" class="message"></div>
 
+    </div>
 </div>
 
-<script>
+<script type="module">
 
-    const params = new URLSearchParams(window.location.search);
-    const index = params.get("id");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+    getFirestore, collection, query, where, getDocs,
+    doc, getDoc, updateDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    let admins = JSON.parse(localStorage.getItem("admins")) || [];
 
-    let admin = admins[index];
+const firebaseConfig = {
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+    measurementId: "G-LBEY0W7RX3"
+};
 
-    if(admin){
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-        document.getElementById("adminId").value = admin.id;
-        document.getElementById("adminName").value = admin.fullName;
-        document.getElementById("adminRole").value = admin.role;
-        document.getElementById("adminStatus").value = admin.status;
+const USERS = "users";
+const MAX_ACTIVE = 5;
+const CORE = "Core Admin";
+const DEPT = "Departmental Admin";
 
+const $ = id => document.getElementById(id);
+const targetUid = new URLSearchParams(location.search).get("id");
+
+let currentUser = null;
+let editingData = null;
+let activeCores = [];
+
+
+function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, c =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function isActive(d) {
+    return String(d.status || "").trim().toLowerCase() === "active";
+}
+
+function showMsg(text, type) {
+    const m = $("message");
+    m.textContent = text;
+    m.className = "message show " + type;
+    m.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function lock(text) {
+    const n = $("lockNote");
+    n.textContent = text;
+    n.classList.toggle("show", !!text);
+    $("formBox").classList.toggle("hidden", !!text);
+}
+
+function goBack() { location.href = "admin-list.html"; }
+$("backButton").addEventListener("click", goBack);
+
+window.addEventListener("error", e => showMsg("Error: " + e.message, "error"));
+window.addEventListener("unhandledrejection", e =>
+    showMsg("Error: " + ((e.reason && e.reason.message) || String(e.reason)), "error"));
+
+
+async function verifySuperAdmin(user) {
+    const snap = await getDoc(doc(db, USERS, user.uid));
+    if (!snap.exists()) return false;
+    const d = snap.data();
+    const r1 = String(d.roleType || "").trim().toLowerCase();
+    const r2 = String(d.role || "").trim().toLowerCase();
+    return (r1 === "super admin" || r2 === "super admin") && isActive(d);
+}
+
+
+/* ============ START ============ */
+
+onAuthStateChanged(auth, async user => {
+    currentUser = user;
+
+    if (!user) return lock("Super Admin হিসেবে লগইন করুন।");
+    if (!targetUid) return lock("কোন Admin Edit হবে তা জানা যায়নি। Admin List থেকে Edit চাপুন।");
+
+    try {
+        if (!(await verifySuperAdmin(user))) {
+            return lock("অ্যাক্সেস নেই। শুধু Active Super Admin Edit করতে পারবেন।");
+        }
+
+        const snap = await getDoc(doc(db, USERS, targetUid));
+        if (!snap.exists()) return lock("এই Admin পাওয়া যায়নি।");
+
+        editingData = snap.data();
+        const type = editingData.roleType || editingData.role;
+
+        if (type === "Super Admin") return lock("Super Admin Edit করা যাবে না।");
+        if (type !== CORE && type !== DEPT) return lock("এটি Admin অ্যাকাউন্ট নয়।");
+
+        await loadCores();
+        fillForm();
+        lock("");
+
+    } catch (e) {
+        console.error(e);
+        lock("লোড করা যায়নি: " + e.message);
+    }
+});
+
+
+async function loadCores() {
+    const snap = await getDocs(query(collection(db, USERS), where("roleType", "==", CORE)));
+    activeCores = snap.docs
+        .filter(d => d.id !== targetUid && isActive(d.data()))
+        .map(d => ({ uid: d.id, name: d.data().name || d.data().email || d.id }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    $("reportsTo").innerHTML = '<option value="">-- Core Admin বাছুন --</option>' +
+        activeCores.map(c => `<option value="${esc(c.uid)}">${esc(c.name)}</option>`).join("");
+}
+
+function fillForm() {
+    $("adminId").value = targetUid;
+    $("name").value = editingData.name || "";
+    $("email").value = editingData.email || "";
+    $("mobile").value = editingData.mobile || "";
+    $("role").value = editingData.roleType === DEPT ? DEPT : CORE;
+    $("department").value = editingData.department || "";
+    $("reportsTo").value = editingData.reportsTo || "";
+    $("status").value = isActive(editingData) ? "Active" : "Inactive";
+    applyRole();
+}
+
+function applyRole() {
+    const isDept = $("role").value === DEPT;
+    $("deptGroup").classList.toggle("hidden", !isDept);
+    $("reportsGroup").classList.toggle("hidden", !isDept);
+}
+$("role").addEventListener("change", applyRole);
+
+
+/* ============ SAVE ============ */
+
+async function activeCount(role, department) {
+    const q = role === CORE
+        ? query(collection(db, USERS), where("roleType", "==", CORE))
+        : query(collection(db, USERS), where("roleType", "==", DEPT), where("department", "==", department));
+    const snap = await getDocs(q);
+    return snap.docs.filter(d => d.id !== targetUid && isActive(d.data())).length;
+}
+
+$("saveButton").addEventListener("click", save);
+
+async function save() {
+    $("message").className = "message";
+
+    if (!currentUser || !editingData) {
+        return showMsg("সেশন পাওয়া যায়নি। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।", "error");
     }
 
-    function saveAdmin() {
+    const name = $("name").value.trim();
+    const newRole = $("role").value;
+    const deptInput = $("department").value;
+    const coreUid = $("reportsTo").value;
+    const newStatus = $("status").value;
 
-        admins[index].fullName =
-            document.getElementById("adminName").value;
+    const oldRole = editingData.roleType;
+    const oldDept = editingData.department || "";
+    const wasActive = isActive(editingData);
 
-        admins[index].role =
-            document.getElementById("adminRole").value;
+    if (name.length < 3) return showMsg("নাম কমপক্ষে ৩ অক্ষরের হতে হবে।", "error");
+    if (newRole === DEPT && !deptInput) return showMsg("Department বাছুন।", "error");
+    if (newRole === DEPT && !coreUid) return showMsg("Reports To-তে একজন Core Admin বাছুন।", "error");
 
-        admins[index].status =
-            document.getElementById("adminStatus").value;
+    const btn = $("saveButton");
+    btn.disabled = true;
+    btn.textContent = "যাচাই হচ্ছে...";
 
-        localStorage.setItem("admins", JSON.stringify(admins));
+    try {
+        if (!(await verifySuperAdmin(currentUser))) {
+            return showMsg("অ্যাক্সেস অস্বীকৃত।", "error");
+        }
 
-        alert("Admin Updated Successfully!");
+        const newDept = newRole === CORE ? "" : deptInput;
 
-        window.location.href = "admin-list.html";
+        // Core Admin পদ ছাড়লে বা Inactive হলে অধীনস্থদের আগে সরাতে হবে
+        if (oldRole === CORE && wasActive && (newRole !== CORE || newStatus !== "Active")) {
+            const sub = await getDocs(query(collection(db, USERS), where("reportsTo", "==", targetUid)));
+            const n = sub.docs.filter(d => d.id !== targetUid && isActive(d.data())).length;
+            if (n > 0) {
+                return showMsg(`এই Core Admin-এর অধীনে ${n} জন Active Admin আছে। আগে তাদের Edit করে অন্য Core Admin-এর অধীনে সরান।`, "error");
+            }
+        }
 
+        if (newStatus === "Active") {
+            const count = await activeCount(newRole, newDept);
+            if (count >= MAX_ACTIVE) {
+                return showMsg(newRole === CORE
+                    ? `Core Admin-এর সর্বোচ্চ ${MAX_ACTIVE}টি Active পদ পূর্ণ।`
+                    : `${newDept} Department-এ Departmental Admin-এর সর্বোচ্চ ${MAX_ACTIVE}টি Active পদ পূর্ণ।`,
+                    "error");
+            }
+        }
+
+        let reportsTo = currentUser.uid;
+        let reportsToName = "Super Admin";
+
+        if (newRole === DEPT) {
+            const c = await getDoc(doc(db, USERS, coreUid));
+            if (!c.exists() || c.data().roleType !== CORE || !isActive(c.data())) {
+                return showMsg("বাছাই করা Core Admin পাওয়া যায়নি বা Active নন।", "error");
+            }
+            reportsTo = coreUid;
+            reportsToName = c.data().name || c.data().email || coreUid;
+        }
+
+        const update = {
+            name: name,
+            role: newRole,
+            roleType: newRole,
+            department: newDept,
+            reportsTo: reportsTo,
+            reportsToName: reportsToName,
+            status: newStatus,
+            updatedBy: currentUser.uid,
+            updatedAt: serverTimestamp()
+        };
+
+        if (newRole !== oldRole || newDept !== oldDept) {
+            update.previousRole = oldRole;
+            update.previousDepartment = oldDept;
+            update.roleChangedAt = serverTimestamp();
+        }
+
+        btn.textContent = "সেভ হচ্ছে...";
+        await updateDoc(doc(db, USERS, targetUid), update);
+
+        showMsg("সেভ হয়েছে। তালিকায় ফিরে যাচ্ছে...", "success");
+        setTimeout(goBack, 1200);
+
+    } catch (e) {
+        console.error("Edit Admin Error:", e);
+        showMsg(e.message || "সেভ করা যায়নি।", "error");
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "Save changes";
     }
-
-    function goBack() {
-        window.location.href = "admin-list.html";
-    }
+}
 
 </script>
-
 </body>
 </html>
