@@ -4,9 +4,7 @@
 KALI LIFE ECOSYSTEM
 Page : Admin List
 File : admin-list.html
-Version : 2.1
-Status : Completed
-Last Updated : 07-08-2026
+Version : 2.2
 ==========================================
 -->
 <html lang="en">
@@ -16,70 +14,81 @@ Last Updated : 07-08-2026
     <title>Admin List - KALI LIFE ECOSYSTEM</title>
     <!-- Authentication System -->
     <script src="auth.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 12px; }
+        .table-wrap { overflow-x: auto; }
+        table { border-collapse: collapse; min-width: 900px; }
+        th { background: #f0fdf4; }
+        td, th { text-align: left; font-size: 14px; }
+        button { padding: 6px 10px; cursor: pointer; }
+        .inactive { color: #b91c1c; font-weight: bold; }
+        .active { color: #166534; font-weight: bold; }
+    </style>
 </head>
 
 <body>
-    <!-- Login & Role Security -->
+<!-- Login & Role Security -->
 <script>
 checkLogin();
 checkRole("Super Admin");
 </script>
+
 <h1>KALI LIFE ECOSYSTEM</h1>
 <h2>Admin List</h2>
 
 <hr>
 
-<table border="1" cellpadding="10" id="adminTable">
-<tr>
-    <th>SL</th>
-    <th>Admin ID</th>
-    <th>Name</th>
-    <th>Role</th>
-    <th>Reports To</th>
-    <th>Status</th>
-    <th>View</th>
-    <th>Edit</th>
-    <th>Delete</th>
-</tr>
-<tbody id="adminTableBody">
-</tbody>
-</table>
 <div style="margin:15px 0;">
-<input
-type="text"
-id="searchAdmin"
-placeholder="Search Admin..."
-onkeyup="searchAdmin()"
-style="width:250px;padding:10px;">
+    <input
+        type="text"
+        id="searchAdmin"
+        placeholder="Search Admin..."
+        onkeyup="searchAdmin()"
+        style="width:250px;max-width:100%;padding:10px;">
 </div>
-    <button onclick="window.location.href='admin-dashboard.html'">
-Home
-</button>
 
-<button onclick="window.location.href='create-admin.html'">
-Create Admin
-</button>
+<div class="table-wrap">
+<table border="1" cellpadding="10" id="adminTable">
+    <thead>
+    <tr>
+        <th>SL</th>
+        <th>Admin ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Department</th>
+        <th>Reports To</th>
+        <th>Status</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody id="adminTableBody"></tbody>
+</table>
+</div>
+
+<br>
+<button onclick="window.location.href='admin-dashboard.html'">Home</button>
+<button onclick="window.location.href='create-admin.html'">Create Admin</button>
+
 <hr>
-
 <p>© KALI LIFE ECOSYSTEM - Admin Management System</p>
 
-<!-- Admin List JavaScript -->
 <script type="module">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
     getFirestore,
     collection,
     getDocs,
+    getDoc,
     deleteDoc,
-    doc
+    doc,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-
-/* Firebase Configuration */
 
 const firebaseConfig = {
     apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
@@ -91,228 +100,178 @@ const firebaseConfig = {
     measurementId: "G-LBEY0W7RX3"
 };
 
-
-/* Firebase */
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const ADMIN_ROLES = ["Super Admin", "Core Admin", "Departmental Admin"];
+
+
+function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, c =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function isActive(status) {
+    return String(status || "Active").trim().toLowerCase() === "active";
+}
 
 
 /* Load All Admins */
 
 async function loadAdmins() {
 
-    const table =
-        document.getElementById("adminTableBody");
+    const table = document.getElementById("adminTableBody");
 
-    table.innerHTML = `
-        <tr>
-            <td colspan="9" style="text-align:center;">
-                Loading admins...
-            </td>
-        </tr>
-    `;
+    table.innerHTML = `<tr><td colspan="10" style="text-align:center;">Loading admins...</td></tr>`;
 
     try {
 
-        const snapshot =
-            await getDocs(collection(db, "users"));
+        const snapshot = await getDocs(collection(db, "users"));
 
-        table.innerHTML = "";
+        const rows = [];
 
-        let index = 0;
-
-        snapshot.forEach(function(adminDoc) {
-
+        snapshot.forEach(function (adminDoc) {
             const admin = adminDoc.data();
-
-const role =
-    admin.roleType ||
-    admin.role ||
-    "";
-
-const adminRoles = [
-    "Super Admin",
-    "Core Admin",
-    "Departmental Admin"
-];
-
-if (!adminRoles.includes(role)) {
-    return;
-}
-            const reportsTo =
-                admin.createdByRole ||
-                "Super Admin";
-
-            const status =
-                admin.status ||
-                "Active";
-
-            table.innerHTML += `
-                <tr>
-
-                    <td>${++index}</td>
-
-                    <td>${admin.uid || adminDoc.id}</td>
-
-                    <td>${admin.name || ""}</td>
-
-                    <td>${role}</td>
-
-                    <td>${reportsTo}</td>
-
-                    <td>${status}</td>
-
-                    <td>
-                        <button onclick="viewUser('${adminDoc.id}')">
-                            View
-                        </button>
-                    </td>
-
-                    <td>
-                        <button onclick="editUser('${adminDoc.id}')">
-                            Edit
-                        </button>
-                    </td>
-
-                    <td>
-                        <button onclick="deleteUser('${adminDoc.id}')">
-                            Delete
-                        </button>
-                    </td>
-
-                </tr>
-            `;
-
+            const role = admin.roleType || admin.role || "";
+            if (!ADMIN_ROLES.includes(role)) return;
+            rows.push({ id: adminDoc.id, admin, role });
         });
 
-        if (index === 0) {
+        // Super Admin → Core Admin → Departmental Admin, then by name
+        rows.sort((a, b) =>
+            ADMIN_ROLES.indexOf(a.role) - ADMIN_ROLES.indexOf(b.role) ||
+            String(a.admin.name || "").localeCompare(String(b.admin.name || "")));
 
-            table.innerHTML = `
-                <tr>
-                    <td colspan="9" style="text-align:center;">
-                        No admin accounts found.
-                    </td>
-                </tr>
-            `;
-
+        if (rows.length === 0) {
+            table.innerHTML = `<tr><td colspan="10" style="text-align:center;">No admin accounts found.</td></tr>`;
+            return;
         }
+
+        let html = "";
+        let index = 0;
+
+        rows.forEach(function (r) {
+
+            const admin = r.admin;
+            const isSuper = r.role === "Super Admin";
+            const status = admin.status || "Active";
+
+            const reportsTo = isSuper
+                ? "—"
+                : (admin.reportsToName || admin.createdByRole || "Super Admin");
+
+            const editCell = isSuper
+                ? "—"
+                : `<button onclick="editUser('${esc(r.id)}')">Edit</button>`;
+
+            const deleteCell = isSuper
+                ? "—"
+                : `<button onclick="deleteUser('${esc(r.id)}')">Delete</button>`;
+
+            html += `
+                <tr>
+                    <td>${++index}</td>
+                    <td>${esc(admin.uid || r.id)}</td>
+                    <td>${esc(admin.name)}</td>
+                    <td>${esc(r.role)}</td>
+                    <td>${esc(admin.department || "—")}</td>
+                    <td>${esc(reportsTo)}</td>
+                    <td class="${isActive(status) ? "active" : "inactive"}">${esc(status)}</td>
+                    <td><button onclick="viewUser('${esc(r.id)}')">View</button></td>
+                    <td>${editCell}</td>
+                    <td>${deleteCell}</td>
+                </tr>`;
+        });
+
+        table.innerHTML = html;
 
     } catch (error) {
 
-        console.error(
-            "Admin List Error:",
-            error
-        );
+        console.error("Admin List Error:", error);
 
-        table.innerHTML = `
-            <tr>
-                <td colspan="9" style="text-align:center;color:red;">
-                    Failed to load admin accounts.
-                </td>
-            </tr>
-        `;
-
+        table.innerHTML = `<tr><td colspan="10" style="text-align:center;color:red;">Failed to load admin accounts.</td></tr>`;
     }
-
 }
 
 
 /* View Admin */
 
-window.viewUser = function(id) {
-
-    window.location.href =
-        "view-admin.html?id=" + id;
-
+window.viewUser = function (id) {
+    window.location.href = "view-admin.html?id=" + encodeURIComponent(id);
 };
 
 
-/* Edit Admin */
+/* Edit Admin → নতুন Edit ফর্ম (create-admin.html) */
 
-window.editUser = function(id) {
-
-    window.location.href =
-        "edit-admin.html?id=" + id;
-
+window.editUser = function (id) {
+    window.location.href = "create-admin.html#edit=" + encodeURIComponent(id);
 };
 
 
 /* Delete Admin */
 
-window.deleteUser = async function(id) {
-
-    if (
-        !confirm(
-            "Are you sure you want to delete this admin?"
-        )
-    ) {
-        return;
-    }
+window.deleteUser = async function (id) {
 
     try {
 
-        await deleteDoc(
-            doc(db, "users", id)
-        );
+        const snap = await getDoc(doc(db, "users", id));
 
-        alert(
-            "Admin deleted successfully."
-        );
+        if (!snap.exists()) {
+            alert("Admin পাওয়া যায়নি।");
+            loadAdmins();
+            return;
+        }
 
+        const data = snap.data();
+        const role = data.roleType || data.role || "";
+
+        if (role === "Super Admin") {
+            alert("Super Admin মোছা যাবে না।");
+            return;
+        }
+
+        if (role === "Core Admin") {
+            const subs = await getDocs(query(collection(db, "users"), where("reportsTo", "==", id)));
+            if (subs.docs.some(d => d.id !== id)) {
+                alert("এই Core Admin-এর অধীনে Admin আছে। আগে তাদের অন্য Core Admin-এর অধীনে সরান, অথবা Inactive করুন।");
+                return;
+            }
+        }
+
+        if (!confirm(
+            "\"" + (data.name || id) + "\" কে মুছবেন?\n\n" +
+            "সতর্কতা: এতে শুধু Firestore প্রোফাইল মুছবে। Firebase Authentication-এ ইমেইল থেকে যাবে, " +
+            "তাই একই ইমেইলে আবার Admin বানানো যাবে না। সাধারণত Inactive করাই নিরাপদ।"
+        )) {
+            return;
+        }
+
+        await deleteDoc(doc(db, "users", id));
+        alert("Admin মোছা হয়েছে।");
         loadAdmins();
 
     } catch (error) {
 
-        console.error(
-            "Delete Admin Error:",
-            error
-        );
-
-        alert(
-            "Failed to delete admin."
-        );
-
+        console.error("Delete Admin Error:", error);
+        alert("মোছা যায়নি।");
     }
-
 };
 
 
 /* Search Admin */
 
-window.searchAdmin = function() {
+window.searchAdmin = function () {
 
-    const input =
-        document
-        .getElementById("searchAdmin")
-        .value
-        .toLowerCase();
+    const input = document.getElementById("searchAdmin").value.toLowerCase();
 
-    const rows =
-        document.querySelectorAll(
-            "#adminTableBody tr"
-        );
-
-    rows.forEach(function(row) {
-
-        const text =
-            row.innerText.toLowerCase();
-
-        row.style.display =
-            text.includes(input)
-                ? ""
-                : "none";
-
+    document.querySelectorAll("#adminTableBody tr").forEach(function (row) {
+        row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
     });
-
 };
 
-
-/* Initialize */
 
 loadAdmins();
 
 </script>
 </body>
-
 </html>
