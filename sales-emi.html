@@ -9,7 +9,8 @@
 body{background:#eef3f8;padding:15px;}
 .box{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:12px;}
 .hidden{display:none;}
-h2{text-align:center;color:#006400;margin-bottom:15px;}
+h2{text-align:center;color:#006400;margin-bottom:4px;}
+.ver{text-align:center;font-size:12px;color:#8a99a8;margin-bottom:10px;}
 label{display:block;font-weight:bold;margin:12px 0 4px;}
 input{width:100%;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
 input[readonly]{background:#f1f4f7;}
@@ -18,6 +19,9 @@ input[readonly]{background:#f1f4f7;}
 .total{display:flex;justify-content:space-between;margin-top:10px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
 button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
 button:disabled{opacity:.6;}
+#msg{margin-top:14px;padding:12px;border-radius:8px;font-weight:bold;font-size:15px;text-align:center;display:none;word-break:break-word;}
+#msg.ok{display:block;background:#dcfce7;color:#166534;}
+#msg.err{display:block;background:#fee2e2;color:#b91c1c;}
 h3{margin:25px 0 8px;}
 .sum{display:flex;gap:10px;margin-bottom:8px;}
 .sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:10px;font-size:13px;}
@@ -29,10 +33,11 @@ h3{margin:25px 0 8px;}
 </head>
 <body>
 
-<div id="status" class="box">Loading...</div>
+<div id="status" class="box">Loading... (sales-emi v3)</div>
 
 <div class="box hidden" id="page">
 <h2>Sales Entry</h2>
+<div class="ver">sales-emi v3</div>
 
 <label>Sold By</label>
 <input type="text" id="soldBy" readonly>
@@ -61,6 +66,7 @@ h3{margin:25px 0 8px;}
 <div class="total"><span>Commission</span><span id="commView">₹0</span></div>
 
 <button type="button" id="saveSale">Save Sale</button>
+<div id="msg"></div>
 
 <h3>My Sales</h3>
 <div class="sum">
@@ -70,7 +76,19 @@ h3{margin:25px 0 8px;}
 <div id="list">Loading...</div>
 </div>
 
+<script>
+// Plain script: shows a message on screen if the main script never starts
+setTimeout(function () {
+  if (!window.__fbLoaded) {
+    var s = document.getElementById("status");
+    if (s) s.textContent = "Firebase did not load. Check internet or try another browser. (sales-emi v3)";
+  }
+}, 7000);
+</script>
+
 <script type="module">
+window.__fbLoaded = true;
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }
@@ -100,6 +118,12 @@ let user = null;
 let role = "";
 let rate = 0;
 
+function show(text, ok) {
+  const m = $("msg");
+  m.textContent = text;
+  m.className = ok ? "ok" : "err";
+}
+
 function calc() {
   const total = num("quantity") * num("sellPrice");
   const comm = total * rate / 100;
@@ -117,8 +141,8 @@ onAuthStateChanged(auth, async (u) => {
     role = String(d.roleType || d.role || "").trim().toLowerCase();
     const active = String(d.status || "").trim().toLowerCase() === "active";
     if (!(role in RATES) || !active) {
-      alert("Access Denied! Only active admins can enter sales.");
-      history.back();
+      $("status").textContent = "Access Denied. Only active admins can enter sales. (role: " +
+        (role || "none") + ", status: " + (d.status || "none") + ")";
       return;
     }
     user = u;
@@ -167,16 +191,17 @@ $("saveSale").addEventListener("click", async () => {
   const quantity = num("quantity");
   const sellPrice = num("sellPrice");
 
-  if (!customerName) return alert("Enter customer name");
-  if (!itemName) return alert("Enter item name");
-  if (!(quantity > 0)) return alert("Enter quantity");
-  if (!(sellPrice > 0)) return alert("Enter price");
-  if (!user) return alert("Please login again");
+  if (!customerName) return show("Enter customer name", false);
+  if (!itemName) return show("Enter item name", false);
+  if (!(quantity > 0)) return show("Enter quantity", false);
+  if (!(sellPrice > 0)) return show("Enter price", false);
+  if (!user) return show("Please login again", false);
 
   const { total, comm } = calc();
   const btn = $("saveSale");
   btn.disabled = true;
   btn.textContent = "Saving...";
+  show("Saving...", true);
   try {
     const now = new Date();
     await addDoc(collection(db, "sales"), {
@@ -193,7 +218,7 @@ $("saveSale").addEventListener("click", async () => {
       createdAt: now.getTime(),
       dateText: now.toLocaleDateString("en-IN")
     });
-    alert("Sale saved successfully!");
+    show("Sale saved successfully!", true);
     $("customerName").value = "";
     $("itemName").value = "";
     $("quantity").value = "1";
@@ -201,7 +226,7 @@ $("saveSale").addEventListener("click", async () => {
     calc();
     loadList();
   } catch (e) {
-    alert("NOT saved: " + e.message);
+    show("NOT saved: " + (e.code || "") + " " + e.message, false);
   } finally {
     btn.disabled = false;
     btn.textContent = "Save Sale";
