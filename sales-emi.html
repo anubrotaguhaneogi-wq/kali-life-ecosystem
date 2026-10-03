@@ -3,111 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALI LIFE ECOSYSTEM - Sales</title>
+<title>Sales</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#eef3f8;padding:20px;}
-.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
+body{background:#eef3f8;padding:15px;}
+.box{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:12px;}
 .hidden{display:none;}
-h1{text-align:center;color:#006400;margin-bottom:10px;}
-h2{text-align:center;color:#0055aa;margin-bottom:25px;}
-h3{margin:18px 0 6px;color:#1a2320;}
-hr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}
+h2{text-align:center;color:#006400;margin-bottom:15px;}
 label{display:block;font-weight:bold;margin:12px 0 4px;}
-input,textarea{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
+input{width:100%;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
 input[readonly]{background:#f1f4f7;}
-input:focus,textarea:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}
-.row{display:flex;gap:12px;}
+.row{display:flex;gap:10px;}
 .row>div{flex:1;}
-.calc{display:flex;justify-content:space-between;margin-top:10px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
+.total{display:flex;justify-content:space-between;margin-top:10px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
 button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
 button:disabled{opacity:.6;}
-.sum{display:flex;gap:10px;}
-.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}
-.sum b{display:block;font-size:18px;margin-top:4px;}
+h3{margin:25px 0 8px;}
+.sum{display:flex;gap:10px;margin-bottom:8px;}
+.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:10px;font-size:13px;}
+.sum b{display:block;font-size:16px;margin-top:3px;}
 .item{padding:10px 0;border-top:1px solid #dde3ea;}
 .item small{display:block;color:#5b6b63;margin-top:2px;}
-.empty{color:#5b6b63;padding:8px 0;}
-#status{text-align:center;padding:30px;color:#5b6b63;font-size:15px;}
-@media(max-width:600px){.row{flex-direction:column;gap:0;}.sum{flex-direction:column;}}
+#status{text-align:center;padding:30px;color:#5b6b63;}
 </style>
 </head>
 <body>
 
-<div id="status" class="container">Loading...</div>
+<div id="status" class="box">Loading...</div>
 
-<div class="container hidden" id="page">
-<h1>KALI LIFE ECOSYSTEM</h1>
-<h2>Sales</h2>
+<div class="box hidden" id="page">
+<h2>Sales Entry</h2>
 
-<div class="row">
-  <div>
-    <label>Sale ID</label>
-    <input type="text" id="saleId" readonly>
-  </div>
-  <div>
-    <label>Date</label>
-    <input type="text" id="saleDate" readonly>
-  </div>
-</div>
+<label>Sold By</label>
+<input type="text" id="soldBy" readonly>
 
-<div class="row">
-  <div>
-    <label>Sold By</label>
-    <input type="text" id="soldBy" readonly>
-  </div>
-  <div>
-    <label>Your Role / Commission</label>
-    <input type="text" id="roleView" readonly>
-  </div>
-</div>
-
-<hr>
+<label>Role / Commission</label>
+<input type="text" id="roleView" readonly>
 
 <label>Customer Name *</label>
-<input type="text" id="customerName" placeholder="Enter Customer Name" autocomplete="off">
-
-<label>Customer Mobile</label>
-<input type="tel" id="customerMobile" placeholder="Enter Mobile Number" autocomplete="off">
+<input type="text" id="customerName" placeholder="Customer name" autocomplete="off">
 
 <label>Item Name *</label>
-<input type="text" id="itemName" placeholder="Enter Item Name" autocomplete="off">
+<input type="text" id="itemName" placeholder="Item name" autocomplete="off">
 
 <div class="row">
   <div>
-    <label>Quantity (Pieces) *</label>
-    <input type="number" id="quantity" inputmode="decimal" min="0" step="any" placeholder="How many pieces">
+    <label>Quantity *</label>
+    <input type="number" id="quantity" inputmode="decimal" value="1">
   </div>
   <div>
-    <label>Buying Price (per piece) *</label>
-    <input type="number" id="buyPrice" inputmode="decimal" min="0" step="any" placeholder="Bought at">
-  </div>
-  <div>
-    <label>Selling Price (per piece) *</label>
-    <input type="number" id="sellPrice" inputmode="decimal" min="0" step="any" placeholder="Sold at">
+    <label>Price (per piece) *</label>
+    <input type="number" id="sellPrice" inputmode="decimal" placeholder="Price">
   </div>
 </div>
 
-<div class="calc"><span>Total Sale</span><span id="totalView">₹0</span></div>
-<div class="calc"><span>Profit</span><span id="profitView">₹0</span></div>
-<div class="calc"><span>Your Commission</span><span id="commView">₹0</span></div>
-
-<label>Remarks</label>
-<textarea id="remarks" rows="2" placeholder="Remarks"></textarea>
+<div class="total"><span>Total</span><span id="totalView">₹0</span></div>
+<div class="total"><span>Commission</span><span id="commView">₹0</span></div>
 
 <button type="button" id="saveSale">Save Sale</button>
 
-<hr>
-
 <h3>My Sales</h3>
 <div class="sum">
-  <div>Entries<b id="sumCount">0</b></div>
   <div>Total Sold<b id="sumSold">₹0</b></div>
-  <div>Commission Earned<b id="sumComm">₹0</b></div>
+  <div>Commission<b id="sumComm">₹0</b></div>
 </div>
-<div id="list"><p class="empty">Loading...</p></div>
-
-<button type="button" id="backBtn" style="background:#1a2320;">Back to Dashboard</button>
+<div id="list">Loading...</div>
 </div>
 
 <script type="module">
@@ -130,7 +90,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Commission % on TOTAL sale amount, by seller's role
+// Commission % on total sale, by role
 const RATES = { "super admin": 5, "core admin": 10, "departmental admin": 20 };
 
 const $ = (id) => document.getElementById(id);
@@ -139,52 +99,36 @@ const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN")
 let user = null;
 let role = "";
 let rate = 0;
-let dept = "";
-
-$("saleId").value = "SAL-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-$("saleDate").value = new Date().toLocaleString("en-IN");
-$("backBtn").addEventListener("click", () => {
-  if (role === "super admin") location.href = "super-admin-dashboard.html";
-  else history.back();
-});
 
 function calc() {
-  const q = num("quantity");
-  const total = q * num("sellPrice");
-  const profit = total - q * num("buyPrice");
+  const total = num("quantity") * num("sellPrice");
   const comm = total * rate / 100;
   $("totalView").textContent = money(total);
-  $("profitView").textContent = money(profit);
   $("commView").textContent = money(comm);
-  return { total, profit, comm };
+  return { total, comm };
 }
-["quantity", "buyPrice", "sellPrice"].forEach(id => $(id).addEventListener("input", calc));
+["quantity", "sellPrice"].forEach(id => $(id).addEventListener("input", calc));
 
 onAuthStateChanged(auth, async (u) => {
   if (!u) { location.href = "login.html"; return; }
-
   try {
     const snap = await getDoc(doc(db, "users", u.uid));
     const d = snap.exists() ? snap.data() : {};
     role = String(d.roleType || d.role || "").trim().toLowerCase();
     const active = String(d.status || "").trim().toLowerCase() === "active";
-
     if (!(role in RATES) || !active) {
       alert("Access Denied! Only active admins can enter sales.");
       history.back();
       return;
     }
-
     user = u;
     rate = RATES[role];
-    dept = d.department || "";
     $("soldBy").value = d.name || u.displayName || u.email || u.uid;
     $("roleView").value = (d.roleType || d.role || role) + " - " + rate + "%";
     $("status").classList.add("hidden");
     $("page").classList.remove("hidden");
     calc();
     loadList();
-
   } catch (e) {
     $("status").textContent = "Could not verify access: " + (e.code || "") + " " + e.message;
   }
@@ -197,25 +141,23 @@ async function loadList() {
     let sold = 0, comm = 0;
     const list = $("list");
     list.innerHTML = "";
-    if (!rows.length) list.innerHTML = '<p class="empty">No sales yet.</p>';
+    if (!rows.length) list.textContent = "No sales yet.";
     rows.forEach(r => {
       sold += r.totalSale || 0;
       comm += r.commission || 0;
       const div = document.createElement("div");
       div.className = "item";
       const t = document.createElement("div");
-      t.textContent = r.itemName + " x " + r.quantity + " @ " + money(r.sellPrice) + " = " + money(r.totalSale);
-      const sm = document.createElement("small");
-      sm.textContent = "To " + r.customerName + " | Commission " + money(r.commission) + " | " + r.dateText;
-      div.append(t, sm);
+      t.textContent = r.itemName + " x " + r.quantity + " = " + money(r.totalSale);
+      const s = document.createElement("small");
+      s.textContent = "To " + r.customerName + " | Commission " + money(r.commission || 0) + " | " + r.dateText;
+      div.append(t, s);
       list.appendChild(div);
     });
-    $("sumCount").textContent = rows.length;
     $("sumSold").textContent = money(sold);
     $("sumComm").textContent = money(comm);
   } catch (e) {
-    $("list").innerHTML = "";
-    alert("List not loaded: " + e.code + " - " + e.message);
+    $("list").textContent = "List not loaded: " + e.message;
   }
 }
 
@@ -223,50 +165,43 @@ $("saveSale").addEventListener("click", async () => {
   const customerName = $("customerName").value.trim();
   const itemName = $("itemName").value.trim();
   const quantity = num("quantity");
-  const buyPrice = num("buyPrice");
   const sellPrice = num("sellPrice");
 
   if (!customerName) return alert("Enter customer name");
   if (!itemName) return alert("Enter item name");
   if (!(quantity > 0)) return alert("Enter quantity");
-  if (!(buyPrice > 0)) return alert("Enter buying price");
-  if (!(sellPrice > 0)) return alert("Enter selling price");
+  if (!(sellPrice > 0)) return alert("Enter price");
   if (!user) return alert("Please login again");
 
-  const { total, profit, comm } = calc();
-  const now = new Date();
+  const { total, comm } = calc();
   const btn = $("saveSale");
   btn.disabled = true;
   btn.textContent = "Saving...";
   try {
+    const now = new Date();
     await addDoc(collection(db, "sales"), {
-      saleId: $("saleId").value,
       customerName,
-      customerMobile: $("customerMobile").value.trim(),
       itemName,
       quantity,
-      buyPrice,
       sellPrice,
       totalSale: total,
-      profit,
       commissionRate: rate,
       commission: comm,
-      remarks: $("remarks").value.trim(),
       soldBy: user.uid,
       soldByName: $("soldBy").value,
       soldByRole: role,
-      department: dept,
       createdAt: now.getTime(),
       dateText: now.toLocaleDateString("en-IN")
     });
     alert("Sale saved successfully!");
-    ["customerName","customerMobile","itemName","quantity","buyPrice","sellPrice","remarks"].forEach(id => $(id).value = "");
-    $("saleId").value = "SAL-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-    $("saleDate").value = new Date().toLocaleString("en-IN");
+    $("customerName").value = "";
+    $("itemName").value = "";
+    $("quantity").value = "1";
+    $("sellPrice").value = "";
     calc();
     loadList();
   } catch (e) {
-    alert("NOT saved: " + e.code + " - " + e.message);
+    alert("NOT saved: " + e.message);
   } finally {
     btn.disabled = false;
     btn.textContent = "Save Sale";
