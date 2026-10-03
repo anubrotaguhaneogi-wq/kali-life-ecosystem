@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1125,3 +1126,832 @@ function calculateGrandTotalOnly() {
 /* ==========================================
    EMI INFORMATION
 ==============
+<script type="module">
+
+/* ==========================================
+   FIREBASE - SALES SAVE
+========================================== */
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+};
+
+
+const firebaseApp =
+    initializeApp(firebaseConfig);
+
+const firebaseAuth =
+    getAuth(firebaseApp);
+
+const firestore =
+    getFirestore(firebaseApp);
+
+
+/* ==========================================
+   CURRENCY
+========================================== */
+
+function formatCurrency(amount) {
+
+    return "₹" +
+        Number(amount || 0)
+        .toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+}
+
+
+/* ==========================================
+   EMI INFORMATION
+========================================== */
+
+function updateEmiInfo(
+    grandTotal,
+    downPayment,
+    dueAmount
+) {
+
+    const type =
+        document.getElementById(
+            "paymentType"
+        ).value;
+
+    const box =
+        document.getElementById(
+            "emiInfo"
+        );
+
+    if (!box) return;
+
+
+    if (type === "full") {
+
+        box.innerText =
+            "Full payment selected. " +
+            "Total payable: " +
+            formatCurrency(grandTotal);
+
+        return;
+    }
+
+
+    if (type === "emi12") {
+
+        const weekly =
+            dueAmount / 12;
+
+        box.innerText =
+            "12 Week EMI | Down Payment: " +
+            formatCurrency(downPayment) +
+            " | Remaining: " +
+            formatCurrency(dueAmount) +
+            " | Approx. weekly payment: " +
+            formatCurrency(weekly);
+
+        return;
+    }
+
+
+    if (type === "emi24") {
+
+        const weekly =
+            dueAmount / 24;
+
+        box.innerText =
+            "24 Week EMI | Down Payment: " +
+            formatCurrency(downPayment) +
+            " | Remaining: " +
+            formatCurrency(dueAmount) +
+            " | Approx. weekly payment: " +
+            formatCurrency(weekly);
+
+        return;
+    }
+
+
+    box.innerText =
+        "Select an EMI option to see payment information.";
+
+}
+
+
+/* ==========================================
+   SAVE SALES
+========================================== */
+
+async function saveSale() {
+
+    const message =
+        document.getElementById("message");
+
+
+    function error(text) {
+
+        message.className = "error";
+        message.innerText = text;
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    function success(text) {
+
+        message.className = "success";
+        message.innerText = text;
+
+    }
+
+
+    const customerName =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+
+    const customerMobile =
+        document.getElementById(
+            "customerMobile"
+        ).value.trim();
+
+
+    const productName =
+        document.getElementById(
+            "productName"
+        ).value.trim();
+
+
+    const quantity =
+        parseFloat(
+            document.getElementById(
+                "quantity"
+            ).value
+        ) || 0;
+
+
+    const sellingPrice =
+        parseFloat(
+            document.getElementById(
+                "sellingPrice"
+            ).value
+        ) || 0;
+
+
+    const discount =
+        parseFloat(
+            document.getElementById(
+                "discount"
+            ).value
+        ) || 0;
+
+
+    const transportCharge =
+        parseFloat(
+            document.getElementById(
+                "transportCharge"
+            ).value
+        ) || 0;
+
+
+    const paymentType =
+        document.getElementById(
+            "paymentType"
+        ).value;
+
+
+    const paymentMethod =
+        document.getElementById(
+            "paymentMethod"
+        ).value;
+
+
+    const downPayment =
+        parseFloat(
+            document.getElementById(
+                "downPayment"
+            ).value
+        ) || 0;
+
+
+    const dueAmount =
+        parseFloat(
+            document.getElementById(
+                "dueAmount"
+            ).value
+        ) || 0;
+
+
+    const invoiceNumber =
+        document.getElementById(
+            "invoiceNumber"
+        ).value;
+
+
+    const customerId =
+        document.getElementById(
+            "customerId"
+        ).value;
+
+
+    const invoiceDateTime =
+        document.getElementById(
+            "invoiceDateTime"
+        ).value;
+
+
+    const remarks =
+        document.getElementById(
+            "remarks"
+        ).value.trim();
+
+
+    /* ======================================
+       VALIDATION
+    ====================================== */
+
+    if (!customerName) {
+
+        error("Please enter Customer Name.");
+
+        return;
+    }
+
+
+    if (!/^[0-9]{10}$/.test(customerMobile)) {
+
+        error(
+            "Please enter a valid 10 digit Customer Mobile number."
+        );
+
+        return;
+    }
+
+
+    if (!productName) {
+
+        error("Please enter Product Name.");
+
+        return;
+    }
+
+
+    if (!(quantity > 0)) {
+
+        error("Please enter Quantity.");
+
+        return;
+    }
+
+
+    if (!(sellingPrice > 0)) {
+
+        error("Please enter Selling Price.");
+
+        return;
+    }
+
+
+    if (discount < 0) {
+
+        error("Discount cannot be negative.");
+
+        return;
+    }
+
+
+    if (transportCharge < 0) {
+
+        error(
+            "Transportation Charge cannot be negative."
+        );
+
+        return;
+    }
+
+
+    if (!paymentType) {
+
+        error("Please select Payment Type.");
+
+        return;
+    }
+
+
+    if (!paymentMethod) {
+
+        error("Please select Payment Method.");
+
+        return;
+    }
+
+
+    /* ======================================
+       FINAL CALCULATION
+    ====================================== */
+
+    const productAmount =
+        quantity * sellingPrice;
+
+
+    const afterDiscount =
+        Math.max(
+            productAmount - discount,
+            0
+        );
+
+
+    const grandTotal =
+        afterDiscount +
+        transportCharge;
+
+
+    let finalDownPayment =
+        downPayment;
+
+
+    if (paymentType === "full") {
+
+        finalDownPayment =
+            grandTotal;
+
+    }
+
+
+    if (
+        paymentType === "emi12" ||
+        paymentType === "emi24"
+    ) {
+
+        const minimumDownPayment =
+            grandTotal * 0.40;
+
+
+        if (
+            finalDownPayment <
+            minimumDownPayment
+        ) {
+
+            error(
+                "For EMI, minimum 40% down payment is required. Minimum: " +
+                formatCurrency(
+                    minimumDownPayment
+                )
+            );
+
+            return;
+        }
+
+    }
+
+
+    if (
+        finalDownPayment >
+        grandTotal
+    ) {
+
+        error(
+            "Down Payment cannot be greater than Grand Total."
+        );
+
+        return;
+
+    }
+
+
+    const finalDue =
+        Math.max(
+            grandTotal -
+            finalDownPayment,
+            0
+        );
+
+
+    /* ======================================
+       FIREBASE LOGIN CHECK
+    ====================================== */
+
+    const currentUser =
+        firebaseAuth.currentUser;
+
+
+    if (!currentUser) {
+
+        error(
+            "Firebase login session not found. Please logout and login again."
+        );
+
+        return;
+    }
+
+
+    /* ======================================
+       ADMIN INFORMATION
+    ====================================== */
+
+    const soldBy =
+        localStorage.getItem(
+            "userName"
+        ) ||
+        localStorage.getItem(
+            "adminName"
+        ) ||
+        localStorage.getItem(
+            "userEmail"
+        ) ||
+        currentUser.email ||
+        currentUser.uid;
+
+
+    const soldByRole =
+        localStorage.getItem(
+            "userRole"
+        ) || "";
+
+
+    /* ======================================
+       BUTTON
+    ====================================== */
+
+    const button =
+        document.querySelector(
+            ".save-btn"
+        );
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "Saving...";
+
+
+    try {
+
+        const now =
+            new Date();
+
+
+        await addDoc(
+            collection(
+                firestore,
+                "sales"
+            ),
+            {
+
+                invoiceNumber:
+                    invoiceNumber,
+
+                invoiceDateTime:
+                    invoiceDateTime,
+
+                customerId:
+                    customerId,
+
+                customerName:
+                    customerName,
+
+                customerMobile:
+                    customerMobile,
+
+                productName:
+                    productName,
+
+                itemName:
+                    productName,
+
+                quantity:
+                    quantity,
+
+                sellingPrice:
+                    sellingPrice,
+
+                sellPrice:
+                    sellingPrice,
+
+                productAmount:
+                    productAmount,
+
+                discount:
+                    discount,
+
+                transportCharge:
+                    transportCharge,
+
+                transportation:
+                    transportCharge,
+
+                grandTotal:
+                    grandTotal,
+
+                totalSale:
+                    grandTotal,
+
+                paymentType:
+                    paymentType,
+
+                paymentMethod:
+                    paymentMethod,
+
+                downPayment:
+                    finalDownPayment,
+
+                dueAmount:
+                    finalDue,
+
+                remainingDue:
+                    finalDue,
+
+                remarks:
+                    remarks,
+
+                soldBy:
+                    currentUser.uid,
+
+                soldByName:
+                    soldBy,
+
+                soldByRole:
+                    soldByRole,
+
+                createdAt:
+                    Date.now(),
+
+                dateText:
+                    now.toLocaleDateString(
+                        "en-IN"
+                    ),
+
+                createdDate:
+                    now.toISOString()
+
+            }
+        );
+
+
+        success(
+            "✅ Sales saved successfully!"
+        );
+
+
+        /* ==================================
+           RESET FORM
+        ================================== */
+
+        resetSaleForm();
+
+
+        /* Keep success message */
+        message.className =
+            "success";
+
+        message.innerText =
+            "✅ Sales saved successfully! Invoice: " +
+            invoiceNumber;
+
+
+    }
+
+    catch (errorObject) {
+
+        console.error(
+            "SALES SAVE ERROR:",
+            errorObject
+        );
+
+
+        error(
+            "❌ Sales NOT saved: " +
+            (
+                errorObject.code ||
+                ""
+            ) +
+            " " +
+            (
+                errorObject.message ||
+                "Unknown error"
+            )
+        );
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.innerText =
+            "💾 Save Sales";
+
+    }
+
+}
+
+
+/* ==========================================
+   RESET SALES FORM
+========================================== */
+
+function resetSaleForm() {
+
+    document.getElementById(
+        "customerName"
+    ).value = "";
+
+
+    document.getElementById(
+        "customerMobile"
+    ).value = "";
+
+
+    document.getElementById(
+        "productName"
+    ).value = "";
+
+
+    document.getElementById(
+        "quantity"
+    ).value = "";
+
+
+    document.getElementById(
+        "sellingPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "discount"
+    ).value = "0";
+
+
+    document.getElementById(
+        "transportCharge"
+    ).value = "0";
+
+
+    document.getElementById(
+        "paymentType"
+    ).value = "";
+
+
+    document.getElementById(
+        "paymentMethod"
+    ).value = "";
+
+
+    document.getElementById(
+        "downPayment"
+    ).value = "";
+
+
+    document.getElementById(
+        "dueAmount"
+    ).value = "0.00";
+
+
+    document.getElementById(
+        "remarks"
+    ).value = "";
+
+
+    document.getElementById(
+        "productAmount"
+    ).innerText =
+        "₹0.00";
+
+
+    document.getElementById(
+        "discountDisplay"
+    ).innerText =
+        "₹0.00";
+
+
+    document.getElementById(
+        "transportDisplay"
+    ).innerText =
+        "₹0.00";
+
+
+    document.getElementById(
+        "grandTotalDisplay"
+    ).innerText =
+        "₹0.00";
+
+
+    document.getElementById(
+        "downPaymentDisplay"
+    ).innerText =
+        "₹0.00";
+
+
+    document.getElementById(
+        "dueDisplay"
+    ).innerText =
+        "₹0.00";
+
+
+    document.getElementById(
+        "emiInfo"
+    ).innerText =
+        "Select an EMI option to see payment information.";
+
+
+    document.getElementById(
+        "message"
+    ).innerText = "";
+
+
+    document.getElementById(
+        "message"
+    ).className = "";
+
+
+    initializeSaleForm();
+
+}
+
+
+/* ==========================================
+   FIREBASE AUTH STATE
+========================================== */
+
+onAuthStateChanged(
+    firebaseAuth,
+    function(currentUser) {
+
+        if (!currentUser) {
+
+            console.log(
+                "Firebase Auth user not available."
+            );
+
+            return;
+
+        }
+
+        console.log(
+            "Firebase Auth user:",
+            currentUser.uid
+        );
+
+    }
+);
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        initializeSaleForm();
+
+        calculateSale();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
