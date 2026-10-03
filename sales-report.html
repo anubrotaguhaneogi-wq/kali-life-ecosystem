@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Report - KALI LIFE ECOSYSTEM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#eef3f8;padding:15px;color:#0f172a;}
+.box{max-width:760px;margin:0 auto 15px;background:#fff;padding:20px;border-radius:12px;}
+.hidden{display:none !important;}
+h2{text-align:center;color:#166534;margin-bottom:15px;}
+label{display:block;font-weight:bold;margin:12px 0 4px;font-size:14px;}
+input,select{width:100%;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;background:#fff;}
+.sum{display:flex;gap:10px;margin:15px 0;}
+.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:10px;font-size:13px;}
+.sum b{display:block;font-size:16px;margin-top:3px;}
+h3{margin:20px 0 8px;font-size:16px;}
+.adm{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #dde3ea;font-size:14px;}
+.adm small{display:block;color:#5b6b63;margin-top:2px;}
+.adm .r{text-align:right;}
+.item{padding:12px 0;border-top:1px solid #dde3ea;}
+.item small{display:block;color:#5b6b63;margin-top:3px;line-height:1.5;}
+.acts{display:flex;gap:8px;margin-top:8px;}
+.acts button{flex:1;padding:9px;font-size:14px;font-weight:bold;color:#fff;border:0;border-radius:8px;}
+.edit{background:#166534;}
+.del{background:#b91c1c;}
+.back{display:block;text-align:center;padding:13px;background:#334155;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;}
+#status{text-align:center;padding:30px;color:#5b6b63;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:15px;}
+.modal .card{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:420px;max-height:90vh;overflow:auto;}
+.modal .row{display:flex;gap:10px;}
+.modal .row>div{flex:1;}
+.modal .btns{display:flex;gap:10px;margin-top:18px;}
+.modal .btns button{flex:1;padding:13px;font-size:16px;font-weight:bold;color:#fff;border:0;border-radius:8px;}
+.save{background:#166534;}
+.cancel{background:#64748b;}
+.modal button:disabled{opacity:.6;}
+</style>
+</head>
+<body>
+
+<div id="status" class="box">Loading...</div>
+
+<div class="box hidden" id="page">
+  <h2>Sales Report</h2>
+
+  <label for="filterAdmin">Admin</label>
+  <select id="filterAdmin"><option value="">All admins</option></select>
+
+  <div class="sum">
+    <div>Total Sold<b id="sumSold">₹0</b></div>
+    <div>Commission<b id="sumComm">₹0</b></div>
+    <div>Sales<b id="sumCount">0</b></div>
+  </div>
+
+  <h3>Admin-wise</h3>
+  <div id="adminList"></div>
+
+  <h3>All Sales</h3>
+  <div id="list">Loading...</div>
+
+  <a class="back" href="reports.html" style="margin-top:20px;">Back to Reports</a>
+</div>
+
+<div class="modal hidden" id="editModal">
+  <div class="card">
+    <h3 style="margin-top:0;">Edit Sale</h3>
+    <label for="eCustomer">Customer Name</label>
+    <input type="text" id="eCustomer" autocomplete="off">
+    <label for="eItem">Item Name</label>
+    <input type="text" id="eItem" autocomplete="off">
+    <div class="row">
+      <div>
+        <label for="eQty">Quantity</label>
+        <input type="number" id="eQty" inputmode="decimal">
+      </div>
+      <div>
+        <label for="ePrice">Price (per piece)</label>
+        <input type="number" id="ePrice" inputmode="decimal">
+      </div>
+    </div>
+    <div class="btns">
+      <button type="button" class="cancel" id="eCancel">Cancel</button>
+      <button type="button" class="save" id="eSave">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, getDoc, doc, updateDoc, deleteDoc }
+  from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+  measurementId: "G-LBEY0W7RX3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = (id) => document.getElementById(id);
+const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN");
+
+let isSuper = false;
+let sales = [];
+let editing = null;
+
+onAuthStateChanged(auth, async (u) => {
+  if (!u) { location.href = "login.html"; return; }
+  try {
+    const snap = await getDoc(doc(db, "users", u.uid));
+    const d = snap.exists() ? snap.data() : {};
+    const role = String(d.roleType || d.role || "").trim().toLowerCase();
+    const active = String(d.status || "").trim().toLowerCase() === "active";
+    if (!(role === "super admin" || role === "core admin") || !active) {
+      alert("Access Denied! Only Super Admin and Core Admin can view the sales report.");
+      history.back();
+      return;
+    }
+    isSuper = role === "super admin";
+    $("status").classList.add("hidden");
+    $("page").classList.remove("hidden");
+    await loadSales();
+  } catch (e) {
+    $("status").textContent = "Could not verify access: " + (e.code || "") + " " + e.message;
+  }
+});
+
+async function loadSales() {
+  try {
+    const snap = await getDocs(collection(db, "sales"));
+    sales = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    fillAdminFilter();
+    render();
+  } catch (e) {
+    $("list").textContent = "List not loaded: " + e.message;
+  }
+}
+
+function fillAdminFilter() {
+  const sel = $("filterAdmin");
+  const current = sel.value;
+  const seen = new Map();
+  sales.forEach(s => { if (s.soldBy) seen.set(s.soldBy, s.soldByName || s.soldBy); });
+  sel.innerHTML = "";
+  const all = document.createElement("option");
+  all.value = "";
+  all.textContent = "All admins";
+  sel.appendChild(all);
+  seen.forEach((name, uid) => {
+    const o = document.createElement("option");
+    o.value = uid;
+    o.textContent = name;
+    sel.appendChild(o);
+  });
+  sel.value = seen.has(current) ? current : "";
+}
+
+function render() {
+  const filter = $("filterAdmin").value;
+  const rows = filter ? sales.filter(s => s.soldBy === filter) : sales;
+
+  let sold = 0, comm = 0;
+  rows.forEach(r => { sold += r.totalSale || 0; comm += r.commission || 0; });
+  $("sumSold").textContent = money(sold);
+  $("sumComm").textContent = money(comm);
+  $("sumCount").textContent = rows.length;
+
+  // Admin-wise totals (always across all sales)
+  const by = new Map();
+  sales.forEach(s => {
+    const k = s.soldBy || "unknown";
+    if (!by.has(k)) by.set(k, { name: s.soldByName || k, role: s.soldByRole || "", sold: 0, comm: 0, n: 0 });
+    const a = by.get(k);
+    a.sold += s.totalSale || 0;
+    a.comm += s.commission || 0;
+    a.n += 1;
+  });
+  const al = $("adminList");
+  al.innerHTML = "";
+  if (!by.size) al.textContent = "No sales yet.";
+  by.forEach(a => {
+    const row = document.createElement("div");
+    row.className = "adm";
+    const l = document.createElement("div");
+    const n = document.createElement("b");
+    n.textContent = a.name;
+    const sm = document.createElement("small");
+    sm.textContent = a.role + " | " + a.n + " sales";
+    l.append(n, sm);
+    const r = document.createElement("div");
+    r.className = "r";
+    const t = document.createElement("b");
+    t.textContent = money(a.sold);
+    const c = document.createElement("small");
+    c.textContent = "Commission " + money(a.comm);
+    r.append(t, c);
+    row.append(l, r);
+    al.appendChild(row);
+  });
+
+  const list = $("list");
+  list.innerHTML = "";
+  if (!rows.length) { list.textContent = "No sales yet."; return; }
+  rows.forEach(r => {
+    const div = document.createElement("div");
+    div.className = "item";
+    const t = document.createElement("div");
+    t.textContent = r.itemName + " x " + r.quantity + " = " + money(r.totalSale || 0);
+    const s = document.createElement("small");
+    s.textContent = "To " + r.customerName + " | Sold by " + (r.soldByName || "-") +
+      " (" + (r.soldByRole || "-") + ") | Commission " + money(r.commission || 0) +
+      " | " + (r.dateText || "");
+    div.append(t, s);
+    if (isSuper) {
+      const acts = document.createElement("div");
+      acts.className = "acts";
+      const e = document.createElement("button");
+      e.className = "edit";
+      e.textContent = "Edit";
+      e.addEventListener("click", () => openEdit(r));
+      const d = document.createElement("button");
+      d.className = "del";
+      d.textContent = "Delete";
+      d.addEventListener("click", () => removeSale(r));
+      acts.append(e, d);
+      div.appendChild(acts);
+    }
+    list.appendChild(div);
+  });
+}
+
+$("filterAdmin").addEventListener("change", render);
+
+function openEdit(r) {
+  editing = r;
+  $("eCustomer").value = r.customerName || "";
+  $("eItem").value = r.itemName || "";
+  $("eQty").value = r.quantity || "";
+  $("ePrice").value = r.sellPrice || "";
+  $("editModal").classList.remove("hidden");
+}
+$("eCancel").addEventListener("click", () => {
+  editing = null;
+  $("editModal").classList.add("hidden");
+});
+
+$("eSave").addEventListener("click", async () => {
+  if (!isSuper || !editing) return;
+  const customerName = $("eCustomer").value.trim();
+  const itemName = $("eItem").value.trim();
+  const quantity = parseFloat($("eQty").value) || 0;
+  const sellPrice = parseFloat($("ePrice").value) || 0;
+  if (!customerName) return alert("Enter customer name");
+  if (!itemName) return alert("Enter item name");
+  if (!(quantity > 0)) return alert("Enter quantity");
+  if (!(sellPrice > 0)) return alert("Enter price");
+
+  const rate = editing.commissionRate || 0;
+  const totalSale = quantity * sellPrice;
+  const commission = totalSale * rate / 100;
+  const btn = $("eSave");
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+  try {
+    await updateDoc(doc(db, "sales", editing.id), {
+      customerName, itemName, quantity, sellPrice, totalSale, commission,
+      editedBy: auth.currentUser.uid,
+      editedAt: Date.now()
+    });
+    $("editModal").classList.add("hidden");
+    editing = null;
+    await loadSales();
+  } catch (e) {
+    alert("NOT saved: " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Save changes";
+  }
+});
+
+async function removeSale(r) {
+  if (!isSuper) return;
+  if (!confirm("Delete this sale? " + r.itemName + " x " + r.quantity + " for " + r.customerName)) return;
+  try {
+    await deleteDoc(doc(db, "sales", r.id));
+    await loadSales();
+  } catch (e) {
+    alert("NOT deleted: " + e.message);
+  }
+}
+</script>
+</body>
+  </html>
+  
