@@ -1,1952 +1,804 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sales Management - KALI LIFE ECOSYSTEM</title>
 
-<script src="auth.js"></script>
-
 <style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#222;
+}
+
+.header{
+    background:#16834b;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
+
+.header h1{
+    margin:0;
+    font-size:24px;
+}
+
+.header p{
+    margin:5px 0 0;
+    font-size:14px;
+}
+
+.container{
+    max-width:650px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.card h2{
+    margin-top:0;
+    color:#16834b;
+}
+
+.admin-box{
+    background:#eef8f2;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:18px;
+    font-size:14px;
+}
+
+label{
+    display:block;
+    margin-top:14px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#16834b;
+}
+
+.amount-box{
+    background:#f1f8f4;
+}
+
+button{
+    width:100%;
+    margin-top:22px;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    background:#16834b;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#116b3d;
+}
+
+button:disabled{
+    background:#999;
+}
+
+.message{
+    margin-top:15px;
+    padding:10px;
+    border-radius:8px;
+    text-align:center;
+    display:none;
+}
+
+.success{
+    display:block;
+    background:#e5f7eb;
+    color:#126b38;
+}
+
+.error{
+    display:block;
+    background:#fdeaea;
+    color:#b00020;
+}
+
+.sales-list{
+    margin-top:25px;
+}
+
+.sale-row{
+    background:#fff;
+    padding:15px;
+    margin-top:10px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.sale-row strong{
+    color:#16834b;
+}
+
+.loading{
+    text-align:center;
+    color:#777;
+    padding:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>KALI LIFE ECOSYSTEM</h1>
+    <p>Sales Management</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Sales Entry</h2>
+
+<div class="admin-box">
+    <strong>Admin:</strong>
+    <span id="adminName">Loading...</span>
+    <br>
+    <strong>Admin ID:</strong>
+    <span id="adminId">Loading...</span>
+</div>
+
+<label for="customerName">Customer Name</label>
+<input
+    type="text"
+    id="customerName"
+    placeholder="Enter customer name"
+>
+
+<label for="customerMobile">Customer Mobile</label>
+<input
+    type="tel"
+    id="customerMobile"
+    inputmode="numeric"
+    maxlength="10"
+    placeholder="Enter mobile number"
+>
+
+<label for="itemName">Item Name</label>
+<input
+    type="text"
+    id="itemName"
+    placeholder="Enter item name"
+>
+
+<label for="quantity">Quantity</label>
+<input
+    type="number"
+    id="quantity"
+    min="1"
+    step="1"
+    placeholder="Enter quantity"
+>
+
+<label for="rate">Rate</label>
+<input
+    type="number"
+    id="rate"
+    min="0"
+    step="0.01"
+    placeholder="Enter rate"
+>
+
+<label for="amount">Amount</label>
+<input
+    type="number"
+    id="amount"
+    class="amount-box"
+    readonly
+    placeholder="Automatically calculated"
+>
+
+<button id="saveButton">
+    Save Sale
+</button>
+
+<div id="message" class="message"></div>
+
+</div>
+
+<div class="card sales-list">
+
+<h2>My Sales</h2>
+
+<div id="salesList">
+    <div class="loading">Loading sales...</div>
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    doc,
+    query,
+    where
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
 
 /* ==========================================
-   KALI LIFE ECOSYSTEM
-   SALES MANAGEMENT
-   PREMIUM FINAL DESIGN
+   FIREBASE CONFIG
 ========================================== */
 
-* {
-    box-sizing: border-box;
-}
+const firebaseConfig = {
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+    measurementId: "G-LBEY0W7RX3"
+};
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f1f5f9;
-    color: #0f172a;
-}
 
 /* ==========================================
-   HEADER
+   FIREBASE INITIALIZE
 ========================================== */
 
-header {
-    background: #166534;
-    color: #ffffff;
-    padding: 23px 15px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-}
+const app = initializeApp(firebaseConfig);
 
-header h1 {
-    margin: 0;
-    font-size: 27px;
-}
+const auth = getAuth(app);
 
-header p {
-    margin: 7px 0 0;
-    font-size: 14px;
-    opacity: 0.9;
-}
+const db = getFirestore(app);
+
 
 /* ==========================================
-   CONTAINER
+   ELEMENTS
 ========================================== */
 
-.container {
-    width: 100%;
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 0 15px 40px;
-}
+const adminNameEl = document.getElementById("adminName");
+const adminIdEl = document.getElementById("adminId");
+
+const customerNameEl =
+    document.getElementById("customerName");
+
+const customerMobileEl =
+    document.getElementById("customerMobile");
+
+const itemNameEl =
+    document.getElementById("itemName");
+
+const quantityEl =
+    document.getElementById("quantity");
+
+const rateEl =
+    document.getElementById("rate");
+
+const amountEl =
+    document.getElementById("amount");
+
+const saveButton =
+    document.getElementById("saveButton");
+
+const messageEl =
+    document.getElementById("message");
+
+const salesListEl =
+    document.getElementById("salesList");
+
+
+let currentUser = null;
+let currentAdminName = "";
+
 
 /* ==========================================
-   FORM CARD
+   AMOUNT CALCULATION
 ========================================== */
 
-.form-card {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 7px 22px rgba(0,0,0,0.07);
+function calculateAmount(){
+
+    const quantity =
+        Number(quantityEl.value) || 0;
+
+    const rate =
+        Number(rateEl.value) || 0;
+
+    const amount =
+        quantity * rate;
+
+    amountEl.value =
+        amount > 0 ? amount.toFixed(2) : "";
 }
 
-/* ==========================================
-   TITLE
-========================================== */
+quantityEl.addEventListener(
+    "input",
+    calculateAmount
+);
 
-.section-title {
-    margin: 0 0 8px;
-    color: #166534;
-    font-size: 23px;
-}
+rateEl.addEventListener(
+    "input",
+    calculateAmount
+);
 
-.section-subtitle {
-    margin: 0 0 25px;
-    color: #64748b;
-    font-size: 14px;
-}
-
-/* ==========================================
-   FORM GRID
-========================================== */
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.form-group {
-    width: 100%;
-}
-
-.full-width {
-    grid-column: 1 / -1;
-}
-
-/* ==========================================
-   LABEL
-========================================== */
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    color: #334155;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* ==========================================
-   INPUT / SELECT / TEXTAREA
-========================================== */
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #0f172a;
-    font-size: 15px;
-    outline: none;
-    transition: 0.2s;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-}
-
-input[readonly] {
-    background: #f8fafc;
-    color: #475569;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-/* ==========================================
-   CALCULATION CARD
-========================================== */
-
-.summary-card {
-    margin-top: 28px;
-    padding: 22px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-}
-
-.summary-card h3 {
-    margin: 0 0 15px;
-    color: #166534;
-    font-size: 18px;
-}
-
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 10px 0;
-    border-bottom: 1px solid #e2e8f0;
-    color: #475569;
-    font-size: 14px;
-}
-
-.summary-row:last-child {
-    border-bottom: none;
-}
-
-.summary-total {
-    margin-top: 8px;
-    padding-top: 15px;
-    border-top: 2px solid #16a34a;
-    color: #166534;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.due-row {
-    color: #dc2626;
-    font-weight: bold;
-}
-
-/* ==========================================
-   EMI INFORMATION
-========================================== */
-
-.emi-info {
-    margin-top: 15px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    background: #f0fdf4;
-    color: #166534;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-/* ==========================================
-   BUTTON AREA
-========================================== */
-
-.button-group {
-    display: flex;
-    gap: 12px;
-    margin-top: 25px;
-}
-
-button {
-    border: none;
-    border-radius: 8px;
-    padding: 14px 18px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.save-btn {
-    flex: 1;
-    background: #16a34a;
-    color: #ffffff;
-}
-
-.save-btn:hover {
-    background: #15803d;
-}
-
-.reset-btn {
-    flex: 1;
-    background: #64748b;
-    color: #ffffff;
-}
-
-.reset-btn:hover {
-    background: #475569;
-}
-
-.back-btn {
-    display: block;
-    margin-top: 12px;
-    padding: 13px;
-    background: #334155;
-    color: #ffffff;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.back-btn:hover {
-    background: #1e293b;
-}
 
 /* ==========================================
    MESSAGE
 ========================================== */
 
-#message {
-    min-height: 20px;
-    margin-top: 15px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-}
+function showMessage(text,type){
 
-.success {
-    color: #15803d;
-}
+    messageEl.textContent = text;
 
-.error {
-    color: #dc2626;
-}
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 650px) {
-
-    header h1 {
-        font-size: 22px;
-    }
-
-    header p {
-        font-size: 13px;
-    }
-
-    .container {
-        margin-top: 20px;
-        padding: 0 10px 30px;
-    }
-
-    .form-card {
-        padding: 20px;
-        border-radius: 12px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .full-width {
-        grid-column: auto;
-    }
-
-    .button-group {
-        flex-direction: column;
-    }
-
-    .summary-row {
-        font-size: 13px;
-    }
-
-    .summary-total {
-        font-size: 17px;
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<script>
-
-/* ==========================================
-   LOGIN & ROLE ACCESS
-========================================== */
-
-checkLogin();
-
-const salesRole =
-    localStorage.getItem("userRole") || "";
-
-if (
-    salesRole !== "Super Admin" &&
-    salesRole !== "Core Admin"
-) {
-
-    alert("Access Denied!");
-
-    window.location.href =
-        "admin-dashboard.html";
-}
-
-</script>
-
-
-<header>
-
-    <h1>💰 KALI LIFE ECOSYSTEM</h1>
-
-    <p>Sales Management System</p>
-
-</header>
-
-
-<div class="container">
-
-<div class="form-card">
-
-    <h2 class="section-title">
-        Sales Entry
-    </h2>
-
-    <p class="section-subtitle">
-        Create a sales invoice and calculate payment,
-        discount, transport and outstanding amount.
-    </p>
-
-
-    <!-- ======================================
-         BASIC INFORMATION
-    ======================================= -->
-
-    <div class="form-grid">
-
-        <div class="form-group">
-
-            <label for="invoiceDateTime">
-                Invoice Date & Time
-            </label>
-
-            <input
-                type="datetime-local"
-                id="invoiceDateTime"
-                readonly>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="invoiceNumber">
-                Invoice Number
-            </label>
-
-            <input
-                type="text"
-                id="invoiceNumber"
-                readonly>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="customerId">
-                Customer ID
-            </label>
-
-            <input
-                type="text"
-                id="customerId"
-                readonly>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="customerName">
-                Customer Name
-            </label>
-
-            <input
-                type="text"
-                id="customerName"
-                placeholder="Enter Customer Name"
-                required>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="customerMobile">
-                Customer Mobile
-            </label>
-
-            <input
-                type="tel"
-                id="customerMobile"
-                placeholder="10 digit mobile number"
-                maxlength="10"
-                inputmode="numeric"
-                required>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="productName">
-                Product Name
-            </label>
-
-            <input
-                type="text"
-                id="productName"
-                placeholder="Enter Product Name"
-                required>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="quantity">
-                Quantity
-            </label>
-
-            <input
-                type="number"
-                id="quantity"
-                placeholder="Enter Quantity"
-                min="1"
-                step="1"
-                oninput="calculateSale()"
-                required>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="sellingPrice">
-                Selling Price / Piece
-            </label>
-
-            <input
-                type="number"
-                id="sellingPrice"
-                placeholder="Enter Selling Price"
-                min="0"
-                step="0.01"
-                oninput="calculateSale()"
-                required>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="discount">
-                Discount
-            </label>
-
-            <input
-                type="number"
-                id="discount"
-                placeholder="Enter Discount"
-                min="0"
-                step="0.01"
-                value="0"
-                oninput="calculateSale()">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="transportCharge">
-                Transportation Charge
-            </label>
-
-            <input
-                type="number"
-                id="transportCharge"
-                placeholder="Enter Transportation Charge"
-                min="0"
-                step="0.01"
-                value="0"
-                oninput="calculateSale()">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="paymentType">
-                Payment Type
-            </label>
-
-            <select id="paymentType" onchange="handlePaymentType()">
-
-                <option value="">
-                    -- Select Payment Type --
-                </option>
-
-                <option value="full">
-                    Full Payment
-                </option>
-
-                <option value="emi12">
-                    EMI - 12 Weeks
-                </option>
-
-                <option value="emi24">
-                    EMI - 24 Weeks
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="paymentMethod">
-                Payment Method
-            </label>
-
-            <select id="paymentMethod">
-
-                <option value="">
-                    -- Select Payment Method --
-                </option>
-
-                <option value="Cash">
-                    Cash
-                </option>
-
-                <option value="UPI">
-                    UPI
-                </option>
-
-                <option value="Bank Transfer">
-                    Bank Transfer
-                </option>
-
-                <option value="Credit">
-                    Credit / Due
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="downPayment">
-                Down Payment
-            </label>
-
-            <input
-                type="number"
-                id="downPayment"
-                placeholder="Minimum 40% for EMI"
-                min="0"
-                step="0.01"
-                oninput="calculateSale()">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="dueAmount">
-                Remaining Due
-            </label>
-
-            <input
-                type="number"
-                id="dueAmount"
-                readonly>
-
-        </div>
-
-
-        <div class="form-group full-width">
-
-            <label for="remarks">
-                Remarks
-            </label>
-
-            <textarea
-                id="remarks"
-                placeholder="Enter any additional remarks...">
-            </textarea>
-
-        </div>
-
-    </div>
-
-
-    <!-- ======================================
-         SALES SUMMARY
-    ======================================= -->
-
-    <div class="summary-card">
-
-        <h3>
-            Sales Calculation
-        </h3>
-
-
-        <div class="summary-row">
-
-            <span>
-                Product Amount
-            </span>
-
-            <strong id="productAmount">
-                ₹0.00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row">
-
-            <span>
-                Discount
-            </span>
-
-            <strong id="discountDisplay">
-                ₹0.00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row">
-
-            <span>
-                Transportation
-            </span>
-
-            <strong id="transportDisplay">
-                ₹0.00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row summary-total">
-
-            <span>
-                GRAND TOTAL
-            </span>
-
-            <strong id="grandTotalDisplay">
-                ₹0.00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row">
-
-            <span>
-                Down Payment
-            </span>
-
-            <strong id="downPaymentDisplay">
-                ₹0.00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row due-row">
-
-            <span>
-                REMAINING DUE
-            </span>
-
-            <strong id="dueDisplay">
-                ₹0.00
-            </strong>
-
-        </div>
-
-
-        <div
-            id="emiInfo"
-            class="emi-info">
-
-            Select an EMI option to see payment information.
-
-        </div>
-
-    </div>
-
-
-    <div id="message"></div>
-
-
-    <!-- ======================================
-         BUTTONS
-    ======================================= -->
-
-    <div class="button-group">
-
-        <button
-            type="button"
-            class="save-btn"
-            onclick="saveSale()">
-
-            💾 Save Sales
-
-        </button>
-
-
-        <button
-            type="button"
-            class="reset-btn"
-            onclick="resetSaleForm()">
-
-            🔄 Reset
-
-        </button>
-
-    </div>
-
-
-    <a
-        class="back-btn"
-        href="admin-dashboard.html">
-
-        ⬅ Back to Dashboard
-
-    </a>
-
-</div>
-
-</div>
-
-
-<script>
-
-/* ==========================================
-   GENERATE INVOICE NUMBER
-========================================== */
-
-function generateInvoiceNumber() {
-
-    const now = new Date();
-
-    const datePart =
-        now.getFullYear() +
-        String(now.getMonth() + 1).padStart(2, "0") +
-        String(now.getDate()).padStart(2, "0");
-
-    const sales =
-        JSON.parse(
-            localStorage.getItem("sales")
-        ) || [];
-
-    const serial =
-        String(sales.length + 1)
-        .padStart(4, "0");
-
-    return "KLE-" +
-        datePart +
-        "-" +
-        serial;
-}
-
-
-/* ==========================================
-   GENERATE CUSTOMER ID
-========================================== */
-
-function generateCustomerId() {
-
-    return "CUS-" +
-        Date.now()
-        .toString()
-        .slice(-6);
+    messageEl.className =
+        "message " + type;
 
 }
 
 
 /* ==========================================
-   SET DATE & IDS
+   AUTHENTICATION
 ========================================== */
 
-function initializeSaleForm() {
+onAuthStateChanged(auth, async (user) => {
 
-    const now = new Date();
+    if(!user){
 
-    const localDateTime =
-        new Date(
-            now.getTime() -
-            now.getTimezoneOffset() * 60000
-        )
-        .toISOString()
-        .slice(0, 16);
+        window.location.href = "login.html";
 
-    document.getElementById(
-        "invoiceDateTime"
-    ).value = localDateTime;
+        return;
+    }
 
-    document.getElementById(
-        "invoiceNumber"
-    ).value =
-        generateInvoiceNumber();
+    try{
 
-    document.getElementById(
-        "customerId"
-    ).value =
-        generateCustomerId();
+        currentUser = user;
 
-}
+        adminIdEl.textContent =
+            user.uid;
 
+        const userRef =
+            doc(db,"users",user.uid);
 
-/* ==========================================
-   CALCULATE SALE
-========================================== */
+        const userSnap =
+            await getDoc(userRef);
 
-function calculateSale() {
+        let userData = {};
 
-    const quantity =
-        parseFloat(
-            document.getElementById(
-                "quantity"
-            ).value
-        ) || 0;
+        if(userSnap.exists()){
 
-    const sellingPrice =
-        parseFloat(
-            document.getElementById(
-                "sellingPrice"
-            ).value
-        ) || 0;
+            userData =
+                userSnap.data();
 
-    const discount =
-        parseFloat(
-            document.getElementById(
-                "discount"
-            ).value
-        ) || 0;
+        }
 
-    const transport =
-        parseFloat(
-            document.getElementById(
-                "transportCharge"
-            ).value
-        ) || 0;
+        currentAdminName =
+            userData.name ||
+            user.displayName ||
+            user.email ||
+            user.uid;
 
-    const downPayment =
-        parseFloat(
-            document.getElementById(
-                "downPayment"
-            ).value
-        ) || 0;
+        adminNameEl.textContent =
+            currentAdminName;
 
+        await loadMySales();
 
-    const productAmount =
-        quantity * sellingPrice;
+    }
+    catch(error){
 
+        console.error(error);
 
-    const afterDiscount =
-        Math.max(
-            productAmount - discount,
-            0
+        showMessage(
+            "Unable to load admin information.",
+            "error"
         );
 
-
-    const grandTotal =
-        afterDiscount + transport;
-
-
-    let actualDownPayment =
-        downPayment;
-
-
-    if (
-        document.getElementById(
-            "paymentType"
-        ).value === "full"
-    ) {
-
-        actualDownPayment =
-            grandTotal;
-
-        document.getElementById(
-            "downPayment"
-        ).value =
-            grandTotal.toFixed(2);
-
     }
 
-
-    const dueAmount =
-        Math.max(
-            grandTotal -
-            actualDownPayment,
-            0
-        );
-
-
-    document.getElementById(
-        "dueAmount"
-    ).value =
-        dueAmount.toFixed(2);
-
-
-    document.getElementById(
-        "productAmount"
-    ).innerText =
-        formatCurrency(productAmount);
-
-
-    document.getElementById(
-        "discountDisplay"
-    ).innerText =
-        formatCurrency(discount);
-
-
-    document.getElementById(
-        "transportDisplay"
-    ).innerText =
-        formatCurrency(transport);
-
-
-    document.getElementById(
-        "grandTotalDisplay"
-    ).innerText =
-        formatCurrency(grandTotal);
-
-
-    document.getElementById(
-        "downPaymentDisplay"
-    ).innerText =
-        formatCurrency(actualDownPayment);
-
-
-    document.getElementById(
-        "dueDisplay"
-    ).innerText =
-        formatCurrency(dueAmount);
-
-
-    updateEmiInfo(
-        grandTotal,
-        actualDownPayment,
-        dueAmount
-    );
-
-}
+});
 
 
 /* ==========================================
-   PAYMENT TYPE
+   SAVE SALE
 ========================================== */
 
-function handlePaymentType() {
-
-    const type =
-        document.getElementById(
-            "paymentType"
-        ).value;
-
-
-    if (type === "full") {
-
-        const total =
-            calculateGrandTotalOnly();
-
-        document.getElementById(
-            "downPayment"
-        ).value =
-            total.toFixed(2);
-
-    }
-
-
-    if (
-        type === "emi12" ||
-        type === "emi24"
-    ) {
-
-        const total =
-            calculateGrandTotalOnly();
-
-        const minimum =
-            total * 0.40;
-
-        document.getElementById(
-            "downPayment"
-        ).value =
-            minimum.toFixed(2);
-
-    }
-
-
-    calculateSale();
-
-}
-
-
-/* ==========================================
-   GRAND TOTAL ONLY
-========================================== */
-
-function calculateGrandTotalOnly() {
-
-    const quantity =
-        parseFloat(
-            document.getElementById(
-                "quantity"
-            ).value
-        ) || 0;
-
-    const price =
-        parseFloat(
-            document.getElementById(
-                "sellingPrice"
-            ).value
-        ) || 0;
-
-    const discount =
-        parseFloat(
-            document.getElementById(
-                "discount"
-            ).value
-        ) || 0;
-
-    const transport =
-        parseFloat(
-            document.getElementById(
-                "transportCharge"
-            ).value
-        ) || 0;
-
-
-    return Math.max(
-        quantity * price -
-        discount,
-        0
-    ) + transport;
-
-}
-
-
-/* ==========================================
-   EMI INFORMATION
-==============
-<script type="module">
-
-/* ==========================================
-   FIREBASE - SALES SAVE
-========================================== */
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-import {
-    getAuth,
-    onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-import {
-    getFirestore,
-    collection,
-    addDoc
-} from
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-
-    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-
-    authDomain:
-        "kali-life-ecosystem.firebaseapp.com",
-
-    projectId:
-        "kali-life-ecosystem",
-
-    storageBucket:
-        "kali-life-ecosystem.firebasestorage.app",
-
-    messagingSenderId:
-        "734170546737",
-
-    appId:
-        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-
-    measurementId:
-        "G-LBEY0W7RX3"
-};
-
-
-const firebaseApp =
-    initializeApp(firebaseConfig);
-
-const firebaseAuth =
-    getAuth(firebaseApp);
-
-const firestore =
-    getFirestore(firebaseApp);
-
-
-/* ==========================================
-   CURRENCY
-========================================== */
-
-function formatCurrency(amount) {
-
-    return "₹" +
-        Number(amount || 0)
-        .toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-
-}
-
-
-/* ==========================================
-   EMI INFORMATION
-========================================== */
-
-function updateEmiInfo(
-    grandTotal,
-    downPayment,
-    dueAmount
-) {
-
-    const type =
-        document.getElementById(
-            "paymentType"
-        ).value;
-
-    const box =
-        document.getElementById(
-            "emiInfo"
-        );
-
-    if (!box) return;
-
-
-    if (type === "full") {
-
-        box.innerText =
-            "Full payment selected. " +
-            "Total payable: " +
-            formatCurrency(grandTotal);
-
-        return;
-    }
-
-
-    if (type === "emi12") {
-
-        const weekly =
-            dueAmount / 12;
-
-        box.innerText =
-            "12 Week EMI | Down Payment: " +
-            formatCurrency(downPayment) +
-            " | Remaining: " +
-            formatCurrency(dueAmount) +
-            " | Approx. weekly payment: " +
-            formatCurrency(weekly);
-
-        return;
-    }
-
-
-    if (type === "emi24") {
-
-        const weekly =
-            dueAmount / 24;
-
-        box.innerText =
-            "24 Week EMI | Down Payment: " +
-            formatCurrency(downPayment) +
-            " | Remaining: " +
-            formatCurrency(dueAmount) +
-            " | Approx. weekly payment: " +
-            formatCurrency(weekly);
-
-        return;
-    }
-
-
-    box.innerText =
-        "Select an EMI option to see payment information.";
-
-}
-
-
-/* ==========================================
-   SAVE SALES
-========================================== */
-
-async function saveSale() {
-
-    const message =
-        document.getElementById("message");
-
-
-    function error(text) {
-
-        message.className = "error";
-        message.innerText = text;
-
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth"
-        });
-
-    }
-
-
-    function success(text) {
-
-        message.className = "success";
-        message.innerText = text;
-
-    }
-
-
-    const customerName =
-        document.getElementById(
-            "customerName"
-        ).value.trim();
-
-
-    const customerMobile =
-        document.getElementById(
-            "customerMobile"
-        ).value.trim();
-
-
-    const productName =
-        document.getElementById(
-            "productName"
-        ).value.trim();
-
-
-    const quantity =
-        parseFloat(
-            document.getElementById(
-                "quantity"
-            ).value
-        ) || 0;
-
-
-    const sellingPrice =
-        parseFloat(
-            document.getElementById(
-                "sellingPrice"
-            ).value
-        ) || 0;
-
-
-    const discount =
-        parseFloat(
-            document.getElementById(
-                "discount"
-            ).value
-        ) || 0;
-
-
-    const transportCharge =
-        parseFloat(
-            document.getElementById(
-                "transportCharge"
-            ).value
-        ) || 0;
-
-
-    const paymentType =
-        document.getElementById(
-            "paymentType"
-        ).value;
-
-
-    const paymentMethod =
-        document.getElementById(
-            "paymentMethod"
-        ).value;
-
-
-    const downPayment =
-        parseFloat(
-            document.getElementById(
-                "downPayment"
-            ).value
-        ) || 0;
-
-
-    const dueAmount =
-        parseFloat(
-            document.getElementById(
-                "dueAmount"
-            ).value
-        ) || 0;
-
-
-    const invoiceNumber =
-        document.getElementById(
-            "invoiceNumber"
-        ).value;
-
-
-    const customerId =
-        document.getElementById(
-            "customerId"
-        ).value;
-
-
-    const invoiceDateTime =
-        document.getElementById(
-            "invoiceDateTime"
-        ).value;
-
-
-    const remarks =
-        document.getElementById(
-            "remarks"
-        ).value.trim();
-
-
-    /* ======================================
-       VALIDATION
-    ====================================== */
-
-    if (!customerName) {
-
-        error("Please enter Customer Name.");
-
-        return;
-    }
-
-
-    if (!/^[0-9]{10}$/.test(customerMobile)) {
-
-        error(
-            "Please enter a valid 10 digit Customer Mobile number."
-        );
-
-        return;
-    }
-
-
-    if (!productName) {
-
-        error("Please enter Product Name.");
-
-        return;
-    }
-
-
-    if (!(quantity > 0)) {
-
-        error("Please enter Quantity.");
-
-        return;
-    }
-
-
-    if (!(sellingPrice > 0)) {
-
-        error("Please enter Selling Price.");
-
-        return;
-    }
-
-
-    if (discount < 0) {
-
-        error("Discount cannot be negative.");
-
-        return;
-    }
-
-
-    if (transportCharge < 0) {
-
-        error(
-            "Transportation Charge cannot be negative."
-        );
-
-        return;
-    }
-
-
-    if (!paymentType) {
-
-        error("Please select Payment Type.");
-
-        return;
-    }
-
-
-    if (!paymentMethod) {
-
-        error("Please select Payment Method.");
-
-        return;
-    }
-
-
-    /* ======================================
-       FINAL CALCULATION
-    ====================================== */
-
-    const productAmount =
-        quantity * sellingPrice;
-
-
-    const afterDiscount =
-        Math.max(
-            productAmount - discount,
-            0
-        );
-
-
-    const grandTotal =
-        afterDiscount +
-        transportCharge;
-
-
-    let finalDownPayment =
-        downPayment;
-
-
-    if (paymentType === "full") {
-
-        finalDownPayment =
-            grandTotal;
-
-    }
-
-
-    if (
-        paymentType === "emi12" ||
-        paymentType === "emi24"
-    ) {
-
-        const minimumDownPayment =
-            grandTotal * 0.40;
-
-
-        if (
-            finalDownPayment <
-            minimumDownPayment
-        ) {
-
-            error(
-                "For EMI, minimum 40% down payment is required. Minimum: " +
-                formatCurrency(
-                    minimumDownPayment
-                )
+saveButton.addEventListener(
+    "click",
+    async () => {
+
+        if(!currentUser){
+
+            showMessage(
+                "Admin login required.",
+                "error"
             );
 
             return;
         }
 
-    }
 
+        const customerName =
+            customerNameEl.value.trim();
 
-    if (
-        finalDownPayment >
-        grandTotal
-    ) {
+        const customerMobile =
+            customerMobileEl.value.trim();
 
-        error(
-            "Down Payment cannot be greater than Grand Total."
-        );
+        const itemName =
+            itemNameEl.value.trim();
 
-        return;
+        const quantity =
+            Number(quantityEl.value);
 
-    }
+        const rate =
+            Number(rateEl.value);
 
+        const amount =
+            quantity * rate;
 
-    const finalDue =
-        Math.max(
-            grandTotal -
-            finalDownPayment,
-            0
-        );
 
+        /* VALIDATION */
 
-    /* ======================================
-       FIREBASE LOGIN CHECK
-    ====================================== */
+        if(!customerName){
 
-    const currentUser =
-        firebaseAuth.currentUser;
-
-
-    if (!currentUser) {
-
-        error(
-            "Firebase login session not found. Please logout and login again."
-        );
-
-        return;
-    }
-
-
-    /* ======================================
-       ADMIN INFORMATION
-    ====================================== */
-
-    const soldBy =
-        localStorage.getItem(
-            "userName"
-        ) ||
-        localStorage.getItem(
-            "adminName"
-        ) ||
-        localStorage.getItem(
-            "userEmail"
-        ) ||
-        currentUser.email ||
-        currentUser.uid;
-
-
-    const soldByRole =
-        localStorage.getItem(
-            "userRole"
-        ) || "";
-
-
-    /* ======================================
-       BUTTON
-    ====================================== */
-
-    const button =
-        document.querySelector(
-            ".save-btn"
-        );
-
-
-    button.disabled = true;
-
-    button.innerText =
-        "Saving...";
-
-
-    try {
-
-        const now =
-            new Date();
-
-
-        await addDoc(
-            collection(
-                firestore,
-                "sales"
-            ),
-            {
-
-                invoiceNumber:
-                    invoiceNumber,
-
-                invoiceDateTime:
-                    invoiceDateTime,
-
-                customerId:
-                    customerId,
-
-                customerName:
-                    customerName,
-
-                customerMobile:
-                    customerMobile,
-
-                productName:
-                    productName,
-
-                itemName:
-                    productName,
-
-                quantity:
-                    quantity,
-
-                sellingPrice:
-                    sellingPrice,
-
-                sellPrice:
-                    sellingPrice,
-
-                productAmount:
-                    productAmount,
-
-                discount:
-                    discount,
-
-                transportCharge:
-                    transportCharge,
-
-                transportation:
-                    transportCharge,
-
-                grandTotal:
-                    grandTotal,
-
-                totalSale:
-                    grandTotal,
-
-                paymentType:
-                    paymentType,
-
-                paymentMethod:
-                    paymentMethod,
-
-                downPayment:
-                    finalDownPayment,
-
-                dueAmount:
-                    finalDue,
-
-                remainingDue:
-                    finalDue,
-
-                remarks:
-                    remarks,
-
-                soldBy:
-                    currentUser.uid,
-
-                soldByName:
-                    soldBy,
-
-                soldByRole:
-                    soldByRole,
-
-                createdAt:
-                    Date.now(),
-
-                dateText:
-                    now.toLocaleDateString(
-                        "en-IN"
-                    ),
-
-                createdDate:
-                    now.toISOString()
-
-            }
-        );
-
-
-        success(
-            "✅ Sales saved successfully!"
-        );
-
-
-        /* ==================================
-           RESET FORM
-        ================================== */
-
-        resetSaleForm();
-
-
-        /* Keep success message */
-        message.className =
-            "success";
-
-        message.innerText =
-            "✅ Sales saved successfully! Invoice: " +
-            invoiceNumber;
-
-
-    }
-
-    catch (errorObject) {
-
-        console.error(
-            "SALES SAVE ERROR:",
-            errorObject
-        );
-
-
-        error(
-            "❌ Sales NOT saved: " +
-            (
-                errorObject.code ||
-                ""
-            ) +
-            " " +
-            (
-                errorObject.message ||
-                "Unknown error"
-            )
-        );
-
-    }
-
-    finally {
-
-        button.disabled = false;
-
-        button.innerText =
-            "💾 Save Sales";
-
-    }
-
-}
-
-
-/* ==========================================
-   RESET SALES FORM
-========================================== */
-
-function resetSaleForm() {
-
-    document.getElementById(
-        "customerName"
-    ).value = "";
-
-
-    document.getElementById(
-        "customerMobile"
-    ).value = "";
-
-
-    document.getElementById(
-        "productName"
-    ).value = "";
-
-
-    document.getElementById(
-        "quantity"
-    ).value = "";
-
-
-    document.getElementById(
-        "sellingPrice"
-    ).value = "";
-
-
-    document.getElementById(
-        "discount"
-    ).value = "0";
-
-
-    document.getElementById(
-        "transportCharge"
-    ).value = "0";
-
-
-    document.getElementById(
-        "paymentType"
-    ).value = "";
-
-
-    document.getElementById(
-        "paymentMethod"
-    ).value = "";
-
-
-    document.getElementById(
-        "downPayment"
-    ).value = "";
-
-
-    document.getElementById(
-        "dueAmount"
-    ).value = "0.00";
-
-
-    document.getElementById(
-        "remarks"
-    ).value = "";
-
-
-    document.getElementById(
-        "productAmount"
-    ).innerText =
-        "₹0.00";
-
-
-    document.getElementById(
-        "discountDisplay"
-    ).innerText =
-        "₹0.00";
-
-
-    document.getElementById(
-        "transportDisplay"
-    ).innerText =
-        "₹0.00";
-
-
-    document.getElementById(
-        "grandTotalDisplay"
-    ).innerText =
-        "₹0.00";
-
-
-    document.getElementById(
-        "downPaymentDisplay"
-    ).innerText =
-        "₹0.00";
-
-
-    document.getElementById(
-        "dueDisplay"
-    ).innerText =
-        "₹0.00";
-
-
-    document.getElementById(
-        "emiInfo"
-    ).innerText =
-        "Select an EMI option to see payment information.";
-
-
-    document.getElementById(
-        "message"
-    ).innerText = "";
-
-
-    document.getElementById(
-        "message"
-    ).className = "";
-
-
-    initializeSaleForm();
-
-}
-
-
-/* ==========================================
-   FIREBASE AUTH STATE
-========================================== */
-
-onAuthStateChanged(
-    firebaseAuth,
-    function(currentUser) {
-
-        if (!currentUser) {
-
-            console.log(
-                "Firebase Auth user not available."
+            showMessage(
+                "Customer Name is required.",
+                "error"
             );
 
             return;
+        }
+
+        if(!customerMobile){
+
+            showMessage(
+                "Customer Mobile is required.",
+                "error"
+            );
+
+            return;
+        }
+
+        if(!itemName){
+
+            showMessage(
+                "Item Name is required.",
+                "error"
+            );
+
+            return;
+        }
+
+        if(!quantity || quantity <= 0){
+
+            showMessage(
+                "Enter a valid quantity.",
+                "error"
+            );
+
+            return;
+        }
+
+        if(!rate || rate < 0){
+
+            showMessage(
+                "Enter a valid rate.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        saveButton.disabled = true;
+
+        saveButton.textContent =
+            "Saving...";
+
+
+        try{
+
+            const now = new Date();
+
+
+            /* ======================================
+               SAVE TO FIRESTORE
+            ====================================== */
+
+            await addDoc(
+                collection(db,"sales"),
+                {
+
+                    adminId:
+                        currentUser.uid,
+
+                    adminName:
+                        currentAdminName,
+
+                    customerName:
+                        customerName,
+
+                    customerMobile:
+                        customerMobile,
+
+                    itemName:
+                        itemName,
+
+                    quantity:
+                        quantity,
+
+                    rate:
+                        rate,
+
+                    amount:
+                        amount,
+
+                    createdAt:
+                        now.getTime(),
+
+                    dateText:
+                        now.toLocaleDateString(
+                            "en-IN"
+                        )
+
+                }
+            );
+
+
+            showMessage(
+                "Sale saved successfully.",
+                "success"
+            );
+
+
+            /* CLEAR FORM */
+
+            customerNameEl.value = "";
+
+            customerMobileEl.value = "";
+
+            itemNameEl.value = "";
+
+            quantityEl.value = "";
+
+            rateEl.value = "";
+
+            amountEl.value = "";
+
+
+            await loadMySales();
+
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            showMessage(
+                "Sale could not be saved. Check Firebase.",
+                "error"
+            );
 
         }
 
-        console.log(
-            "Firebase Auth user:",
-            currentUser.uid
-        );
+
+        saveButton.disabled = false;
+
+        saveButton.textContent =
+            "Save Sale";
 
     }
 );
 
 
 /* ==========================================
-   INITIALIZE
+   LOAD ADMIN SALES
 ========================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+async function loadMySales(){
 
-        initializeSaleForm();
+    if(!currentUser){
 
-        calculateSale();
+        return;
+    }
+
+
+    salesListEl.innerHTML =
+        '<div class="loading">Loading sales...</div>';
+
+
+    try{
+
+        const salesQuery =
+            query(
+                collection(db,"sales"),
+                where(
+                    "adminId",
+                    "==",
+                    currentUser.uid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(salesQuery);
+
+
+        if(snapshot.empty){
+
+            salesListEl.innerHTML =
+                '<div class="loading">No sales found.</div>';
+
+            return;
+        }
+
+
+        const sales = [];
+
+
+        snapshot.forEach(
+            (saleDoc) => {
+
+                sales.push(
+                    saleDoc.data()
+                );
+
+            }
+        );
+
+
+        sales.sort(
+            (a,b) =>
+                (b.createdAt || 0) -
+                (a.createdAt || 0)
+        );
+
+
+        salesListEl.innerHTML = "";
+
+
+        sales.forEach(
+            (sale) => {
+
+                const row =
+                    document.createElement("div");
+
+                row.className =
+                    "sale-row";
+
+
+                row.innerHTML = `
+
+                    <strong>
+                        ${escapeHtml(
+                            sale.itemName
+                        )}
+                    </strong>
+
+                    <br>
+
+                    Customer:
+                    ${escapeHtml(
+                        sale.customerName
+                    )}
+
+                    <br>
+
+                    Mobile:
+                    ${escapeHtml(
+                        sale.customerMobile
+                    )}
+
+                    <br>
+
+                    Quantity:
+                    ${sale.quantity}
+
+                    × ₹${Number(
+                        sale.rate
+                    ).toFixed(2)}
+
+                    <br>
+
+                    <strong>
+                        Amount:
+                        ₹${Number(
+                            sale.amount
+                        ).toFixed(2)}
+                    </strong>
+
+                    <br>
+
+                    Date:
+                    ${escapeHtml(
+                        sale.dateText || ""
+                    )}
+
+                `;
+
+
+                salesListEl.appendChild(row);
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        salesListEl.innerHTML =
+            '<div class="loading">Unable to load sales.</div>';
+
+    }
+
+}
+
+
+/* ==========================================
+   SECURITY
+   ========================================== */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==========================================
+   MOBILE NUMBER
+========================================== */
+
+customerMobileEl.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value
+            .replace(/\D/g,"")
+            .slice(0,10);
 
     }
 );
