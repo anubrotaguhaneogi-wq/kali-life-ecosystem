@@ -293,8 +293,8 @@ import {
     getAuth,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
-    signOut
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    deleteUser
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";থ
 
 import {
     getFirestore,
@@ -569,13 +569,13 @@ async function createAdmin() {
     btn.disabled = true;
     let newUser = null;
 
-    try {
-        btn.textContent = "Super Admin যাচাই হচ্ছে...
-      // ==========================================
-      // CREATE FIREBASE AUTH USER
-      // ==========================================
+try {
 
-      btn.textContent = "Admin তৈরি হচ্ছে...";
+    // ==========================================
+    // CREATE FIREBASE AUTH USER
+    // ==========================================
+
+    btn.textContent = "Admin তৈরি হচ্ছে..."; তৈরি
 
       // নতুন Admin-এর Firebase Authentication account তৈরি
       const cred = await createUserWithEmailAndPassword(
@@ -682,3 +682,7 @@ await setDoc(
       btn.textContent = "Create Admin";
 
         }
+    }
+</script>
+</body>
+</html>
