@@ -613,7 +613,9 @@ async function createAdmin() {
       // SAVE ADMIN PROFILE TO FIRESTORE
       // ==========================================
 
-      await setDoc(doc(db, USERS, newUser.uid), {
+await setDoc(
+    doc(db, USERS, newUser.uid),
+    {
         name: name,
         email: email,
         mobile: mobile,
@@ -622,10 +624,10 @@ async function createAdmin() {
         department: department || "",
         reportsTo: reportsToUid || "",
         status: status || "Active",
-
         createdAt: serverTimestamp(),
         createdBy: currentUser.uid
-      });
+    }
+);
 
       // ==========================================
       // SUCCESS
