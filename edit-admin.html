@@ -288,7 +288,8 @@ function fillForm() {
     $("name").value = editingData.name || "";
     $("email").value = editingData.email || "";
     $("mobile").value = editingData.mobile || "";
-    $("role").value = editingData.roleType === DEPT ? DEPT : CORE;
+    const savedRole = editingData.roleType || editingData.role || "";
+$("role").value = savedRole === DEPT ? DEPT : CORE;
     $("department").value = editingData.department || "";
     $("reportsTo").value = editingData.reportsTo || "";
     $("status").value = isActive(editingData) ? "Active" : "Inactive";
