@@ -571,3 +571,112 @@ async function createAdmin() {
 
     try {
         btn.textContent = "Super Admin যাচাই হচ্ছে...
+      // ==========================================
+      // CREATE FIREBASE AUTH USER
+      // ==========================================
+
+      btn.textContent = "Admin তৈরি হচ্ছে...";
+
+      // নতুন Admin-এর Firebase Authentication account তৈরি
+      const cred = await createUserWithEmailAndPassword(
+        secondaryAuth,
+        email,
+        password
+      );
+
+      newUser = cred.user;
+
+      // ==========================================
+      // DUPLICATE MOBILE CHECK
+      // ==========================================
+
+      const mobileSnap = await getDocs(
+        query(
+          collection(db, USERS),
+          where("mobile", "==", mobile)
+        )
+      );
+
+      if (!mobileSnap.empty) {
+        // Firestore-এ একই mobile থাকলে নতুন Auth account সরিয়ে দিই
+        try {
+          await deleteUser(newUser);
+        } catch (e) {
+          console.error("Duplicate mobile cleanup error:", e);
+        }
+
+        newUser = null;
+        return showMsg(msg, "এই Mobile Number আগে থেকেই ব্যবহার করা হয়েছে।", "error");
+      }
+
+      // ==========================================
+      // SAVE ADMIN PROFILE TO FIRESTORE
+      // ==========================================
+
+      await setDoc(doc(db, USERS, newUser.uid), {
+        name: name,
+        email: email,
+        mobile: mobile,
+        role: role,
+        roleType: role,
+        department: department || "",
+        reportsTo: reportsToUid || "",
+        status: status || "Active",
+
+        createdAt: serverTimestamp(),
+        createdBy: currentUser.uid
+      });
+
+      // ==========================================
+      // SUCCESS
+      // ==========================================
+
+      showMsg(
+        msg,
+        `${role} সফলভাবে তৈরি হয়েছে।`,
+        "success"
+      );
+
+      resetCreateForm();
+
+      await loadCores();
+
+      showView("list");
+      await renderList();
+
+    } catch (e) {
+
+      console.error("Create Admin Error:", e);
+
+      // Firebase Auth account তৈরি হয়ে গেলে কিন্তু Firestore save
+      // ব্যর্থ হলে orphan account রেখে যাব না।
+      if (newUser) {
+        try {
+          await deleteUser(newUser);
+        } catch (cleanupError) {
+          console.error("Auth cleanup failed:", cleanupError);
+        }
+      }
+
+      let errorText = "Admin তৈরি করা যায়নি।";
+
+      if (e.code === "auth/email-already-in-use") {
+        errorText = "এই Email দিয়ে আগে থেকেই একটি Firebase account আছে।";
+      } else if (e.code === "auth/invalid-email") {
+        errorText = "Email Address সঠিক নয়।";
+      } else if (e.code === "auth/weak-password") {
+        errorText = "Password কমপক্ষে 8 অক্ষরের হতে হবে।";
+      } else if (e.code === "permission-denied") {
+        errorText = "Firestore permission denied।";
+      } else if (e.message) {
+        errorText = e.message;
+      }
+
+      showMsg(msg, errorText, "error");
+
+    } finally {
+
+      btn.disabled = false;
+      btn.textContent = "Create Admin";
+
+        }
