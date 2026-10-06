@@ -328,7 +328,7 @@ async function save() {
     const coreUid = $("reportsTo").value;
     const newStatus = $("status").value;
 
-    const oldRole = editingData.roleType;
+    const oldRole = editingData.roleType || editingData.role || "";
     const oldDept = editingData.department || "";
     const wasActive = isActive(editingData);
 
