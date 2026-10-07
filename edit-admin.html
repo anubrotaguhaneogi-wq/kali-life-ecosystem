@@ -203,9 +203,15 @@ function esc(s) {
         ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-function isActive(d) {
-    return String(d.status || "").trim().toLowerCase() === "active";
-}
+<!-- OLD EDIT ADMIN LINK
+window.editUser = function (id) {
+    window.location.href = "admin-edit.html?id=" + id;
+};
+-->
+
+window.editUser = function (id) {
+    window.location.href = "edit-admin.html?id=" + id;
+};
 
 function showMsg(text, type) {
     const m = $("message");
