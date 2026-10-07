@@ -201,10 +201,10 @@ window.viewUser = function (id) {
 };
 
 
-/* Edit Admin → নতুন Edit ফর্ম (create-admin.html) */
+/* Edit Admin → আলাদা Edit ফর্মে যাবে */
 
 window.editUser = function (id) {
-    window.location.href = "create-admin.html#edit=" + encodeURIComponent(id);
+    window.location.href = "admin-edit.html?id=" + encodeURIComponent(id);
 };
 
 
