@@ -86,6 +86,49 @@ input[readonly]{
     line-height:1.5;
 }
 
+/* PHOTO */
+
+.photo-box{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.photo-preview{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #166534;
+    background:#e2e8f0;
+    display:block;
+    margin:0 auto 12px;
+}
+
+.photo-placeholder{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    border:4px solid #166534;
+    background:#e2e8f0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    font-size:50px;
+}
+
+.photo-input{
+    background:#f8fafc;
+    padding:10px;
+}
+
+.photo-name{
+    margin-top:7px;
+    font-size:12px;
+    color:#64748b;
+    word-break:break-word;
+}
+
 .buttons{
     display:flex;
     gap:10px;
@@ -174,6 +217,7 @@ button:disabled{
 }
 
 @media(max-width:600px){
+
     body{
         padding:10px;
     }
@@ -200,7 +244,9 @@ button:disabled{
 
     <div class="card">
 
-        <h2 class="section-title">Admin Edit / পদ পরিবর্তন</h2>
+        <h2 class="section-title">
+            Admin Edit / পদ পরিবর্তন
+        </h2>
 
         <div id="loadingBox" class="loading">
             Admin তথ্য লোড হচ্ছে...
@@ -208,77 +254,211 @@ button:disabled{
 
         <div id="editBox" class="hidden">
 
-            <div class="form-group">
-                <label for="eName">Full Name</label>
-                <input id="eName" type="text">
+            <!-- PHOTO -->
+
+            <div class="photo-box">
+
+                <label>Admin Photo</label>
+
+                <div id="photoPlaceholder"
+                     class="photo-placeholder">
+                    👤
+                </div>
+
+                <img id="photoPreview"
+                     class="photo-preview hidden"
+                     alt="Admin Photo">
+
+                <input
+                    id="ePhoto"
+                    class="photo-input"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp">
+
+                <div id="photoName"
+                     class="photo-name">
+                    নতুন ছবি নির্বাচন করুন
+                </div>
+
+                <div class="hint">
+                    JPG / PNG / WEBP ছবি ব্যবহার করুন।
+                    ছবি স্বয়ংক্রিয়ভাবে 600×600-এর মধ্যে কমপ্রেস হবে।
+                </div>
+
             </div>
 
-            <div class="form-group">
-                <label for="eEmail">Email</label>
-                <input id="eEmail" type="email" readonly>
-            </div>
+
+            <!-- NAME -->
 
             <div class="form-group">
-                <label for="eMobile">Mobile</label>
-                <input id="eMobile" type="tel" readonly>
+
+                <label for="eName">
+                    Full Name
+                </label>
+
+                <input
+                    id="eName"
+                    type="text">
+
             </div>
 
+
+            <!-- EMAIL -->
+
             <div class="form-group">
-                <label for="eRole">Role</label>
+
+                <label for="eEmail">
+                    Email
+                </label>
+
+                <input
+                    id="eEmail"
+                    type="email"
+                    readonly>
+
+            </div>
+
+
+            <!-- MOBILE -->
+
+            <div class="form-group">
+
+                <label for="eMobile">
+                    Mobile
+                </label>
+
+                <input
+                    id="eMobile"
+                    type="tel"
+                    readonly>
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div class="form-group">
+
+                <label for="eRole">
+                    Role
+                </label>
 
                 <select id="eRole">
-                    <option value="Core Admin">Core Admin</option>
-                    <option value="Departmental Admin">Departmental Admin</option>
+
+                    <option value="Core Admin">
+                        Core Admin
+                    </option>
+
+                    <option value="Departmental Admin">
+                        Departmental Admin
+                    </option>
+
                 </select>
 
                 <div class="hint">
                     এখানে Admin-এর পদ পরিবর্তন করতে পারবেন।
                 </div>
+
             </div>
 
-            <div class="form-group" id="eDeptGroup">
-                <label for="eDepartment">Department</label>
+
+            <!-- DEPARTMENT -->
+
+            <div class="form-group"
+                 id="eDeptGroup">
+
+                <label for="eDepartment">
+                    Department
+                </label>
+
                 <select id="eDepartment"></select>
+
             </div>
 
-            <div class="form-group" id="eReportsGroup">
-                <label for="eReportsTo">Reports To</label>
+
+            <!-- REPORTS TO -->
+
+            <div class="form-group"
+                 id="eReportsGroup">
+
+                <label for="eReportsTo">
+                    Reports To
+                </label>
+
                 <select id="eReportsTo"></select>
+
             </div>
+
+
+            <!-- STATUS -->
 
             <div class="form-group">
-                <label for="eStatus">Status</label>
+
+                <label for="eStatus">
+                    Status
+                </label>
 
                 <select id="eStatus">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Inactive">
+                        Inactive
+                    </option>
+
                 </select>
+
             </div>
 
+
+            <!-- BUTTONS -->
+
             <div class="buttons">
+
                 <button
                     type="button"
                     id="saveEditButton"
                     class="save-button">
+
                     Save Changes
+
                 </button>
 
                 <button
                     type="button"
                     id="cancelEditButton"
                     class="cancel-button">
+
                     Cancel
+
                 </button>
+
             </div>
 
-            <div id="editMessage" class="message"></div>
+
+            <div id="editMessage"
+                 class="message">
+            </div>
 
         </div>
 
+
         <div class="links">
-            <a href="admin-dashboard.html">← Admin Dashboard</a>
-            <a href="create-admin.html">Admin Management</a>
-            <a href="admin-list.html">Admin List</a>
+
+            <a href="admin-dashboard.html">
+                ← Admin Dashboard
+            </a>
+
+            <a href="create-admin.html">
+                Admin Management
+            </a>
+
+            <a href="admin-list.html">
+                Admin List
+            </a>
+
         </div>
 
     </div>
@@ -313,19 +493,41 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
 
 /* =====================================================
    FIREBASE CONFIG
    ===================================================== */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-    authDomain: "kali-life-ecosystem.firebaseapp.com",
-    projectId: "kali-life-ecosystem",
-    storageBucket: "kali-life-ecosystem.firebasestorage.app",
-    messagingSenderId: "734170546737",
-    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-    measurementId: "G-LBEY0W7RX3"
+
+    apiKey:
+        "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
 };
 
 
@@ -333,29 +535,40 @@ const firebaseConfig = {
    FIREBASE INITIALIZE
    ===================================================== */
 
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const db =
+    getFirestore(app);
 
-const mainAuth = getAuth(app);
+const mainAuth =
+    getAuth(app);
+
+const storage =
+    getStorage(app);
 
 
 /* =====================================================
    CONSTANTS
    ===================================================== */
 
-const USERS = "users";
+const USERS =
+    "users";
 
-const CORE = "Core Admin";
+const CORE =
+    "Core Admin";
 
-const DEPT = "Departmental Admin";
+const DEPT =
+    "Departmental Admin";
 
 const DEPARTMENTS = [
+
     "Product",
     "Agriculture",
     "Technology",
     "Marriage",
     "Education"
+
 ];
 
 
@@ -363,7 +576,8 @@ const DEPARTMENTS = [
    HELPER
    ===================================================== */
 
-const $ = id => document.getElementById(id);
+const $ =
+    id => document.getElementById(id);
 
 
 /* =====================================================
@@ -380,28 +594,36 @@ let editingData = null;
 
 let activeCores = [];
 
+let selectedPhotoFile = null;
+
 
 /* =====================================================
    MESSAGE
    ===================================================== */
 
-function showMessage(text, type){
+function showMessage(text,type){
 
-    const box = $("editMessage");
+    const box =
+        $("editMessage");
 
-    box.textContent = text;
+    box.textContent =
+        text;
 
-    box.className = "message show " + type;
+    box.className =
+        "message show " + type;
 }
 
 
 function clearMessage(){
 
-    const box = $("editMessage");
+    const box =
+        $("editMessage");
 
-    box.textContent = "";
+    box.textContent =
+        "";
 
-    box.className = "message";
+    box.className =
+        "message";
 }
 
 
@@ -411,9 +633,11 @@ function clearMessage(){
 
 function isActive(data){
 
-    return String(data.status || "")
-        .trim()
-        .toLowerCase() === "active";
+    return String(
+        data.status || ""
+    )
+    .trim()
+    .toLowerCase() === "active";
 }
 
 
@@ -427,7 +651,10 @@ function fillDepartments(){
         '<option value="">-- Department বাছুন --</option>' +
 
         DEPARTMENTS
-        .map(d => `<option value="${d}">${d}</option>`)
+        .map(
+            d =>
+            `<option value="${d}">${d}</option>`
+        )
         .join("");
 }
 
@@ -440,16 +667,305 @@ function applyRoleUI(role){
 
     if(role === CORE){
 
-        $("eDeptGroup").classList.add("hidden");
+        $("eDeptGroup")
+            .classList
+            .add("hidden");
 
-        $("eReportsGroup").classList.add("hidden");
+        $("eReportsGroup")
+            .classList
+            .add("hidden");
 
     }else{
 
-        $("eDeptGroup").classList.remove("hidden");
+        $("eDeptGroup")
+            .classList
+            .remove("hidden");
 
-        $("eReportsGroup").classList.remove("hidden");
+        $("eReportsGroup")
+            .classList
+            .remove("hidden");
     }
+}
+
+
+/* =====================================================
+   PHOTO PREVIEW
+   ===================================================== */
+
+$("ePhoto").addEventListener(
+    "change",
+    event => {
+
+        const file =
+            event.target.files[0];
+
+        if(!file){
+
+            selectedPhotoFile =
+                null;
+
+            $("photoName").textContent =
+                "নতুন ছবি নির্বাচন করুন";
+
+            return;
+        }
+
+
+        if(
+            !file.type.startsWith("image/")
+        ){
+
+            showMessage(
+                "শুধু Image file নির্বাচন করুন।",
+                "error"
+            );
+
+            event.target.value =
+                "";
+
+            return;
+        }
+
+
+        selectedPhotoFile =
+            file;
+
+
+        $("photoName").textContent =
+            file.name;
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            e => {
+
+                $("photoPreview").src =
+                    e.target.result;
+
+                $("photoPreview")
+                    .classList
+                    .remove("hidden");
+
+                $("photoPlaceholder")
+                    .classList
+                    .add("hidden");
+            };
+
+
+        reader.readAsDataURL(file);
+    }
+);
+
+
+/* =====================================================
+   RESIZE PHOTO
+   ===================================================== */
+
+function resizeImage(file){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                event => {
+
+                    const img =
+                        new Image();
+
+
+                    img.onload =
+                        () => {
+
+                            const maxSize =
+                                600;
+
+                            let width =
+                                img.width;
+
+                            let height =
+                                img.height;
+
+
+                            if(width > height){
+
+                                if(width > maxSize){
+
+                                    height =
+                                        Math.round(
+                                            height *
+                                            maxSize /
+                                            width
+                                        );
+
+                                    width =
+                                        maxSize;
+                                }
+
+                            }else{
+
+                                if(height > maxSize){
+
+                                    width =
+                                        Math.round(
+                                            width *
+                                            maxSize /
+                                            height
+                                        );
+
+                                    height =
+                                        maxSize;
+                                }
+                            }
+
+
+                            const canvas =
+                                document.createElement(
+                                    "canvas"
+                                );
+
+
+                            canvas.width =
+                                width;
+
+                            canvas.height =
+                                height;
+
+
+                            const ctx =
+                                canvas.getContext(
+                                    "2d"
+                                );
+
+
+                            ctx.drawImage(
+                                img,
+                                0,
+                                0,
+                                width,
+                                height
+                            );
+
+
+                            canvas.toBlob(
+                                blob => {
+
+                                    if(!blob){
+
+                                        reject(
+                                            new Error(
+                                                "Image compression failed."
+                                            )
+                                        );
+
+                                        return;
+                                    }
+
+
+                                    resolve(blob);
+
+                                },
+                                "image/jpeg",
+                                0.85
+                            );
+
+                        };
+
+
+                    img.onerror =
+                        () => reject(
+                            new Error(
+                                "Image load failed."
+                            )
+                        );
+
+
+                    img.src =
+                        event.target.result;
+                };
+
+
+            reader.onerror =
+                () => reject(
+                    new Error(
+                        "File read failed."
+                    )
+                );
+
+
+            reader.readAsDataURL(file);
+        }
+    );
+}
+
+
+/* =====================================================
+   UPLOAD PHOTO
+   ===================================================== */
+
+async function uploadAdminPhoto(){
+
+    if(!selectedPhotoFile){
+
+        return editingData?.photoURL || "";
+    }
+
+
+    showMessage(
+        "Admin Photo Upload হচ্ছে...",
+        "info"
+    );
+
+
+    const resizedBlob =
+        await resizeImage(
+            selectedPhotoFile
+        );
+
+
+    const fileName =
+        "admin_" +
+        editingUid +
+        "_" +
+        Date.now() +
+        ".jpg";
+
+
+    const storagePath =
+        "admin-photos/" +
+        fileName;
+
+
+    const storageRef =
+        ref(
+            storage,
+            storagePath
+        );
+
+
+    await uploadBytes(
+        storageRef,
+        resizedBlob,
+        {
+            contentType:
+                "image/jpeg"
+        }
+    );
+
+
+    const photoURL =
+        await getDownloadURL(
+            storageRef
+        );
+
+
+    return photoURL;
 }
 
 
@@ -459,35 +975,75 @@ function applyRoleUI(role){
 
 async function loadCoreAdmins(){
 
-    const q = query(
-        collection(db, USERS),
-        where("roleType", "==", CORE)
-    );
-
-    const snap = await getDocs(q);
-
-    activeCores = snap.docs
-        .filter(d => isActive(d.data()))
-        .map(d => ({
-            uid: d.id,
-            name:
-                d.data().name ||
-                d.data().email ||
-                d.id
-        }))
-        .filter(c => c.uid !== editingUid)
-        .sort((a,b) =>
-            a.name.localeCompare(b.name)
+    const q =
+        query(
+            collection(
+                db,
+                USERS
+            ),
+            where(
+                "roleType",
+                "==",
+                CORE
+            )
         );
+
+
+    const snap =
+        await getDocs(q);
+
+
+    activeCores =
+        snap.docs
+
+        .filter(
+            d =>
+            isActive(
+                d.data()
+            )
+        )
+
+        .map(
+            d => ({
+
+                uid:
+                    d.id,
+
+                name:
+                    d.data().name ||
+                    d.data().email ||
+                    d.id
+
+            })
+        )
+
+        .filter(
+            c =>
+            c.uid !== editingUid
+        )
+
+        .sort(
+            (a,b) =>
+            a.name.localeCompare(
+                b.name
+            )
+        );
+
 
     $("eReportsTo").innerHTML =
         '<option value="">-- Core Admin বাছুন --</option>' +
 
         activeCores
-        .map(c =>
-            `<option value="${c.uid}">${c.name}</option>`
+
+        .map(
+            c =>
+            `<option value="${c.uid}">
+                ${c.name}
+            </option>`
         )
+
         .join("");
+
 
     if(
         editingData &&
@@ -511,466 +1067,23 @@ function getAdminUid(){
             window.location.search
         );
 
+
     return (
+
         params.get("uid") ||
+
         params.get("id") ||
+
         params.get("userId") ||
+
         params.get("adminId") ||
+
         ""
+
     ).trim();
 }
 
 
 /* =====================================================
    VERIFY SUPER ADMIN
-   ===================================================== */
-
-async function verifySuperAdmin(user){
-
-    const snap = await getDoc(
-        doc(db, USERS, user.uid)
-    );
-
-    if(!snap.exists()){
-
-        return false;
-    }
-
-    const data = snap.data();
-
-    const role1 =
-        String(data.roleType || "")
-        .trim()
-        .toLowerCase();
-
-    const role2 =
-        String(data.role || "")
-        .trim()
-        .toLowerCase();
-
-    return (
-        (
-            role1 === "super admin" ||
-            role2 === "super admin"
-        )
-        &&
-        isActive(data)
-    );
-}
-
-
-/* =====================================================
-   LOAD ADMIN
-   ===================================================== */
-
-async function loadAdmin(){
-
-    clearMessage();
-
-    editingUid = getAdminUid();
-
-    if(!editingUid){
-
-        $("loadingBox").classList.add("hidden");
-
-        showMessage(
-            "কোন Admin নির্বাচন করা হয়নি। Admin List থেকে Edit চাপুন।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    try{
-
-        const snap = await getDoc(
-            doc(db, USERS, editingUid)
-        );
-
-
-        if(!snap.exists()){
-
-            $("loadingBox").classList.add("hidden");
-
-            showMessage(
-                "এই Admin-এর Firestore তথ্য পাওয়া যায়নি।",
-                "error"
-            );
-
-            return;
-        }
-
-
-        editingData = snap.data();
-
-
-        $("eName").value =
-            editingData.name || "";
-
-
-        $("eEmail").value =
-            editingData.email || "";
-
-
-        $("eMobile").value =
-            editingData.mobile || "";
-
-
-        const role =
-            editingData.roleType ||
-            editingData.role ||
-            DEPT;
-
-
-        $("eRole").value = role;
-
-
-        $("eDepartment").value =
-            editingData.department || "";
-
-
-        $("eStatus").value =
-            editingData.status || "Active";
-
-
-        applyRoleUI(role);
-
-
-        await loadCoreAdmins();
-
-
-        $("loadingBox").classList.add("hidden");
-
-        $("editBox").classList.remove("hidden");
-
-
-    }catch(error){
-
-        console.error(
-            "Load Admin Error:",
-            error
-        );
-
-        $("loadingBox").classList.add("hidden");
-
-        showMessage(
-            "Admin তথ্য লোড করা যায়নি। Firestore Permission অথবা Login পরীক্ষা করুন।",
-            "error"
-        );
-    }
-}
-
-
-/* =====================================================
-   SAVE EDIT
-   ===================================================== */
-
-async function saveChanges(){
-
-    clearMessage();
-
-
-    if(!superAdminOk){
-
-        showMessage(
-            "শুধু Active Super Admin Admin-এর পদ পরিবর্তন করতে পারবেন।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(!editingUid){
-
-        showMessage(
-            "Admin UID পাওয়া যায়নি।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const name =
-        $("eName").value.trim();
-
-
-    const role =
-        $("eRole").value;
-
-
-    const department =
-        $("eDepartment").value;
-
-
-    const reportsTo =
-        $("eReportsTo").value;
-
-
-    const status =
-        $("eStatus").value;
-
-
-    if(name.length < 3){
-
-        showMessage(
-            "নাম কমপক্ষে ৩ অক্ষরের হতে হবে।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(role !== CORE && role !== DEPT){
-
-        showMessage(
-            "সঠিক Role নির্বাচন করুন।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(role === DEPT && !department){
-
-        showMessage(
-            "Departmental Admin-এর জন্য Department নির্বাচন করুন।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(role === DEPT && !reportsTo){
-
-        showMessage(
-            "Departmental Admin-এর জন্য Reports To নির্বাচন করুন।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const btn =
-        $("saveEditButton");
-
-
-    btn.disabled = true;
-
-    btn.textContent =
-        "Saving...";
-
-
-    try{
-
-        const updates = {
-
-            name: name,
-
-            role: role,
-
-            roleType: role,
-
-            department:
-                role === DEPT
-                ? department
-                : "",
-
-            reportsTo:
-                role === DEPT
-                ? reportsTo
-                : "",
-
-            status: status
-        };
-
-
-        await updateDoc(
-            doc(db, USERS, editingUid),
-            updates
-        );
-
-
-        showMessage(
-            "Admin তথ্য এবং পদ সফলভাবে পরিবর্তন হয়েছে।",
-            "success"
-        );
-
-
-        editingData = {
-            ...editingData,
-            ...updates
-        };
-
-
-        setTimeout(() => {
-
-            window.location.href =
-                "admin-list.html";
-
-        }, 1200);
-
-
-    }catch(error){
-
-        console.error(
-            "Save Admin Error:",
-            error
-        );
-
-
-        let msg =
-            "Admin তথ্য Save করা যায়নি।";
-
-
-        if(
-            error.code ===
-            "permission-denied"
-        ){
-
-            msg =
-                "Firestore Permission Denied।";
-        }
-
-
-        showMessage(
-            msg,
-            "error"
-        );
-
-
-    }finally{
-
-        btn.disabled = false;
-
-        btn.textContent =
-            "Save Changes";
-    }
-}
-
-
-/* =====================================================
-   ROLE CHANGE
-   ===================================================== */
-
-$("eRole").addEventListener(
-    "change",
-    async () => {
-
-        const role =
-            $("eRole").value;
-
-        applyRoleUI(role);
-
-        if(role === DEPT){
-
-            await loadCoreAdmins();
-        }
-    }
-);
-
-
-/* =====================================================
-   SAVE BUTTON
-   ===================================================== */
-
-$("saveEditButton").addEventListener(
-    "click",
-    saveChanges
-);
-
-
-/* =====================================================
-   CANCEL BUTTON
-   ===================================================== */
-
-$("cancelEditButton").addEventListener(
-    "click",
-    () => {
-
-        window.location.href =
-            "admin-list.html";
-    }
-);
-
-
-/* =====================================================
-   AUTH CHECK
-   ===================================================== */
-
-onAuthStateChanged(
-    mainAuth,
-    async user => {
-
-        currentUser = user;
-
-        if(!user){
-
-            $("loadingBox").classList.add("hidden");
-
-            showMessage(
-                "Super Admin হিসেবে Login করুন।",
-                "error"
-            );
-
-            return;
-        }
-
-
-        try{
-
-            superAdminOk =
-                await verifySuperAdmin(user);
-
-
-            if(!superAdminOk){
-
-                $("loadingBox").classList.add("hidden");
-
-                showMessage(
-                    "Access Denied — শুধু Active Super Admin এই পেজ ব্যবহার করতে পারবেন।",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            await loadAdmin();
-
-
-        }catch(error){
-
-            console.error(
-                "Auth Error:",
-                error
-            );
-
-            $("loadingBox").classList.add("hidden");
-
-            showMessage(
-                "Admin authentication পরীক্ষা করা যায়নি।",
-                "error"
-            );
-        }
-
-    }
-);
-
-
-/* =====================================================
-   START
-   ===================================================== */
-
-fillDepartments();
-
-</script>
-
-</body>
-</html>
+   ============================
