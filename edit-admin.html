@@ -3,88 +3,198 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#166534">
-<title>Edit Admin - KALI LIFE ECOSYSTEM</title>
+<title>Admin Edit / পদ পরিবর্তন - KALI LIFE ECOSYSTEM</title>
+
 <style>
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    padding: 25px 15px;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #052e16, #064e3b, #0f172a);
-    color: #0f172a;
+*{
+    box-sizing:border-box;
 }
 
-.container { width: 100%; max-width: 650px; margin: 0 auto; }
-
-.header { text-align: center; color: #fff; margin-bottom: 20px; }
-.header h1 { margin: 0; font-size: 28px; font-weight: 800; }
-.header p { margin: 7px 0 0; color: rgba(255,255,255,0.75); font-size: 13px; }
-
-.card { background: #fff; padding: 30px; border-radius: 18px; box-shadow: 0 25px 70px rgba(0,0,0,0.28); }
-
-.section-title {
-    margin: 0 0 20px; padding-bottom: 10px;
-    border-bottom: 2px solid #dcfce7; color: #166534;
-    font-size: 19px; font-weight: 800;
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f0fdf4;
+    color:#1f2937;
+    padding:20px;
 }
 
-.form-group { margin-bottom: 18px; }
-.hidden { display: none !important; }
-
-label { display: block; margin-bottom: 7px; color: #334155; font-size: 14px; font-weight: 700; }
-
-input, select {
-    width: 100%; height: 48px; padding: 0 13px;
-    border: 1px solid #cbd5e1; border-radius: 9px;
-    background: #fff; color: #0f172a; font-size: 15px; outline: none;
+.container{
+    max-width:650px;
+    margin:auto;
 }
-input:focus, select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
-input[readonly] { background: #f1f5f9; color: #64748b; }
 
-.hint { margin-top: 6px; color: #64748b; font-size: 12px; line-height: 1.4; }
-
-.buttons { display: flex; gap: 10px; margin-top: 25px; }
-button {
-    flex: 1; height: 48px; border: none; border-radius: 9px;
-    font-size: 15px; font-weight: 800; cursor: pointer;
+.header{
+    background:#166534;
+    color:white;
+    padding:25px 20px;
+    border-radius:16px;
+    text-align:center;
+    margin-bottom:20px;
 }
-.save-button { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
-.save-button:disabled { opacity: 0.65; cursor: not-allowed; }
-.back-button { background: #64748b; color: #fff; }
 
-.message {
-    display: none; margin-top: 18px; padding: 12px; border-radius: 9px;
-    text-align: center; font-size: 13px; font-weight: 700; line-height: 1.45;
+.header h1{
+    margin:0 0 8px;
+    font-size:25px;
 }
-.message.show { display: block; }
-.error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
-.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
 
-.lock-note {
-    display: none; margin-bottom: 18px; padding: 12px; border-radius: 9px;
-    background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
-    font-size: 13px; font-weight: 700; line-height: 1.5;
+.header p{
+    margin:0;
+    font-size:14px;
 }
-.lock-note.show { display: block; }
 
-:focus-visible { outline: 3px solid #86efac; outline-offset: 2px; }
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
 
-@media (max-width: 600px) {
-    body { padding: 15px 10px; }
-    .card { padding: 22px 18px; border-radius: 14px; }
-    .header h1 { font-size: 24px; }
-    .buttons { flex-direction: column; }
+.section-title{
+    margin-top:0;
+    color:#166534;
+    font-size:22px;
+}
+
+.form-group{
+    margin-bottom:17px;
+}
+
+label{
+    display:block;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    font-size:15px;
+    background:white;
+}
+
+input[readonly]{
+    background:#f1f5f9;
+}
+
+.hint{
+    margin-top:6px;
+    font-size:12px;
+    color:#64748b;
+    line-height:1.5;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.save-button{
+    background:#166534;
+    color:white;
+    flex:1;
+}
+
+.cancel-button{
+    background:#e2e8f0;
+    color:#1e293b;
+    flex:1;
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+    margin-top:18px;
+    padding:12px;
+    border-radius:9px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.message.error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.message.info{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.loading{
+    text-align:center;
+    padding:30px 10px;
+    color:#64748b;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.links{
+    margin-top:20px;
+    text-align:center;
+}
+
+.links a{
+    color:#166534;
+    text-decoration:none;
+    font-weight:700;
+    margin:0 8px;
+    font-size:13px;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
+
+@media(max-width:600px){
+    body{
+        padding:10px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
 }
 </style>
 </head>
+
 <body>
+
 <div class="container">
 
     <div class="header">
-        <h1>✏️ Edit Admin</h1>
+        <h1>🔐 Admin Management</h1>
         <p>KALI LIFE ECOSYSTEM</p>
     </div>
 
@@ -92,84 +202,121 @@ button {
 
         <h2 class="section-title">Admin Edit / পদ পরিবর্তন</h2>
 
-        <div id="lockNote" class="lock-note show">লোড হচ্ছে...</div>
+        <div id="loadingBox" class="loading">
+            Admin তথ্য লোড হচ্ছে...
+        </div>
 
-        <div id="formBox" class="hidden">
+        <div id="editBox" class="hidden">
 
             <div class="form-group">
-                <label for="adminId">Admin ID</label>
-                <input id="adminId" type="text" readonly>
+                <label for="eName">Full Name</label>
+                <input id="eName" type="text">
             </div>
 
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input id="name" type="text">
+                <label for="eEmail">Email</label>
+                <input id="eEmail" type="email" readonly>
             </div>
 
             <div class="form-group">
-                <label for="email">Email (বদলানো যাবে না)</label>
-                <input id="email" type="text" readonly>
+                <label for="eMobile">Mobile</label>
+                <input id="eMobile" type="tel" readonly>
             </div>
 
             <div class="form-group">
-                <label for="mobile">Mobile (বদলানো যাবে না)</label>
-                <input id="mobile" type="text" readonly>
-            </div>
+                <label for="eRole">Role</label>
 
-            <div class="form-group">
-                <label for="role">Role</label>
-                <select id="role">
+                <select id="eRole">
                     <option value="Core Admin">Core Admin</option>
                     <option value="Departmental Admin">Departmental Admin</option>
                 </select>
-                <div class="hint">প্রমোশন বা পদ বদলাতে এখানে Role বদলান। পরের লগইনে সে নতুন পদের ড্যাশবোর্ডে ঢুকবে।</div>
+
+                <div class="hint">
+                    এখানে Admin-এর পদ পরিবর্তন করতে পারবেন।
+                </div>
             </div>
 
-            <div class="form-group hidden" id="deptGroup">
-                <label for="department">Department</label>
-                <select id="department">
-                    <option value="">-- Department বাছুন --</option>
-                    <option value="Product">Product</option>
-                    <option value="Agriculture">Agriculture</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Marriage">Marriage</option>
-                    <option value="Education">Education</option>
-                </select>
+            <div class="form-group" id="eDeptGroup">
+                <label for="eDepartment">Department</label>
+                <select id="eDepartment"></select>
             </div>
 
-            <div class="form-group hidden" id="reportsGroup">
-                <label for="reportsTo">Reports To</label>
-                <select id="reportsTo"></select>
+            <div class="form-group" id="eReportsGroup">
+                <label for="eReportsTo">Reports To</label>
+                <select id="eReportsTo"></select>
             </div>
 
             <div class="form-group">
-                <label for="status">Status</label>
-                <select id="status">
+                <label for="eStatus">Status</label>
+
+                <select id="eStatus">
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                 </select>
             </div>
 
             <div class="buttons">
-                <button type="button" id="saveButton" class="save-button">Save changes</button>
-                <button type="button" id="backButton" class="back-button">Back</button>
+                <button
+                    type="button"
+                    id="saveEditButton"
+                    class="save-button">
+                    Save Changes
+                </button>
+
+                <button
+                    type="button"
+                    id="cancelEditButton"
+                    class="cancel-button">
+                    Cancel
+                </button>
             </div>
+
+            <div id="editMessage" class="message"></div>
+
         </div>
 
-        <div id="message" class="message"></div>
+        <div class="links">
+            <a href="admin-dashboard.html">← Admin Dashboard</a>
+            <a href="create-admin.html">Admin Management</a>
+            <a href="admin-list.html">Admin List</a>
+        </div>
 
     </div>
+
 </div>
+
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import {
-    getFirestore, collection, query, where, getDocs,
-    doc, getDoc, updateDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+/* =====================================================
+   FIREBASE IMPORT
+   ===================================================== */
 
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+   ===================================================== */
 
 const firebaseConfig = {
     apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
@@ -181,243 +328,649 @@ const firebaseConfig = {
     measurementId: "G-LBEY0W7RX3"
 };
 
+
+/* =====================================================
+   FIREBASE INITIALIZE
+   ===================================================== */
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
-const auth = getAuth(app);
+
+const mainAuth = getAuth(app);
+
+
+/* =====================================================
+   CONSTANTS
+   ===================================================== */
 
 const USERS = "users";
-const MAX_ACTIVE = 5;
+
 const CORE = "Core Admin";
+
 const DEPT = "Departmental Admin";
 
+const DEPARTMENTS = [
+    "Product",
+    "Agriculture",
+    "Technology",
+    "Marriage",
+    "Education"
+];
+
+
+/* =====================================================
+   HELPER
+   ===================================================== */
+
 const $ = id => document.getElementById(id);
-const targetUid = new URLSearchParams(location.search).get("id");
+
+
+/* =====================================================
+   STATE
+   ===================================================== */
 
 let currentUser = null;
+
+let superAdminOk = false;
+
+let editingUid = null;
+
 let editingData = null;
+
 let activeCores = [];
 
 
-function esc(s) {
-    return String(s ?? "").replace(/[&<>"']/g, c =>
-        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-}
+/* =====================================================
+   MESSAGE
+   ===================================================== */
 
-<!-- OLD EDIT ADMIN LINK
-window.editUser = function (id) {
-    window.location.href = "admin-edit.html?id=" + id;
-};
--->
+function showMessage(text, type){
 
-window.editUser = function (id) {
-    window.location.href = "edit-admin.html?id=" + id;
-};
+    const box = $("editMessage");
 
-function showMsg(text, type) {
-    const m = $("message");
-    m.textContent = text;
-    m.className = "message show " + type;
-    m.scrollIntoView({ behavior: "smooth", block: "center" });
-}
+    box.textContent = text;
 
-function lock(text) {
-    const n = $("lockNote");
-    n.textContent = text;
-    n.classList.toggle("show", !!text);
-    $("formBox").classList.toggle("hidden", !!text);
-}
-
-function goBack() { location.href = "admin-list.html"; }
-$("backButton").addEventListener("click", goBack);
-
-window.addEventListener("error", e => showMsg("Error: " + e.message, "error"));
-window.addEventListener("unhandledrejection", e =>
-    showMsg("Error: " + ((e.reason && e.reason.message) || String(e.reason)), "error"));
-
-
-async function verifySuperAdmin(user) {
-    const snap = await getDoc(doc(db, USERS, user.uid));
-    if (!snap.exists()) return false;
-    const d = snap.data();
-    const r1 = String(d.roleType || "").trim().toLowerCase();
-    const r2 = String(d.role || "").trim().toLowerCase();
-    return (r1 === "super admin" || r2 === "super admin") && isActive(d);
+    box.className = "message show " + type;
 }
 
 
-/* ============ START ============ */
+function clearMessage(){
 
-onAuthStateChanged(auth, async user => {
-    currentUser = user;
+    const box = $("editMessage");
 
-    if (!user) return lock("Super Admin হিসেবে লগইন করুন।");
-    if (!targetUid) return lock("কোন Admin Edit হবে তা জানা যায়নি। Admin List থেকে Edit চাপুন।");
+    box.textContent = "";
 
-    try {
-        if (!(await verifySuperAdmin(user))) {
-            return lock("অ্যাক্সেস নেই। শুধু Active Super Admin Edit করতে পারবেন।");
+    box.className = "message";
+}
+
+
+/* =====================================================
+   ACTIVE CHECK
+   ===================================================== */
+
+function isActive(data){
+
+    return String(data.status || "")
+        .trim()
+        .toLowerCase() === "active";
+}
+
+
+/* =====================================================
+   DEPARTMENT LIST
+   ===================================================== */
+
+function fillDepartments(){
+
+    $("eDepartment").innerHTML =
+        '<option value="">-- Department বাছুন --</option>' +
+
+        DEPARTMENTS
+        .map(d => `<option value="${d}">${d}</option>`)
+        .join("");
+}
+
+
+/* =====================================================
+   ROLE UI
+   ===================================================== */
+
+function applyRoleUI(role){
+
+    if(role === CORE){
+
+        $("eDeptGroup").classList.add("hidden");
+
+        $("eReportsGroup").classList.add("hidden");
+
+    }else{
+
+        $("eDeptGroup").classList.remove("hidden");
+
+        $("eReportsGroup").classList.remove("hidden");
+    }
+}
+
+
+/* =====================================================
+   LOAD ACTIVE CORE ADMINS
+   ===================================================== */
+
+async function loadCoreAdmins(){
+
+    const q = query(
+        collection(db, USERS),
+        where("roleType", "==", CORE)
+    );
+
+    const snap = await getDocs(q);
+
+    activeCores = snap.docs
+        .filter(d => isActive(d.data()))
+        .map(d => ({
+            uid: d.id,
+            name:
+                d.data().name ||
+                d.data().email ||
+                d.id
+        }))
+        .filter(c => c.uid !== editingUid)
+        .sort((a,b) =>
+            a.name.localeCompare(b.name)
+        );
+
+    $("eReportsTo").innerHTML =
+        '<option value="">-- Core Admin বাছুন --</option>' +
+
+        activeCores
+        .map(c =>
+            `<option value="${c.uid}">${c.name}</option>`
+        )
+        .join("");
+
+    if(
+        editingData &&
+        editingData.reportsTo
+    ){
+
+        $("eReportsTo").value =
+            editingData.reportsTo;
+    }
+}
+
+
+/* =====================================================
+   FIND ADMIN UID FROM URL
+   ===================================================== */
+
+function getAdminUid(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return (
+        params.get("uid") ||
+        params.get("id") ||
+        params.get("userId") ||
+        params.get("adminId") ||
+        ""
+    ).trim();
+}
+
+
+/* =====================================================
+   VERIFY SUPER ADMIN
+   ===================================================== */
+
+async function verifySuperAdmin(user){
+
+    const snap = await getDoc(
+        doc(db, USERS, user.uid)
+    );
+
+    if(!snap.exists()){
+
+        return false;
+    }
+
+    const data = snap.data();
+
+    const role1 =
+        String(data.roleType || "")
+        .trim()
+        .toLowerCase();
+
+    const role2 =
+        String(data.role || "")
+        .trim()
+        .toLowerCase();
+
+    return (
+        (
+            role1 === "super admin" ||
+            role2 === "super admin"
+        )
+        &&
+        isActive(data)
+    );
+}
+
+
+/* =====================================================
+   LOAD ADMIN
+   ===================================================== */
+
+async function loadAdmin(){
+
+    clearMessage();
+
+    editingUid = getAdminUid();
+
+    if(!editingUid){
+
+        $("loadingBox").classList.add("hidden");
+
+        showMessage(
+            "কোন Admin নির্বাচন করা হয়নি। Admin List থেকে Edit চাপুন।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    try{
+
+        const snap = await getDoc(
+            doc(db, USERS, editingUid)
+        );
+
+
+        if(!snap.exists()){
+
+            $("loadingBox").classList.add("hidden");
+
+            showMessage(
+                "এই Admin-এর Firestore তথ্য পাওয়া যায়নি।",
+                "error"
+            );
+
+            return;
         }
 
-        const snap = await getDoc(doc(db, USERS, targetUid));
-        if (!snap.exists()) return lock("এই Admin পাওয়া যায়নি।");
 
         editingData = snap.data();
-        const type = editingData.roleType || editingData.role;
 
-        if (type === "Super Admin") return lock("Super Admin Edit করা যাবে না।");
-        if (type !== CORE && type !== DEPT) return lock("এটি Admin অ্যাকাউন্ট নয়।");
 
-        await loadCores();
-        fillForm();
-        lock("");
+        $("eName").value =
+            editingData.name || "";
 
-    } catch (e) {
-        console.error(e);
-        lock("লোড করা যায়নি: " + e.message);
+
+        $("eEmail").value =
+            editingData.email || "";
+
+
+        $("eMobile").value =
+            editingData.mobile || "";
+
+
+        const role =
+            editingData.roleType ||
+            editingData.role ||
+            DEPT;
+
+
+        $("eRole").value = role;
+
+
+        $("eDepartment").value =
+            editingData.department || "";
+
+
+        $("eStatus").value =
+            editingData.status || "Active";
+
+
+        applyRoleUI(role);
+
+
+        await loadCoreAdmins();
+
+
+        $("loadingBox").classList.add("hidden");
+
+        $("editBox").classList.remove("hidden");
+
+
+    }catch(error){
+
+        console.error(
+            "Load Admin Error:",
+            error
+        );
+
+        $("loadingBox").classList.add("hidden");
+
+        showMessage(
+            "Admin তথ্য লোড করা যায়নি। Firestore Permission অথবা Login পরীক্ষা করুন।",
+            "error"
+        );
     }
-});
-
-
-async function loadCores() {
-    const snap = await getDocs(query(collection(db, USERS), where("roleType", "==", CORE)));
-    activeCores = snap.docs
-        .filter(d => d.id !== targetUid && isActive(d.data()))
-        .map(d => ({ uid: d.id, name: d.data().name || d.data().email || d.id }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-    $("reportsTo").innerHTML = '<option value="">-- Core Admin বাছুন --</option>' +
-        activeCores.map(c => `<option value="${esc(c.uid)}">${esc(c.name)}</option>`).join("");
 }
 
-function fillForm() {
-    $("adminId").value = targetUid;
-    $("name").value = editingData.name || "";
-    $("email").value = editingData.email || "";
-    $("mobile").value = editingData.mobile || "";
-    const savedRole = editingData.roleType || editingData.role || "";
-$("role").value = savedRole === DEPT ? DEPT : CORE;
-    $("department").value = editingData.department || "";
-    $("reportsTo").value = editingData.reportsTo || "";
-    $("status").value = isActive(editingData) ? "Active" : "Inactive";
-    applyRole();
-}
 
-function applyRole() {
-    const isDept = $("role").value === DEPT;
-    $("deptGroup").classList.toggle("hidden", !isDept);
-    $("reportsGroup").classList.toggle("hidden", !isDept);
-}
-$("role").addEventListener("change", applyRole);
+/* =====================================================
+   SAVE EDIT
+   ===================================================== */
+
+async function saveChanges(){
+
+    clearMessage();
 
 
-/* ============ SAVE ============ */
+    if(!superAdminOk){
 
-async function activeCount(role, department) {
-    const q = role === CORE
-        ? query(collection(db, USERS), where("roleType", "==", CORE))
-        : query(collection(db, USERS), where("roleType", "==", DEPT), where("department", "==", department));
-    const snap = await getDocs(q);
-    return snap.docs.filter(d => d.id !== targetUid && isActive(d.data())).length;
-}
+        showMessage(
+            "শুধু Active Super Admin Admin-এর পদ পরিবর্তন করতে পারবেন।",
+            "error"
+        );
 
-$("saveButton").addEventListener("click", save);
-
-async function save() {
-    $("message").className = "message";
-
-    if (!currentUser || !editingData) {
-        return showMsg("সেশন পাওয়া যায়নি। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।", "error");
+        return;
     }
 
-    const name = $("name").value.trim();
-    const newRole = $("role").value;
-    const deptInput = $("department").value;
-    const coreUid = $("reportsTo").value;
-    const newStatus = $("status").value;
 
-    const oldRole = editingData.roleType || editingData.role || "";
-    const oldDept = editingData.department || "";
-    const wasActive = isActive(editingData);
+    if(!editingUid){
 
-    if (name.length < 3) return showMsg("নাম কমপক্ষে ৩ অক্ষরের হতে হবে।", "error");
-    if (newRole === DEPT && !deptInput) return showMsg("Department বাছুন।", "error");
-    if (newRole === DEPT && !coreUid) return showMsg("Reports To-তে একজন Core Admin বাছুন।", "error");
+        showMessage(
+            "Admin UID পাওয়া যায়নি।",
+            "error"
+        );
 
-    const btn = $("saveButton");
+        return;
+    }
+
+
+    const name =
+        $("eName").value.trim();
+
+
+    const role =
+        $("eRole").value;
+
+
+    const department =
+        $("eDepartment").value;
+
+
+    const reportsTo =
+        $("eReportsTo").value;
+
+
+    const status =
+        $("eStatus").value;
+
+
+    if(name.length < 3){
+
+        showMessage(
+            "নাম কমপক্ষে ৩ অক্ষরের হতে হবে।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(role !== CORE && role !== DEPT){
+
+        showMessage(
+            "সঠিক Role নির্বাচন করুন।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(role === DEPT && !department){
+
+        showMessage(
+            "Departmental Admin-এর জন্য Department নির্বাচন করুন।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(role === DEPT && !reportsTo){
+
+        showMessage(
+            "Departmental Admin-এর জন্য Reports To নির্বাচন করুন।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const btn =
+        $("saveEditButton");
+
+
     btn.disabled = true;
-    btn.textContent = "যাচাই হচ্ছে...";
 
-    try {
-        if (!(await verifySuperAdmin(currentUser))) {
-            return showMsg("অ্যাক্সেস অস্বীকৃত।", "error");
-        }
+    btn.textContent =
+        "Saving...";
 
-        const newDept = newRole === CORE ? "" : deptInput;
 
-        // Core Admin পদ ছাড়লে বা Inactive হলে অধীনস্থদের আগে সরাতে হবে
-        if (oldRole === CORE && wasActive && (newRole !== CORE || newStatus !== "Active")) {
-            const sub = await getDocs(query(collection(db, USERS), where("reportsTo", "==", targetUid)));
-            const n = sub.docs.filter(d => d.id !== targetUid && isActive(d.data())).length;
-            if (n > 0) {
-                return showMsg(`এই Core Admin-এর অধীনে ${n} জন Active Admin আছে। আগে তাদের Edit করে অন্য Core Admin-এর অধীনে সরান।`, "error");
-            }
-        }
+    try{
 
-        if (newStatus === "Active") {
-            const count = await activeCount(newRole, newDept);
-            if (count >= MAX_ACTIVE) {
-                return showMsg(newRole === CORE
-                    ? `Core Admin-এর সর্বোচ্চ ${MAX_ACTIVE}টি Active পদ পূর্ণ।`
-                    : `${newDept} Department-এ Departmental Admin-এর সর্বোচ্চ ${MAX_ACTIVE}টি Active পদ পূর্ণ।`,
-                    "error");
-            }
-        }
+        const updates = {
 
-        let reportsTo = currentUser.uid;
-        let reportsToName = "Super Admin";
-
-        if (newRole === DEPT) {
-            const c = await getDoc(doc(db, USERS, coreUid));
-            if (!c.exists() || c.data().roleType !== CORE || !isActive(c.data())) {
-                return showMsg("বাছাই করা Core Admin পাওয়া যায়নি বা Active নন।", "error");
-            }
-            reportsTo = coreUid;
-            reportsToName = c.data().name || c.data().email || coreUid;
-        }
-
-        const update = {
             name: name,
-            role: newRole,
-            roleType: newRole,
-            department: newDept,
-            reportsTo: reportsTo,
-            reportsToName: reportsToName,
-            status: newStatus,
-            updatedBy: currentUser.uid,
-            updatedAt: serverTimestamp()
+
+            role: role,
+
+            roleType: role,
+
+            department:
+                role === DEPT
+                ? department
+                : "",
+
+            reportsTo:
+                role === DEPT
+                ? reportsTo
+                : "",
+
+            status: status
         };
 
-        if (newRole !== oldRole || newDept !== oldDept) {
-            update.previousRole = oldRole;
-            update.previousDepartment = oldDept;
-            update.roleChangedAt = serverTimestamp();
+
+        await updateDoc(
+            doc(db, USERS, editingUid),
+            updates
+        );
+
+
+        showMessage(
+            "Admin তথ্য এবং পদ সফলভাবে পরিবর্তন হয়েছে।",
+            "success"
+        );
+
+
+        editingData = {
+            ...editingData,
+            ...updates
+        };
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "admin-list.html";
+
+        }, 1200);
+
+
+    }catch(error){
+
+        console.error(
+            "Save Admin Error:",
+            error
+        );
+
+
+        let msg =
+            "Admin তথ্য Save করা যায়নি।";
+
+
+        if(
+            error.code ===
+            "permission-denied"
+        ){
+
+            msg =
+                "Firestore Permission Denied।";
         }
 
-        btn.textContent = "সেভ হচ্ছে...";
-        await updateDoc(doc(db, USERS, targetUid), update);
 
-        showMsg("সেভ হয়েছে। তালিকায় ফিরে যাচ্ছে...", "success");
-        setTimeout(goBack, 1200);
+        showMessage(
+            msg,
+            "error"
+        );
 
-    } catch (e) {
-        console.error("Edit Admin Error:", e);
-        showMsg(e.message || "সেভ করা যায়নি।", "error");
-    } finally {
+
+    }finally{
+
         btn.disabled = false;
-        btn.textContent = "Save changes";
+
+        btn.textContent =
+            "Save Changes";
     }
 }
 
+
+/* =====================================================
+   ROLE CHANGE
+   ===================================================== */
+
+$("eRole").addEventListener(
+    "change",
+    async () => {
+
+        const role =
+            $("eRole").value;
+
+        applyRoleUI(role);
+
+        if(role === DEPT){
+
+            await loadCoreAdmins();
+        }
+    }
+);
+
+
+/* =====================================================
+   SAVE BUTTON
+   ===================================================== */
+
+$("saveEditButton").addEventListener(
+    "click",
+    saveChanges
+);
+
+
+/* =====================================================
+   CANCEL BUTTON
+   ===================================================== */
+
+$("cancelEditButton").addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "admin-list.html";
+    }
+);
+
+
+/* =====================================================
+   AUTH CHECK
+   ===================================================== */
+
+onAuthStateChanged(
+    mainAuth,
+    async user => {
+
+        currentUser = user;
+
+        if(!user){
+
+            $("loadingBox").classList.add("hidden");
+
+            showMessage(
+                "Super Admin হিসেবে Login করুন।",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try{
+
+            superAdminOk =
+                await verifySuperAdmin(user);
+
+
+            if(!superAdminOk){
+
+                $("loadingBox").classList.add("hidden");
+
+                showMessage(
+                    "Access Denied — শুধু Active Super Admin এই পেজ ব্যবহার করতে পারবেন।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            await loadAdmin();
+
+
+        }catch(error){
+
+            console.error(
+                "Auth Error:",
+                error
+            );
+
+            $("loadingBox").classList.add("hidden");
+
+            showMessage(
+                "Admin authentication পরীক্ষা করা যায়নি।",
+                "error"
+            );
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+fillDepartments();
+
 </script>
+
 </body>
 </html>
