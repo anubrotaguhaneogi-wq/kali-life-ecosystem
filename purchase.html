@@ -3,229 +3,1300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>KALI LIFE ECOSYSTEM - Purchase</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#eef3f8;padding:20px;}
-.container{max-width:900px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.15);}
-.hidden{display:none;}
-h1{text-align:center;color:#006400;margin-bottom:10px;}
-h2{text-align:center;color:#0055aa;margin-bottom:25px;}
-h3{margin:18px 0 6px;color:#1a2320;}
-hr{margin:18px 0;border:0;border-top:1px solid #dde3ea;}
-label{display:block;font-weight:bold;margin:12px 0 4px;}
-input,textarea{width:100%;background:#fff;padding:12px;font-size:16px;border:1px solid #c9d3de;border-radius:8px;}
-input[readonly]{background:#f1f4f7;}
-input:focus,textarea:focus,button:focus-visible{outline:2px solid #006400;outline-offset:1px;}
-.row{display:flex;gap:12px;}
-.row>div{flex:1;}
-.calc{display:flex;justify-content:space-between;margin-top:12px;padding:12px;background:#e9f4ec;border-radius:8px;font-weight:bold;}
-button{width:100%;margin-top:18px;padding:14px;font-size:17px;font-weight:bold;color:#fff;background:#006400;border:0;border-radius:8px;}
-button:disabled{opacity:.6;}
-.sum{display:flex;gap:10px;}
-.sum div{flex:1;background:#e9f4ec;border-radius:8px;padding:12px;font-size:14px;}
-.sum b{display:block;font-size:18px;margin-top:4px;}
-.item{padding:10px 0;border-top:1px solid #dde3ea;}
-.item small{display:block;color:#5b6b63;margin-top:2px;}
-.empty{color:#5b6b63;padding:8px 0;}
-#status{text-align:center;padding:30px;color:#5b6b63;font-size:15px;}
-@media(max-width:600px){.row{flex-direction:column;gap:0;}}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#eef3f8;
+  padding:15px;
+}
+
+.box{
+  max-width:600px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 18px rgba(0,0,0,.06);
+}
+
+.hidden{
+  display:none;
+}
+
+h2{
+  text-align:center;
+  color:#006400;
+  margin-bottom:4px;
+}
+
+.ver{
+  text-align:center;
+  font-size:12px;
+  color:#8a99a8;
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 4px;
+}
+
+input,
+textarea{
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  border:1px solid #c9d3de;
+  border-radius:8px;
+  outline:none;
+}
+
+input:focus,
+textarea:focus{
+  border-color:#006400;
+}
+
+input[readonly]{
+  background:#f1f4f7;
+}
+
+textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+.row>div{
+  flex:1;
+}
+
+.total{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  padding:12px;
+  background:#e9f4ec;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  font-size:17px;
+  font-weight:bold;
+  color:#fff;
+  background:#006400;
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#004d00;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+#msg{
+  margin-top:14px;
+  padding:12px;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:15px;
+  text-align:center;
+  display:none;
+  word-break:break-word;
+}
+
+#msg.ok{
+  display:block;
+  background:#dcfce7;
+  color:#166534;
+}
+
+#msg.err{
+  display:block;
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+h3{
+  margin:25px 0 8px;
+}
+
+.sum{
+  display:flex;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.sum div{
+  flex:1;
+  background:#e9f4ec;
+  border-radius:8px;
+  padding:10px;
+  font-size:13px;
+}
+
+.sum b{
+  display:block;
+  font-size:16px;
+  margin-top:3px;
+}
+
+.item{
+  padding:10px 0;
+  border-top:1px solid #dde3ea;
+}
+
+.item small{
+  display:block;
+  color:#5b6b63;
+  margin-top:2px;
+}
+
+#status{
+  text-align:center;
+  padding:30px;
+  color:#5b6b63;
+}
+
+.stock-preview{
+  margin-top:8px;
+  padding:10px;
+  border-radius:8px;
+  background:#f1f7f3;
+  color:#31543b;
+  font-size:14px;
+  font-weight:bold;
+}
 </style>
 </head>
+
 <body>
 
-<div id="status" class="container">Loading...</div>
-
-<div class="container hidden" id="page">
-<h1>KALI LIFE ECOSYSTEM</h1>
-<h2>Purchase</h2>
-
-<div class="row">
-  <div>
-    <label>Purchase ID</label>
-    <input type="text" id="purchaseId" readonly>
-  </div>
-  <div>
-    <label>Date</label>
-    <input type="text" id="purchaseDate" readonly>
-  </div>
+<div id="status" class="box">
+  Loading Purchase System...
 </div>
+
+<div class="box hidden" id="page">
+
+<h2>Purchase Entry</h2>
+<div class="ver">KALI LIFE ECOSYSTEM • Purchase v4</div>
+
+<label>Purchase ID</label>
+<input type="text" id="purchaseId" readonly>
+
+<label>Date</label>
+<input type="text" id="purchaseDate" readonly>
 
 <label>Entered By (Admin)</label>
 <input type="text" id="enteredBy" readonly>
 
-<hr>
-
-<label>Bought From (Supplier Name) *</label>
-<input type="text" id="supplierName" placeholder="Enter Supplier Name" autocomplete="off">
+<label>Supplier Name *</label>
+<input
+  type="text"
+  id="supplierName"
+  placeholder="Supplier name"
+  autocomplete="off"
+>
 
 <label>Item Name *</label>
-<input type="text" id="itemName" placeholder="Enter Item Name" autocomplete="off">
+<input
+  type="text"
+  id="itemName"
+  placeholder="Item name"
+  autocomplete="off"
+>
+
+<div id="stockPreview" class="stock-preview">
+  Current Stock: —
+</div>
 
 <div class="row">
+
   <div>
-    <label>Quantity (Pieces) *</label>
-    <input type="number" id="quantity" inputmode="decimal" min="0" step="any" placeholder="How many pieces">
+    <label>Quantity *</label>
+    <input
+      type="number"
+      id="quantity"
+      inputmode="decimal"
+      min="0.01"
+      step="any"
+      value="1"
+    >
   </div>
+
   <div>
-    <label>Buying Price (per piece) *</label>
-    <input type="number" id="buyPrice" inputmode="decimal" min="0" step="any" placeholder="Bought at">
+    <label>Buying Price / Piece *</label>
+    <input
+      type="number"
+      id="buyPrice"
+      inputmode="decimal"
+      min="0"
+      step="any"
+      placeholder="Price"
+    >
   </div>
+
 </div>
 
-<div class="calc"><span>Total Cost</span><span id="totalView">₹0</span></div>
+<div class="total">
+  <span>Total Cost</span>
+  <span id="totalView">₹0</span>
+</div>
 
 <label>Remarks</label>
-<textarea id="remarks" rows="2" placeholder="Remarks"></textarea>
+<textarea
+  id="remarks"
+  placeholder="Optional remarks"
+></textarea>
 
-<button type="button" id="savePurchase">Save Purchase</button>
+<button type="button" id="savePurchase">
+  Save Purchase
+</button>
 
-<hr>
+<div id="msg"></div>
 
 <h3>My Purchases</h3>
+
 <div class="sum">
-  <div>Entries<b id="sumCount">0</b></div>
-  <div>Total Cost<b id="sumCost">₹0</b></div>
+  <div>
+    Entries
+    <b id="sumEntries">0</b>
+  </div>
+
+  <div>
+    Total Cost
+    <b id="sumCost">₹0</b>
+  </div>
 </div>
-<div id="list"><p class="empty">Loading...</p></div>
 
-<button type="button" id="backBtn" style="background:#1a2320;">Back to Dashboard</button>
+<div id="list">
+  Loading...
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where }
-  from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+</div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-  authDomain: "kali-life-ecosystem.firebaseapp.com",
-  projectId: "kali-life-ecosystem",
-  storageBucket: "kali-life-ecosystem.firebasestorage.app",
-  messagingSenderId: "734170546737",
-  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-  measurementId: "G-LBEY0W7RX3"
-};
+<script>
+/* KALI LIFE ECOSYSTEM - Purchase + Inventory */
+setTimeout(function(){
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  if(!window.__fbLoaded){
 
-const $ = (id) => document.getElementById(id);
-const num = (id) => parseFloat($(id).value) || 0;
-const money = (n) => "₹" + (Math.round(n * 100) / 100).toLocaleString("en-IN");
-let user = null;
+    const status = document.getElementById("status");
 
-$("purchaseId").value = "PUR-" + Date.now();
-$("purchaseDate").value = new Date().toLocaleString("en-IN");
-$("backBtn").addEventListener("click", () => { location.href = "super-admin-dashboard.html"; });
-
-function calc() {
-  const total = num("quantity") * num("buyPrice");
-  $("totalView").textContent = money(total);
-  return total;
-}
-["quantity", "buyPrice"].forEach(id => $(id).addEventListener("input", calc));
-
-// Login + Super Admin check (read from Firestore, not localStorage)
-onAuthStateChanged(auth, async (u) => {
-  if (!u) { location.href = "login.html"; return; }
-
-  try {
-    const snap = await getDoc(doc(db, "users", u.uid));
-    const d = snap.exists() ? snap.data() : {};
-    const role = String(d.roleType || d.role || "").trim().toLowerCase();
-    const active = String(d.status || "").trim().toLowerCase() === "active";
-
-    if (role !== "super admin" || !active) {
-      alert("Access Denied! Only Super Admin can enter purchases.");
-      location.href = "super-admin-dashboard.html";
-      return;
+    if(status){
+      status.textContent =
+        "Firebase did not load. Check internet connection and try again.";
     }
 
-    user = u;
-    $("enteredBy").value = d.name || u.displayName || u.email || u.uid;
-    $("status").classList.add("hidden");
-    $("page").classList.remove("hidden");
-    loadList();
-
-  } catch (e) {
-    $("status").textContent = "Could not verify access: " + (e.code || "") + " " + e.message;
   }
-});
 
-async function loadList() {
-  try {
-    const snap = await getDocs(query(collection(db, "purchases"), where("purchasedBy", "==", user.uid)));
-    const rows = snap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-    let cost = 0;
-    const list = $("list");
-    list.innerHTML = "";
-    if (!rows.length) list.innerHTML = '<p class="empty">No purchases yet.</p>';
-    rows.forEach(r => {
-      cost += r.totalCost || 0;
-      const div = document.createElement("div");
-      div.className = "item";
-      const t = document.createElement("div");
-      t.textContent = r.itemName + " x " + r.quantity + " @ " + money(r.buyPrice) + " = " + money(r.totalCost);
-      const sm = document.createElement("small");
-      sm.textContent = "From " + r.supplierName + " | " + r.dateText;
-      div.append(t, sm);
-      list.appendChild(div);
-    });
-    $("sumCount").textContent = rows.length;
-    $("sumCost").textContent = money(cost);
-  } catch (e) {
-    $("list").innerHTML = "";
-    alert("List not loaded: " + e.code + " - " + e.message);
-  }
+},7000);
+</script>
+
+
+<script type="module">
+
+window.__fbLoaded = true;
+
+
+/* =========================================================
+   FIREBASE IMPORTS
+   ========================================================= */
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  query,
+  where,
+  runTransaction
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+   ========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+
+  authDomain:
+    "kali-life-ecosystem.firebaseapp.com",
+
+  projectId:
+    "kali-life-ecosystem",
+
+  storageBucket:
+    "kali-life-ecosystem.firebasestorage.app",
+
+  messagingSenderId:
+    "734170546737",
+
+  appId:
+    "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+  measurementId:
+    "G-LBEY0W7RX3"
+};
+
+
+/* =========================================================
+   FIREBASE INITIALIZATION
+   ========================================================= */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+const $ = (id) =>
+  document.getElementById(id);
+
+
+const num = (id) =>
+  parseFloat($(id).value) || 0;
+
+
+const money = (n) =>
+  "₹" +
+  (
+    Math.round((Number(n) || 0) * 100) / 100
+  ).toLocaleString("en-IN");
+
+
+let user = null;
+
+let userData = null;
+
+
+/* =========================================================
+   MESSAGE SYSTEM
+   ========================================================= */
+
+function showMessage(text, success){
+
+  const msg = $("msg");
+
+  msg.textContent = text;
+
+  msg.className = success ? "ok" : "err";
+
 }
 
-$("savePurchase").addEventListener("click", async () => {
-  const supplierName = $("supplierName").value.trim();
-  const itemName = $("itemName").value.trim();
-  const quantity = num("quantity");
-  const buyPrice = num("buyPrice");
 
-  if (!supplierName) return alert("Enter supplier name");
-  if (!itemName) return alert("Enter item name");
-  if (!(quantity > 0)) return alert("Enter quantity");
-  if (!(buyPrice > 0)) return alert("Enter buying price");
-  if (!user) return alert("Please login again");
+/* =========================================================
+   PURCHASE ID
+   ========================================================= */
 
-  const total = calc();
-  const now = new Date();
-  const btn = $("savePurchase");
-  btn.disabled = true;
-  btn.textContent = "Saving...";
-  try {
-    await addDoc(collection(db, "purchases"), {
-      purchaseId: $("purchaseId").value,
-      supplierName,
-      itemName,
-      quantity,
-      buyPrice,
-      totalCost: total,
-      remarks: $("remarks").value.trim(),
-      purchasedBy: user.uid,
-      enteredByName: $("enteredBy").value,
-      createdAt: now.getTime(),
-      dateText: now.toLocaleDateString("en-IN")
-    });
-    alert("Purchase saved successfully!");
-    ["supplierName","itemName","quantity","buyPrice","remarks"].forEach(id => $(id).value = "");
-    $("purchaseId").value = "PUR-" + Date.now();
-    $("purchaseDate").value = new Date().toLocaleString("en-IN");
-    calc();
-    loadList();
-  } catch (e) {
-    alert("NOT saved: " + e.code + " - " + e.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Save Purchase";
-  }
+function generatePurchaseId(){
+
+  return "PUR-" + Date.now();
+
+}
+
+
+function resetPurchaseId(){
+
+  $("purchaseId").value =
+    generatePurchaseId();
+
+  $("purchaseDate").value =
+    new Date().toLocaleString("en-IN");
+
+}
+
+
+/* =========================================================
+   PRODUCT KEY
+   ---------------------------------------------------------
+   Same product with different capitalization/spaces
+   will use the same Inventory document.
+   ========================================================= */
+
+function createItemKey(itemName){
+
+  return itemName
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g," ");
+
+}
+
+
+/* =========================================================
+   SAFE INVENTORY DOCUMENT ID
+   ========================================================= */
+
+function createInventoryId(itemKey){
+
+  return encodeURIComponent(itemKey);
+
+}
+
+
+/* =========================================================
+   TOTAL COST CALCULATION
+   ========================================================= */
+
+function calculateTotal(){
+
+  const quantity =
+    num("quantity");
+
+  const buyPrice =
+    num("buyPrice");
+
+  const total =
+    quantity * buyPrice;
+
+  $("totalView").textContent =
+    money(total);
+
+  return total;
+
+}
+
+
+["quantity","buyPrice"].forEach(id => {
+
+  $(id).addEventListener(
+    "input",
+    calculateTotal
+  );
+
 });
+
+
+/* =========================================================
+   SHOW CURRENT STOCK
+   ========================================================= */
+
+async function loadCurrentStock(){
+
+  const itemName =
+    $("itemName").value.trim();
+
+  if(!itemName){
+
+    $("stockPreview").textContent =
+      "Current Stock: —";
+
+    return;
+  }
+
+  try{
+
+    const itemKey =
+      createItemKey(itemName);
+
+    const inventoryId =
+      createInventoryId(itemKey);
+
+    const inventoryRef =
+      doc(
+        db,
+        "inventory",
+        inventoryId
+      );
+
+    const snap =
+      await getDoc(inventoryRef);
+
+    if(snap.exists()){
+
+      const data =
+        snap.data();
+
+      const stock =
+        Number(data.stockQuantity) || 0;
+
+      $("stockPreview").textContent =
+        "Current Stock: " +
+        stock;
+
+    }else{
+
+      $("stockPreview").textContent =
+        "Current Stock: 0";
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Stock check error:",
+      error
+    );
+
+    $("stockPreview").textContent =
+      "Current Stock: —";
+
+  }
+
+}
+
+
+/* =========================================================
+   ITEM NAME STOCK CHECK
+   ========================================================= */
+
+let stockTimer = null;
+
+$("itemName").addEventListener(
+  "input",
+  function(){
+
+    clearTimeout(stockTimer);
+
+    stockTimer =
+      setTimeout(
+        loadCurrentStock,
+        400
+      );
+
+  }
+);
+
+
+/* =========================================================
+   LOAD MY PURCHASES
+   ========================================================= */
+
+async function loadList(){
+
+  if(!user) return;
+
+  try{
+
+    const snap =
+      await getDocs(
+
+        query(
+          collection(db,"purchases"),
+
+          where(
+            "purchasedBy",
+            "==",
+            user.uid
+          )
+        )
+
+      );
+
+
+    const rows =
+      snap.docs
+        .map(d => ({
+          id:d.id,
+          ...d.data()
+        }))
+        .sort(
+          (a,b) =>
+            (b.createdAt || 0) -
+            (a.createdAt || 0)
+        );
+
+
+    let totalCost = 0;
+
+
+    $("sumEntries").textContent =
+      rows.length;
+
+
+    $("list").innerHTML = "";
+
+
+    if(!rows.length){
+
+      $("list").textContent =
+        "No purchases yet.";
+
+      $("sumCost").textContent =
+        "₹0";
+
+      return;
+
+    }
+
+
+    rows.forEach(r => {
+
+      totalCost +=
+        Number(r.totalCost) || 0;
+
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "item";
+
+
+      const title =
+        document.createElement("div");
+
+      title.textContent =
+        (r.itemName || "Item") +
+        " × " +
+        (r.quantity || 0) +
+        " = " +
+        money(r.totalCost || 0);
+
+
+      const small =
+        document.createElement("small");
+
+      small.textContent =
+        "Supplier: " +
+        (r.supplierName || "—") +
+        " | " +
+        (r.dateText || "");
+
+
+      div.append(
+        title,
+        small
+      );
+
+
+      $("list").appendChild(div);
+
+    });
+
+
+    $("sumCost").textContent =
+      money(totalCost);
+
+
+  }catch(error){
+
+    console.error(
+      "Purchase list error:",
+      error
+    );
+
+    $("list").textContent =
+      "Purchase list could not be loaded: " +
+      error.message;
+
+  }
+
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+   ========================================================= */
+
+onAuthStateChanged(
+  auth,
+  async (u) => {
+
+    if(!u){
+
+      location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    try{
+
+      const userSnap =
+        await getDoc(
+          doc(
+            db,
+            "users",
+            u.uid
+          )
+        );
+
+
+      const d =
+        userSnap.exists()
+          ? userSnap.data()
+          : {};
+
+
+      const role =
+        String(
+          d.roleType ||
+          d.role ||
+          ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+      const active =
+        String(
+          d.status ||
+          ""
+        )
+        .trim()
+        .toLowerCase()
+        === "active";
+
+
+      /*
+       * Existing system rule retained:
+       * Purchase entry is currently restricted
+       * to an active Super Admin.
+       */
+
+      if(
+        role !== "super admin" ||
+        !active
+      ){
+
+        $("status").textContent =
+          "Access Denied. Only an active Super Admin can enter purchases.";
+
+        return;
+
+      }
+
+
+      user = u;
+
+      userData = d;
+
+
+      $("enteredBy").value =
+        d.name ||
+        u.displayName ||
+        u.email ||
+        u.uid;
+
+
+      resetPurchaseId();
+
+      calculateTotal();
+
+      await loadList();
+
+
+      $("status")
+        .classList
+        .add("hidden");
+
+
+      $("page")
+        .classList
+        .remove("hidden");
+
+
+    }catch(error){
+
+      console.error(
+        "Authentication error:",
+        error
+      );
+
+      $("status").textContent =
+        "Could not verify access: " +
+        (error.code || "") +
+        " " +
+        error.message;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SAVE PURCHASE + UPDATE INVENTORY
+   ---------------------------------------------------------
+   IMPORTANT:
+   Purchase record and Inventory update happen
+   in ONE Firestore transaction.
+   ========================================================= */
+
+$("savePurchase").addEventListener(
+  "click",
+  async () => {
+
+    const supplierName =
+      $("supplierName")
+        .value
+        .trim();
+
+
+    const itemName =
+      $("itemName")
+        .value
+        .trim();
+
+
+    const quantity =
+      num("quantity");
+
+
+    const buyPrice =
+      num("buyPrice");
+
+
+    const remarks =
+      $("remarks")
+        .value
+        .trim();
+
+
+    /* ---------- Validation ---------- */
+
+    if(!supplierName){
+
+      showMessage(
+        "Enter supplier name.",
+        false
+      );
+
+      return;
+
+    }
+
+
+    if(!itemName){
+
+      showMessage(
+        "Enter item name.",
+        false
+      );
+
+      return;
+
+    }
+
+
+    if(!(quantity > 0)){
+
+      showMessage(
+        "Enter a valid purchase quantity.",
+        false
+      );
+
+      return;
+
+    }
+
+
+    if(!(buyPrice > 0)){
+
+      showMessage(
+        "Enter a valid buying price.",
+        false
+      );
+
+      return;
+
+    }
+
+
+    if(!user){
+
+      showMessage(
+        "Please login again.",
+        false
+      );
+
+      return;
+
+    }
+
+
+    const totalCost =
+      quantity * buyPrice;
+
+
+    const itemKey =
+      createItemKey(itemName);
+
+
+    const inventoryId =
+      createInventoryId(itemKey);
+
+
+    const btn =
+      $("savePurchase");
+
+
+    btn.disabled = true;
+
+    btn.textContent =
+      "Saving Purchase...";
+
+
+    showMessage(
+      "Saving Purchase and updating Stock...",
+      true
+    );
+
+
+    try{
+
+      const now =
+        new Date();
+
+
+      /*
+       * Create a new Purchase document reference
+       * before starting the transaction.
+       */
+
+      const purchaseRef =
+        doc(
+          collection(
+            db,
+            "purchases"
+          )
+        );
+
+
+      const inventoryRef =
+        doc(
+          db,
+          "inventory",
+          inventoryId
+        );
+
+
+      /*
+       * Firestore Transaction
+       *
+       * Purchase + Inventory are committed together.
+       */
+
+      const result =
+        await runTransaction(
+          db,
+          async (transaction) => {
+
+            /* READ INVENTORY FIRST */
+
+            const inventorySnap =
+              await transaction.get(
+                inventoryRef
+              );
+
+
+            let currentStock = 0;
+
+            let totalPurchased = 0;
+
+            let totalPurchaseValue = 0;
+
+
+            if(
+              inventorySnap.exists()
+            ){
+
+              const old =
+                inventorySnap.data();
+
+
+              currentStock =
+                Number(
+                  old.stockQuantity
+                ) || 0;
+
+
+              totalPurchased =
+                Number(
+                  old.totalPurchased
+                ) || 0;
+
+
+              totalPurchaseValue =
+                Number(
+                  old.totalPurchaseValue
+                ) || 0;
+
+            }
+
+
+            /* NEW STOCK */
+
+            const newStock =
+              currentStock +
+              quantity;
+
+
+            const newTotalPurchased =
+              totalPurchased +
+              quantity;
+
+
+            const newTotalPurchaseValue =
+              totalPurchaseValue +
+              totalCost;
+
+
+            /* INVENTORY DATA */
+
+            const inventoryData = {
+
+              itemName:
+                itemName,
+
+              itemKey:
+                itemKey,
+
+              stockQuantity:
+                newStock,
+
+              totalPurchased:
+                newTotalPurchased,
+
+              totalPurchaseValue:
+                newTotalPurchaseValue,
+
+              lastBuyPrice:
+                buyPrice,
+
+              lastSupplierName:
+                supplierName,
+
+              updatedAt:
+                now.getTime(),
+
+              updatedBy:
+                user.uid,
+
+              updatedByName:
+                $("enteredBy").value
+
+            };
+
+
+            /*
+             * PURCHASE DATA
+             */
+
+            const purchaseData = {
+
+              purchaseId:
+                $("purchaseId").value,
+
+              supplierName:
+                supplierName,
+
+              itemName:
+                itemName,
+
+              itemKey:
+                itemKey,
+
+              inventoryId:
+                inventoryId,
+
+              quantity:
+                quantity,
+
+              stockAdded:
+                quantity,
+
+              buyPrice:
+                buyPrice,
+
+              totalCost:
+                totalCost,
+
+              remarks:
+                remarks,
+
+              purchasedBy:
+                user.uid,
+
+              enteredByName:
+                $("enteredBy").value,
+
+              createdAt:
+                now.getTime(),
+
+              dateText:
+                now.toLocaleDateString(
+                  "en-IN"
+                )
+
+            };
+
+
+            /*
+             * WRITE INVENTORY
+             */
+
+            transaction.set(
+              inventoryRef,
+              inventoryData
+            );
+
+
+            /*
+             * WRITE PURCHASE
+             */
+
+            transaction.set(
+              purchaseRef,
+              purchaseData
+            );
+
+
+            return {
+              previousStock:
+                currentStock,
+
+              added:
+                quantity,
+
+              newStock:
+                newStock
+
+            };
+
+          }
+        );
+
+
+      /* ---------- SUCCESS ---------- */
+
+      showMessage(
+        "Purchase saved successfully. Stock updated to " +
+        result.newStock +
+        ".",
+        true
+      );
+
+
+      /*
+       * Clear entry fields
+       */
+
+      $("supplierName").value =
+        "";
+
+      $("itemName").value =
+        "";
+
+      $("quantity").value =
+        "1";
+
+      $("buyPrice").value =
+        "";
+
+      $("remarks").value =
+        "";
+
+
+      $("stockPreview").textContent =
+        "Current Stock: —";
+
+
+      resetPurchaseId();
+
+      calculateTotal();
+
+
+      await loadList();
+
+
+    }catch(error){
+
+      console.error(
+        "Purchase save error:",
+        error
+      );
+
+
+      let message =
+        error.message ||
+        "Unknown error";
+
+
+      if(
+        error.code ===
+        "permission-denied"
+      ){
+
+        message =
+          "Permission denied. Check Firestore Rules.";
+
+      }
+
+
+      showMessage(
+        "Purchase NOT saved: " +
+        message,
+        false
+      );
+
+
+    }finally{
+
+      btn.disabled =
+        false;
+
+      btn.textContent =
+        "Save Purchase";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INITIAL CALCULATION
+   ========================================================= */
+
+calculateTotal();
+
 </script>
+
 </body>
 </html>
