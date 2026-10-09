@@ -1,150 +1,1265 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KALI LIFE — Dashboard</title>
+
+<title>KALI LIFE — Admin Dashboard</title>
+
+<script src="auth.js"></script>
+
 <style>
-:root{--bg:#f3f7f5;--green:#087443;--green2:#0caf63;--green3:#dff7ea;--gold:#c99427;--line:#e3ebe7;--text:#10231a;--muted:#74847c;--sidebar:260px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-a{text-decoration:none;color:inherit}
-.app{display:flex;min-height:100vh}
-.sidebar{width:var(--sidebar);background:linear-gradient(180deg,#061c12,#08291b);color:#fff;padding:18px 12px;position:fixed;top:0;bottom:0;left:0;overflow-y:auto}
-.brand{display:flex;align-items:center;gap:10px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
-.brand-logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#c9f8d9,#3dca83);display:grid;place-items:center;font-weight:900;color:#07351f}
-.brand strong{font-size:14px;display:block}
-.brand small{font-size:9px;color:#83a797}
-.section{font-size:9px;color:#628a76;letter-spacing:1px;padding:14px 8px 6px;text-transform:uppercase}
-.nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:#c4d8ce;font-size:12px;margin-bottom:3px}
-.nav a:hover,.nav a.active{background:rgba(61,211,132,.18);color:#fff}
-.nav a.active{box-shadow:inset 3px 0 0 #54dc91}
-.main{margin-left:var(--sidebar);width:calc(100% - var(--sidebar));min-height:100vh}
-.topbar{height:70px;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:10}
-.topbar h1{font-size:18px}
-.content{padding:22px 24px 40px;max-width:1400px}
-.welcome{margin-bottom:18px}
-.welcome h2{font-size:22px}
-.welcome p{font-size:12px;color:var(--muted);margin-top:4px}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(8,60,38,.06)}
-.kpi-icon{width:36px;height:36px;border-radius:10px;background:var(--green3);display:grid;place-items:center;font-size:16px}
-.kpi h3{font-size:22px;margin-top:12px}
-.kpi p{font-size:11px;color:var(--muted);margin-top:3px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(8,60,38,.06);margin-bottom:16px}
-.card-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.card-head h3{font-size:14px}
-.income{padding:16px}
-.income-main{background:linear-gradient(135deg,#e8f9ef,#f8fcf9);border:1px solid #d8eee1;border-radius:14px;padding:16px}
-.income-main small{font-size:10px;color:#56816c;font-weight:700}
-.income-main h2{font-size:28px;color:#075c35;margin-top:4px}
-.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;width:100%}.grid2{grid-template-columns:1fr}}
+:root{
+    --bg:#f3f7f5;
+    --green:#087443;
+    --green2:#0caf63;
+    --green3:#dff7ea;
+    --red:#dc3545;
+    --orange:#d98b00;
+    --blue:#1976d2;
+    --line:#e3ebe7;
+    --text:#10231a;
+    --muted:#74847c;
+    --sidebar:260px;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:system-ui,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:var(--sidebar);
+    background:linear-gradient(180deg,#061c12,#08291b);
+    color:#fff;
+    padding:18px 12px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    overflow-y:auto;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    margin-bottom:12px;
+}
+
+.brand-logo{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#c9f8d9,#3dca83);
+    display:grid;
+    place-items:center;
+    font-weight:900;
+    color:#07351f;
+}
+
+.brand strong{
+    font-size:14px;
+    display:block;
+}
+
+.brand small{
+    font-size:9px;
+    color:#83a797;
+}
+
+.section{
+    font-size:9px;
+    color:#628a76;
+    letter-spacing:1px;
+    padding:14px 8px 6px;
+    text-transform:uppercase;
+}
+
+.nav a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:10px;
+    color:#c4d8ce;
+    font-size:12px;
+    margin-bottom:3px;
+}
+
+.nav a:hover,
+.nav a.active{
+    background:rgba(61,211,132,.18);
+    color:#fff;
+}
+
+.nav a.active{
+    box-shadow:inset 3px 0 0 #54dc91;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:var(--sidebar);
+    width:calc(100% - var(--sidebar));
+    min-height:100vh;
+}
+
+.topbar{
+    min-height:70px;
+    background:rgba(255,255,255,.96);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 24px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.topbar h1{
+    font-size:18px;
+}
+
+.admin-info{
+    text-align:right;
+}
+
+.admin-name{
+    font-size:13px;
+    font-weight:700;
+}
+
+.admin-role{
+    font-size:10px;
+    color:var(--green);
+}
+
+.content{
+    padding:22px 24px 40px;
+    max-width:1400px;
+    margin:auto;
+}
+
+/* WELCOME */
+
+.welcome{
+    margin-bottom:18px;
+}
+
+.welcome h2{
+    font-size:22px;
+}
+
+.welcome p{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+/* STATUS */
+
+.live-status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:#e8f8ef;
+    color:#087443;
+    border:1px solid #cceedd;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:11px;
+    margin-top:10px;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+    background:#0caf63;
+    border-radius:50%;
+}
+
+/* KPI */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.kpi{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+    box-shadow:0 6px 20px rgba(8,60,38,.06);
+}
+
+.kpi-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    background:var(--green3);
+    display:grid;
+    place-items:center;
+    font-size:17px;
+}
+
+.kpi h3{
+    font-size:24px;
+    margin-top:12px;
+}
+
+.kpi p{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+/* GRID */
+
+.grid2{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:16px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(8,60,38,.06);
+    margin-bottom:16px;
+}
+
+.card-head{
+    padding:14px 16px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.card-head h3{
+    font-size:14px;
+}
+
+/* INCOME */
+
+.income{
+    padding:16px;
+}
+
+.income-main{
+    background:linear-gradient(135deg,#e8f9ef,#f8fcf9);
+    border:1px solid #d8eee1;
+    border-radius:14px;
+    padding:18px;
+}
+
+.income-main small{
+    font-size:10px;
+    color:#56816c;
+    font-weight:700;
+}
+
+.income-main h2{
+    font-size:30px;
+    color:#075c35;
+    margin-top:4px;
+}
+
+/* QUICK */
+
+.quick{
+    padding:15px 16px;
+}
+
+.quick-row{
+    display:flex;
+    justify-content:space-between;
+    padding:11px 0;
+    border-bottom:1px dashed #e2e8e5;
+    font-size:13px;
+}
+
+.quick-row:last-child{
+    border-bottom:none;
+}
+
+.quick-value{
+    font-weight:800;
+}
+
+/* RECENT SALES */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:11px 13px;
+    border-bottom:1px solid #edf1ef;
+    text-align:left;
+    font-size:12px;
+}
+
+th{
+    color:#62736b;
+    background:#f8faf9;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.status.completed{
+    background:#dff7ea;
+    color:#087443;
+}
+
+.status.pending{
+    background:#fff2cc;
+    color:#9a6700;
+}
+
+.status.cancelled{
+    background:#fde2e5;
+    color:#c62838;
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:#7a8982;
+    font-size:13px;
+}
+
+/* ERROR */
+
+.error-box{
+    display:none;
+    background:#fff1f2;
+    color:#b42318;
+    border:1px solid #fecdd3;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+    .kpi-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .grid2{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .topbar{
+        padding:12px 15px;
+    }
+
+    .content{
+        padding:18px 12px 30px;
+    }
+
+    .kpi-grid{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .kpi{
+        padding:13px;
+    }
+
+    .kpi h3{
+        font-size:20px;
+    }
+
+    .welcome h2{
+        font-size:20px;
+    }
+
+    .admin-info{
+        display:none;
+    }
+
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-  <aside class="sidebar">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
     <div class="brand">
-      <div class="brand-logo">K</div>
-      <div>
-        <strong>KALI LIFE</strong>
-        <small>BUSINESS ECOSYSTEM</small>
-      </div>
+
+        <div class="brand-logo">
+            K
+        </div>
+
+        <div>
+            <strong>KALI LIFE</strong>
+            <small>BUSINESS ECOSYSTEM</small>
+        </div>
+
     </div>
-<div class="section">My Business</div>
-<nav class="nav">
 
-    <a href="admin-dashboard.html" class="active">
-        ⌂ Dashboard
-    </a>
 
-    <a href="orders.html">
-        🛒 Orders
-    </a>
+    <div class="section">
+        My Business
+    </div>
 
-    <a href="customers.html">
-        ♙ Customers
-    </a>
 
-    <a href="products.html">
-        ▣ Products
-    </a>
+    <nav class="nav">
 
-    <a href="sales.html">
-        ↑ Sales
-    </a>
+        <a href="admin-dashboard.html" class="active">
+            ⌂ Dashboard
+        </a>
 
-    <a href="payments.html">
-        ₹ Payments
-    </a>
+        <a href="orders.html">
+            🛒 Orders
+        </a>
 
-    <a href="commission.html">
-        💰 Commission
-    </a>
+        <a href="customers.html">
+            👥 Customers
+        </a>
 
-</nav>
+        <a href="products.html">
+            ▣ Products
+        </a>
 
-<div class="section">Operations</div>
+        <a href="sales.html">
+            ↑ Sales
+        </a>
 
-<nav class="nav">
+        <a href="payments.html">
+            ₹ Payments
+        </a>
 
-    <a href="purchase.html">
-        ↓ Purchase
-    </a>
+        <a href="commission.html">
+            💰 Commission
+        </a>
 
-    <a href="warehouse.html">
-        ▤ Warehouse
-    </a>
-
-    <a href="logistics.html">
-        🚚 Logistics
-    </a>
-
-</nav>
     </nav>
-  </aside>
 
-  <div class="main">
-    <div class="topbar">
-      <h1>Dashboard</h1>
-      <div style="font-size:13px;color:var(--muted)">Admin Panel</div>
+
+    <div class="section">
+        Operations
     </div>
+
+
+    <nav class="nav">
+
+        <a href="purchase.html">
+            ↓ Purchase
+        </a>
+
+        <a href="warehouse.html">
+            ▤ Warehouse
+        </a>
+
+        <a href="logistics.html">
+            🚚 Logistics
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+        <div class="admin-info">
+
+            <div
+                class="admin-name"
+                id="topAdminName">
+                Loading...
+            </div>
+
+            <div
+                class="admin-role"
+                id="topAdminRole">
+                Loading...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
 
     <div class="content">
-      <div class="welcome">
-        <h2>Welcome back 👋</h2>
-        <p>KALI LIFE Department Business Center</p>
-      </div>
 
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-icon">📦</div><h3>1,248</h3><p>Total Orders</p></div>
-        <div class="kpi"><div class="kpi-icon">💰</div><h3>₹4.8L</h3><p>Total Sales</p></div>
-        <div class="kpi"><div class="kpi-icon">👥</div><h3>856</h3><p>Customers</p></div>
-        <div class="kpi"><div class="kpi-icon">✅</div><h3>92%</h3><p>Success Rate</p></div>
-      </div>
 
-      <div class="grid2">
-        <div class="card">
-          <div class="card-head"><h3>Today's Income</h3></div>
-          <div class="income">
-            <div class="income-main">
-              <small>TODAY'S EARNING</small>
-              <h2>₹28,450</h2>
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome back,
+                <span id="adminName">
+                    Admin
+                </span>
+                👋
+            </h2>
+
+            <p>
+                Your real-time KALI LIFE business dashboard
+            </p>
+
+            <div class="live-status">
+
+                <span class="live-dot"></span>
+
+                LIVE DATA
+
             </div>
-          </div>
+
         </div>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorBox"
+            class="error-box">
+        </div>
+
+
+        <!-- KPI -->
+
+        <div class="kpi-grid">
+
+
+            <div class="kpi">
+
+                <div class="kpi-icon">
+                    📦
+                </div>
+
+                <h3 id="totalOrders">
+                    0
+                </h3>
+
+                <p>
+                    Total Orders
+                </p>
+
+            </div>
+
+
+            <div class="kpi">
+
+                <div class="kpi-icon">
+                    💰
+                </div>
+
+                <h3 id="totalSales">
+                    ₹0
+                </h3>
+
+                <p>
+                    Total Sales
+                </p>
+
+            </div>
+
+
+            <div class="kpi">
+
+                <div class="kpi-icon">
+                    👥
+                </div>
+
+                <h3 id="totalCustomers">
+                    0
+                </h3>
+
+                <p>
+                    Customers
+                </p>
+
+            </div>
+
+
+            <div class="kpi">
+
+                <div class="kpi-icon">
+                    📊
+                </div>
+
+                <h3 id="totalQuantity">
+                    0
+                </h3>
+
+                <p>
+                    Items Sold
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SECOND ROW -->
+
+        <div class="grid2">
+
+
+            <!-- TODAY -->
+
+            <div class="card">
+
+                <div class="card-head">
+
+                    <h3>
+                        Today's Sales
+                    </h3>
+
+                    <span>
+                        💰
+                    </span>
+
+                </div>
+
+                <div class="income">
+
+                    <div class="income-main">
+
+                        <small>
+                            TODAY'S REAL EARNING
+                        </small>
+
+                        <h2 id="todaySales">
+                            ₹0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK -->
+
+            <div class="card">
+
+                <div class="card-head">
+
+                    <h3>
+                        Order Status
+                    </h3>
+
+                </div>
+
+
+                <div class="quick">
+
+                    <div class="quick-row">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <span
+                            class="quick-value"
+                            id="pendingOrders">
+                            0
+                        </span>
+
+                    </div>
+
+
+                    <div class="quick-row">
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <span
+                            class="quick-value"
+                            id="completedOrders">
+                            0
+                        </span>
+
+                    </div>
+
+
+                    <div class="quick-row">
+
+                        <span>
+                            Cancelled
+                        </span>
+
+                        <span
+                            class="quick-value"
+                            id="cancelledOrders">
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECENT SALES -->
+
         <div class="card">
-          <div class="card-head"><h3>Quick Actions</h3></div>
-          <div style="padding:14px 16px;font-size:13px;line-height:1.8">
-            • Pending Orders: <b>12</b><br>
-            • New Customers: <b>5</b><br>
-            • Low Stock: <b>3</b>
-          </div>
+
+            <div class="card-head">
+
+                <h3>
+                    Recent Sales
+                </h3>
+
+                <span
+                    style="font-size:11px;color:#74847c;">
+                    Live
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Item
+                            </th>
+
+                            <th>
+                                Quantity
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="salesTable">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty">
+
+                                Loading real sales data...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
         </div>
-      </div>
+
     </div>
-  </div>
+
 </div>
-</body>
-</html>
+
+</div>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    limit
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/*
+=================================================
+FIREBASE CONFIG
+
+IMPORTANT:
+Use the SAME firebaseConfig from your working
+login.html.
+
+Do NOT invent a new Firebase project here.
+=================================================
+*/
+
+const firebaseConfig = {
+
+    apiKey: "PASTE_YOUR_LOGIN_HTML_API_KEY",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "PASTE_YOUR_LOGIN_HTML_MESSAGING_SENDER_ID",
+
+    appId:
+        "PASTE_YOUR_LOGIN_HTML_APP_ID",
+
+    measurementId:
+        "G-LBEY0W7RX3"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getFirestore(app);
+
+
+/* ============================================
+   CURRENT ADMIN SESSION
+============================================ */
+
+const session =
+    getSession();
+
+
+if (!session) {
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+const currentAdminId =
+    String(session?.adminId || "").trim();
+
+const currentUid =
+    String(session?.uid || "").trim();
+
+const currentMobile =
+    String(session?.mobile || "").trim();
+
+const currentAdminName =
+    String(session?.name || "Admin").trim();
+
+const currentRole =
+    String(session?.role || "Admin").trim();
+
+
+document.getElementById(
+    "adminName"
+).textContent =
+    currentAdminName;
+
+
+document.getElementById(
+    "topAdminName"
+).textContent =
+    currentAdminName;
+
+
+document.getElementById(
+    "topAdminRole"
+).textContent =
+    currentRole;
+
+
+/* ============================================
+   FLEXIBLE FIELD READER
+
+   Supports old/new field names.
+============================================ */
+
+function valueOf(data, fields, fallback = "") {
+
+    for (const field of fields) {
+
+        if (
+            data[field] !== undefined &&
+            data[field] !== null &&
+            data[field] !== ""
+        ) {
+
+            return data[field];
+
+        }
+
+    }
+
+    return fallback;
+
+}
+
+
+/* ============================================
+   NUMBER
+============================================ */
+
+function numberValue(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        value === ""
+    ) {
+
+        return 0;
+
+    }
+
+    const cleaned =
+        String(value)
+        .replace(/[₹,\s]/g,"");
+
+    const number =
+        Number(cleaned);
+
+    return Number.isFinite(number)
+        ? number
+        : 0;
+
+}
+
+
+/* ============================================
+   DATE
+============================================ */
+
+function getDate(data) {
+
+    const raw =
+        valueOf(
+            data,
+            [
+                "createdAt",
+                "date",
+                "saleDate",
+                "orderDate",
+                "timestamp"
+            ]
+        );
+
+    if (!raw) return null;
+
+    if (
+        typeof raw === "object" &&
+        raw.toDate
+    ) {
+
+        return raw.toDate();
+
+    }
+
+    const d =
+        new Date(raw);
+
+    return isNaN(d.getTime())
+        ? null
+        : d;
+
+}
+
+
+/* ============================================
+   ADMIN MATCH
+
+   This is the most important filter.
+============================================ */
+
+function belongsToCurrentAdmin(data) {
+
+    /*
+    Super Admin can see everything.
+    */
+
+    if (
+        currentRole === "Super Admin"
+    ) {
+
+        return true;
+
+    }
+
+
+    const adminId =
+        String(
+            valueOf(
+                data,
+                [
+                    "adminId",
+                    "adminID",
+                    "sellerId",
+                    "sellerID",
+                    "createdByAdminId",
+                    "salesAdminId"
+                ]
+            )
+        ).trim();
+
+
+    const uid =
+        String(
+            valueOf(
+                data,
+                [
+                    "uid",
+                    "userUid",
+                    "createdByUid",
+                    "sellerUid"
+                ]
+            )
+        ).trim();
+
+
+    const mobile =
+        String(
+            valueOf(
+                data,
+                [
+                    "adminMobile",
+                    "sellerMobile",
+                    "createdByMobile",
+                    "mobile"
+                ]
+            )
+        ).trim();
+
+
+    if (
+        currentAdminId &&
+        adminId &&
+        currentAdminId === adminId
+    ) {
+
+        return true;
+
+    }
+
+
+    if (
+        currentUid &&
+        uid &&
+        currentUid === uid
+    ) {
+
+        return true;
+
+    }
+
+
+    if (
+        currentMobile &&
+        mobile &&
+        currentMobile === mobile
+    ) {
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* ============================================
+   LOAD SALES
+============================================ */
+
+async function loadSales() {
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "sales"
+                )
+            );
+
+
+        let sales = [];
+
+        snapshot.forEach(doc => {
+
+            const data =
+                doc.data();
+
+            if (
+                belongsToCurrentAdmin(data)
+            ) {
+
+                sales.push({
+                    id: doc.id,
+                    ...data
+                });
+
+            }
+
+        });
+
+
+        calculateSales(
+            sales
+        );
+
+        renderRecentSales(
+            sales
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Sales loading error:",
+            error
+        );
+
+        showError(
+            "Sales data load করতে সমস্যা হয়েছে: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ============================================
+   CALCULATE SALES
+============================================ */
+
+function calculateSales(
+    sales
+) {
+
+    let totalAmount = 0;
+
+    let totalQuantity = 0;
+
+    let todayAmount = 0;
+
+    const today =
+        new Date();
+
+    sales.forEach(sale => {
+
+        const amount =
+            numberValue(
+     
