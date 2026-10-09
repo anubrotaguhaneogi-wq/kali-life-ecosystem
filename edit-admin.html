@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Edit / পদ পরিবর্তন - KALI LIFE ECOSYSTEM</title>
+
+<title>Admin Edit & Management - KALI LIFE ECOSYSTEM</title>
 
 <style>
 *{
@@ -13,46 +14,133 @@
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:#f0fdf4;
-    color:#1f2937;
-    padding:20px;
+    background:linear-gradient(135deg,#f0fdf4,#ecfdf5,#f8fafc);
+    color:#0f172a;
+    padding:18px;
 }
 
 .container{
-    max-width:650px;
+    width:100%;
+    max-width:760px;
     margin:auto;
 }
 
 .header{
-    background:#166534;
-    color:white;
+    background:linear-gradient(135deg,#14532d,#166534,#15803d);
+    color:#fff;
     padding:25px 20px;
-    border-radius:16px;
+    border-radius:20px;
     text-align:center;
+    box-shadow:0 12px 35px rgba(22,101,52,.20);
     margin-bottom:20px;
 }
 
 .header h1{
-    margin:0 0 8px;
+    margin:0 0 7px;
     font-size:25px;
 }
 
 .header p{
     margin:0;
-    font-size:14px;
+    font-size:13px;
+    opacity:.9;
+}
+
+.security-badge{
+    display:inline-block;
+    margin-top:14px;
+    padding:7px 14px;
+    border-radius:30px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.25);
+    font-size:12px;
+    font-weight:700;
 }
 
 .card{
-    background:white;
-    border-radius:16px;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:20px;
     padding:24px;
-    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    box-shadow:0 10px 35px rgba(15,23,42,.08);
 }
 
 .section-title{
-    margin-top:0;
+    margin:0 0 5px;
     color:#166534;
     font-size:22px;
+}
+
+.subtitle{
+    margin:0 0 22px;
+    color:#64748b;
+    font-size:13px;
+}
+
+.loading{
+    text-align:center;
+    padding:35px 15px;
+    color:#64748b;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.photo-box{
+    text-align:center;
+    padding:20px;
+    margin-bottom:22px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+}
+
+.photo-preview,
+.photo-placeholder{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    margin:0 auto 13px;
+}
+
+.photo-preview{
+    display:block;
+    object-fit:cover;
+    border:5px solid #166534;
+    background:#e2e8f0;
+}
+
+.photo-placeholder{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#dcfce7;
+    border:5px solid #86efac;
+    font-size:55px;
+}
+
+.photo-input{
+    width:100%;
+    max-width:400px;
+    padding:10px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    background:#fff;
+}
+
+.photo-name{
+    margin-top:8px;
+    color:#64748b;
+    font-size:12px;
+    word-break:break-word;
+}
+
+.hint{
+    margin-top:7px;
+    color:#64748b;
+    font-size:11px;
+    line-height:1.5;
 }
 
 .form-group{
@@ -61,99 +149,90 @@ body{
 
 label{
     display:block;
-    font-weight:700;
     margin-bottom:7px;
+    font-size:14px;
+    font-weight:700;
+    color:#334155;
 }
 
 input,
 select{
     width:100%;
-    padding:12px;
+    padding:12px 13px;
     border:1px solid #cbd5e1;
-    border-radius:9px;
+    border-radius:10px;
+    background:#fff;
+    color:#0f172a;
     font-size:15px;
-    background:white;
+    outline:none;
+    transition:.2s;
+}
+
+input:focus,
+select:focus{
+    border-color:#16a34a;
+    box-shadow:0 0 0 3px rgba(22,163,74,.10);
 }
 
 input[readonly]{
     background:#f1f5f9;
+    color:#475569;
+    cursor:not-allowed;
 }
 
-.hint{
-    margin-top:6px;
-    font-size:12px;
-    color:#64748b;
-    line-height:1.5;
+.identity-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:20px;
 }
 
-/* PHOTO */
-
-.photo-box{
-    text-align:center;
-    margin-bottom:22px;
-}
-
-.photo-preview{
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid #166534;
-    background:#e2e8f0;
-    display:block;
-    margin:0 auto 12px;
-}
-
-.photo-placeholder{
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    border:4px solid #166534;
-    background:#e2e8f0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 12px;
-    font-size:50px;
-}
-
-.photo-input{
+.identity-item{
+    padding:14px;
     background:#f8fafc;
-    padding:10px;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
 }
 
-.photo-name{
-    margin-top:7px;
-    font-size:12px;
+.identity-label{
     color:#64748b;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.identity-value{
+    color:#0f172a;
+    font-size:13px;
+    font-weight:700;
     word-break:break-word;
 }
 
+.role-info{
+    padding:12px 14px;
+    margin-bottom:18px;
+    background:#eff6ff;
+    border:1px solid #bfdbfe;
+    border-radius:11px;
+    color:#1e40af;
+    font-size:12px;
+    line-height:1.5;
+}
+
 .buttons{
-    display:flex;
+    display:grid;
+    grid-template-columns:1fr 1fr;
     gap:10px;
-    margin-top:22px;
+    margin-top:24px;
 }
 
 button{
     border:0;
-    border-radius:9px;
-    padding:12px 18px;
-    font-size:15px;
+    border-radius:10px;
+    padding:13px 16px;
+    font-size:14px;
     font-weight:700;
     cursor:pointer;
-}
-
-.save-button{
-    background:#166534;
-    color:white;
-    flex:1;
-}
-
-.cancel-button{
-    background:#e2e8f0;
-    color:#1e293b;
-    flex:1;
+    transition:.2s;
 }
 
 button:disabled{
@@ -161,12 +240,41 @@ button:disabled{
     cursor:not-allowed;
 }
 
+.save-button{
+    background:#166534;
+    color:#fff;
+}
+
+.save-button:hover{
+    background:#14532d;
+}
+
+.delete-button{
+    background:#dc2626;
+    color:#fff;
+}
+
+.delete-button:hover{
+    background:#b91c1c;
+}
+
+.cancel-button{
+    margin-top:10px;
+    width:100%;
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.cancel-button:hover{
+    background:#cbd5e1;
+}
+
 .message{
     display:none;
     margin-top:18px;
-    padding:12px;
-    border-radius:9px;
-    font-size:14px;
+    padding:13px;
+    border-radius:10px;
+    font-size:13px;
     line-height:1.5;
 }
 
@@ -177,39 +285,54 @@ button:disabled{
 .message.success{
     background:#dcfce7;
     color:#166534;
+    border:1px solid #86efac;
 }
 
 .message.error{
     background:#fee2e2;
     color:#991b1b;
+    border:1px solid #fecaca;
 }
 
 .message.info{
     background:#dbeafe;
     color:#1e40af;
+    border:1px solid #bfdbfe;
 }
 
-.loading{
-    text-align:center;
-    padding:30px 10px;
-    color:#64748b;
+.danger-box{
+    margin-top:24px;
+    padding:15px;
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    border-radius:12px;
 }
 
-.hidden{
-    display:none !important;
+.danger-box strong{
+    display:block;
+    color:#9a3412;
+    margin-bottom:5px;
+    font-size:13px;
+}
+
+.danger-box p{
+    margin:0;
+    color:#9a3412;
+    font-size:11px;
+    line-height:1.5;
 }
 
 .links{
-    margin-top:20px;
     text-align:center;
+    margin-top:20px;
 }
 
 .links a{
     color:#166534;
     text-decoration:none;
+    font-size:12px;
     font-weight:700;
-    margin:0 8px;
-    font-size:13px;
+    margin:0 7px;
 }
 
 .links a:hover{
@@ -226,8 +349,16 @@ button:disabled{
         padding:18px;
     }
 
+    .identity-box{
+        grid-template-columns:1fr;
+    }
+
     .buttons{
-        flex-direction:column;
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:21px;
     }
 }
 </style>
@@ -240,19 +371,45 @@ button:disabled{
     <div class="header">
         <h1>🔐 Admin Management</h1>
         <p>KALI LIFE ECOSYSTEM</p>
+        <div class="security-badge">
+            👑 SUPER ADMIN CONTROL
+        </div>
     </div>
 
     <div class="card">
 
-        <h2 class="section-title">
-            Admin Edit / পদ পরিবর্তন
-        </h2>
-
         <div id="loadingBox" class="loading">
-            Admin তথ্য লোড হচ্ছে...
+            🔄 Admin information loading...
+        </div>
+
+        <div id="accessDenied" class="message error">
+            Super Admin access required.
         </div>
 
         <div id="editBox" class="hidden">
+
+            <h2 class="section-title">
+                Admin Edit / Management
+            </h2>
+
+            <p class="subtitle">
+                Super Admin can correct the selected administrator's information.
+            </p>
+
+            <div class="identity-box">
+
+                <div class="identity-item">
+                    <div class="identity-label">Admin UID</div>
+                    <div class="identity-value" id="displayUid">-</div>
+                </div>
+
+                <div class="identity-item">
+                    <div class="identity-label">Current Role</div>
+                    <div class="identity-value" id="displayRole">-</div>
+                </div>
+
+            </div>
+
 
             <!-- PHOTO -->
 
@@ -281,8 +438,8 @@ button:disabled{
                 </div>
 
                 <div class="hint">
-                    JPG / PNG / WEBP ছবি ব্যবহার করুন।
-                    ছবি স্বয়ংক্রিয়ভাবে 600×600-এর মধ্যে কমপ্রেস হবে।
+                    JPG / PNG / WEBP ব্যবহার করুন।
+                    ছবিটি সর্বোচ্চ 600×600px-এর মধ্যে JPEG হিসেবে সংরক্ষণ করা হবে।
                 </div>
 
             </div>
@@ -298,7 +455,8 @@ button:disabled{
 
                 <input
                     id="eName"
-                    type="text">
+                    type="text"
+                    autocomplete="name">
 
             </div>
 
@@ -316,6 +474,10 @@ button:disabled{
                     type="email"
                     readonly>
 
+                <div class="hint">
+                    Login identity নিরাপত্তার জন্য Email পরিবর্তনযোগ্য নয়।
+                </div>
+
             </div>
 
 
@@ -331,6 +493,10 @@ button:disabled{
                     id="eMobile"
                     type="tel"
                     readonly>
+
+                <div class="hint">
+                    Login identity নিরাপত্তার জন্য Mobile পরিবর্তনযোগ্য নয়।
+                </div>
 
             </div>
 
@@ -355,10 +521,12 @@ button:disabled{
 
                 </select>
 
-                <div class="hint">
-                    এখানে Admin-এর পদ পরিবর্তন করতে পারবেন।
-                </div>
+            </div>
 
+
+            <div id="roleInfo"
+                 class="role-info">
+                Role information loading...
             </div>
 
 
@@ -371,7 +539,13 @@ button:disabled{
                     Department
                 </label>
 
-                <select id="eDepartment"></select>
+                <select id="eDepartment">
+
+                    <option value="">
+                        -- Department বাছুন --
+                    </option>
+
+                </select>
 
             </div>
 
@@ -385,7 +559,13 @@ button:disabled{
                     Reports To
                 </label>
 
-                <select id="eReportsTo"></select>
+                <select id="eReportsTo">
+
+                    <option value="">
+                        -- Core Admin বাছুন --
+                    </option>
+
+                </select>
 
             </div>
 
@@ -413,7 +593,7 @@ button:disabled{
             </div>
 
 
-            <!-- BUTTONS -->
+            <!-- SAVE / DELETE -->
 
             <div class="buttons">
 
@@ -422,24 +602,47 @@ button:disabled{
                     id="saveEditButton"
                     class="save-button">
 
-                    Save Changes
+                    💾 Save Changes
 
                 </button>
 
                 <button
                     type="button"
-                    id="cancelEditButton"
-                    class="cancel-button">
+                    id="deleteButton"
+                    class="delete-button">
 
-                    Cancel
+                    🗑️ Delete Admin
 
                 </button>
 
             </div>
 
 
+            <button
+                type="button"
+                id="cancelEditButton"
+                class="cancel-button">
+
+                ← Back to Admin List
+
+            </button>
+
+
             <div id="editMessage"
                  class="message">
+            </div>
+
+
+            <div class="danger-box">
+
+                <strong>⚠️ Delete Protection</strong>
+
+                <p>
+                    Super Admin নিজের Super Admin account delete করতে পারবে না।
+                    অন্য Admin delete করলে Firestore Admin record এবং stored photo
+                    remove করা হবে।
+                </p>
+
             </div>
 
         </div>
@@ -447,16 +650,16 @@ button:disabled{
 
         <div class="links">
 
-            <a href="admin-dashboard.html">
-                ← Admin Dashboard
-            </a>
-
-            <a href="create-admin.html">
-                Admin Management
+            <a href="super-admin-dashboard.html">
+                ← Super Admin
             </a>
 
             <a href="admin-list.html">
                 Admin List
+            </a>
+
+            <a href="create-admin.html">
+                Create Admin
             </a>
 
         </div>
@@ -468,18 +671,18 @@ button:disabled{
 
 <script type="module">
 
-/* =====================================================
+/* =========================================================
    FIREBASE IMPORT
-   ===================================================== */
+========================================================= */
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -487,24 +690,29 @@ import {
     query,
     where,
     getDocs,
-    getDoc,
     doc,
-    updateDoc
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    getDoc,
+    updateDoc,
+    deleteDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
     getStorage,
     ref,
     uploadBytes,
-    getDownloadURL
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+    getDownloadURL,
+    deleteObject
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+import {
+    getCurrentUser,
+    logout
+} from "./auth.js";
 
 
-/* =====================================================
+/* =========================================================
    FIREBASE CONFIG
-   ===================================================== */
+========================================================= */
 
 const firebaseConfig = {
 
@@ -531,9 +739,9 @@ const firebaseConfig = {
 };
 
 
-/* =====================================================
-   FIREBASE INITIALIZE
-   ===================================================== */
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 const app =
     initializeApp(firebaseConfig);
@@ -541,25 +749,24 @@ const app =
 const db =
     getFirestore(app);
 
-const mainAuth =
+const firebaseAuth =
     getAuth(app);
 
 const storage =
     getStorage(app);
 
 
-/* =====================================================
+/* =========================================================
    CONSTANTS
-   ===================================================== */
+========================================================= */
 
-const USERS =
-    "users";
+const USERS = "users";
 
-const CORE =
-    "Core Admin";
+const SUPER_ADMIN = "Super Admin";
 
-const DEPT =
-    "Departmental Admin";
+const CORE_ADMIN = "Core Admin";
+
+const DEPARTMENT_ADMIN = "Departmental Admin";
 
 const DEPARTMENTS = [
 
@@ -572,34 +779,32 @@ const DEPARTMENTS = [
 ];
 
 
-/* =====================================================
-   HELPER
-   ===================================================== */
-
-const $ =
-    id => document.getElementById(id);
-
-
-/* =====================================================
+/* =========================================================
    STATE
-   ===================================================== */
+========================================================= */
 
-let currentUser = null;
+let currentSessionUser = null;
 
-let superAdminOk = false;
-
-let editingUid = null;
+let editingUid = "";
 
 let editingData = null;
 
-let activeCores = [];
-
 let selectedPhotoFile = null;
 
+let activeCoreAdmins = [];
 
-/* =====================================================
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+const $ = id =>
+    document.getElementById(id);
+
+
+/* =========================================================
    MESSAGE
-   ===================================================== */
+========================================================= */
 
 function showMessage(text,type){
 
@@ -627,438 +832,37 @@ function clearMessage(){
 }
 
 
-/* =====================================================
-   ACTIVE CHECK
-   ===================================================== */
+/* =========================================================
+   NORMALIZE ROLE
+========================================================= */
+
+function getRole(data){
+
+    return String(
+        data?.roleType ||
+        data?.role ||
+        ""
+    ).trim();
+}
+
+
+/* =========================================================
+   ACTIVE STATUS
+========================================================= */
 
 function isActive(data){
 
     return String(
-        data.status || ""
+        data?.status || ""
     )
     .trim()
     .toLowerCase() === "active";
 }
 
 
-/* =====================================================
-   DEPARTMENT LIST
-   ===================================================== */
-
-function fillDepartments(){
-
-    $("eDepartment").innerHTML =
-        '<option value="">-- Department বাছুন --</option>' +
-
-        DEPARTMENTS
-        .map(
-            d =>
-            `<option value="${d}">${d}</option>`
-        )
-        .join("");
-}
-
-
-/* =====================================================
-   ROLE UI
-   ===================================================== */
-
-function applyRoleUI(role){
-
-    if(role === CORE){
-
-        $("eDeptGroup")
-            .classList
-            .add("hidden");
-
-        $("eReportsGroup")
-            .classList
-            .add("hidden");
-
-    }else{
-
-        $("eDeptGroup")
-            .classList
-            .remove("hidden");
-
-        $("eReportsGroup")
-            .classList
-            .remove("hidden");
-    }
-}
-
-
-/* =====================================================
-   PHOTO PREVIEW
-   ===================================================== */
-
-$("ePhoto").addEventListener(
-    "change",
-    event => {
-
-        const file =
-            event.target.files[0];
-
-        if(!file){
-
-            selectedPhotoFile =
-                null;
-
-            $("photoName").textContent =
-                "নতুন ছবি নির্বাচন করুন";
-
-            return;
-        }
-
-
-        if(
-            !file.type.startsWith("image/")
-        ){
-
-            showMessage(
-                "শুধু Image file নির্বাচন করুন।",
-                "error"
-            );
-
-            event.target.value =
-                "";
-
-            return;
-        }
-
-
-        selectedPhotoFile =
-            file;
-
-
-        $("photoName").textContent =
-            file.name;
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            e => {
-
-                $("photoPreview").src =
-                    e.target.result;
-
-                $("photoPreview")
-                    .classList
-                    .remove("hidden");
-
-                $("photoPlaceholder")
-                    .classList
-                    .add("hidden");
-            };
-
-
-        reader.readAsDataURL(file);
-    }
-);
-
-
-/* =====================================================
-   RESIZE PHOTO
-   ===================================================== */
-
-function resizeImage(file){
-
-    return new Promise(
-        (resolve,reject) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                event => {
-
-                    const img =
-                        new Image();
-
-
-                    img.onload =
-                        () => {
-
-                            const maxSize =
-                                600;
-
-                            let width =
-                                img.width;
-
-                            let height =
-                                img.height;
-
-
-                            if(width > height){
-
-                                if(width > maxSize){
-
-                                    height =
-                                        Math.round(
-                                            height *
-                                            maxSize /
-                                            width
-                                        );
-
-                                    width =
-                                        maxSize;
-                                }
-
-                            }else{
-
-                                if(height > maxSize){
-
-                                    width =
-                                        Math.round(
-                                            width *
-                                            maxSize /
-                                            height
-                                        );
-
-                                    height =
-                                        maxSize;
-                                }
-                            }
-
-
-                            const canvas =
-                                document.createElement(
-                                    "canvas"
-                                );
-
-
-                            canvas.width =
-                                width;
-
-                            canvas.height =
-                                height;
-
-
-                            const ctx =
-                                canvas.getContext(
-                                    "2d"
-                                );
-
-
-                            ctx.drawImage(
-                                img,
-                                0,
-                                0,
-                                width,
-                                height
-                            );
-
-
-                            canvas.toBlob(
-                                blob => {
-
-                                    if(!blob){
-
-                                        reject(
-                                            new Error(
-                                                "Image compression failed."
-                                            )
-                                        );
-
-                                        return;
-                                    }
-
-
-                                    resolve(blob);
-
-                                },
-                                "image/jpeg",
-                                0.85
-                            );
-
-                        };
-
-
-                    img.onerror =
-                        () => reject(
-                            new Error(
-                                "Image load failed."
-                            )
-                        );
-
-
-                    img.src =
-                        event.target.result;
-                };
-
-
-            reader.onerror =
-                () => reject(
-                    new Error(
-                        "File read failed."
-                    )
-                );
-
-
-            reader.readAsDataURL(file);
-        }
-    );
-}
-
-
-/* =====================================================
-   UPLOAD PHOTO
-   ===================================================== */
-
-async function uploadAdminPhoto(){
-
-    if(!selectedPhotoFile){
-
-        return editingData?.photoURL || "";
-    }
-
-
-    showMessage(
-        "Admin Photo Upload হচ্ছে...",
-        "info"
-    );
-
-
-    const resizedBlob =
-        await resizeImage(
-            selectedPhotoFile
-        );
-
-
-    const fileName =
-        "admin_" +
-        editingUid +
-        "_" +
-        Date.now() +
-        ".jpg";
-
-
-    const storagePath =
-        "admin-photos/" +
-        fileName;
-
-
-    const storageRef =
-        ref(
-            storage,
-            storagePath
-        );
-
-
-    await uploadBytes(
-        storageRef,
-        resizedBlob,
-        {
-            contentType:
-                "image/jpeg"
-        }
-    );
-
-
-    const photoURL =
-        await getDownloadURL(
-            storageRef
-        );
-
-
-    return photoURL;
-}
-
-
-/* =====================================================
-   LOAD ACTIVE CORE ADMINS
-   ===================================================== */
-
-async function loadCoreAdmins(){
-
-    const q =
-        query(
-            collection(
-                db,
-                USERS
-            ),
-            where(
-                "roleType",
-                "==",
-                CORE
-            )
-        );
-
-
-    const snap =
-        await getDocs(q);
-
-
-    activeCores =
-        snap.docs
-
-        .filter(
-            d =>
-            isActive(
-                d.data()
-            )
-        )
-
-        .map(
-            d => ({
-
-                uid:
-                    d.id,
-
-                name:
-                    d.data().name ||
-                    d.data().email ||
-                    d.id
-
-            })
-        )
-
-        .filter(
-            c =>
-            c.uid !== editingUid
-        )
-
-        .sort(
-            (a,b) =>
-            a.name.localeCompare(
-                b.name
-            )
-        );
-
-
-    $("eReportsTo").innerHTML =
-        '<option value="">-- Core Admin বাছুন --</option>' +
-
-        activeCores
-
-        .map(
-            c =>
-            `<option value="${c.uid}">
-                ${c.name}
-            </option>`
-        )
-
-        .join("");
-
-
-    if(
-        editingData &&
-        editingData.reportsTo
-    ){
-
-        $("eReportsTo").value =
-            editingData.reportsTo;
-    }
-}
-
-
-/* =====================================================
-   FIND ADMIN UID FROM URL
-   ===================================================== */
+/* =========================================================
+   GET ADMIN UID
+========================================================= */
 
 function getAdminUid(){
 
@@ -1067,23 +871,201 @@ function getAdminUid(){
             window.location.search
         );
 
-
     return (
-
         params.get("uid") ||
-
         params.get("id") ||
-
         params.get("userId") ||
-
         params.get("adminId") ||
-
         ""
-
     ).trim();
 }
 
 
-/* =====================================================
-   VERIFY SUPER ADMIN
-   ============================
+/* =========================================================
+   SUPER ADMIN CHECK
+========================================================= */
+
+function isSuperAdmin(){
+
+    if(!currentSessionUser){
+
+        return false;
+    }
+
+    const role =
+        String(
+            currentSessionUser.role ||
+            currentSessionUser.roleType ||
+            ""
+        )
+        .trim()
+        .toLowerCase();
+
+    const status =
+        String(
+            currentSessionUser.status ||
+            ""
+        )
+        .trim()
+        .toLowerCase();
+
+    return (
+        role === "super admin" &&
+        status !== "blocked" &&
+        status !== "inactive"
+    );
+}
+
+
+/* =========================================================
+   FILL DEPARTMENTS
+========================================================= */
+
+function fillDepartments(){
+
+    $("eDepartment").innerHTML =
+        '<option value="">-- Department বাছুন --</option>';
+
+    DEPARTMENTS.forEach(
+        department => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                department;
+
+            option.textContent =
+                department;
+
+            $("eDepartment")
+                .appendChild(option);
+        }
+    );
+}
+
+
+/* =========================================================
+   ROLE UI
+========================================================= */
+
+function applyRoleUI(role){
+
+    const normalizedRole =
+        String(role || "").trim();
+
+    if(normalizedRole === CORE_ADMIN){
+
+        $("eDeptGroup")
+            .classList
+            .add("hidden");
+
+        $("eReportsGroup")
+            .classList
+            .add("hidden");
+
+        $("eDepartment").value =
+            "";
+
+        $("eReportsTo").value =
+            "";
+
+        $("roleInfo").textContent =
+            "Core Admin পুরো Accounts ও operational area দেখতে পারবে। তবে Super Admin-এর final authority থাকবে।";
+
+    }
+
+    else if(
+        normalizedRole === DEPARTMENT_ADMIN
+    ){
+
+        $("eDeptGroup")
+            .classList
+            .remove("hidden");
+
+        $("eReportsGroup")
+            .classList
+            .remove("hidden");
+
+        $("roleInfo").textContent =
+            "Departmental Admin শুধুমাত্র নির্ধারিত Department-এর কাজ ও data access করবে।";
+    }
+
+    else{
+
+        $("eDeptGroup")
+            .classList
+            .remove("hidden");
+
+        $("eReportsGroup")
+            .classList
+            .remove("hidden");
+
+        $("roleInfo").textContent =
+            "Admin role নির্বাচন করুন।";
+    }
+}
+
+
+/* =========================================================
+   LOAD ACTIVE CORE ADMINS
+========================================================= */
+
+async function loadCoreAdmins(){
+
+    const q =
+        query(
+            collection(db,USERS),
+            where("roleType","==",CORE_ADMIN)
+        );
+
+    const snapshot =
+        await getDocs(q);
+
+    activeCoreAdmins = [];
+
+    snapshot.forEach(
+        documentSnapshot => {
+
+            const data =
+                documentSnapshot.data();
+
+            if(
+                documentSnapshot.id !== editingUid &&
+                isActive(data)
+            ){
+
+                activeCoreAdmins.push({
+
+                    uid:
+                        documentSnapshot.id,
+
+                    name:
+                        data.name ||
+                        data.email ||
+                        documentSnapshot.id
+
+                });
+            }
+        }
+    );
+
+    activeCoreAdmins.sort(
+        (a,b) =>
+            a.name.localeCompare(
+                b.name
+            )
+    );
+
+
+    $("eReportsTo").innerHTML =
+        '<option value="">-- Core Admin বাছুন --</option>';
+
+    activeCoreAdmins.forEach(
+        core => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+  
