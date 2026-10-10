@@ -1079,3 +1079,1171 @@ function validatePhoto(file){
         );
 
       
+    /* =========================
+       COMPLETE PHOTO VALIDATION
+    ========================= */
+
+    if(file.size > 2 * 1024 * 1024){
+        showMsg(
+            "formMsg",
+            "ছবির size সর্বোচ্চ 2 MB হতে হবে।"
+        );
+        return false;
+    }
+
+    return true;
+}
+
+
+/* =========================
+   PHOTO PREVIEW
+========================= */
+
+$("adminPhoto").addEventListener(
+    "change",
+    function(){
+        const file =
+            this.files &&
+            this.files[0];
+
+        if(!file){
+            selectedPhotoFile = null;
+            $("photoPreview").style.display = "none";
+            $("photoPlaceholder").style.display = "flex";
+            return;
+        }
+
+        if(!validatePhoto(file)){
+            this.value = "";
+            selectedPhotoFile = null;
+            $("photoPreview").style.display = "none";
+            $("photoPlaceholder").style.display = "flex";
+            return;
+        }
+
+        selectedPhotoFile = file;
+
+        const reader =
+            new FileReader();
+
+        reader.onload =
+            function(e){
+                $("photoPreview").src =
+                    e.target.result;
+
+                $("photoPreview").style.display =
+                    "block";
+
+                $("photoPlaceholder").style.display =
+                    "none";
+            };
+
+        reader.readAsDataURL(file);
+    }
+);
+
+
+/* =========================
+   ROLE / DEPARTMENT CONTROL
+========================= */
+
+$("roleType").addEventListener(
+    "change",
+    function(){
+
+        const role =
+            this.value;
+
+        const department =
+            $("department");
+
+        const reportsTo =
+            $("reportsTo");
+
+        if(role === "Core Admin"){
+
+            department.value = "";
+
+            department.disabled = true;
+
+            reportsTo.value =
+                "Super Admin";
+
+            reportsTo.disabled = true;
+
+        }else if(role === "Departmental Admin"){
+
+            department.disabled = false;
+
+            reportsTo.disabled = false;
+
+        }else{
+
+            department.disabled = false;
+
+            reportsTo.disabled = false;
+        }
+    }
+);
+
+
+/* =========================
+   TAB CONTROL
+========================= */
+
+$("createTab").addEventListener(
+    "click",
+    function(){
+
+        $("createTab")
+            .classList
+            .add("active");
+
+        $("listTab")
+            .classList
+            .remove("active");
+
+        $("createSection")
+            .classList
+            .remove("hidden");
+
+        $("listSection")
+            .classList
+            .add("hidden");
+    }
+);
+
+
+$("listTab").addEventListener(
+    "click",
+    async function(){
+
+        $("listTab")
+            .classList
+            .add("active");
+
+        $("createTab")
+            .classList
+            .remove("active");
+
+        $("createSection")
+            .classList
+            .add("hidden");
+
+        $("listSection")
+            .classList
+            .remove("hidden");
+
+        await loadAdminList();
+    }
+);
+
+
+/* =========================
+   RESET FORM
+========================= */
+
+function resetAdminForm(){
+
+    editingUid = null;
+
+    selectedPhotoFile = null;
+
+    $("adminForm").reset();
+
+    $("adminMobile").disabled = false;
+
+    $("adminEmail").disabled = false;
+
+    $("passwordGroup")
+        .classList
+        .remove("hidden");
+
+    $("adminPassword")
+        .required = true;
+
+    $("saveBtn").textContent =
+        "Create Admin";
+
+    $("formTitle").textContent =
+        "Create Admin";
+
+    $("cancelEditBtn")
+        .classList
+        .add("hidden");
+
+    $("photoPreview").src = "";
+
+    $("photoPreview").style.display =
+        "none";
+
+    $("photoPlaceholder").style.display =
+        "flex";
+
+    $("department").disabled =
+        false;
+
+    $("reportsTo").disabled =
+        false;
+
+    hideMsg("formMsg");
+
+    loadCoreAdmins();
+}
+
+
+/* =========================
+   CREATE FIREBASE AUTH USER
+========================= */
+
+async function createSecondaryAuthUser(
+    email,
+    password
+){
+
+    const appName =
+        "adminCreator_" +
+        Date.now();
+
+    secondaryApp =
+        initializeApp(
+            firebaseConfig,
+            appName
+        );
+
+    secondaryAuth =
+        getAuth(
+            secondaryApp
+        );
+
+    const result =
+        await createUserWithEmailAndPassword(
+            secondaryAuth,
+            email,
+            password
+        );
+
+    return result.user;
+}
+
+
+/* =========================
+   SAVE PHOTO
+========================= */
+
+async function uploadAdminPhoto(
+    uid,
+    file
+){
+
+    if(!file)
+        return null;
+
+    const extension =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+    const photoPath =
+        "admin-photos/" +
+        uid +
+        "." +
+        extension;
+
+    const photoRef =
+        ref(
+            storage,
+            photoPath
+        );
+
+    await uploadBytes(
+        photoRef,
+        file
+    );
+
+    const photoURL =
+        await getDownloadURL(
+            photoRef
+        );
+
+    return {
+        photoURL,
+        photoPath
+    };
+}
+
+
+/* =========================
+   CREATE ADMIN
+========================= */
+
+async function createAdmin(){
+
+    const name =
+        $("adminName")
+            .value
+            .trim();
+
+    const email =
+        $("adminEmail")
+            .value
+            .trim()
+            .toLowerCase();
+
+    const mobile =
+        $("adminMobile")
+            .value
+            .trim();
+
+    const password =
+        $("adminPassword")
+            .value;
+
+    const roleType =
+        $("roleType")
+            .value
+            .trim();
+
+    const department =
+        $("department")
+            .value
+            .trim();
+
+    const reportsTo =
+        $("reportsTo")
+            .value
+            .trim();
+
+    const status =
+        $("status")
+            .value
+            .trim() ||
+        "Active";
+
+
+    if(!name ||
+       !email ||
+       !mobile ||
+       !password ||
+       !roleType){
+
+        showMsg(
+            "formMsg",
+            "সব required field পূরণ করুন।"
+        );
+
+        return;
+    }
+
+
+    if(!/^\d{10}$/.test(mobile)){
+
+        showMsg(
+            "formMsg",
+            "Mobile number অবশ্যই 10 digit হতে হবে।"
+        );
+
+        return;
+    }
+
+
+    if(password.length < 6){
+
+        showMsg(
+            "formMsg",
+            "Password কমপক্ষে 6 characters হতে হবে।"
+        );
+
+        return;
+    }
+
+
+    if(
+        roleType ===
+        "Departmental Admin" &&
+        !department
+    ){
+
+        showMsg(
+            "formMsg",
+            "Departmental Admin-এর জন্য Department নির্বাচন করুন।"
+        );
+
+        return;
+    }
+
+
+    if(
+        roleType ===
+        "Core Admin"
+    ){
+
+        const count =
+            await activeCoreCount();
+
+        if(count >= CORE_LIMIT){
+
+            showMsg(
+                "formMsg",
+                "সর্বোচ্চ " +
+                CORE_LIMIT +
+                " জন Active Core Admin রাখা যাবে।"
+            );
+
+            return;
+        }
+    }
+
+
+    if(
+        roleType ===
+        "Departmental Admin"
+    ){
+
+        const count =
+            await activeDepartmentCount(
+                department
+            );
+
+        if(count >= DEPT_LIMIT){
+
+            showMsg(
+                "formMsg",
+                department +
+                " department-এ সর্বোচ্চ " +
+                DEPT_LIMIT +
+                " জন Active Departmental Admin রাখা যাবে।"
+            );
+
+            return;
+        }
+    }
+
+
+    /* CHECK MOBILE */
+
+    const mobileSnap =
+        await getDocs(
+            query(
+                collection(
+                    db,
+                    USERS
+                ),
+                where(
+                    "mobile",
+                    "==",
+                    mobile
+                )
+            )
+        );
+
+    if(!mobileSnap.empty){
+
+        showMsg(
+            "formMsg",
+            "এই Mobile number আগে থেকেই ব্যবহার করা হয়েছে।"
+        );
+
+        return;
+    }
+
+
+    let authUser = null;
+
+
+    try{
+
+        $("saveBtn").disabled =
+            true;
+
+        $("saveBtn").textContent =
+            "Creating Admin...";
+
+        hideMsg("formMsg");
+
+
+        /* CREATE FIREBASE AUTH */
+
+        authUser =
+            await createSecondaryAuthUser(
+                email,
+                password
+            );
+
+
+        const uid =
+            authUser.uid;
+
+
+        /* UPLOAD PHOTO */
+
+        let photoData =
+            null;
+
+        if(selectedPhotoFile){
+
+            photoData =
+                await uploadAdminPhoto(
+                    uid,
+                    selectedPhotoFile
+                );
+        }
+
+
+        /* FIRESTORE DATA */
+
+        const adminData = {
+
+            uid: uid,
+
+            name: name,
+
+            email: email,
+
+            mobile: mobile,
+
+            roleType: roleType,
+
+            role: roleType,
+
+            department:
+                roleType ===
+                "Core Admin"
+                    ? ""
+                    : department,
+
+            reportsTo:
+                reportsTo ||
+                "Super Admin",
+
+            status: status,
+
+            photoURL:
+                photoData
+                    ? photoData.photoURL
+                    : "",
+
+            photoPath:
+                photoData
+                    ? photoData.photoPath
+                    : "",
+
+            createdBy:
+                currentUser.uid,
+
+            createdAt:
+                serverTimestamp(),
+
+            updatedAt:
+                serverTimestamp()
+        };
+
+
+        await setDoc(
+            doc(
+                db,
+                USERS,
+                uid
+            ),
+            adminData
+        );
+
+
+        showMsg(
+            "formMsg",
+            "Admin সফলভাবে তৈরি হয়েছে।",
+            true
+        );
+
+
+        resetAdminForm();
+
+
+        $("createTab")
+            .click();
+
+
+    }catch(error){
+
+        console.error(
+            "Create Admin Error:",
+            error
+        );
+
+
+        /* REMOVE UPLOADED PHOTO IF FIRESTORE FAILS */
+
+        try{
+
+            if(
+                authUser &&
+                selectedPhotoFile
+            ){
+
+                const extension =
+                    selectedPhotoFile.name
+                        .split(".")
+                        .pop()
+                        .toLowerCase();
+
+                await deleteObject(
+                    ref(
+                        storage,
+                        "admin-photos/" +
+                        authUser.uid +
+                        "." +
+                        extension
+                    )
+                );
+            }
+
+        }catch(cleanupError){
+
+            console.warn(
+                "Photo cleanup failed:",
+                cleanupError
+            );
+        }
+
+
+        showMsg(
+            "formMsg",
+            friendlyError(error)
+        );
+
+    }finally{
+
+        $("saveBtn").disabled =
+            false;
+
+        if(editingUid){
+
+            $("saveBtn").textContent =
+                "Update Admin";
+
+        }else{
+
+            $("saveBtn").textContent =
+                "Create Admin";
+        }
+    }
+}
+
+
+/* =========================
+   EDIT ADMIN
+========================= */
+
+async function editAdmin(uid){
+
+    try{
+
+        hideMsg("formMsg");
+
+        const snap =
+            await getDoc(
+                doc(
+                    db,
+                    USERS,
+                    uid
+                )
+            );
+
+
+        if(!snap.exists()){
+
+            showMsg(
+                "listMsg",
+                "Admin record পাওয়া যায়নি।"
+            );
+
+            return;
+        }
+
+
+        const data =
+            snap.data();
+
+
+        editingUid =
+            uid;
+
+
+        $("formTitle").textContent =
+            "Edit Admin";
+
+
+        $("saveBtn").textContent =
+            "Update Admin";
+
+
+        $("cancelEditBtn")
+            .classList
+            .remove("hidden");
+
+
+        $("passwordGroup")
+            .classList
+            .add("hidden");
+
+
+        $("adminPassword")
+            .required = false;
+
+
+        $("adminName").value =
+            data.name || "";
+
+
+        $("adminEmail").value =
+            data.email || "";
+
+
+        /*
+         * IMPORTANT:
+         * Mobile remains editable only as the same existing value.
+         * Duplicate mobile check below excludes this UID.
+         */
+
+        $("adminMobile").value =
+            data.mobile || "";
+
+
+        $("roleType").value =
+            data.roleType ||
+            data.role ||
+            "";
+
+
+        $("department").value =
+            data.department ||
+            "";
+
+
+        $("status").value =
+            data.status ||
+            "Active";
+
+
+        await loadCoreAdmins();
+
+
+        $("reportsTo").value =
+            data.reportsTo ||
+            "Super Admin";
+
+
+        $("roleType")
+            .dispatchEvent(
+                new Event("change")
+            );
+
+
+        if(data.photoURL){
+
+            $("photoPreview").src =
+                data.photoURL;
+
+            $("photoPreview").style.display =
+                "block";
+
+            $("photoPlaceholder").style.display =
+                "none";
+
+        }else{
+
+            $("photoPreview").src = "";
+
+            $("photoPreview").style.display =
+                "none";
+
+            $("photoPlaceholder").style.display =
+                "flex";
+        }
+
+
+        selectedPhotoFile =
+            null;
+
+
+        $("createTab")
+            .click();
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Edit Admin Error:",
+            error
+        );
+
+        showMsg(
+            "listMsg",
+            friendlyError(error)
+        );
+    }
+}
+
+
+/* =========================
+   UPDATE ADMIN
+========================= */
+
+async function updateAdmin(){
+
+    const uid =
+        editingUid;
+
+
+    if(!uid){
+
+        showMsg(
+            "formMsg",
+            "Edit Admin record পাওয়া যায়নি।"
+        );
+
+        return;
+    }
+
+
+    const name =
+        $("adminName")
+            .value
+            .trim();
+
+    const email =
+        $("adminEmail")
+            .value
+            .trim()
+            .toLowerCase();
+
+    const mobile =
+        $("adminMobile")
+            .value
+            .trim();
+
+    const roleType =
+        $("roleType")
+            .value
+            .trim();
+
+    const department =
+        $("department")
+            .value
+            .trim();
+
+    const reportsTo =
+        $("reportsTo")
+            .value
+            .trim();
+
+    const status =
+        $("status")
+            .value
+            .trim() ||
+        "Active";
+
+
+    if(!name ||
+       !email ||
+       !mobile ||
+       !roleType){
+
+        showMsg(
+            "formMsg",
+            "সব required field পূরণ করুন।"
+        );
+
+        return;
+    }
+
+
+    if(!/^\d{10}$/.test(mobile)){
+
+        showMsg(
+            "formMsg",
+            "Mobile number অবশ্যই 10 digit হতে হবে।"
+        );
+
+        return;
+    }
+
+
+    if(
+        roleType ===
+        "Departmental Admin" &&
+        !department
+    ){
+
+        showMsg(
+            "formMsg",
+            "Department নির্বাচন করুন।"
+        );
+
+        return;
+    }
+
+
+    /* DUPLICATE MOBILE CHECK
+       CURRENT UID EXCLUDED */
+
+    const mobileSnap =
+        await getDocs(
+            query(
+                collection(
+                    db,
+                    USERS
+                ),
+                where(
+                    "mobile",
+                    "==",
+                    mobile
+                )
+            )
+        );
+
+
+    let duplicateMobile =
+        false;
+
+
+    mobileSnap.forEach(
+        s => {
+
+            if(s.id !== uid){
+
+                duplicateMobile =
+                    true;
+            }
+        }
+    );
+
+
+    if(duplicateMobile){
+
+        showMsg(
+            "formMsg",
+            "এই Mobile number অন্য Admin-এর নামে ব্যবহার করা হয়েছে।"
+        );
+
+        return;
+    }
+
+
+    /* CORE LIMIT */
+
+    if(
+        roleType ===
+        "Core Admin"
+    ){
+
+        const count =
+            await activeCoreCount(
+                uid
+            );
+
+        if(
+            status === "Active" &&
+            count >= CORE_LIMIT
+        ){
+
+            showMsg(
+                "formMsg",
+                "সর্বোচ্চ " +
+                CORE_LIMIT +
+                " জন Active Core Admin রাখা যাবে।"
+            );
+
+            return;
+        }
+    }
+
+
+    /* DEPARTMENT LIMIT */
+
+    if(
+        roleType ===
+        "Departmental Admin"
+    ){
+
+        const count =
+            await activeDepartmentCount(
+                department,
+                uid
+            );
+
+        if(
+            status === "Active" &&
+            count >= DEPT_LIMIT
+        ){
+
+            showMsg(
+                "formMsg",
+                department +
+                " department-এ সর্বোচ্চ " +
+                DEPT_LIMIT +
+                " জন Active Departmental Admin রাখা যাবে।"
+            );
+
+            return;
+        }
+    }
+
+
+    try{
+
+        $("saveBtn").disabled =
+            true;
+
+        $("saveBtn").textContent =
+            "Updating Admin...";
+
+
+        const oldSnap =
+            await getDoc(
+                doc(
+                    db,
+                    USERS,
+                    uid
+                )
+            );
+
+
+        const oldData =
+            oldSnap.exists()
+                ? oldSnap.data()
+                : {};
+
+
+        let photoURL =
+            oldData.photoURL ||
+            "";
+
+        let photoPath =
+            oldData.photoPath ||
+            "";
+
+
+        /* NEW PHOTO */
+
+        if(selectedPhotoFile){
+
+            const newPhoto =
+                await uploadAdminPhoto(
+                    uid,
+                    selectedPhotoFile
+                );
+
+
+            if(
+                oldData.photoPath &&
+                oldData.photoPath !==
+                newPhoto.photoPath
+            ){
+
+                try{
+
+                    await deleteObject(
+                        ref(
+                            storage,
+                            oldData.photoPath
+                        )
+                    );
+
+                }catch(photoDeleteError){
+
+                    console.warn(
+                        "Old photo delete failed:",
+                        photoDeleteError
+                    );
+                }
+            }
+
+
+            photoURL =
+                newPhoto.photoURL;
+
+            photoPath =
+                newPhoto.photoPath;
+        }
+
+
+        /* FIRESTORE UPDATE */
+
+        const updateData = {
+
+            name: name,
+
+            email: email,
+
+            mobile: mobile,
+
+            roleType: roleType,
+
+            role: roleType,
+
+            department:
+                roleType ===
+                "Core Admin"
+                    ? ""
+                    : department,
+
+            reportsTo:
+                roleType ===
+                "Core Admin"
+                    ? "Super Admin"
+                    : (
+                        reportsTo ||
+                        "Super Admin"
+                    ),
+
+            status: status,
+
+            photoURL:
+                photoURL,
+
+            photoPath:
+                photoPath,
+
+            updatedAt:
+                serverTimestamp(),
+
+            updatedBy:
+                currentUser.uid
+        };
+
+
+        await updateDoc(
+            doc(
+                db,
+                USERS,
+                uid
+            ),
+            updateData
+        );
+
+
+        /*
+         * Firebase Authentication email update.
+         * This keeps login email synchronized.
+         */
+
+        if(
+            oldData.email &&
+            oldData.email !== email
+        ){
+
+            try{
+
+                const {
+                    updateEmail
+                } =
+                await import(
+                    "https://www.gstatic.com/fireba
