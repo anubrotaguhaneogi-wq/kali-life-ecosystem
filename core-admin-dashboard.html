@@ -57,6 +57,8 @@ input:focus,select:focus{
     border-color:#16a34a;
     box-shadow:0 0 0 3px rgba(22,163,74,.12)
 }
+select:disabled{background:#f1f5f9;color:#94a3b8;cursor:not-allowed}
+.hint{margin-top:6px;color:#64748b;font-size:12px;line-height:1.4}
 .password-box{position:relative}
 .password-box input{padding-right:70px}
 .password-toggle{
@@ -64,6 +66,10 @@ input:focus,select:focus{
     right:7px;
     top:50%;
     transform:translateY(-50%);
+    width:auto;
+    height:auto;
+    flex:none;
+    padding:8px;
     border:0;
     background:transparent;
     color:#166534;
@@ -172,14 +178,14 @@ placeholder="Enter admin full name">
 
 <div class="form-group">
 <label for="email">Email Address</label>
-<input id="email" type="email" autocomplete="email"
+<input id="email" type="email" autocomplete="off"
 placeholder="Enter admin email">
 </div>
 
 <div class="form-group">
 <label for="mobile">Mobile Number</label>
 <input id="mobile" type="tel" inputmode="numeric"
-maxlength="10" autocomplete="tel"
+maxlength="10" autocomplete="off"
 placeholder="Enter 10 digit mobile number">
 </div>
 
@@ -194,7 +200,6 @@ class="password-toggle">Show</button>
 </div>
 </div>
 
-<!-- IMPORTANT: ADMIN ROLE -->
 <div class="form-group">
 <label for="role">Admin Role</label>
 <select id="role">
@@ -202,23 +207,28 @@ class="password-toggle">Show</button>
 <option value="Core Admin">Core Admin</option>
 <option value="Departmental Admin">Departmental Admin</option>
 </select>
+<div class="hint">Super Admin is created by the system and cannot be created here.</div>
 </div>
 
-<!-- DEPARTMENT -->
 <div class="form-group">
-<label for="department">Department / Post</label>
-<select id="department">
-<option value="">Select Department / Post</option>
-<option value="Sales / Marketplace">Sales / Marketplace</option>
-<option value="Marketing">Marketing</option>
-<option value="Service">Service</option>
+<label for="department">Department</label>
+<select id="department" disabled>
+<option value="">Select Department</option>
+<option value="Product">Product</option>
 <option value="Agriculture">Agriculture</option>
-<option value="Astrology">Astrology</option>
+<option value="Technology">Technology</option>
+<option value="Marriage">Marriage</option>
 <option value="Education">Education</option>
-<option value="Technical">Technical</option>
-<option value="Accounts & Finance">Accounts & Finance</option>
-<option value="Customer Service">Customer Service</option>
 </select>
+<div class="hint" id="departmentHint">Select an Admin Role first.</div>
+</div>
+
+<div class="form-group">
+<label for="reportsTo">Reports To</label>
+<select id="reportsTo" disabled>
+<option value="">Select Admin Role first</option>
+</select>
+<div class="hint" id="reportsHint"></div>
 </div>
 
 <div class="form-group">
@@ -227,6 +237,7 @@ class="password-toggle">Show</button>
 <option value="Active">Active</option>
 <option value="Inactive">Inactive</option>
 </select>
+<div class="hint">Inactive admins do not count toward the capacity limit.</div>
 </div>
 
 <div class="buttons">
@@ -249,7 +260,7 @@ Reset
 <div id="message" class="message"></div>
 
 <div class="links">
-<a href="admin-dashboard.html">← Admin Dashboard</a>
+<a href="super-admin-dashboard.html">← Super Admin Dashboard</a>
 <a href="admin-list.html">Admin List</a>
 </div>
 
@@ -295,139 +306,209 @@ appId:"1:734170546737:web:26f79e1b4b19ebabfe0b10"
 };
 
 
+/* ================= LIMITS ================= */
+
+const CORE_LIMIT = 5;
+const DEPT_LIMIT = 5;
+
+
 /* ================= FIREBASE ================= */
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
-
-/* Secondary Auth
-   Super Admin session remains active */
-const adminApp =
-initializeApp(firebaseConfig,"AdminCreationApp");
-
-const adminAuth =
-getAuth(adminApp);
+/* Secondary Auth app: creating a new admin here
+   does NOT replace the Super Admin login session. */
+const adminApp = initializeApp(firebaseConfig,"AdminCreationApp");
+const adminAuth = getAuth(adminApp);
 
 
 /* ================= ELEMENTS ================= */
 
-const nameInput =
-document.getElementById("name");
+const $ = (id)=>document.getElementById(id);
 
-const emailInput =
-document.getElementById("email");
-
-const mobileInput =
-document.getElementById("mobile");
-
-const passwordInput =
-document.getElementById("password");
-
-const passwordToggle =
-document.getElementById("passwordToggle");
-
-const roleInput =
-document.getElementById("role");
-
-const departmentInput =
-document.getElementById("department");
-
-const statusInput =
-document.getElementById("status");
-
-const createButton =
-document.getElementById("createButton");
-
-const resetButton =
-document.getElementById("resetButton");
-
-const message =
-document.getElementById("message");
-
-const securityInfo =
-document.getElementById("securityInfo");
-
+const nameInput = $("name");
+const emailInput = $("email");
+const mobileInput = $("mobile");
+const passwordInput = $("password");
+const passwordToggle = $("passwordToggle");
+const roleInput = $("role");
+const departmentInput = $("department");
+const departmentHint = $("departmentHint");
+const reportsToInput = $("reportsTo");
+const reportsHint = $("reportsHint");
+const statusInput = $("status");
+const createButton = $("createButton");
+const resetButton = $("resetButton");
+const message = $("message");
+const securityInfo = $("securityInfo");
 
 let superAdminAuthorized = false;
+let activeCoreAdmins = [];   /* [{uid,name}] */
 
 
-/* ================= MESSAGE ================= */
+/* ================= HELPERS ================= */
 
 function showMessage(text,type){
-
-message.textContent=text;
-
-message.className=
-"message show "+type;
-
+    message.textContent = text;
+    message.className = "message show " + type;
 }
 
 function clearMessage(){
+    message.textContent = "";
+    message.className = "message";
+}
 
-message.textContent="";
+function norm(v){
+    return String(v || "").trim().toLowerCase();
+}
 
-message.className="message";
+function isActive(data){
+    return norm(data.status || data.accountStatus || "Active") === "active";
+}
 
+function readRole(data){
+    return norm(data.roleType || data.role || data.accountRole || "");
+}
+
+function setButton(text,disabled){
+    createButton.textContent = text;
+    createButton.disabled = disabled;
 }
 
 
-/* ================= PASSWORD ================= */
+/* ================= PASSWORD SHOW / HIDE ================= */
 
 passwordToggle.addEventListener("click",()=>{
-
-if(passwordInput.type==="password"){
-
-passwordInput.type="text";
-
-passwordToggle.textContent="Hide";
-
-}else{
-
-passwordInput.type="password";
-
-passwordToggle.textContent="Show";
-
-}
-
+    if(passwordInput.type === "password"){
+        passwordInput.type = "text";
+        passwordToggle.textContent = "Hide";
+    }else{
+        passwordInput.type = "password";
+        passwordToggle.textContent = "Show";
+    }
 });
 
 
-/* ================= MOBILE ================= */
+/* ================= MOBILE: DIGITS ONLY ================= */
 
 mobileInput.addEventListener("input",function(){
-
-this.value=
-this.value.replace(/\D/g,"").slice(0,10);
-
+    this.value = this.value.replace(/\D/g,"").slice(0,10);
 });
+
+
+/* ================= ROLE CHANGE RULES =================
+   Core Admin         : no department, reports to Super Admin
+   Departmental Admin : department required,
+                        reports to an Active Core Admin
+======================================================= */
+
+function applyRoleRules(){
+
+    const role = roleInput.value;
+
+    if(role === "Core Admin"){
+
+        departmentInput.value = "";
+        departmentInput.disabled = true;
+        departmentHint.textContent =
+            "Core Admin does not belong to one department.";
+
+        reportsToInput.innerHTML =
+            '<option value="Super Admin">Super Admin</option>';
+        reportsToInput.value = "Super Admin";
+        reportsToInput.disabled = true;
+        reportsHint.textContent =
+            "Core Admin always reports to the Super Admin.";
+
+    }else if(role === "Departmental Admin"){
+
+        departmentInput.disabled = false;
+        departmentHint.textContent =
+            "Required. Maximum " + DEPT_LIMIT +
+            " active admins per department.";
+
+        fillCoreAdminOptions();
+
+    }else{
+
+        departmentInput.value = "";
+        departmentInput.disabled = true;
+        departmentHint.textContent = "Select an Admin Role first.";
+
+        reportsToInput.innerHTML =
+            '<option value="">Select Admin Role first</option>';
+        reportsToInput.disabled = true;
+        reportsHint.textContent = "";
+    }
+}
+
+function fillCoreAdminOptions(){
+
+    reportsToInput.innerHTML =
+        '<option value="">Select Core Admin</option>';
+
+    activeCoreAdmins.forEach((c)=>{
+        const option = document.createElement("option");
+        option.value = c.uid;
+        option.textContent = c.name;
+        reportsToInput.appendChild(option);
+    });
+
+    if(activeCoreAdmins.length === 0){
+        reportsToInput.disabled = true;
+        reportsHint.textContent =
+            "No Active Core Admin found. Create a Core Admin first.";
+    }else{
+        reportsToInput.disabled = false;
+        reportsHint.textContent = "Choose the Core Admin this person reports to.";
+    }
+}
+
+roleInput.addEventListener("change",applyRoleRules);
+
+
+/* ================= LOAD ACTIVE CORE ADMINS ================= */
+
+async function loadCoreAdmins(){
+
+    const snap = await getDocs(
+        query(collection(db,"users"),where("roleType","==","Core Admin"))
+    );
+
+    activeCoreAdmins = [];
+
+    snap.forEach((d)=>{
+        const data = d.data();
+        if(isActive(data)){
+            activeCoreAdmins.push({
+                uid:d.id,
+                name:data.name || data.email || d.id
+            });
+        }
+    });
+}
 
 
 /* ================= RESET ================= */
 
 resetButton.addEventListener("click",()=>{
 
-nameInput.value="";
-emailInput.value="";
-mobileInput.value="";
-passwordInput.value="";
-roleInput.value="";
-departmentInput.value="";
-statusInput.value="Active";
+    nameInput.value = "";
+    emailInput.value = "";
+    mobileInput.value = "";
+    passwordInput.value = "";
+    roleInput.value = "";
+    statusInput.value = "Active";
 
-clearMessage();
+    applyRoleRules();
+    clearMessage();
 
-createButton.disabled=
-!superAdminAuthorized;
-
-createButton.textContent=
-superAdminAuthorized
-?"Create Admin"
-:"Checking Authorization...";
-
+    setButton(
+        superAdminAuthorized ? "Create Admin" : "Checking Authorization...",
+        !superAdminAuthorized
+    );
 });
 
 
@@ -435,494 +516,290 @@ superAdminAuthorized
 
 onAuthStateChanged(auth,async(user)=>{
 
-superAdminAuthorized=false;
+    superAdminAuthorized = false;
+    setButton("Checking Authorization...",true);
 
-createButton.disabled=true;
+    if(!user){
+        securityInfo.textContent =
+            "You are not logged in. Super Admin login required.";
+        securityInfo.style.background = "#fef2f2";
+        securityInfo.style.color = "#b91c1c";
+        setButton("Super Admin Login Required",true);
+        return;
+    }
 
-createButton.textContent=
-"Checking Authorization...";
+    try{
 
+        const snap = await getDoc(doc(db,"users",user.uid));
 
-if(!user){
+        if(!snap.exists()){
+            throw new Error("Super Admin profile not found.");
+        }
 
-securityInfo.textContent=
-"You are not logged in. Super Admin login required.";
+        const data = snap.data();
 
-securityInfo.style.background="#fef2f2";
-securityInfo.style.color="#b91c1c";
+        if(readRole(data) !== "super admin" || !isActive(data)){
+            throw new Error(
+                "Only an Active Super Admin can create Admin accounts."
+            );
+        }
 
-createButton.textContent=
-"Super Admin Login Required";
+        await loadCoreAdmins();
 
-return;
+        superAdminAuthorized = true;
 
-}
+        securityInfo.textContent =
+            "✓ Super Admin verified. You can create a new Admin.";
+        securityInfo.style.background = "#f0fdf4";
+        securityInfo.style.color = "#166534";
 
+        setButton("Create Admin",false);
 
-try{
+        applyRoleRules();
 
-const snap=
-await getDoc(
-doc(db,"users",user.uid)
-);
+    }catch(error){
 
+        console.error(error);
 
-if(!snap.exists()){
+        securityInfo.textContent = "Access denied: " + error.message;
+        securityInfo.style.background = "#fef2f2";
+        securityInfo.style.color = "#b91c1c";
 
-throw new Error("Super Admin profile not found.");
-
-}
-
-
-const data=snap.data();
-
-const role=
-String(
-data.roleType ||
-data.role ||
-data.accountRole ||
-""
-).trim().toLowerCase();
-
-const status=
-String(
-data.status ||
-data.accountStatus ||
-""
-).trim().toLowerCase();
-
-
-if(
-role!=="super admin" ||
-status!=="active"
-){
-
-throw new Error(
-"Only an Active Super Admin can create Admin accounts."
-);
-
-}
-
-
-superAdminAuthorized=true;
-
-securityInfo.textContent=
-"✓ Super Admin verified. You can create a new Admin.";
-
-securityInfo.style.background="#f0fdf4";
-securityInfo.style.color="#166534";
-
-createButton.disabled=false;
-
-createButton.textContent="Create Admin";
-
-
-}catch(error){
-
-console.error(error);
-
-securityInfo.textContent=
-"Access denied: "+error.message;
-
-securityInfo.style.background="#fef2f2";
-securityInfo.style.color="#b91c1c";
-
-createButton.textContent=
-"Access Denied";
-
-}
-
+        setButton("Access Denied",true);
+    }
 });
+
+
+/* ================= CAPACITY COUNTS ================= */
+
+async function activeCoreCount(){
+
+    const snap = await getDocs(
+        query(collection(db,"users"),where("roleType","==","Core Admin"))
+    );
+
+    let count = 0;
+    snap.forEach((d)=>{ if(isActive(d.data())) count++; });
+    return count;
+}
+
+async function activeDepartmentCount(department){
+
+    const snap = await getDocs(
+        query(collection(db,"users"),where("department","==",department))
+    );
+
+    let count = 0;
+    snap.forEach((d)=>{
+        const data = d.data();
+        if(readRole(data) === "departmental admin" && isActive(data)){
+            count++;
+        }
+    });
+    return count;
+}
 
 
 /* ================= CREATE ADMIN ================= */
 
-createButton.addEventListener(
-"click",
-createAdmin
-);
-
+createButton.addEventListener("click",createAdmin);
 
 async function createAdmin(){
 
-clearMessage();
+    clearMessage();
+
+    if(!superAdminAuthorized){
+        showMessage(
+            "Only an Active Super Admin can create Admin accounts.",
+            "error"
+        );
+        return;
+    }
+
+    const currentUser = auth.currentUser;
+
+    if(!currentUser){
+        showMessage("Super Admin login is required.","error");
+        return;
+    }
 
+    /* FORM DATA */
 
-if(!superAdminAuthorized){
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim().toLowerCase();
+    const mobile = mobileInput.value.trim();
+    const password = passwordInput.value;
+    const role = roleInput.value.trim();
+    const status = statusInput.value;
+
+    let department = "";
+    let reportsTo = "Super Admin";
+    let reportsToUid = "";
+
+    /* VALIDATION */
 
-showMessage(
-"Only an Active Super Admin can create Admin accounts.",
-"error"
-);
+    if(name.length < 3){
+        showMessage("Please enter the full name.","error");
+        return;
+    }
 
-return;
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        showMessage("Please enter a valid email address.","error");
+        return;
+    }
 
-}
+    if(!/^[0-9]{10}$/.test(mobile)){
+        showMessage("Mobile number must contain exactly 10 digits.","error");
+        return;
+    }
 
+    if(password.length < 8){
+        showMessage("Password must contain at least 8 characters.","error");
+        return;
+    }
 
-const currentUser=auth.currentUser;
+    if(role !== "Core Admin" && role !== "Departmental Admin"){
+        showMessage("Please select Admin Role.","error");
+        return;
+    }
 
+    if(role === "Departmental Admin"){
 
-if(!currentUser){
+        department = departmentInput.value.trim();
 
-showMessage(
-"Super Admin login is required.",
-"error"
-);
+        if(!department){
+            showMessage("Please select a Department.","error");
+            return;
+        }
+
+        const chosen = activeCoreAdmins.find(
+            (c)=>c.uid === reportsToInput.value
+        );
 
-return;
+        if(!chosen){
+            showMessage(
+                "Please select the Core Admin this person reports to.",
+                "error"
+            );
+            return;
+        }
 
-}
+        reportsTo = chosen.name;
+        reportsToUid = chosen.uid;
+    }
 
+    try{
 
-/* FORM DATA */
-
-const name=
-nameInput.value.trim();
-
-const email=
-emailInput.value.trim().toLowerCase();
-
-const mobile=
-mobileInput.value.trim();
-
-const password=
-passwordInput.value;
-
-const role=
-roleInput.value.trim();
-
-const department=
-departmentInput.value.trim();
-
-const status=
-statusInput.value;
-
-
-/* VALIDATION */
-
-if(name.length<3){
-
-showMessage(
-"Please enter the full name.",
-"error"
-);
-
-return;
-
-}
-
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-
-showMessage(
-"Please enter a valid email address.",
-"error"
-);
-
-return;
-
-}
-
-if(!/^[0-9]{10}$/.test(mobile)){
-
-showMessage(
-"Mobile number must contain exactly 10 digits.",
-"error"
-);
-
-return;
-
-}
-
-if(password.length<8){
-
-showMessage(
-"Password must contain at least 8 characters.",
-"error"
-);
-
-return;
-
-}
-
-if(
-role!=="Core Admin" &&
-role!=="Departmental Admin"
-){
-
-showMessage(
-"Please select Admin Role.",
-"error"
-);
-
-return;
-
-}
-
-if(!department){
-
-showMessage(
-"Please select Department / Post.",
-"error"
-);
-
-return;
-
-}
-
-
-/* RECHECK SUPER ADMIN */
-
-const superSnap=
-await getDoc(
-doc(db,"users",currentUser.uid)
-);
-
-if(!superSnap.exists()){
-
-showMessage(
-"Super Admin profile not found.",
-"error"
-);
-
-return;
-
-}
-
-const superData=
-superSnap.data();
-
-const superRole=
-String(
-superData.roleType ||
-superData.role ||
-superData.accountRole ||
-""
-).trim().toLowerCase();
-
-const superStatus=
-String(
-superData.status ||
-superData.accountStatus ||
-""
-).trim().toLowerCase();
-
-
-if(
-superRole!=="super admin" ||
-superStatus!=="active"
-){
-
-showMessage(
-"Super Admin authorization failed.",
-"error"
-);
-
-return;
-
-}
-
-
-/* DUPLICATE MOBILE */
-
-createButton.disabled=true;
-createButton.textContent=
-"Checking Mobile...";
-
-
-const mobileQuery=
-query(
-collection(db,"users"),
-where("mobile","==",mobile)
-);
-
-const mobileSnap=
-await getDocs(mobileQuery);
-
-
-if(!mobileSnap.empty){
-
-showMessage(
-"This mobile number is already registered.",
-"error"
-);
-
-createButton.disabled=false;
-createButton.textContent="Create Admin";
-
-return;
-
-}
-
-
-/* DUPLICATE EMAIL */
-
-createButton.textContent=
-"Checking Email...";
-
-
-const emailQuery=
-query(
-collection(db,"users"),
-where("email","==",email)
-);
-
-const emailSnap=
-await getDocs(emailQuery);
-
-
-if(!emailSnap.empty){
-
-showMessage(
-"This email is already registered.",
-"error"
-);
-
-createButton.disabled=false;
-createButton.textContent="Create Admin";
-
-return;
-
-}
-
-
-/* CREATE FIREBASE AUTH ACCOUNT */
-
-let newUser=null;
-
-
-try{
-
-createButton.textContent=
-"Creating Admin...";
-
-
-const credential=
-await createUserWithEmailAndPassword(
-adminAuth,
-email,
-password
-);
-
-newUser=credential.user;
-
-
-/* IMPORTANT:
-   Save COMPLETE ADMIN PROFILE */
-
-const adminData={
-
-uid:newUser.uid,
-
-name:name,
-
-email:email,
-
-mobile:mobile,
-
-role:`${department} ${role}`,
-
-roleType:role,
-
-department:department,
-
-status:status,
-
-createdAt:serverTimestamp(),
-
-createdBy:currentUser.uid,
-
-createdByRole:"Super Admin"
-
-};
-
-
-await setDoc(
-doc(db,"users",newUser.uid),
-adminData
-);
-
-
-/* Do NOT delete Auth account */
-
-await signOut(adminAuth);
-
-
-showMessage(
-"✓ Admin created successfully. Role, Department and Status saved.",
-"success"
-);
-
-
-/* CLEAR FORM */
-
-nameInput.value="";
-emailInput.value="";
-mobileInput.value="";
-passwordInput.value="";
-roleInput.value="";
-departmentInput.value="";
-statusInput.value="Active";
-
-
-createButton.disabled=false;
-createButton.textContent="Create Admin";
-
-
-}catch(error){
-
-console.error(
-"CREATE ADMIN ERROR:",
-error
-);
-
-
-/* If Auth was created but Firestore failed,
-   do not silently hide the problem. */
-
-if(error.code==="auth/email-already-in-use"){
-
-showMessage(
-"This email already exists in Firebase Authentication.",
-"error"
-);
-
-}else if(
-error.code==="auth/weak-password"
-){
-
-showMessage(
-"Password is too weak. Use at least 8 characters.",
-"error"
-);
-
-}else if(
-error.code==="permission-denied"
-){
-
-showMessage(
-"Firestore permission denied. Check Firestore Rules.",
-"error"
-);
-
-}else{
-
-showMessage(
-"Create Admin failed: "+
-(error.message || error.code || "Unknown error"),
-"error"
-);
-
-}
-
-createButton.disabled=false;
-createButton.textContent="Create Admin";
-
-}
-
-}
-
-</script>
-
-</body>
-</html>
+        /* RECHECK SUPER ADMIN */
+
+        setButton("Checking Authorization...",true);
+
+        const superSnap = await getDoc(doc(db,"users",currentUser.uid));
+
+        if(
+            !superSnap.exists() ||
+            readRole(superSnap.data()) !== "super admin" ||
+            !isActive(superSnap.data())
+        ){
+            showMessage("Super Admin authorization failed.","error");
+            setButton("Create Admin",false);
+            return;
+        }
+
+        /* DUPLICATE MOBILE */
+
+        setButton("Checking Mobile...",true);
+
+        const mobileSnap = await getDocs(
+            query(collection(db,"users"),where("mobile","==",mobile))
+        );
+
+        if(!mobileSnap.empty){
+            showMessage("This mobile number is already registered.","error");
+            setButton("Create Admin",false);
+            return;
+        }
+
+        /* DUPLICATE EMAIL */
+
+        setButton("Checking Email...",true);
+
+        const emailSnap = await getDocs(
+            query(collection(db,"users"),where("email","==",email))
+        );
+
+        if(!emailSnap.empty){
+            showMessage("This email is already registered.","error");
+            setButton("Create Admin",false);
+            return;
+        }
+
+        /* CAPACITY (only Active admins count) */
+
+        if(status === "Active"){
+
+            setButton("Checking Capacity...",true);
+
+            if(role === "Core Admin"){
+
+                const coreCount = await activeCoreCount();
+
+                if(coreCount >= CORE_LIMIT){
+                    showMessage(
+                        "Core Admin limit reached (" + CORE_LIMIT +
+                        " active). Make one Inactive first.",
+                        "error"
+                    );
+                    setButton("Create Admin",false);
+                    return;
+                }
+
+            }else{
+
+                const deptCount = await activeDepartmentCount(department);
+
+                if(deptCount >= DEPT_LIMIT){
+                    showMessage(
+                        department + " department limit reached (" +
+                        DEPT_LIMIT + " active). Make one Inactive first.",
+                        "error"
+                    );
+                    setButton("Create Admin",false);
+                    return;
+                }
+            }
+        }
+
+        /* CREATE FIREBASE AUTH ACCOUNT (secondary app) */
+
+        setButton("Creating Admin...",true);
+
+        const credential = await createUserWithEmailAndPassword(
+            adminAuth,
+            email,
+            password
+        );
+
+        const newUser = credential.user;
+
+        /* SAVE COMPLETE ADMIN PROFILE */
+
+        const adminData = {
+            uid:newUser.uid,
+            name:name,
+            email:email,
+            mobile:mobile,
+            role:role,
+            roleType:role,
+            department:department,
+            reportsTo:reportsTo,
+            reportsToUid:reportsToUid,
+            status:status,
+            createdBy:currentUser.uid,
+            createdByRole:"Super Admin",
+            createdAt:serverTimestamp()
+        };
+
+        await setDoc(doc(db,"users",newUser.uid),adminData);
+
+        await signOut(
