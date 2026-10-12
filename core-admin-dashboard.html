@@ -1519,31 +1519,33 @@ onAuthStateChanged(
              * Firebase Authentication UID.
              */
 
-            const profileRef =
-                doc(
-                    db,
-                    "users",
-                    user.uid
-                );
+            /* ================= CORE ADMIN PROFILE LOOKUP ================= */
+/*
+ * Firebase Authentication UID এবং Firestore
+ * document ID এক না হলেও profile খুঁজে বের করবে।
+ */
+
+const profileQuery = query(
+    collection(db, "users"),
+    where("uid", "==", user.uid)
+);
+
+const profileSnap =
+    await getDocs(profileQuery);
 
 
-            const profileSnap =
-                await getDoc(profileRef);
+if(profileSnap.empty){
+
+    throw new Error(
+        "Your Firestore profile was not found for UID: " +
+        user.uid
+    );
+
+}
 
 
-            if(!profileSnap.exists()){
-
-                throw new Error(
-                    "Your Firestore profile was not found for UID: " +
-                    user.uid
-                );
-
-            }
-
-
-            const data =
-                profileSnap.data();
-
+const data =
+    profileSnap.docs[0].data();
 
             const role =
                 normalize(
