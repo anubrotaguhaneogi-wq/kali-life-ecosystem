@@ -1,1710 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color"
-      content="#064e3b">
-
-<title>Core Admin Dashboard - KALI LIFE ECOSYSTEM</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#064e3b">
+<title>Core Admin Dashboard - KALI LIFE</title>
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    min-height:100vh;
-
-    background:
-        linear-gradient(
-            135deg,
-            #022c22,
-            #064e3b,
-            #0f766e
-        );
-
-    color:#0f172a;
-}
-
-/* ================= LOADING ================= */
-
-#loadingScreen{
-
-    position:fixed;
-    inset:0;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #022c22,
-            #064e3b,
-            #0f766e
-        );
-
-    color:white;
-
-    z-index:9999;
-}
-
-.loader{
-
-    width:48px;
-    height:48px;
-
-    border:4px solid
-        rgba(255,255,255,.25);
-
-    border-top-color:white;
-
-    border-radius:50%;
-
-    animation:
-        spin 1s linear infinite;
-
-    margin-bottom:18px;
-}
-
-@keyframes spin{
-
-    to{
-        transform:rotate(360deg);
-    }
-
-}
-
-.loading-text{
-
-    font-size:14px;
-    opacity:.85;
-
-}
-
-/* ================= APP ================= */
-
-#app{
-
-    display:none;
-    min-height:100vh;
-
-}
-
-/* ================= HEADER ================= */
-
-.header{
-
-    position:sticky;
-    top:0;
-
-    z-index:100;
-
-    height:70px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 25px;
-
-    background:
-        rgba(2,44,34,.92);
-
-    backdrop-filter:blur(12px);
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.12);
-
-    color:white;
-
-}
-
-.brand{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-}
-
-.brand-logo{
-
-    width:42px;
-    height:42px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #22c55e,
-            #059669
-        );
-
-    font-size:20px;
-
-}
-
-.brand h1{
-
-    font-size:18px;
-    font-weight:800;
-
-}
-
-.brand p{
-
-    font-size:11px;
-    opacity:.65;
-
-    margin-top:2px;
-
-}
-
-.header-right{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-}
-
-.role-badge{
-
-    padding:7px 12px;
-
-    border-radius:20px;
-
-    background:
-        rgba(34,197,94,.15);
-
-    border:
-        1px solid
-        rgba(34,197,94,.35);
-
-    color:#bbf7d0;
-
-    font-size:12px;
-    font-weight:700;
-
-}
-
-.logout-btn{
-
-    border:0;
-
-    padding:9px 14px;
-
-    border-radius:9px;
-
-    background:#dc2626;
-
-    color:white;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-}
-
-.logout-btn:hover{
-
-    background:#b91c1c;
-
-}
-
-/* ================= LAYOUT ================= */
-
-.layout{
-
-    display:flex;
-    min-height:calc(100vh - 70px);
-
-}
-
-/* ================= SIDEBAR ================= */
-
-.sidebar{
-
-    width:245px;
-
-    padding:22px 15px;
-
-    background:
-        rgba(2,44,34,.75);
-
-    border-right:
-        1px solid
-        rgba(255,255,255,.10);
-
-}
-
-.menu-title{
-
-    color:#86efac;
-
-    font-size:11px;
-    font-weight:800;
-
-    text-transform:uppercase;
-
-    letter-spacing:1.5px;
-
-    padding:0 12px;
-
-    margin-bottom:10px;
-
-}
-
-.menu{
-
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-
-}
-
-.menu button{
-
-    width:100%;
-
-    padding:13px 14px;
-
-    border:0;
-
-    border-radius:10px;
-
-    background:transparent;
-
-    color:#d1fae5;
-
-    text-align:left;
-
-    font-size:14px;
-
-    font-weight:650;
-
-    cursor:pointer;
-
-}
-
-.menu button:hover,
-.menu button.active{
-
-    background:
-        rgba(34,197,94,.16);
-
-    color:white;
-
-}
-
-/* ================= CONTENT ================= */
-
-.content{
-
-    flex:1;
-
-    padding:28px;
-
-    max-width:1400px;
-
-}
-
-/* ================= WELCOME ================= */
-
-.welcome{
-
-    color:white;
-
-    margin-bottom:24px;
-
-}
-
-.welcome h2{
-
-    font-size:27px;
-    margin-bottom:5px;
-
-}
-
-.welcome p{
-
-    font-size:13px;
-    color:#d1fae5;
-
-}
-
-/* ================= PROFILE ================= */
-
-.profile-card{
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:20px;
-
-    margin-bottom:22px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:18px;
-
-    box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.18);
-
-}
-
-.avatar{
-
-    width:65px;
-    height:65px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #16a34a,
-            #064e3b
-        );
-
-    color:white;
-
-    font-size:25px;
-    font-weight:800;
-
-}
-
-.profile-info{
-
-    flex:1;
-
-}
-
-.profile-info h3{
-
-    font-size:19px;
-
-    margin-bottom:4px;
-
-}
-
-.profile-info p{
-
-    color:#64748b;
-
-    font-size:13px;
-
-    margin:3px 0;
-
-}
-
-.uid{
-
-    font-family:monospace;
-
-    font-size:11px !important;
-
-    color:#94a3b8 !important;
-
-    word-break:break-all;
-
-}
-
-.active-status{
-
-    padding:7px 12px;
-
-    border-radius:20px;
-
-    background:#dcfce7;
-
-    color:#166534;
-
-    font-size:12px;
-
-    font-weight:800;
-
-}
-
-/* ================= STATS ================= */
-
-.stats{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:16px;
-
-    margin-bottom:22px;
-
-}
-
-.stat-card{
-
-    background:white;
-
-    border-radius:16px;
-
-    padding:20px;
-
-    box-shadow:
-        0 12px 30px
-        rgba(0,0,0,.13);
-
-}
-
-.stat-icon{
-
-    width:42px;
-    height:42px;
-
-    border-radius:11px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#ecfdf5;
-
-    color:#047857;
-
-    font-size:19px;
-
-    margin-bottom:14px;
-
-}
-
-.stat-label{
-
-    color:#64748b;
-
-    font-size:12px;
-
-    font-weight:700;
-
-}
-
-.stat-value{
-
-    font-size:27px;
-
-    font-weight:800;
-
-    color:#0f172a;
-
-    margin-top:4px;
-
-}
-
-/* ================= MODULES ================= */
-
-.section-title{
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:800;
-
-    margin:25px 0 13px;
-
-}
-
-.modules{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:16px;
-
-}
-
-.module{
-
-    background:white;
-
-    border-radius:16px;
-
-    padding:20px;
-
-    box-shadow:
-        0 12px 30px
-        rgba(0,0,0,.13);
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.module:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 18px 38px
-        rgba(0,0,0,.20);
-
-}
-
-.module-icon{
-
-    font-size:25px;
-
-    margin-bottom:10px;
-
-}
-
-.module h3{
-
-    font-size:16px;
-
-    margin-bottom:5px;
-
-}
-
-.module p{
-
-    color:#64748b;
-
-    font-size:12px;
-
-    line-height:1.5;
-
-}
-
-/* ================= ERROR ================= */
-
-#errorBox{
-
-    display:none;
-
-    margin:25px auto;
-
-    max-width:600px;
-
-    background:#fff;
-
-    padding:25px;
-
-    border-radius:16px;
-
-    box-shadow:
-        0 20px 50px
-        rgba(0,0,0,.2);
-
-    text-align:center;
-
-}
-
-#errorBox h2{
-
-    color:#b91c1c;
-
-    margin-bottom:10px;
-
-}
-
-#errorBox p{
-
-    color:#475569;
-
-    font-size:14px;
-
-    line-height:1.6;
-
-}
-
-#errorBox button{
-
-    margin-top:18px;
-
-    padding:11px 18px;
-
-    border:0;
-
-    border-radius:8px;
-
-    background:#166534;
-
-    color:white;
-
-    font-weight:700;
-
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:900px){
-
-    .sidebar{
-
-        width:200px;
-
-    }
-
-    .stats{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-    }
-
-    .modules{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-    }
-
-}
-
-@media(max-width:650px){
-
-    .header{
-
-        padding:0 15px;
-
-    }
-
-    .brand p{
-
-        display:none;
-
-    }
-
-    .role-badge{
-
-        display:none;
-
-    }
-
-    .layout{
-
-        display:block;
-
-    }
-
-    .sidebar{
-
-        width:100%;
-
-        padding:10px;
-
-        border-right:0;
-
-        border-bottom:
-            1px solid
-            rgba(255,255,255,.1);
-
-    }
-
-    .menu{
-
-        flex-direction:row;
-
-        overflow-x:auto;
-
-    }
-
-    .menu button{
-
-        white-space:nowrap;
-
-        width:auto;
-
-    }
-
-    .content{
-
-        padding:18px 12px;
-
-    }
-
-    .welcome h2{
-
-        font-size:23px;
-
-    }
-
-    .profile-card{
-
-        align-items:flex-start;
-
-    }
-
-    .active-status{
-
-        display:none;
-
-    }
-
-    .stats{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap:10px;
-
-    }
-
-    .stat-card{
-
-        padding:15px;
-
-    }
-
-    .stat-value{
-
-        font-size:23px;
-
-    }
-
-    .modules{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Arial,sans-serif;min-height:100vh;background:linear-gradient(135deg,#022c22,#064e3b,#0f766e);color:#0f172a}
+#loadingScreen{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,#022c22,#064e3b,#0f766e);color:#fff;z-index:9999}
+.loader{width:48px;height:48px;border:4px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:14px;opacity:.85}
+#app{display:none;min-height:100vh}
+.header{position:sticky;top:0;z-index:100;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 25px;background:rgba(2,44,34,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.12);color:#fff}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,#22c55e,#059669);font-size:20px}
+.brand h1{font-size:18px;font-weight:800}
+.brand p{font-size:11px;opacity:.65;margin-top:2px}
+.header-right{display:flex;align-items:center;gap:12px}
+.role-badge{padding:7px 12px;border-radius:20px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#bbf7d0;font-size:12px;font-weight:700}
+.logout-btn{border:0;padding:9px 14px;border-radius:9px;background:#dc2626;color:#fff;font-weight:700;cursor:pointer}
+.logout-btn:hover{background:#b91c1c}
+.layout{display:flex;min-height:calc(100vh - 70px)}
+.sidebar{width:245px;padding:22px 15px;background:rgba(2,44,34,.75);border-right:1px solid rgba(255,255,255,.1)}
+.menu-title{color:#86efac;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;padding:0 12px;margin-bottom:10px}
+.menu{display:flex;flex-direction:column;gap:7px}
+.menu button{width:100%;padding:13px 14px;border:0;border-radius:10px;background:transparent;color:#d1fae5;text-align:left;font-size:14px;font-weight:650;cursor:pointer}
+.menu button:hover,.menu button.active{background:rgba(34,197,94,.16);color:#fff}
+.content{flex:1;padding:28px;max-width:1400px}
+.welcome{color:#fff;margin-bottom:24px}
+.welcome h2{font-size:27px;margin-bottom:5px}
+.welcome p{font-size:13px;color:#d1fae5}
+.profile-card{background:#fff;border-radius:18px;padding:20px;margin-bottom:22px;display:flex;align-items:center;gap:18px;box-shadow:0 15px 40px rgba(0,0,0,.18)}
+.avatar{width:65px;height:65px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#16a34a,#064e3b);color:#fff;font-size:25px;font-weight:800}
+.profile-info{flex:1}
+.profile-info h3{font-size:19px;margin-bottom:4px}
+.profile-info p{color:#64748b;font-size:13px;margin:3px 0}
+.uid{font-family:monospace;font-size:11px!important;color:#94a3b8!important;word-break:break-all}
+.active-status{padding:7px 12px;border-radius:20px;background:#dcfce7;color:#166534;font-size:12px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.stat-card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.13)}
+.stat-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:#ecfdf5;color:#047857;font-size:19px;margin-bottom:14px}
+.stat-label{color:#64748b;font-size:12px;font-weight:700}
+.stat-value{font-size:27px;font-weight:800;color:#0f172a;margin-top:4px}
+.section-title{color:#fff;font-size:18px;font-weight:800;margin:25px 0 13px}
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.module{background:#fff;border-radius:16px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.13);cursor:pointer;transition:.2s}
+.module:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(0,0,0,.2)}
+.module-icon{font-size:25px;margin-bottom:10px}
+.module h3{font-size:16px;margin-bottom:5px}
+.module p{color:#64748b;font-size:12px;line-height:1.5}
+#errorBox{display:none;margin:25px auto;max-width:600px;background:#fff;padding:25px;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.2);text-align:center}
+#errorBox h2{color:#b91c1c;margin-bottom:10px}
+#errorBox p{color:#475569;font-size:14px;line-height:1.6}
+#errorBox button{margin-top:18px;padding:11px 18px;border:0;border-radius:8px;background:#166534;color:#fff;font-weight:700}
+@media(max-width:900px){.sidebar{width:200px}.stats{grid-template-columns:repeat(2,1fr)}.modules{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.header{padding:0 15px}.brand p,.role-badge,.active-status{display:none}.layout{display:block}.sidebar{width:100%;padding:10px;border-right:0;border-bottom:1px solid rgba(255,255,255,.1)}.menu{flex-direction:row;overflow-x:auto}.menu button{white-space:nowrap;width:auto}.content{padding:18px 12px}.welcome h2{font-size:23px}.profile-card{align-items:flex-start}.stats{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:15px}.stat-value{font-size:23px}.modules{grid-template-columns:1fr}}
 </style>
-
 </head>
-
 <body>
 
-
-<!-- ================= LOADING ================= -->
-
 <div id="loadingScreen">
-
-    <div class="loader"></div>
-
-    <div class="loading-text">
-        Verifying Core Admin account...
-    </div>
-
+  <div class="loader"></div>
+  <div class="loading-text">Verifying Core Admin account...</div>
 </div>
-
-
-<!-- ================= ERROR ================= -->
 
 <div id="errorBox">
-
-    <h2>Access Denied</h2>
-
-    <p id="errorText">
-        Unable to verify your account.
-    </p>
-
-    <button onclick="window.location.href='login.html'">
-        Back to Login
-    </button>
-
+  <h2>Access Denied</h2>
+  <p id="errorText">Unable to verify your account.</p>
+  <button onclick="location.href='login.html'">Back to Login</button>
 </div>
-
-
-<!-- ================= APP ================= -->
 
 <div id="app">
-
-
-<header class="header">
-
+  <header class="header">
     <div class="brand">
-
-        <div class="brand-logo">
-            🌿
-        </div>
-
-        <div>
-
-            <h1>
-                KALI LIFE
-            </h1>
-
-            <p>
-                CORE ADMIN CONTROL CENTER
-            </p>
-
-        </div>
-
+      <div class="brand-logo">🌿</div>
+      <div>
+        <h1>KALI LIFE</h1>
+        <p>CORE ADMIN CONTROL CENTER</p>
+      </div>
     </div>
-
-
     <div class="header-right">
+      <div id="roleBadge" class="role-badge">Core Admin</div>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+  </header>
 
-        <div
-            id="roleBadge"
-            class="role-badge">
-            Core Admin
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="menu-title">Core Administration</div>
+      <div class="menu">
+        <button class="active" onclick="location.reload()">🏠 Dashboard</button>
+        <button onclick="location.href='admin-list.html'">👥 Admin List</button>
+        <button onclick="alert('User Management module coming soon')">👤 Users</button>
+        <button onclick="alert('Reports module coming soon')">📊 Reports</button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="welcome">
+        <h2>Welcome, <span id="welcomeName">Core Admin</span></h2>
+        <p>Manage and monitor the KALI LIFE ECOSYSTEM administration system.</p>
+      </div>
+
+      <div class="profile-card">
+        <div id="avatar" class="avatar">A</div>
+        <div class="profile-info">
+          <h3 id="profileName">Loading...</h3>
+          <p id="profileEmail">—</p>
+          <p id="profileMobile">—</p>
+          <p id="profileUid" class="uid">UID: —</p>
         </div>
+        <div id="activeStatus" class="active-status">ACTIVE</div>
+      </div>
 
-        <button
-            id="logoutBtn"
-            class="logout-btn">
-            Logout
-        </button>
+      <div class="stats">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">TOTAL USERS</div><div id="totalUsers" class="stat-value">0</div></div>
+        <div class="stat-card"><div class="stat-icon">🛡️</div><div class="stat-label">ACTIVE ADMINS</div><div id="activeAdmins" class="stat-value">0</div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-label">CORE ADMINS</div><div id="coreAdmins" class="stat-value">0</div></div>
+        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">DEPARTMENT ADMINS</div><div id="departmentAdmins" class="stat-value">0</div></div>
+      </div>
 
-    </div>
-
-</header>
-
-
-<div class="layout">
-
-
-<!-- ================= SIDEBAR ================= -->
-
-<aside class="sidebar">
-
-    <div class="menu-title">
-        Core Administration
-    </div>
-
-    <div class="menu">
-
-        <button
-            class="active"
-            onclick="showHome()">
-            🏠 Dashboard
-        </button>
-
-        <button
-            onclick="openPage('admin-list.html')">
-            👥 Admin List
-        </button>
-
-        <button
-            onclick="showUsers()">
-            👤 Users
-        </button>
-
-        <button
-            onclick="showReports()">
-            📊 Reports
-        </button>
-
-    </div>
-
-</aside>
-
-
-<!-- ================= CONTENT ================= -->
-
-<main class="content">
-
-
-<div class="welcome">
-
-    <h2>
-        Welcome,
-        <span id="welcomeName">
-            Core Admin
-        </span>
-    </h2>
-
-    <p>
-        Manage and monitor the KALI LIFE ECOSYSTEM administration system.
-    </p>
-
+      <div class="section-title">Management Modules</div>
+      <div class="modules">
+        <div class="module" onclick="location.href='admin-list.html'"><div class="module-icon">👥</div><h3>Admin Management</h3><p>View and monitor registered administrator accounts.</p></div>
+        <div class="module" onclick="alert('User Management module coming soon')"><div class="module-icon">👤</div><h3>User Management</h3><p>Monitor ecosystem users and account activity.</p></div>
+        <div class="module" onclick="alert('Reports module coming soon')"><div class="module-icon">📊</div><h3>Reports & Analytics</h3><p>View administration statistics and system overview.</p></div>
+        <div class="module" onclick="location.href='sales-management.html'"><div class="module-icon">💰</div><h3>Sales Management</h3><p>Access sales management when permission is available.</p></div>
+        <div class="module" onclick="location.href='purchase-management.html'"><div class="module-icon">📦</div><h3>Purchase Management</h3><p>Access purchase records and management tools.</p></div>
+        <div class="module" onclick="location.href='super-admin-dashboard.html'"><div class="module-icon">🔐</div><h3>Super Admin</h3><p>Restricted area. Core Admin access is not granted.</p></div>
+      </div>
+    </main>
+  </div>
 </div>
-
-
-<!-- ================= PROFILE ================= -->
-
-<div class="profile-card">
-
-    <div
-        id="avatar"
-        class="avatar">
-        A
-    </div>
-
-    <div class="profile-info">
-
-        <h3 id="profileName">
-            Loading...
-        </h3>
-
-        <p id="profileEmail">
-            —
-        </p>
-
-        <p id="profileMobile">
-            —
-        </p>
-
-        <p
-            id="profileUid"
-            class="uid">
-            UID: —
-        </p>
-
-    </div>
-
-    <div
-        id="activeStatus"
-        class="active-status">
-        ACTIVE
-    </div>
-
-</div>
-
-
-<!-- ================= STATS ================= -->
-
-<div class="stats">
-
-
-<div class="stat-card">
-
-    <div class="stat-icon">
-        👥
-    </div>
-
-    <div class="stat-label">
-        TOTAL USERS
-    </div>
-
-    <div
-        id="totalUsers"
-        class="stat-value">
-        0
-    </div>
-
-</div>
-
-
-<div class="stat-card">
-
-    <div class="stat-icon">
-        🛡️
-    </div>
-
-    <div class="stat-label">
-        ACTIVE ADMINS
-    </div>
-
-    <div
-        id="activeAdmins"
-        class="stat-value">
-        0
-    </div>
-
-</div>
-
-
-<div class="stat-card">
-
-    <div class="stat-icon">
-        ⭐
-    </div>
-
-    <div class="stat-label">
-        CORE ADMINS
-    </div>
-
-    <div
-        id="coreAdmins"
-        class="stat-value">
-        0
-    </div>
-
-</div>
-
-
-<div class="stat-card">
-
-    <div class="stat-icon">
-        🏢
-    </div>
-
-    <div class="stat-label">
-        DEPARTMENT ADMINS
-    </div>
-
-    <div
-        id="departmentAdmins"
-        class="stat-value">
-        0
-    </div>
-
-</div>
-
-
-</div>
-
-
-<!-- ================= MODULES ================= -->
-
-<div class="section-title">
-    Management Modules
-</div>
-
-
-<div class="modules">
-
-
-<div
-    class="module"
-    onclick="openPage('admin-list.html')">
-
-    <div class="module-icon">
-        👥
-    </div>
-
-    <h3>
-        Admin Management
-    </h3>
-
-    <p>
-        View and monitor registered administrator accounts.
-    </p>
-
-</div>
-
-
-<div
-    class="module"
-    onclick="showUsers()">
-
-    <div class="module-icon">
-        👤
-    </div>
-
-    <h3>
-        User Management
-    </h3>
-
-    <p>
-        Monitor ecosystem users and account activity.
-    </p>
-
-</div>
-
-
-<div
-    class="module"
-    onclick="showReports()">
-
-    <div class="module-icon">
-        📊
-    </div>
-
-    <h3>
-        Reports & Analytics
-    </h3>
-
-    <p>
-        View administration statistics and system overview.
-    </p>
-
-</div>
-
-
-<div
-    class="module"
-    onclick="openPage('sales-management.html')">
-
-    <div class="module-icon">
-        💰
-    </div>
-
-    <h3>
-        Sales Management
-    </h3>
-
-    <p>
-        Access sales management when permission is available.
-    </p>
-
-</div>
-
-
-<div
-    class="module"
-    onclick="openPage('purchase-management.html')">
-
-    <div class="module-icon">
-        📦
-    </div>
-
-    <h3>
-        Purchase Management
-    </h3>
-
-    <p>
-        Access purchase records and management tools.
-    </p>
-
-</div>
-
-
-<div
-    class="module"
-    onclick="openPage('super-admin-dashboard.html')">
-
-    <div class="module-icon">
-        🔐
-    </div>
-
-    <h3>
-        Super Admin
-    </h3>
-
-    <p>
-        Restricted area. Core Admin access is not granted.
-    </p>
-
-</div>
-
-
-</div>
-
-
-</main>
-
-</div>
-
-</div>
-
-
-<!-- ================= FIREBASE ================= -->
 
 <script type="module">
-
-import {
-    initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-
-import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-import {
-    getFirestore,
-    doc,
-    getDoc,
-    collection,
-    getDocs,
-    query,
-    where
-}
-
-
-/* ================= FIREBASE CONFIG ================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-
-    authDomain:
-        "kali-life-ecosystem.firebaseapp.com",
-
-    projectId:
-        "kali-life-ecosystem",
-
-    storageBucket:
-        "kali-life-ecosystem.firebasestorage.app",
-
-    messagingSenderId:
-        "734170546737",
-
-    appId:
-        "1:734170546737:web:26f79e1b4b19ebabfe0b10"
-
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10"
 };
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-/* ================= FIREBASE ================= */
+const normalize = v => String(v || "").trim().toLowerCase();
 
-const app =
-    initializeApp(firebaseConfig);
-
-const auth =
-    getAuth(app);
-
-const db =
-    getFirestore(app);
-
-
-/* ================= HELPERS ================= */
-
-function normalize(value){
-
-    return String(value || "")
-        .trim()
-        .toLowerCase();
-
+function showError(text) {
+  document.getElementById("loadingScreen").style.display = "none";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("errorBox").style.display = "block";
+  document.getElementById("errorText").textContent = text;
 }
 
-
-function showError(text){
-
-    document
-        .getElementById("loadingScreen")
-        .style.display = "none";
-
-    document
-        .getElementById("app")
-        .style.display = "none";
-
-    document
-        .getElementById("errorBox")
-        .style.display = "block";
-
-    document
-        .getElementById("errorText")
-        .textContent = text;
-
-}
-
-
-/* ================= PAGE NAVIGATION ================= */
-
-window.openPage = function(page){
-
-    window.location.href = page;
-
+document.getElementById("logoutBtn").onclick = async () => {
+  try {
+    await signOut(auth);
+    location.href = "login.html";
+  } catch (e) {
+    alert("Logout failed. Please try again.");
+  }
 };
 
-
-window.showHome = function(){
-
-    window.location.reload();
-
-};
-
-
-window.showUsers = function(){
-
-    alert(
-        "User Management module is ready for the next development stage."
-    );
-
-};
-
-
-window.showReports = function(){
-
-    alert(
-        "Reports & Analytics module is ready for the next development stage."
-    );
-
-};
-
-
-/* ================= LOGOUT ================= */
-
-document
-    .getElementById("logoutBtn")
-    .addEventListener("click",async()=>{
-
-        try{
-
-            await signOut(auth);
-
-            window.location.href =
-                "login.html";
-
-        }catch(error){
-
-            console.error(
-                "Logout Error:",
-                error
-            );
-
-            alert(
-                "Logout failed. Please try again."
-            );
-
-        }
-
+async function loadStatistics() {
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    let total = 0, activeAdmins = 0, core = 0, dept = 0;
+    snap.forEach(d => {
+      const data = d.data();
+      total++;
+      const role = normalize(data.roleType || data.role || data.accountRole);
+      const status = normalize(data.status || data.accountStatus || "active");
+      if (status === "active" && ["core admin","departmental admin","admin","super admin"].includes(role)) activeAdmins++;
+      if (role === "core admin") core++;
+      if (role === "departmental admin") dept++;
     });
-
-
-/* ================= LOAD STATISTICS ================= */
-
-async function loadStatistics(){
-
-    try{
-
-        const snap =
-            await getDocs(
-                collection(db,"users")
-            );
-
-        let totalUsers = 0;
-        let activeAdmins = 0;
-        let coreAdmins = 0;
-        let departmentAdmins = 0;
-
-        snap.forEach((docSnap)=>{
-
-            const data =
-                docSnap.data();
-
-            totalUsers++;
-
-            const role =
-                normalize(
-                    data.roleType ||
-                    data.role ||
-                    data.accountRole
-                );
-
-            const status =
-                normalize(
-                    data.status ||
-                    data.accountStatus ||
-                    "active"
-                );
-
-            if(
-                status === "active" &&
-                (
-                    role === "core admin" ||
-                    role === "departmental admin" ||
-                    role === "admin" ||
-                    role === "super admin"
-                )
-            ){
-
-                activeAdmins++;
-
-            }
-
-            if(role === "core admin"){
-
-                coreAdmins++;
-
-            }
-
-            if(role === "departmental admin"){
-
-                departmentAdmins++;
-
-            }
-
-        });
-
-
-        document
-            .getElementById("totalUsers")
-            .textContent = totalUsers;
-
-
-        document
-            .getElementById("activeAdmins")
-            .textContent = activeAdmins;
-
-
-        document
-            .getElementById("coreAdmins")
-            .textContent = coreAdmins;
-
-
-        document
-            .getElementById("departmentAdmins")
-            .textContent =
-                departmentAdmins;
-
-
-    }catch(error){
-
-        console.error(
-            "Statistics Error:",
-            error
-        );
-
-        document
-            .getElementById("totalUsers")
-            .textContent = "—";
-
-        document
-            .getElementById("activeAdmins")
-            .textContent = "—";
-
-        document
-            .getElementById("coreAdmins")
-            .textContent = "—";
-
-        document
-            .getElementById("departmentAdmins")
-            .textContent = "—";
-
-    }
-
+    document.getElementById("totalUsers").textContent = total;
+    document.getElementById("activeAdmins").textContent = activeAdmins;
+    document.getElementById("coreAdmins").textContent = core;
+    document.getElementById("departmentAdmins").textContent = dept;
+  } catch (e) {
+    ["totalUsers","activeAdmins","coreAdmins","departmentAdmins"].forEach(id => document.getElementById(id).textContent = "—");
+  }
 }
 
-
-/* ================= AUTH + ROLE CHECK ================= */
-
-onAuthStateChanged(
-    auth,
-    async(user)=>{
-
-        console.log(
-            "Auth State:",
-            user ? user.uid : "NO USER"
-        );
-
-
-        if(!user){
-
-            showError(
-                "No active login session was found. Please login again."
-            );
-
-            setTimeout(()=>{
-
-                window.location.href =
-                    "login.html";
-
-            },2000);
-
-            return;
-
-        }
-
-
-        try{
-
-            /*
-             * IMPORTANT:
-             * Profile is loaded using the
-             * Firebase Authentication UID.
-             */
-
-            /* ================= CORE ADMIN PROFILE LOOKUP ================= */
-/*
- * Firebase Authentication UID এবং Firestore
- * document ID এক না হলেও profile খুঁজে বের করবে।
- */
-
-const profileQuery = query(
-    collection(db, "users"),
-    where("uid", "==", user.uid)
-);
-
-const profileSnap =
-    await getDocs(profileQuery);
-
-
-if(profileSnap.empty){
-
-    throw new Error(
-        "Your Firestore profile was not found for UID: " +
-        user.uid
-    );
-
-}
-
-
-const data =
-    profileSnap.docs[0].data();
-
-                        const role =
-                normalize(
-                    data.roleType ||
-                    data.role ||
-                    data.accountRole
-                );
-
-            const status =
-                normalize(
-                    data.status ||
-                    data.accountStatus ||
-                    "active"
-                );
-
-            console.log("Core Admin Profile:", data);
-            console.log("Detected Role:", role);
-            console.log("Detected Status:", status);
-
-
-            /* ================= CORE ADMIN CHECK ================= */
-
-            if(
-                role !== "core admin"
-            ){
-
-                throw new Error(
-                    "Access denied. This account is not registered as Core Admin."
-                );
-
-            }
-
-
-            if(
-                status !== "active"
-            ){
-
-                throw new Error(
-                    "This Core Admin account is not active."
-                );
-
-            }
-
-
-            /* ================= PROFILE DISPLAY ================= */
-
-            const displayName =
-                data.name ||
-                data.fullName ||
-                data.displayName ||
-                "Core Admin";
-
-            const email =
-                data.email ||
-                user.email ||
-                "—";
-
-            const mobile =
-                data.mobile ||
-                data.phone ||
-                "—";
-
-
-            document
-                .getElementById("welcomeName")
-                .textContent = displayName;
-
-
-            document
-                .getElementById("profileName")
-                .textContent = displayName;
-
-
-            document
-                .getElementById("profileEmail")
-                .textContent = email;
-
-
-            document
-                .getElementById("profileMobile")
-                .textContent = mobile;
-
-
-            document
-                .getElementById("profileUid")
-                .textContent =
-                    "UID: " + user.uid;
-
-
-            const firstLetter =
-                String(displayName)
-                    .trim()
-                    .charAt(0)
-                    .toUpperCase();
-
-
-            document
-                .getElementById("avatar")
-                .textContent =
-                    firstLetter || "A";
-
-
-            document
-                .getElementById("roleBadge")
-                .textContent =
-                    "Core Admin";
-
-
-            document
-                .getElementById("activeStatus")
-                .textContent =
-                    "ACTIVE";
-
-
-            /* ================= LOAD DASHBOARD ================= */
-
-            await loadStatistics();
-
-
-            /* ================= SHOW APP ================= */
-
-            document
-                .getElementById("loadingScreen")
-                .style.display = "none";
-
-
-            document
-                .getElementById("app")
-                .style.display = "block";
-
-
-            console.log(
-                "Core Admin dashboard loaded successfully."
-            );
-
-
-        }catch(error){
-
-            console.error(
-                "Core Admin Verification Error:",
-                error
-            );
-
-
-            showError(
-                error.message ||
-                "Unable to verify Core Admin account."
-            );
-
-        }
-
-    }
-);
-
-
-/* ================= END FIREBASE SCRIPT ================= */
-
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    showError("No active login session found. Please login again.");
+    setTimeout(() => location.href = "login.html", 2000);
+    return;
+  }
+
+  try {
+    const profileSnap = await getDocs(query(collection(db, "users"), where("uid", "==", user.uid)));
+    if (profileSnap.empty) throw new Error("Your Firestore profile was not found for UID: " + user.uid);
+
+    const data = profileSnap.docs[0].data();
+    const role = normalize(data.roleType || data.role || data.accountRole);
+    const status = normalize(data.status || data.accountStatus || "active");
+
+    if (role !== "core admin") throw new Error("Access denied. This account is not registered as Core Admin.");
+    if (status !== "active") throw new Error("This Core Admin account is not active.");
+
+    const name = data.name || data.fullName || data.displayName || "Core Admin";
+    const email = data.email || user.email || "—";
+    const mobile = data.mobile || data.phone || "—";
+
+    document.getElementById("welcomeName").textContent = name;
+    document.getElementById("profileName").textContent = name;
+    document.getElementById("profileEmail").textContent = email;
+    document.getElementById("profileMobile").textContent = mobile;
+    document.getElementById("profileUid").textContent = "UID: " + user.uid;
+    document.getElementById("avatar").textContent = name.trim().charAt(0).toUpperCase() || "A";
+    document.getElementById("roleBadge").textContent = "Core Admin";
+    document.getElementById("activeStatus").textContent = "ACTIVE";
+
+    await loadStatistics();
+
+    document.getElementById("loadingScreen").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  } catch (e) {
+    showError(e.message || "Unable to verify Core Admin account.");
+  }
+});
 </script>
-
 </body>
-
 </html>
