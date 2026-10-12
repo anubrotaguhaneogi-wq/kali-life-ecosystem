@@ -1547,8 +1547,164 @@ if(profileSnap.empty){
 const data =
     profileSnap.docs[0].data();
 
-            const role =
+                        const role =
                 normalize(
                     data.roleType ||
                     data.role ||
-                    da
+                    data.accountRole
+                );
+
+            const status =
+                normalize(
+                    data.status ||
+                    data.accountStatus ||
+                    "active"
+                );
+
+            console.log("Core Admin Profile:", data);
+            console.log("Detected Role:", role);
+            console.log("Detected Status:", status);
+
+
+            /* ================= CORE ADMIN CHECK ================= */
+
+            if(
+                role !== "core admin"
+            ){
+
+                throw new Error(
+                    "Access denied. This account is not registered as Core Admin."
+                );
+
+            }
+
+
+            if(
+                status !== "active"
+            ){
+
+                throw new Error(
+                    "This Core Admin account is not active."
+                );
+
+            }
+
+
+            /* ================= PROFILE DISPLAY ================= */
+
+            const displayName =
+                data.name ||
+                data.fullName ||
+                data.displayName ||
+                "Core Admin";
+
+            const email =
+                data.email ||
+                user.email ||
+                "—";
+
+            const mobile =
+                data.mobile ||
+                data.phone ||
+                "—";
+
+
+            document
+                .getElementById("welcomeName")
+                .textContent = displayName;
+
+
+            document
+                .getElementById("profileName")
+                .textContent = displayName;
+
+
+            document
+                .getElementById("profileEmail")
+                .textContent = email;
+
+
+            document
+                .getElementById("profileMobile")
+                .textContent = mobile;
+
+
+            document
+                .getElementById("profileUid")
+                .textContent =
+                    "UID: " + user.uid;
+
+
+            const firstLetter =
+                String(displayName)
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            document
+                .getElementById("avatar")
+                .textContent =
+                    firstLetter || "A";
+
+
+            document
+                .getElementById("roleBadge")
+                .textContent =
+                    "Core Admin";
+
+
+            document
+                .getElementById("activeStatus")
+                .textContent =
+                    "ACTIVE";
+
+
+            /* ================= LOAD DASHBOARD ================= */
+
+            await loadStatistics();
+
+
+            /* ================= SHOW APP ================= */
+
+            document
+                .getElementById("loadingScreen")
+                .style.display = "none";
+
+
+            document
+                .getElementById("app")
+                .style.display = "block";
+
+
+            console.log(
+                "Core Admin dashboard loaded successfully."
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "Core Admin Verification Error:",
+                error
+            );
+
+
+            showError(
+                error.message ||
+                "Unable to verify Core Admin account."
+            );
+
+        }
+
+    }
+);
+
+
+/* ================= END FIREBASE SCRIPT ================= */
+
+</script>
+
+</body>
+
+</html>
