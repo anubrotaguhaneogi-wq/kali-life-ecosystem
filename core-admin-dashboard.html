@@ -129,7 +129,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;min-height:100vh;background:linear-
         <div class="module" onclick="alert('Reports module coming soon')"><div class="module-icon">📊</div><h3>Reports & Analytics</h3><p>View administration statistics and system overview.</p></div>
         <div class="module" onclick="location.href='sales-management.html'"><div class="module-icon">💰</div><h3>Sales Management</h3><p>Access sales management when permission is available.</p></div>
         <div class="module" onclick="location.href='purchase-management.html'"><div class="module-icon">📦</div><h3>Purchase Management</h3><p>Access purchase records and management tools.</p></div>
-        <div class="module" onclick="location.href='super-admin-dashboard.html'"><div class="module-icon">🔐</div><h3>Super Admin</h3><p>Restricted area. Core Admin access is not granted.</p></div>
+        <div class="module" onclick="showSuperAdminDenied()"><div class="module-icon">🔐</div><h3>Super Admin</h3><p>Restricted area. Core Admin access is not granted.</p></div>
       </div>
     </main>
   </div>
@@ -154,7 +154,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const normalize = v => String(v || "").trim().toLowerCase();
-
+function showSuperAdminDenied() {
+  alert("Access Denied: Super Admin Dashboard is restricted to Super Admin only.");
+}
 function showError(text) {
   document.getElementById("loadingScreen").style.display = "none";
   document.getElementById("app").style.display = "none";
