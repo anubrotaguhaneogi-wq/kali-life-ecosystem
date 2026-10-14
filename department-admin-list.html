@@ -1,487 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="bn">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Department Admin List - KALI LIFE ECOSYSTEM</title>
-
-<script src="auth.js"></script>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#064e3b">
+<title>Department Admin Dashboard - KALI LIFE</title>
 <style>
-
-/* ==========================================
-   KALI LIFE ECOSYSTEM
-   DEPARTMENT ADMIN LIST
-   FINAL CSS
-========================================== */
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f1f5f9;
-    color: #0f172a;
-}
-
-/* HEADER */
-
-header {
-    background: #166534;
-    color: #ffffff;
-    padding: 22px 15px;
-    text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-}
-
-/* CONTAINER */
-
-.container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 25px auto;
-    padding: 0 15px 30px;
-}
-
-/* TOP ACTION AREA */
-
-.top-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-/* CREATE BUTTON */
-
-.create {
-    background: #16a34a;
-    color: #ffffff;
-    padding: 13px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.10);
-    transition: 0.2s;
-}
-
-.create:hover {
-    background: #15803d;
-    transform: translateY(-1px);
-}
-
-/* SEARCH */
-
-.searchBox {
-    width: 100%;
-    padding: 13px 15px;
-    margin-bottom: 20px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #0f172a;
-    font-size: 16px;
-    outline: none;
-}
-
-.searchBox:focus {
-    border-color: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-}
-
-/* TABLE WRAPPER */
-
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
-
-/* TABLE */
-
-table {
-    width: 100%;
-    min-width: 900px;
-    border-collapse: collapse;
-}
-
-/* TABLE HEADER */
-
-th {
-    background: #166534;
-    color: #ffffff;
-    padding: 14px 10px;
-    text-align: center;
-    font-size: 15px;
-    white-space: nowrap;
-}
-
-/* TABLE DATA */
-
-td {
-    padding: 13px 10px;
-    text-align: center;
-    border-bottom: 1px solid #e2e8f0;
-    color: #334155;
-    font-size: 14px;
-}
-
-/* ALTERNATE ROW */
-
-tbody tr:nth-child(even) {
-    background: #f8fafc;
-}
-
-tbody tr:hover {
-    background: #f0fdf4;
-}
-
-/* STATUS */
-
-td:nth-child(5) {
-    font-weight: bold;
-}
-
-/* GENERAL BUTTON */
-
-button {
-    padding: 8px 13px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-/* VIEW */
-
-.view {
-    background: #2563eb;
-    color: #ffffff;
-}
-
-.view:hover {
-    background: #1d4ed8;
-}
-
-/* EDIT */
-
-.edit {
-    background: #f59e0b;
-    color: #ffffff;
-}
-
-.edit:hover {
-    background: #d97706;
-}
-
-/* DELETE */
-
-.delete {
-    background: #dc2626;
-    color: #ffffff;
-}
-
-.delete:hover {
-    background: #b91c1c;
-}
-
-/* EMPTY TABLE MESSAGE */
-
-.empty-message {
-    text-align: center;
-    padding: 30px;
-    color: #64748b;
-    font-size: 15px;
-}
-
-/* MOBILE */
-
-@media (max-width: 700px) {
-
-    header {
-        font-size: 21px;
-        padding: 18px 10px;
-    }
-
-    .container {
-        padding: 0 10px 25px;
-        margin-top: 20px;
-    }
-
-    .top-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .create {
-        width: 100%;
-    }
-
-    .searchBox {
-        font-size: 15px;
-    }
-
-    .table-wrapper {
-        border-radius: 10px;
-    }
-
-    th,
-    td {
-        padding: 11px 8px;
-    }
-
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI","Noto Sans Bengali",Arial,sans-serif;background:#f3f7f5;color:#0f172a}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.header{position:sticky;top:0;z-index:20;background:#064e3b;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.brand h1{font-size:18px}.brand p{font-size:11px;opacity:.75}
+.header-actions{display:flex;gap:8px}.header-actions button{border:0;border-radius:9px;padding:9px 11px;color:#fff;background:#dc2626;font-weight:700}
+.wrap{max-width:1100px;margin:auto;padding:18px}
+.loading,.error{max-width:620px;margin:50px auto;background:#fff;padding:25px;border-radius:16px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.error{color:#991b1b}.hidden{display:none!important}
+.profile{background:#fff;border-radius:16px;padding:18px;display:flex;gap:15px;align-items:center;box-shadow:0 8px 25px rgba(0,0,0,.07);margin-bottom:16px}
+.avatar{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#16a34a;color:#fff;font-size:22px;font-weight:800;flex:none}
+.profile-info{flex:1}.profile-info h2{font-size:19px}.profile-info p{font-size:12px;color:#64748b;margin-top:3px}
+.badge{padding:7px 10px;border-radius:20px;background:#dcfce7;color:#166534;font-size:11px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:#fff;border-radius:14px;padding:16px;box-shadow:0 7px 22px rgba(0,0,0,.06)}
+.stat small{color:#64748b;font-weight:700}.stat strong{display:block;font-size:25px;margin-top:5px}
+.modules{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.module{background:#fff;border:0;border-radius:14px;padding:17px;text-align:left;box-shadow:0 7px 22px rgba(0,0,0,.06);transition:.15s}
+.module:hover{transform:translateY(-2px)}.module b{display:block;margin-top:8px}.module span{display:block;color:#64748b;font-size:12px;margin-top:3px}
+.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 8px 25px rgba(0,0,0,.06);margin-bottom:16px}
+.card h2{font-size:19px;color:#065f46;margin-bottom:12px}
+.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px;color:#475569}
+.field input,.field select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;background:#fff}
+.total{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:10px;padding:12px;margin-top:12px;display:flex;justify-content:space-between;font-weight:800}
+.primary{width:100%;margin-top:12px;padding:13px;border:0;border-radius:10px;background:#047857;color:#fff;font-weight:800}
+.primary:disabled{opacity:.55}.msg{display:none;margin-top:10px;padding:10px;border-radius:9px;font-size:13px;font-weight:700}.msg.show{display:block}.ok{background:#dcfce7;color:#166534}.bad{background:#fee2e2;color:#991b1b}
+.order{border:1px solid #e2e8f0;border-radius:11px;padding:12px;margin-top:9px}
+.order-top{display:flex;justify-content:space-between;gap:10px}.status{padding:5px 8px;border-radius:15px;background:#fef3c7;color:#92400e;font-size:11px;font-weight:800}
+.muted{font-size:12px;color:#64748b;margin-top:4px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.modules{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.wrap{padding:12px}.modules{grid-template-columns:1fr}.profile{align-items:flex-start}.badge{display:none}}
 </style>
-
 </head>
-
 <body>
 
-<script>
-checkLogin();
-checkRole("Core Admin");
-</script>
+<div id="loading" class="loading">Department Admin account যাচাই হচ্ছে...</div>
 
-<header>
-    DEPARTMENT ADMIN LIST
-</header>
-
-<div class="container">
-
-    <div class="top-actions">
-
-        <button
-            class="create"
-            onclick="window.location.href='create-department-admin.html'">
-            ➕ Create Department Admin
-        </button>
-
-    </div>
-
-    <input
-        type="text"
-        id="searchBox"
-        class="searchBox"
-        placeholder="🔍 Search Department Admin..."
-        onkeyup="searchDepartmentAdmins()">
-
-    <div class="table-wrapper">
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>SL</th>
-                    <th>Admin ID</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Status</th>
-                    <th>View</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="departmentTableBody">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
+<div id="errorBox" class="error hidden">
+  <h2>Access Denied</h2>
+  <p id="errorText" style="margin-top:8px"></p>
+  <button class="primary" style="max-width:260px" onclick="location.href='login.html'">Login</button>
 </div>
 
-<script>
+<div id="app" class="hidden">
+<header class="header">
+  <div class="brand">
+    <h1>🌿 KALI LIFE ECOSYSTEM</h1>
+    <p>DEPARTMENT ADMIN CONTROL PANEL</p>
+  </div>
+  <div class="header-actions">
+    <button id="refreshBtn" style="background:#047857">Refresh</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</header>
 
-/* ==========================================
-   LOAD DEPARTMENT ADMINS
-========================================== */
+<main class="wrap">
+  <section class="profile">
+    <div id="avatar" class="avatar">A</div>
+    <div class="profile-info">
+      <h2 id="adminName">—</h2>
+      <p>Department: <b id="department">—</b></p>
+      <p>Reports To: <b id="reportsTo">—</b></p>
+      <p>Admin UID: <span id="uid">—</span></p>
+    </div>
+    <div class="badge">ACTIVE</div>
+  </section>
 
-function loadDepartmentAdmins() {
+  <section class="stats">
+    <div class="stat"><small>MY ORDERS</small><strong id="orderCount">0</strong></div>
+    <div class="stat"><small>MY SALES</small><strong id="salesCount">0</strong></div>
+    <div class="stat"><small>MY COMMISSION</small><strong id="commission">₹0</strong></div>
+    <div class="stat"><small>ORDER PENDING</small><strong id="pendingCount">0</strong></div>
+  </section>
 
-    let admins =
-        JSON.parse(localStorage.getItem("departmentAdmins")) || [];
+  <section class="modules">
+    <button class="module" onclick="goOrder()"><div style="font-size:24px">🛒</div><b>নতুন Order</b><span>Company থেকে product order করুন</span></button>
+    <button class="module" onclick="document.getElementById('ordersCard').scrollIntoView({behavior:'smooth'})"><div style="font-size:24px">📋</div><b>My Orders</b><span>নিজের order status দেখুন</span></button>
+    <button class="module" onclick="location.href='sales_tracking_commission.html'"><div style="font-size:24px">💰</div><b>Sales Entry</b><span>Customer sale ও commission tracking</span></button>
+    <button class="module" onclick="loadAll()"><div style="font-size:24px">🔄</div><b>Refresh Data</b><span>Firestore থেকে live data আনুন</span></button>
+  </section>
 
-    let table =
-        document.getElementById("departmentTableBody");
+  <section id="orderCard" class="card">
+    <h2>🛒 Product Order</h2>
+    <p class="muted" style="margin-bottom:12px">এই order Company/Core Admin-এর কাছে যাবে। Order করার সময় stock কমবে না এবং commission তৈরি হবে না।</p>
+    <div class="form-grid">
+      <div class="field"><label>Product</label><select id="product"><option value="">Product loading...</option></select></div>
+      <div class="field"><label>Quantity</label><input id="qty" type="number" min="1" step="1" value="1"></div>
+      <div class="field"><label>Rate (যদি catalog-এ থাকে)</label><input id="rate" type="number" min="0" step="0.01" readonly></div>
+    </div>
+    <div class="field" style="margin-top:12px"><label>Note</label><input id="note" placeholder="Optional note"></div>
+    <div class="total"><span>Estimated Total</span><span id="total">₹0</span></div>
+    <button id="placeOrder" class="primary">Place Order</button>
+    <div id="msg" class="msg"></div>
+  </section>
 
-    table.innerHTML = "";
+  <section id="ordersCard" class="card">
+    <h2>📋 My Orders</h2>
+    <div id="orders">Loading orders...</div>
+  </section>
+</main>
+</div>
 
-    if (admins.length === 0) {
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {getFirestore,collection,getDocs,getDoc,doc,query,where,addDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-        table.innerHTML = `
-            <tr>
-                <td colspan="8" class="empty-message">
-                    No Department Admin Found
-                </td>
-            </tr>
-        `;
+const firebaseConfig={
+  apiKey:"AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+  authDomain:"kali-life-ecosystem.firebaseapp.com",
+  projectId:"kali-life-ecosystem",
+  storageBucket:"kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId:"734170546737",
+  appId:"1:734170546737:web:26f79e1b4b19ebabfe0b10",
+  measurementId:"G-LBEY0W7RX3"
+};
 
-        return;
-    }
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const $=id=>document.getElementById(id);
+const norm=v=>String(v??"").trim().toLowerCase().replace(/\s+/g," ");
+let currentUser=null,currentAdmin=null,currentCore=null,currentSuper=null,products=[];
 
-    admins.forEach(function(admin, index) {
+function showError(t){$("loading").classList.add("hidden");$("app").classList.add("hidden");$("errorBox").classList.remove("hidden");$("errorText").textContent=t}
+function msg(t,ok=false){$("msg").textContent=t;$("msg").className="msg show "+(ok?"ok":"bad")}
+function money(v){return "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function goOrder(){$("orderCard").scrollIntoView({behavior:"smooth"})}
 
-        table.innerHTML += `
-        <tr>
-
-            <td>${index + 1}</td>
-
-            <td>${admin.id || ""}</td>
-
-            <td>${admin.fullName || ""}</td>
-
-            <td>${admin.department || ""}</td>
-
-            <td>${admin.status || ""}</td>
-
-            <td>
-                <button
-                    class="view"
-                    onclick="viewDepartment(${index})">
-                    View
-                </button>
-            </td>
-
-            <td>
-                <button
-                    class="edit"
-                    onclick="editDepartment(${index})">
-                    Edit
-                </button>
-            </td>
-
-            <td>
-                <button
-                    class="delete"
-                    onclick="deleteDepartment(${index})">
-                    Delete
-                </button>
-            </td>
-
-        </tr>
-        `;
-
-    });
-
+async function profileForUser(u){
+  const direct=await getDoc(doc(db,"users",u.uid));
+  if(direct.exists()) return {id:direct.id,data:direct.data()};
+  if(u.email){
+    const q=await getDocs(query(collection(db,"users"),where("email","==",u.email)));
+    if(!q.empty)return {id:q.docs[0].id,data:q.docs[0].data()};
+  }
+  return null;
 }
-
-
-/* ==========================================
-   SEARCH
-========================================== */
-
-function searchDepartmentAdmins() {
-
-    let search =
-        document.getElementById("searchBox")
-        .value
-        .toLowerCase();
-
-    let rows =
-        document.querySelectorAll(
-            "#departmentTableBody tr"
-        );
-
-    rows.forEach(function(row) {
-
-        let text =
-            row.innerText.toLowerCase();
-
-        if (text.includes(search)) {
-
-            row.style.display = "";
-
-        } else {
-
-            row.style.display = "none";
-
+async function findUser(identifier){
+  if(!identifier)return null;
+  const direct=await getDoc(doc(db,"users",identifier));
+  if(direct.exists())return {id:direct.id,data:direct.data()};
+  const q=await getDocs(query(collection(db,"users"),where("uid","==",identifier)));
+  if(!q.empty)return {id:q.docs[0].id,data:q.docs[0].data()};
+  return null;
+}
+async function buildHierarchy(){
+  const p=await profileForUser(currentUser);
+  if(!p)throw new Error("Firestore users profile পাওয়া যায়নি।");
+  const d=p.data||{};
+  const role=norm(d.roleType||d.role||d.accountRole);
+  const status=norm(d.status||d.accountStatus||"");
+  if(!["department admin","departmental admin"].includes(role))throw new Error("এই account Department Admin নয়।");
+  if(status!=="active")throw new Error("Department Admin account Active নয়.");
+  if(!String(d.department||"").trim())throw new Error("Department profile-এ department সেট করা নেই.");
+  currentAdmin={uid:currentUser.uid,name:d.name||d.fullName||currentUser.email||currentUser.uid,email:d.email||currentUser.email||"",department:String(d.department).trim(),reportsTo:String(d.reportsTo||"").trim(),adminId:d.adminId||p.id};
+  currentCore=null;currentSuper=null;
+  if(currentAdmin.reportsTo){
+    const cp=await findUser(currentAdmin.reportsTo);
+    if(cp){
+      const cd=cp.data||{};
+      const cr=norm(cd.roleType||cd.role||"");
+      if(cr==="core admin"){
+        currentCore={uid:cp.id,name:cd.name||"Core Admin",department:String(cd.department||"").trim(),reportsTo:String(cd.reportsTo||"").trim()};
+        if(currentCore.reportsTo){
+          const sp=await findUser(currentCore.reportsTo);
+          if(sp){const sd=sp.data||{};currentSuper={uid:sp.id,name:sd.name||"Super Admin"}}
         }
-
-    });
-
-}
-
-
-/* ==========================================
-   VIEW
-========================================== */
-
-function viewDepartment(id) {
-
-    window.location.href =
-        "view-department-admin.html?id=" + id;
-
-}
-
-
-/* ==========================================
-   EDIT
-========================================== */
-
-function editDepartment(id) {
-
-    window.location.href =
-        "edit-department-admin.html?id=" + id;
-
-}
-
-
-/* ==========================================
-   DELETE
-========================================== */
-
-function deleteDepartment(id) {
-
-    let admins =
-        JSON.parse(localStorage.getItem("departmentAdmins")) || [];
-
-    if (
-        confirm(
-            "Are you sure you want to delete this Department Admin?"
-        )
-    ) {
-
-        admins.splice(id, 1);
-
-        localStorage.setItem(
-            "departmentAdmins",
-            JSON.stringify(admins)
-        );
-
-        loadDepartmentAdmins();
-
+      }else if(cr==="super admin"){currentSuper={uid:cp.id,name:cd.name||"Super Admin"}}
     }
-
+  }
+  $("adminName").textContent=currentAdmin.name;
+  $("department").textContent=currentAdmin.department;
+  $("reportsTo").textContent=currentCore?.name||currentAdmin.reportsTo||"—";
+  $("uid").textContent=currentUser.uid;
+  $("avatar").textContent=currentAdmin.name.trim().charAt(0).toUpperCase()||"A";
 }
+function productName(d){return d.itemName||d.productName||d.name||"Unnamed Product"}
+function productPrice(d){return Number(d.sellingPrice??d.salePrice??d.price??d.mrp??0)||0}
+function productStock(d){return Number(d.stockQuantity??d.stock??d.quantity??0)||0}
 
+async function loadProducts(){
+  products=[];
+  try{
+    const s=await getDocs(collection(db,"products"));
+    s.forEach(x=>products.push({id:x.id,data:x.data(),source:"products"}));
+  }catch(e){console.warn("products read failed",e)}
+  if(!products.length){
+    try{
+      const s=await getDocs(collection(db,"inventory"));
+      s.forEach(x=>products.push({id:x.id,data:x.data(),source:"inventory"}));
+    }catch(e){console.warn("inventory read failed",e)}
+  }
+  const select=$("product");
+  if(!products.length){
+    select.innerHTML='<option value="">No product catalog available</option>';
+    $("rate").value="";
+    return;
+  }
+  select.innerHTML='<option value="">Select Product</option>'+products.map((p,i)=>{
+    const d=p.data,n=productName(d),stock=productStock(d),price=productPrice(d);
+    return `<option value="${i}">${esc(n)}${stock?` — Stock ${stock}`:""}</option>`;
+  }).join("");
+}
+function selectedProduct(){
+  const i=Number($("product").value);
+  return Number.isInteger(i)&&products[i]?products[i]:null;
+}
+function updateTotal(){
+  const p=selectedProduct(),q=Number($("qty").value)||0,r=p?productPrice(p.data):Number($("rate").value)||0;
+  $("rate").value=r||"";
+  $("total").textContent=money(q*r);
+}
+$("product").addEventListener("change",updateTotal);
+$("qty").addEventListener("input",updateTotal);
 
-/* ==========================================
-   INITIAL LOAD
-========================================== */
+async function loadOrders(){
+  const box=$("orders");box.textContent="Loading orders...";
+  try{
+    const s=await getDocs(query(collection(db,"orders"),where("requestedById","==",currentUser.uid)));
+    const rows=[];
+    s.forEach(x=>rows.push({id:x.id,...x.data()}));
+    rows.sort((a,b)=>(Number(b.createdAtMs)||0)-(Number(a.createdAtMs)||0));
+    $("orderCount").textContent=rows.length;
+    $("pendingCount").textContent=rows.filter(x=>norm(x.status)==="pending").length;
+    if(!rows.length){box.innerHTML='<div class="muted">এখনও কোনো order নেই।</div>';return}
+    box.innerHTML=rows.map(o=>`
+      <div class="order">
+        <div class="order-top"><b>${esc(o.orderId||o.id)}</b><span class="status">${esc(o.status||"Pending")}</span></div>
+        <b style="display:block;margin-top:6px">${esc(o.productName||"Product")}</b>
+        <div class="muted">Quantity: ${Number(o.quantity||0)} • ${money(o.estimatedTotal||0)}</div>
+        <div class="muted">Department: ${esc(o.department||"")} • ${esc(o.dateText||"")}</div>
+      </div>`).join("");
+  }catch(e){$("orders").innerHTML='<div class="muted">Orders load করা যায়নি: '+esc(e.message)+'</div>'}
+}
+async function loadSalesAndCommission(){
+  try{
+    const ss=await getDocs(query(collection(db,"sales"),where("adminId","==",currentUser.uid)));
+    $("salesCount").textContent=ss.size;
+  }catch(e){$("salesCount").textContent="—"}
+  try{
+    const cs=await getDocs(query(collection(db,"commissionLedger"),where("recipientId","==",currentUser.uid)));
+    let total=0;cs.forEach(x=>total+=Number(x.data().commissionAmount||0));
+    $("commission").textContent=money(total);
+  }catch(e){$("commission").textContent="—"}
+}
+async function loadAll(){await Promise.all([loadProducts(),loadOrders(),loadSalesAndCommission()]);updateTotal()}
 
-loadDepartmentAdmins();
+$("placeOrder").addEventListener("click",async()=>{
+  if(!currentUser||!currentAdmin){msg("Admin session পাওয়া যাচ্ছে না।");return}
+  const p=selectedProduct(),q=Math.floor(Number($("qty").value)||0);
+  if(!p){msg("একটি Product নির্বাচন করুন।");return}
+  if(q<=0){msg("সঠিক Quantity দিন।");return}
+  const d=p.data,n=productName(d),rate=productPrice(d),stock=productStock(d);
+  if(stock>0&&q>stock){msg(`এই product-এর বর্তমান stock ${stock}; ${q} order করা যাবে না।`);return}
+  const btn=$("placeOrder");btn.disabled=true;btn.textContent="Saving Order...";
+  try{
+    const now=new Date(),ref="ORD-"+now.getTime().toString().slice(-10);
+    await addDoc(collection(db,"orders"),{
+      orderId:ref,
+      requestedById:currentAdmin.uid,
+      requestedByName:currentAdmin.name,
+      requestedByRole:"Department Admin",
+      department:currentAdmin.department,
+      reportsTo:currentAdmin.reportsTo,
+      coreAdminId:currentCore?.uid||"",
+      coreAdminName:currentCore?.name||"",
+      superAdminId:currentSuper?.uid||"",
+      superAdminName:currentSuper?.name||"",
+      productId:p.id,
+      productSource:p.source,
+      productName:n,
+      quantity:q,
+      unitRate:rate,
+      estimatedTotal:Number((q*rate).toFixed(2)),
+      note:$("note").value.trim(),
+      status:"Pending",
+      createdAt:serverTimestamp(),
+      createdAtMs:now.getTime(),
+      dateText:now.toLocaleDateString("en-IN")
+    });
+    msg("Order সফলভাবে পাঠানো হয়েছে। Core Admin এখন এটি দেখতে পারবে।",true);
+    $("qty").value=1;$("note").value="";
+    await loadOrders();
+  }catch(e){
+    console.error(e);
+    msg(e.code==="permission-denied"?"Order save blocked by Firestore Rules.":"Order save failed: "+e.message);
+  }finally{btn.disabled=false;btn.textContent="Place Order"}
+});
 
+$("logoutBtn").onclick=async()=>{await signOut(auth);location.href="login.html"};
+$("refreshBtn").onclick=loadAll;
+
+onAuthStateChanged(auth,async u=>{
+  if(!u){location.href="login.html";return}
+  currentUser=u;
+  try{
+    await buildHierarchy();
+    await loadAll();
+    $("loading").classList.add("hidden");
+    $("app").classList.remove("hidden");
+  }catch(e){console.error(e);showError(e.message||"Department Admin verification failed.")}
+});
 </script>
-
 </body>
-
 </html>
