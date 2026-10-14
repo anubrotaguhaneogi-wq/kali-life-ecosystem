@@ -3,24 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Sales Management - KALI LIFE ECOSYSTEM</title>
 
 <style>
 *{
     box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
     background:#f4f7f5;
     color:#222;
 }
 
 .header{
     background:#16834b;
-    color:white;
+    color:#fff;
     padding:18px;
     text-align:center;
 }
@@ -36,16 +35,17 @@ body{
 }
 
 .container{
-    max-width:650px;
+    max-width:700px;
     margin:25px auto;
     padding:15px;
 }
 
 .card{
-    background:white;
+    background:#fff;
     padding:22px;
     border-radius:14px;
     box-shadow:0 4px 18px rgba(0,0,0,.08);
+    margin-bottom:20px;
 }
 
 .card h2{
@@ -55,10 +55,22 @@ body{
 
 .admin-box{
     background:#eef8f2;
-    padding:12px;
-    border-radius:8px;
+    padding:14px;
+    border-radius:9px;
     margin-bottom:18px;
     font-size:14px;
+    line-height:1.8;
+    word-break:break-word;
+}
+
+.tracking-box{
+    background:#f7faf8;
+    border:1px solid #dbe9df;
+    padding:12px;
+    border-radius:9px;
+    margin-top:12px;
+    font-size:13px;
+    line-height:1.6;
 }
 
 label{
@@ -83,6 +95,7 @@ input:focus{
 
 .amount-box{
     background:#f1f8f4;
+    font-weight:bold;
 }
 
 button{
@@ -92,7 +105,7 @@ button{
     border:0;
     border-radius:8px;
     background:#16834b;
-    color:white;
+    color:#fff;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
@@ -104,6 +117,7 @@ button:hover{
 
 button:disabled{
     background:#999;
+    cursor:not-allowed;
 }
 
 .message{
@@ -136,16 +150,31 @@ button:disabled{
     margin-top:10px;
     border-radius:10px;
     box-shadow:0 2px 8px rgba(0,0,0,.06);
+    line-height:1.7;
 }
 
 .sale-row strong{
     color:#16834b;
 }
 
+.commission-box{
+    margin-top:10px;
+    padding:10px;
+    background:#f7faf8;
+    border-radius:8px;
+    font-size:13px;
+    line-height:1.7;
+}
+
 .loading{
     text-align:center;
     color:#777;
     padding:15px;
+}
+
+.small{
+    font-size:12px;
+    color:#666;
 }
 </style>
 </head>
@@ -157,44 +186,95 @@ button:disabled{
     <p>Sales Management</p>
 </div>
 
+
 <div class="container">
 
 <div class="card">
 
 <h2>Sales Entry</h2>
 
+
 <div class="admin-box">
-    <strong>Admin:</strong>
+
+    <strong>Logged-in Admin:</strong>
     <span id="adminName">Loading...</span>
     <br>
+
     <strong>Admin ID:</strong>
     <span id="adminId">Loading...</span>
+    <br>
+
+    <strong>Role:</strong>
+    <span id="roleType">Loading...</span>
+    <br>
+
+    <strong>Department:</strong>
+    <span id="department">Loading...</span>
+    <br>
+
+    <strong>Reports To:</strong>
+    <span id="reportsTo">Loading...</span>
+
+    <div class="tracking-box">
+
+        <strong>Automatic Tracking</strong>
+        <br>
+
+        This sale is automatically linked with the
+        logged-in Admin, Department, Core Admin and
+        Super Admin hierarchy.
+
+        <br><br>
+
+        <span class="small">
+        Admin ID is saved with every sale so the source
+        of the sale can be tracked later.
+        </span>
+
+    </div>
+
 </div>
 
-<label for="customerName">Customer Name</label>
+
+<label for="customerName">
+    Customer Name
+</label>
+
 <input
     type="text"
     id="customerName"
     placeholder="Enter customer name"
 >
 
-<label for="customerMobile">Customer Mobile</label>
+
+<label for="customerMobile">
+    Customer Mobile
+</label>
+
 <input
     type="tel"
     id="customerMobile"
     inputmode="numeric"
     maxlength="10"
-    placeholder="Enter mobile number"
+    placeholder="Enter 10 digit mobile number"
 >
 
-<label for="itemName">Item Name</label>
+
+<label for="itemName">
+    Item Name
+</label>
+
 <input
     type="text"
     id="itemName"
     placeholder="Enter item name"
 >
 
-<label for="quantity">Quantity</label>
+
+<label for="quantity">
+    Quantity
+</label>
+
 <input
     type="number"
     id="quantity"
@@ -203,7 +283,11 @@ button:disabled{
     placeholder="Enter quantity"
 >
 
-<label for="rate">Rate</label>
+
+<label for="rate">
+    Rate
+</label>
+
 <input
     type="number"
     id="rate"
@@ -212,7 +296,11 @@ button:disabled{
     placeholder="Enter rate"
 >
 
-<label for="amount">Amount</label>
+
+<label for="amount">
+    Amount
+</label>
+
 <input
     type="number"
     id="amount"
@@ -220,6 +308,7 @@ button:disabled{
     readonly
     placeholder="Automatically calculated"
 >
+
 
 <button id="saveButton">
     Save Sale
@@ -229,29 +318,40 @@ button:disabled{
 
 </div>
 
+
 <div class="card sales-list">
 
 <h2>My Sales</h2>
 
 <div id="salesList">
-    <div class="loading">Loading sales...</div>
+    <div class="loading">
+        Loading sales...
+    </div>
 </div>
 
 </div>
 
 </div>
+
 
 
 <script type="module">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+/* =========================================================
+   FIREBASE IMPORTS
+========================================================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
 
 import {
     getAuth,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -261,42 +361,100 @@ import {
     getDoc,
     doc,
     query,
-    where
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    where,
+    writeBatch,
+    serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
-/* ==========================================
+
+/* =========================================================
    FIREBASE CONFIG
-========================================== */
+========================================================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-    authDomain: "kali-life-ecosystem.firebaseapp.com",
-    projectId: "kali-life-ecosystem",
-    storageBucket: "kali-life-ecosystem.firebasestorage.app",
-    messagingSenderId: "734170546737",
-    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-    measurementId: "G-LBEY0W7RX3"
+
+    apiKey:
+        "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
 };
 
 
-/* ==========================================
-   FIREBASE INITIALIZE
-========================================== */
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
+const app =
+    initializeApp(firebaseConfig);
 
 
-/* ==========================================
-   ELEMENTS
-========================================== */
+const auth =
+    getAuth(app);
 
-const adminNameEl = document.getElementById("adminName");
-const adminIdEl = document.getElementById("adminId");
+
+const db =
+    getFirestore(app);
+
+
+
+/* =========================================================
+   COMMISSION CONFIGURATION
+
+   CURRENT BUSINESS RULE:
+
+   Department Admin = 20%
+   Core Admin       = 10%
+   Super Admin      = 5%
+
+   IMPORTANT:
+   Currently calculated on SALE AMOUNT.
+========================================================= */
+
+const COMMISSION = {
+
+    superAdminPercent: 5,
+
+    coreAdminPercent: 10,
+
+    departmentAdminPercent: 20
+
+};
+
+
+
+/* =========================================================
+   HTML ELEMENTS
+========================================================= */
+
+const adminNameEl =
+    document.getElementById("adminName");
+
+const adminIdEl =
+    document.getElementById("adminId");
+
+const roleTypeEl =
+    document.getElementById("roleType");
+
+const departmentEl =
+    document.getElementById("department");
+
+const reportsToEl =
+    document.getElementById("reportsTo");
+
 
 const customerNameEl =
     document.getElementById("customerName");
@@ -326,13 +484,87 @@ const salesListEl =
     document.getElementById("salesList");
 
 
+
+/* =========================================================
+   CURRENT USER / HIERARCHY
+========================================================= */
+
 let currentUser = null;
-let currentAdminName = "";
+
+let currentAdmin = null;
+
+let currentCoreAdmin = null;
+
+let currentSuperAdmin = null;
 
 
-/* ==========================================
-   AMOUNT CALCULATION
-========================================== */
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function clean(value){
+
+    return String(value ?? "").trim();
+
+}
+
+
+function normalizeRole(value){
+
+    return clean(value)
+        .toLowerCase()
+        .replace(/\s+/g," ");
+
+}
+
+
+function isDepartmentAdmin(role){
+
+    return normalizeRole(role)
+        .includes("department admin");
+
+}
+
+
+function isCoreAdmin(role){
+
+    return normalizeRole(role)
+        .includes("core admin");
+
+}
+
+
+function isSuperAdmin(role){
+
+    return normalizeRole(role)
+        .includes("super admin");
+
+}
+
+
+function calculateCommission(amount, percent){
+
+    return Number(
+        (
+            (Number(amount) || 0) *
+            percent /
+            100
+        ).toFixed(2)
+    );
+
+}
+
+
+function showMessage(text,type){
+
+    messageEl.textContent = text;
+
+    messageEl.className =
+        "message " + type;
+
+}
+
 
 function calculateAmount(){
 
@@ -346,434 +578,12 @@ function calculateAmount(){
         quantity * rate;
 
     amountEl.value =
-        amount > 0 ? amount.toFixed(2) : "";
-}
-
-quantityEl.addEventListener(
-    "input",
-    calculateAmount
-);
-
-rateEl.addEventListener(
-    "input",
-    calculateAmount
-);
-
-
-/* ==========================================
-   MESSAGE
-========================================== */
-
-function showMessage(text,type){
-
-    messageEl.textContent = text;
-
-    messageEl.className =
-        "message " + type;
+        amount > 0
+            ? amount.toFixed(2)
+            : "";
 
 }
 
-
-/* ==========================================
-   AUTHENTICATION
-========================================== */
-
-onAuthStateChanged(auth, async (user) => {
-
-    if(!user){
-
-        window.location.href = "login.html";
-
-        return;
-    }
-
-    try{
-
-        currentUser = user;
-
-        adminIdEl.textContent =
-            user.uid;
-
-        const userRef =
-            doc(db,"users",user.uid);
-
-        const userSnap =
-            await getDoc(userRef);
-
-        let userData = {};
-
-        if(userSnap.exists()){
-
-            userData =
-                userSnap.data();
-
-        }
-
-        currentAdminName =
-            userData.name ||
-            user.displayName ||
-            user.email ||
-            user.uid;
-
-        adminNameEl.textContent =
-            currentAdminName;
-
-        await loadMySales();
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        showMessage(
-            "Unable to load admin information.",
-            "error"
-        );
-
-    }
-
-});
-
-
-/* ==========================================
-   SAVE SALE
-========================================== */
-
-saveButton.addEventListener(
-    "click",
-    async () => {
-
-        if(!currentUser){
-
-            showMessage(
-                "Admin login required.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const customerName =
-            customerNameEl.value.trim();
-
-        const customerMobile =
-            customerMobileEl.value.trim();
-
-        const itemName =
-            itemNameEl.value.trim();
-
-        const quantity =
-            Number(quantityEl.value);
-
-        const rate =
-            Number(rateEl.value);
-
-        const amount =
-            quantity * rate;
-
-
-        /* VALIDATION */
-
-        if(!customerName){
-
-            showMessage(
-                "Customer Name is required.",
-                "error"
-            );
-
-            return;
-        }
-
-        if(!customerMobile){
-
-            showMessage(
-                "Customer Mobile is required.",
-                "error"
-            );
-
-            return;
-        }
-
-        if(!itemName){
-
-            showMessage(
-                "Item Name is required.",
-                "error"
-            );
-
-            return;
-        }
-
-        if(!quantity || quantity <= 0){
-
-            showMessage(
-                "Enter a valid quantity.",
-                "error"
-            );
-
-            return;
-        }
-
-        if(!rate || rate < 0){
-
-            showMessage(
-                "Enter a valid rate.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        saveButton.disabled = true;
-
-        saveButton.textContent =
-            "Saving...";
-
-
-        try{
-
-            const now = new Date();
-
-
-            /* ======================================
-               SAVE TO FIRESTORE
-            ====================================== */
-
-            await addDoc(
-                collection(db,"sales"),
-                {
-
-                    adminId:
-                        currentUser.uid,
-
-                    adminName:
-                        currentAdminName,
-
-                    customerName:
-                        customerName,
-
-                    customerMobile:
-                        customerMobile,
-
-                    itemName:
-                        itemName,
-
-                    quantity:
-                        quantity,
-
-                    rate:
-                        rate,
-
-                    amount:
-                        amount,
-
-                    createdAt:
-                        now.getTime(),
-
-                    dateText:
-                        now.toLocaleDateString(
-                            "en-IN"
-                        )
-
-                }
-            );
-
-
-            showMessage(
-                "Sale saved successfully.",
-                "success"
-            );
-
-
-            /* CLEAR FORM */
-
-            customerNameEl.value = "";
-
-            customerMobileEl.value = "";
-
-            itemNameEl.value = "";
-
-            quantityEl.value = "";
-
-            rateEl.value = "";
-
-            amountEl.value = "";
-
-
-            await loadMySales();
-
-
-        }
-        catch(error){
-
-            console.error(error);
-
-            showMessage(
-                "Sale could not be saved. Check Firebase.",
-                "error"
-            );
-
-        }
-
-
-        saveButton.disabled = false;
-
-        saveButton.textContent =
-            "Save Sale";
-
-    }
-);
-
-
-/* ==========================================
-   LOAD ADMIN SALES
-========================================== */
-
-async function loadMySales(){
-
-    if(!currentUser){
-
-        return;
-    }
-
-
-    salesListEl.innerHTML =
-        '<div class="loading">Loading sales...</div>';
-
-
-    try{
-
-        const salesQuery =
-            query(
-                collection(db,"sales"),
-                where(
-                    "adminId",
-                    "==",
-                    currentUser.uid
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(salesQuery);
-
-
-        if(snapshot.empty){
-
-            salesListEl.innerHTML =
-                '<div class="loading">No sales found.</div>';
-
-            return;
-        }
-
-
-        const sales = [];
-
-
-        snapshot.forEach(
-            (saleDoc) => {
-
-                sales.push(
-                    saleDoc.data()
-                );
-
-            }
-        );
-
-
-        sales.sort(
-            (a,b) =>
-                (b.createdAt || 0) -
-                (a.createdAt || 0)
-        );
-
-
-        salesListEl.innerHTML = "";
-
-
-        sales.forEach(
-            (sale) => {
-
-                const row =
-                    document.createElement("div");
-
-                row.className =
-                    "sale-row";
-
-
-                row.innerHTML = `
-
-                    <strong>
-                        ${escapeHtml(
-                            sale.itemName
-                        )}
-                    </strong>
-
-                    <br>
-
-                    Customer:
-                    ${escapeHtml(
-                        sale.customerName
-                    )}
-
-                    <br>
-
-                    Mobile:
-                    ${escapeHtml(
-                        sale.customerMobile
-                    )}
-
-                    <br>
-
-                    Quantity:
-                    ${sale.quantity}
-
-                    × ₹${Number(
-                        sale.rate
-                    ).toFixed(2)}
-
-                    <br>
-
-                    <strong>
-                        Amount:
-                        ₹${Number(
-                            sale.amount
-                        ).toFixed(2)}
-                    </strong>
-
-                    <br>
-
-                    Date:
-                    ${escapeHtml(
-                        sale.dateText || ""
-                    )}
-
-                `;
-
-
-                salesListEl.appendChild(row);
-
-            }
-        );
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        salesListEl.innerHTML =
-            '<div class="loading">Unable to load sales.</div>';
-
-    }
-
-}
-
-
-/* ==========================================
-   SECURITY
-   ========================================== */
 
 function escapeHtml(value){
 
@@ -787,9 +597,22 @@ function escapeHtml(value){
 }
 
 
-/* ==========================================
-   MOBILE NUMBER
-========================================== */
+
+/* =========================================================
+   INPUT EVENTS
+========================================================= */
+
+quantityEl.addEventListener(
+    "input",
+    calculateAmount
+);
+
+
+rateEl.addEventListener(
+    "input",
+    calculateAmount
+);
+
 
 customerMobileEl.addEventListener(
     "input",
@@ -797,13 +620,579 @@ customerMobileEl.addEventListener(
 
         this.value =
             this.value
-            .replace(/\D/g,"")
-            .slice(0,10);
+                .replace(/\D/g,"")
+                .slice(0,10);
 
     }
 );
 
-</script>
 
-</body>
-</html>
+
+/* =========================================================
+   GET CURRENT USER PROFILE
+=========================================================
+
+   First:
+   users/{Firebase Auth UID}
+
+   Fallback:
+   users document where email matches.
+
+========================================================= */
+
+async function getUserProfile(user){
+
+    try{
+
+        const uidRef =
+            doc(
+                db,
+                "users",
+                user.uid
+            );
+
+
+        const uidSnap =
+            await getDoc(uidRef);
+
+
+        if(uidSnap.exists()){
+
+            return {
+
+                id:
+                    uidSnap.id,
+
+                data:
+                    uidSnap.data()
+
+            };
+
+        }
+
+
+        if(user.email){
+
+            const emailQuery =
+                query(
+                    collection(db,"users"),
+                    where(
+                        "email",
+                        "==",
+                        user.email
+                    )
+                );
+
+
+            const emailSnap =
+                await getDocs(emailQuery);
+
+
+            if(!emailSnap.empty){
+
+                const first =
+                    emailSnap.docs[0];
+
+
+                return {
+
+                    id:
+                        first.id,
+
+                    data:
+                        first.data()
+
+                };
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "getUserProfile error:",
+            error
+        );
+
+    }
+
+
+    return {
+
+        id:
+            user.uid,
+
+        data:
+            {}
+
+    };
+
+}
+
+
+
+/* =========================================================
+   FIND USER BY DOCUMENT ID OR STORED UID
+========================================================= */
+
+async function getUserProfileByIdOrUid(identifier){
+
+    if(!identifier){
+
+        return null;
+
+    }
+
+
+    const value =
+        clean(identifier);
+
+
+    /*
+       STEP 1
+       Try users/{identifier}
+    */
+
+    try{
+
+        const directRef =
+            doc(
+                db,
+                "users",
+                value
+            );
+
+
+        const directSnap =
+            await getDoc(directRef);
+
+
+        if(directSnap.exists()){
+
+            return {
+
+                id:
+                    directSnap.id,
+
+                data:
+                    directSnap.data()
+
+            };
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Direct user lookup failed:",
+            error
+        );
+
+    }
+
+
+
+    /*
+       STEP 2
+       Try uid field
+    */
+
+    try{
+
+        const uidQuery =
+            query(
+                collection(db,"users"),
+                where(
+                    "uid",
+                    "==",
+                    value
+                )
+            );
+
+
+        const uidSnap =
+            await getDocs(uidQuery);
+
+
+        if(!uidSnap.empty){
+
+            const first =
+                uidSnap.docs[0];
+
+
+            return {
+
+                id:
+                    first.id,
+
+                data:
+                    first.data()
+
+            };
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "UID lookup failed:",
+            error
+        );
+
+    }
+
+
+
+    /*
+       STEP 3
+       Try email if identifier looks like email
+    */
+
+    if(value.includes("@")){
+
+        try{
+
+            const emailQuery =
+                query(
+                    collection(db,"users"),
+                    where(
+                        "email",
+                        "==",
+                        value
+                    )
+                );
+
+
+            const emailSnap =
+                await getDocs(emailQuery);
+
+
+            if(!emailSnap.empty){
+
+                const first =
+                    emailSnap.docs[0];
+
+
+                return {
+
+                    id:
+                        first.id,
+
+                    data:
+                        first.data()
+
+                };
+
+            }
+
+        }catch(error){
+
+            console.warn(
+                "Email lookup failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/* =========================================================
+   CREATE HIERARCHY
+========================================================= */
+
+async function loadAdminHierarchy(user){
+
+    const profile =
+        await getUserProfile(user);
+
+
+    const data =
+        profile.data || {};
+
+
+    currentAdmin = {
+
+        uid:
+            user.uid,
+
+        name:
+            clean(data.name) ||
+            user.displayName ||
+            user.email ||
+            user.uid,
+
+        roleType:
+            clean(
+                data.roleType ||
+                data.role ||
+                "User"
+            ),
+
+        department:
+            clean(data.department),
+
+        reportsTo:
+            clean(data.reportsTo),
+
+        mobile:
+            clean(data.mobile),
+
+        email:
+            clean(
+                data.email ||
+                user.email
+            )
+
+    };
+
+
+    currentCoreAdmin = null;
+
+    currentSuperAdmin = null;
+
+
+
+    /* =====================================================
+       DIRECTLY STORED HIERARCHY
+       If these fields already exist in user document,
+       use them first.
+    ===================================================== */
+
+    if(
+        data.coreAdminId ||
+        data.coreAdminUID
+    ){
+
+        const coreIdentifier =
+            clean(
+                data.coreAdminId ||
+                data.coreAdminUID
+            );
+
+
+        const coreProfile =
+            await getUserProfileByIdOrUid(
+                coreIdentifier
+            );
+
+
+        if(coreProfile){
+
+            const coreData =
+                coreProfile.data || {};
+
+
+            currentCoreAdmin = {
+
+                uid:
+                    coreProfile.id,
+
+                name:
+                    clean(coreData.name),
+
+                roleType:
+                    clean(
+                        coreData.roleType ||
+                        coreData.role ||
+                        "Core Admin"
+                    ),
+
+                department:
+                    clean(coreData.department),
+
+                reportsTo:
+                    clean(coreData.reportsTo),
+
+                email:
+                    clean(coreData.email)
+
+            };
+
+        }
+
+    }
+
+
+
+    if(
+        data.superAdminId ||
+        data.superAdminUID
+    ){
+
+        const superIdentifier =
+            clean(
+                data.superAdminId ||
+                data.superAdminUID
+            );
+
+
+        const superProfile =
+            await getUserProfileByIdOrUid(
+                superIdentifier
+            );
+
+
+        if(superProfile){
+
+            const superData =
+                superProfile.data || {};
+
+
+            currentSuperAdmin = {
+
+                uid:
+                    superProfile.id,
+
+                name:
+                    clean(superData.name),
+
+                roleType:
+                    clean(
+                        superData.roleType ||
+                        superData.role ||
+                        "Super Admin"
+                    ),
+
+                department:
+                    clean(superData.department),
+
+                reportsTo:
+                    clean(superData.reportsTo),
+
+                email:
+                    clean(superData.email)
+
+            };
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       FALLBACK HIERARCHY
+
+       Department Admin
+       ↓
+       Core Admin
+       ↓
+       Super Admin
+    ===================================================== */
+
+    if(
+        isDepartmentAdmin(
+            currentAdmin.roleType
+        ) &&
+        !currentCoreAdmin &&
+        currentAdmin.reportsTo
+    ){
+
+        const parentProfile =
+            await getUserProfileByIdOrUid(
+                currentAdmin.reportsTo
+            );
+
+
+        if(parentProfile){
+
+            const parentData =
+                parentProfile.data || {};
+
+
+            const parentRole =
+                clean(
+                    parentData.roleType ||
+                    parentData.role
+                );
+
+
+            if(isCoreAdmin(parentRole)){
+
+                currentCoreAdmin = {
+
+                    uid:
+                        parentProfile.id,
+
+                    name:
+                        clean(parentData.name),
+
+                    roleType:
+                        parentRole,
+
+                    department:
+                        clean(parentData.department),
+
+                    reportsTo:
+                        clean(parentData.reportsTo),
+
+                    email:
+                        clean(parentData.email)
+
+                };
+
+
+                /*
+                   Find Super Admin
+                */
+
+                if(
+                    currentCoreAdmin.reportsTo &&
+                    !currentSuperAdmin
+                ){
+
+                    const superProfile =
+                        await getUserProfileByIdOrUid(
+                            currentCoreAdmin.reportsTo
+                        );
+
+
+                    if(superProfile){
+
+                        const superData =
+                            superProfile.data || {};
+
+
+                        currentSuperAdmin = {
+
+                            uid:
+                                superProfile.id,
+
+                            name:
+                                clean(
+                                    superData.name
+                                ),
+
+                            roleType:
+                                clean(
+                                    superData.roleType ||
+                                    superData.role ||
+                                    "Super Admin"
+                                ),
+
+                            department:
+                                clean(
+                                    superData.department
+                                ),
+
+                            reportsTo:
+                                clean(
+                                    superData.reportsTo
+                                ),
+
+                            email:
+                                clean(
+                                    superData.email
+                                )
+
+                        };
+
+    
