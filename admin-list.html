@@ -30,7 +30,39 @@ Version : 2.2
 <!-- Login & Role Security -->
 <script>
 checkLogin();
-checkRole("Super Admin");
+
+/*
+KALI LIFE ECOSYSTEM
+ADMIN LIST ACCESS
+
+Super Admin      = Full access
+Core Admin       = Admin List access
+Department Admin = No access
+*/
+
+const currentSession =
+    typeof getCurrentUser === "function"
+        ? getCurrentUser()
+        : null;
+
+if (!currentSession) {
+    window.location.href = "login.html";
+} else {
+
+    const currentRole = String(
+        currentSession.roleType ||
+        currentSession.role ||
+        ""
+    ).trim().toLowerCase();
+
+    if (
+        currentRole !== "super admin" &&
+        currentRole !== "core admin"
+    ) {
+        alert("এই Admin List-এ আপনার অ্যাক্সেস নেই।");
+        window.location.href = "login.html";
+    }
+}
 </script>
 
 <h1>KALI LIFE ECOSYSTEM</h1>
