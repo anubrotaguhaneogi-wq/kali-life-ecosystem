@@ -183,7 +183,20 @@ loginBtn.addEventListener("click", async () => {
         }
 
         const userData = userDoc.data();
-        const userRole = (userData.roleType || userData.role || "User").trim();
+        const rawRole = String(
+    userData.roleType || userData.role || userData.accountRole || "User"
+).trim().toLowerCase();
+
+const roleMap = {
+    "super admin": "Super Admin",
+    "core admin": "Core Admin",
+    "departmental admin": "Departmental Admin",
+    "department admin": "Departmental Admin",
+    "admin": "Admin",
+    "user": "User"
+};
+
+const userRole = roleMap[rawRole] || "User";
 
         // Session তৈরি করো (এটা খুব জরুরি)
         createSession({
