@@ -119,12 +119,12 @@
         </a>
     </li>
 
-    <!-- Department Admin: Processing Orders -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-clipboard-list me-2"></i> প্রসেসিং অর্ডার
-        </a>
-    </li>
+  <!-- Department Admin Sales & Commission module -->
+<li class="nav-item">
+    <a class="nav-link" href="sales_tracking_commission.html">
+        <i class="fas fa-chart-line me-2"></i> Sales & Commission
+    </a>
+</li>
 
     <!-- Logout -->
     <li class="nav-item mt-5">
