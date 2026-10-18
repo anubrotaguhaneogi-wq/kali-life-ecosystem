@@ -765,4 +765,227 @@ async function loadMySales(){
                     <div>Super Admin Commission: ₹${superComm}</div>
                 </div>
             </div>
-    
+            salesListEl.innerHTML = sales.map(function(sale){
+
+            const deptComm = Number(sale.departmentAdminCommission || 0).toFixed(2);
+            const coreComm = Number(sale.coreAdminCommission || 0).toFixed(2);
+            const superComm = Number(sale.superAdminCommission || 0).toFixed(2);
+
+            return `
+            <div class="sale-row">
+                <strong>${escapeHtml(sale.itemName || "")}</strong>
+                <div>Customer: ${escapeHtml(sale.customerName || "")}</div>
+                <div>Mobile: ${escapeHtml(sale.customerMobile || "—")}</div>
+                <div>Quantity: ${Number(sale.quantity || 0)}</div>
+                <div>Rate: ₹${Number(sale.rate || 0).toFixed(2)}</div>
+                <div>Amount: ₹${Number(sale.amount || 0).toFixed(2)}</div>
+                <div>Department: ${escapeHtml(sale.department || "—")}</div>
+
+                <div class="commission-box">
+                    <div>Dept Admin Commission: ₹${deptComm}</div>
+                    <div>Core Admin Commission: ₹${coreComm}</div>
+                    <div>Super Admin Commission: ₹${superComm}</div>
+                </div>
+            </div>
+            `;
+        }).join("");
+
+    }catch(error){
+
+        console.error("loadMySales error:", error);
+
+        salesListEl.innerHTML =
+            "<p>Unable to load sales records.</p>";
+    }
+}
+
+
+/* =========================================================
+   SAVE SALE
+========================================================= */
+
+async function saveSale(){
+
+    if(!currentUser || !currentAdmin){
+        showMessage("User authentication not completed.", "error");
+        return;
+    }
+
+    const customerName = clean(customerNameEl.value);
+    const customerMobile = clean(customerMobileEl.value);
+    const itemName = clean(itemNameEl.value);
+    const quantity = Number(quantityEl.value);
+    const rate = Number(rateEl.value);
+
+    if(!customerName){
+        showMessage("Enter customer name.", "error");
+        return;
+    }
+
+    if(!/^\d{10}$/.test(customerMobile)){
+        showMessage("Enter valid 10 digit customer mobile number.", "error");
+        return;
+    }
+
+    if(!itemName){
+        showMessage("Enter item name.", "error");
+        return;
+    }
+
+    if(!quantity || quantity <= 0){
+        showMessage("Enter valid quantity.", "error");
+        return;
+    }
+
+    if(!rate || rate <= 0){
+        showMessage("Enter valid rate.", "error");
+        return;
+    }
+
+    const amount = Number((quantity * rate).toFixed(2));
+
+    const departmentCommission =
+        calculateCommission(
+            amount,
+            COMMISSION.departmentAdminPercent
+        );
+
+    const coreCommission =
+        calculateCommission(
+            amount,
+            COMMISSION.coreAdminPercent
+        );
+
+    const superCommission =
+        calculateCommission(
+            amount,
+            COMMISSION.superAdminPercent
+        );
+
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+
+    try{
+
+        await addDoc(collection(db, "sales"), {
+
+            customerName: customerName,
+            customerMobile: customerMobile,
+
+            itemName: itemName,
+            quantity: quantity,
+            rate: rate,
+            amount: amount,
+
+            adminUid: currentAdmin.uid,
+            adminId: currentAdmin.uid,
+            adminName: currentAdmin.name,
+
+            roleType: currentAdmin.roleType,
+            department: currentAdmin.department,
+            reportsTo: currentAdmin.reportsTo,
+
+            coreAdminId: currentCoreAdmin
+                ? currentCoreAdmin.uid
+                : "",
+
+            coreAdminName: currentCoreAdmin
+                ? currentCoreAdmin.name
+                : "",
+
+            superAdminId: currentSuperAdmin
+                ? currentSuperAdmin.uid
+                : "",
+
+            superAdminName: currentSuperAdmin
+                ? currentSuperAdmin.name
+                : "",
+
+            departmentAdminCommission:
+                departmentCommission,
+
+            coreAdminCommission:
+                coreCommission,
+
+            superAdminCommission:
+                superCommission,
+
+            createdAt: serverTimestamp()
+        });
+
+        showMessage(
+            "Sale saved successfully.",
+            "success"
+        );
+
+        clearForm();
+
+        await loadMySales();
+
+    }catch(error){
+
+        console.error("Save Sale Error:", error);
+
+        showMessage(
+            "Sale could not be saved: " + error.message,
+            "error"
+        );
+
+    }finally{
+
+        saveButton.disabled = false;
+        saveButton.textContent = "Save Sale";
+    }
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+saveButton.addEventListener(
+    "click",
+    saveSale
+);
+
+
+/* =========================================================
+   FIREBASE AUTH
+========================================================= */
+
+onAuthStateChanged(auth, async function(user){
+
+    if(!user){
+
+        currentUser = null;
+        currentAdmin = null;
+
+        showMessage(
+            "Please login first.",
+            "error"
+        );
+
+        return;
+    }
+
+    try{
+
+        currentUser = user;
+
+        await loadAdminHierarchy(user);
+
+        await loadMySales();
+
+    }catch(error){
+
+        console.error(
+            "Authentication / hierarchy error:",
+            error
+        );
+
+        showMessage(
+            "Unable to load admin information.",
+            "error"
+        );
+    }
+});
