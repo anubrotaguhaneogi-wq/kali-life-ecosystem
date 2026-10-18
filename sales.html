@@ -908,20 +908,20 @@ async function getUserProfileByIdOrUid(identifier){
    CREATE HIERARCHY
 ========================================================= */
 
+/* =========================================================
+   CREATE HIERARCHY + SALE SAVE SYSTEM
+========================================================= */
+
 async function loadAdminHierarchy(user){
 
     const profile =
         await getUserProfile(user);
 
-
     const data =
         profile.data || {};
 
-
     currentAdmin = {
-
-        uid:
-            user.uid,
+        uid: user.uid,
 
         name:
             clean(data.name) ||
@@ -950,248 +950,840 @@ async function loadAdminHierarchy(user){
                 data.email ||
                 user.email
             )
-
     };
 
-
     currentCoreAdmin = null;
-
     currentSuperAdmin = null;
 
 
-
     /* =====================================================
-       DIRECTLY STORED HIERARCHY
-       If these fields already exist in user document,
-       use them first.
+       IF CURRENT USER IS SUPER ADMIN
     ===================================================== */
 
-    if(
-        data.coreAdminId ||
-        data.coreAdminUID
-    ){
+    if(isSuperAdmin(currentAdmin.roleType)){
 
-        const coreIdentifier =
-            clean(
-                data.coreAdminId ||
-                data.coreAdminUID
-            );
-
-
-        const coreProfile =
-            await getUserProfileByIdOrUid(
-                coreIdentifier
-            );
-
-
-        if(coreProfile){
-
-            const coreData =
-                coreProfile.data || {};
-
-
-            currentCoreAdmin = {
-
-                uid:
-                    coreProfile.id,
-
-                name:
-                    clean(coreData.name),
-
-                roleType:
-                    clean(
-                        coreData.roleType ||
-                        coreData.role ||
-                        "Core Admin"
-                    ),
-
-                department:
-                    clean(coreData.department),
-
-                reportsTo:
-                    clean(coreData.reportsTo),
-
-                email:
-                    clean(coreData.email)
-
-            };
-
-        }
+        currentSuperAdmin = {
+            uid: currentAdmin.uid,
+            name: currentAdmin.name,
+            roleType: currentAdmin.roleType,
+            department: currentAdmin.department,
+            reportsTo: currentAdmin.reportsTo,
+            email: currentAdmin.email
+        };
 
     }
-
-
-
-    if(
-        data.superAdminId ||
-        data.superAdminUID
-    ){
-
-        const superIdentifier =
-            clean(
-                data.superAdminId ||
-                data.superAdminUID
-            );
-
-
-        const superProfile =
-            await getUserProfileByIdOrUid(
-                superIdentifier
-            );
-
-
-        if(superProfile){
-
-            const superData =
-                superProfile.data || {};
-
-
-            currentSuperAdmin = {
-
-                uid:
-                    superProfile.id,
-
-                name:
-                    clean(superData.name),
-
-                roleType:
-                    clean(
-                        superData.roleType ||
-                        superData.role ||
-                        "Super Admin"
-                    ),
-
-                department:
-                    clean(superData.department),
-
-                reportsTo:
-                    clean(superData.reportsTo),
-
-                email:
-                    clean(superData.email)
-
-            };
-
-        }
-
-    }
-
 
 
     /* =====================================================
-       FALLBACK HIERARCHY
+       IF CURRENT USER IS CORE ADMIN
+    ===================================================== */
 
+    if(isCoreAdmin(currentAdmin.roleType)){
+
+        currentCoreAdmin = {
+            uid: currentAdmin.uid,
+            name: currentAdmin.name,
+            roleType: currentAdmin.roleType,
+            department: currentAdmin.department,
+            reportsTo: currentAdmin.reportsTo,
+            email: currentAdmin.email
+        };
+
+        if(currentAdmin.reportsTo){
+
+            const superProfile =
+                await getUserProfileByIdOrUid(
+                    currentAdmin.reportsTo
+                );
+
+            if(superProfile){
+
+                const superData =
+                    superProfile.data || {};
+
+                currentSuperAdmin = {
+                    uid:
+                        superProfile.id,
+
+                    name:
+                        clean(superData.name),
+
+                    roleType:
+                        clean(
+                            superData.roleType ||
+                            superData.role ||
+                            "Super Admin"
+                        ),
+
+                    department:
+                        clean(
+                            superData.department
+                        ),
+
+                    reportsTo:
+                        clean(
+                            superData.reportsTo
+                        ),
+
+                    email:
+                        clean(
+                            superData.email
+                        )
+                };
+            }
+        }
+    }
+
+
+    /* =====================================================
+       DEPARTMENT ADMIN
        Department Admin
-       ↓
+            ↓
        Core Admin
-       ↓
+            ↓
        Super Admin
     ===================================================== */
 
     if(
         isDepartmentAdmin(
             currentAdmin.roleType
-        ) &&
-        !currentCoreAdmin &&
-        currentAdmin.reportsTo
+        )
     ){
 
-        const parentProfile =
-            await getUserProfileByIdOrUid(
-                currentAdmin.reportsTo
-            );
+        /* -----------------------------------------------
+           FIRST: DIRECT CORE ADMIN MAPPING
+        ------------------------------------------------ */
 
+        if(data.coreAdminId || data.coreAdminUID){
 
-        if(parentProfile){
-
-            const parentData =
-                parentProfile.data || {};
-
-
-            const parentRole =
+            const coreIdentifier =
                 clean(
-                    parentData.roleType ||
-                    parentData.role
+                    data.coreAdminId ||
+                    data.coreAdminUID
                 );
 
+            const coreProfile =
+                await getUserProfileByIdOrUid(
+                    coreIdentifier
+                );
 
-            if(isCoreAdmin(parentRole)){
+            if(coreProfile){
+
+                const coreData =
+                    coreProfile.data || {};
 
                 currentCoreAdmin = {
 
                     uid:
-                        parentProfile.id,
+                        coreProfile.id,
 
                     name:
-                        clean(parentData.name),
+                        clean(
+                            coreData.name
+                        ),
 
                     roleType:
-                        parentRole,
+                        clean(
+                            coreData.roleType ||
+                            coreData.role ||
+                            "Core Admin"
+                        ),
 
                     department:
-                        clean(parentData.department),
+                        clean(
+                            coreData.department
+                        ),
 
                     reportsTo:
-                        clean(parentData.reportsTo),
+                        clean(
+                            coreData.reportsTo
+                        ),
 
                     email:
-                        clean(parentData.email)
-
+                        clean(
+                            coreData.email
+                        )
                 };
+            }
+        }
 
 
-                /*
-                   Find Super Admin
-                */
+        /* -----------------------------------------------
+           FALLBACK: REPORTS TO
+        ------------------------------------------------ */
 
-                if(
-                    currentCoreAdmin.reportsTo &&
-                    !currentSuperAdmin
-                ){
+        if(
+            !currentCoreAdmin &&
+            currentAdmin.reportsTo
+        ){
 
-                    const superProfile =
-                        await getUserProfileByIdOrUid(
-                            currentCoreAdmin.reportsTo
-                        );
+            const parentProfile =
+                await getUserProfileByIdOrUid(
+                    currentAdmin.reportsTo
+                );
+
+            if(parentProfile){
+
+                const parentData =
+                    parentProfile.data || {};
+
+                const parentRole =
+                    clean(
+                        parentData.roleType ||
+                        parentData.role
+                    );
 
 
-                    if(superProfile){
+                if(isCoreAdmin(parentRole)){
 
-                        const superData =
-                            superProfile.data || {};
+                    currentCoreAdmin = {
+
+                        uid:
+                            parentProfile.id,
+
+                        name:
+                            clean(
+                                parentData.name
+                            ),
+
+                        roleType:
+                            parentRole,
+
+                        department:
+                            clean(
+                                parentData.department
+                            ),
+
+                        reportsTo:
+                            clean(
+                                parentData.reportsTo
+                            ),
+
+                        email:
+                            clean(
+                                parentData.email
+                            )
+                    };
+                }
+            }
+        }
 
 
-                        currentSuperAdmin = {
+        /* -----------------------------------------------
+           FIND SUPER ADMIN FROM CORE ADMIN
+        ------------------------------------------------ */
 
-                            uid:
-                                superProfile.id,
+        if(
+            currentCoreAdmin &&
+            currentCoreAdmin.reportsTo &&
+            !currentSuperAdmin
+        ){
 
-                            name:
-                                clean(
-                                    superData.name
-                                ),
+            const superProfile =
+                await getUserProfileByIdOrUid(
+                    currentCoreAdmin.reportsTo
+                );
 
-                            roleType:
-                                clean(
-                                    superData.roleType ||
-                                    superData.role ||
-                                    "Super Admin"
-                                ),
+            if(superProfile){
 
-                            department:
-                                clean(
-                                    superData.department
-                                ),
+                const superData =
+                    superProfile.data || {};
 
-                            reportsTo:
-                                clean(
-                                    superData.reportsTo
-                                ),
+                currentSuperAdmin = {
 
-                            email:
-                                clean(
-                                    superData.email
-                                )
+                    uid:
+                        superProfile.id,
 
-                        };
- 
+                    name:
+                        clean(
+                            superData.name
+                        ),
+
+                    roleType:
+                        clean(
+                            superData.roleType ||
+                            superData.role ||
+                            "Super Admin"
+                        ),
+
+                    department:
+                        clean(
+                            superData.department
+                        ),
+
+                    reportsTo:
+                        clean(
+                            superData.reportsTo
+                        ),
+
+                    email:
+                        clean(
+                            superData.email
+                        )
+                };
+            }
+        }
+
+
+        /* -----------------------------------------------
+           DIRECT SUPER ADMIN MAPPING
+        ------------------------------------------------ */
+
+        if(
+            !currentSuperAdmin &&
+            (
+                data.superAdminId ||
+                data.superAdminUID
+            )
+        ){
+
+            const superIdentifier =
+                clean(
+                    data.superAdminId ||
+                    data.superAdminUID
+                );
+
+            const superProfile =
+                await getUserProfileByIdOrUid(
+                    superIdentifier
+                );
+
+            if(superProfile){
+
+                const superData =
+                    superProfile.data || {};
+
+                currentSuperAdmin = {
+
+                    uid:
+                        superProfile.id,
+
+                    name:
+                        clean(
+                            superData.name
+                        ),
+
+                    roleType:
+                        clean(
+                            superData.roleType ||
+                            superData.role ||
+                            "Super Admin"
+                        ),
+
+                    department:
+                        clean(
+                            superData.department
+                        ),
+
+                    reportsTo:
+                        clean(
+                            superData.reportsTo
+                        ),
+
+                    email:
+                        clean(
+                            superData.email
+                        )
+                };
+            }
+        }
+    }
+
+
+    /* =====================================================
+       SHOW CURRENT ADMIN INFORMATION
+    ===================================================== */
+
+    function setElementValue(
+        element,
+        value
+    ){
+
+        if(!element) return;
+
+        const text =
+            clean(value);
+
+        if(
+            "value" in element
+        ){
+
+            element.value =
+                text;
+
+        }else{
+
+            element.textContent =
+                text;
+        }
+    }
+
+
+    setElementValue(
+        adminNameEl,
+        currentAdmin.name
+    );
+
+    setElementValue(
+        adminIdEl,
+        currentAdmin.uid
+    );
+
+    setElementValue(
+        roleTypeEl,
+        currentAdmin.roleType
+    );
+
+    setElementValue(
+        departmentEl,
+        currentAdmin.department
+    );
+
+    setElementValue(
+        reportsToEl,
+        currentAdmin.reportsTo
+    );
+}
+
+
+/* =========================================================
+   LOAD MY SALES
+========================================================= */
+
+async function loadMySales(){
+
+    if(!currentUser){
+
+        salesListEl.innerHTML =
+            "<p>No user logged in.</p>";
+
+        return;
+    }
+
+    try{
+
+        const salesQuery =
+            query(
+                collection(
+                    db,
+                    "sales"
+                ),
+                where(
+                    "adminUid",
+                    "==",
+                    currentUser.uid
+                )
+            );
+
+        const snapshot =
+            await getDocs(
+                salesQuery
+            );
+
+
+        if(snapshot.empty){
+
+            salesListEl.innerHTML =
+                "<p>No sales recorded yet.</p>";
+
+            return;
+        }
+
+
+        const sales = [];
+
+        snapshot.forEach(
+            function(docSnap){
+
+                sales.push({
+
+                    id:
+                        docSnap.id,
+
+                    ...docSnap.data()
+
+                });
+
+            }
+        );
+
+
+        sales.sort(
+            function(a,b){
+
+                const aTime =
+                    a.createdAt &&
+                    a.createdAt.toMillis
+                        ? a.createdAt.toMillis()
+                        : 0;
+
+                const bTime =
+                    b.createdAt &&
+                    b.createdAt.toMillis
+                        ? b.createdAt.toMillis()
+                        : 0;
+
+                return bTime - aTime;
+            }
+        );
+
+
+        salesListEl.innerHTML =
+            sales.map(
+                function(sale){
+
+                    return `
+                    <div class="sale-card">
+
+                        <b>
+                            ${escapeHtml(
+                                sale.itemName || ""
+                            )}
+                        </b>
+
+                        <div>
+                            Customer:
+                            ${escapeHtml(
+                                sale.customerName || ""
+                            )}
+                        </div>
+
+                        <div>
+                            Quantity:
+                            ${Number(
+                                sale.quantity || 0
+                            )}
+                        </div>
+
+                        <div>
+                            Rate:
+                            ₹${Number(
+                                sale.rate || 0
+                            ).toFixed(2)}
+                        </div>
+
+                        <div>
+                            Amount:
+                            ₹${Number(
+                                sale.amount || 0
+                            ).toFixed(2)}
+                        </div>
+
+                        <div>
+                            Department:
+                            ${escapeHtml(
+                                sale.department || ""
+                            )}
+                        </div>
+
+                    </div>
+                    `;
+
+                }
+            ).join("");
+
+
+    }catch(error){
+
+        console.error(
+            "Load sales error:",
+            error
+        );
+
+        salesListEl.innerHTML =
+            "<p>Unable to load sales.</p>";
+    }
+}
+
+
+/* =========================================================
+   SAVE SALE
+========================================================= */
+
+saveButton.addEventListener(
+    "click",
+    async function(){
+
+        if(!currentUser){
+
+            showMessage(
+                "Please login first.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const customerName =
+            clean(
+                customerNameEl.value
+            );
+
+        const customerMobile =
+            clean(
+                customerMobileEl.value
+            );
+
+        const itemName =
+            clean(
+                itemNameEl.value
+            );
+
+        const quantity =
+            Number(
+                quantityEl.value
+            ) || 0;
+
+        const rate =
+            Number(
+                rateEl.value
+            ) || 0;
+
+        const amount =
+            Number(
+                (quantity * rate)
+                    .toFixed(2)
+            );
+
+
+        /* -----------------------------------------------
+           VALIDATION
+        ------------------------------------------------ */
+
+        if(!customerName){
+
+            showMessage(
+                "Customer name is required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(
+            customerMobile &&
+            customerMobile.length !== 10
+        ){
+
+            showMessage(
+                "Enter a valid 10 digit mobile number.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(!itemName){
+
+            showMessage(
+                "Item name is required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(quantity <= 0){
+
+            showMessage(
+                "Quantity must be greater than 0.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(rate <= 0){
+
+            showMessage(
+                "Rate must be greater than 0.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(amount <= 0){
+
+            showMessage(
+                "Sale amount is invalid.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /* -----------------------------------------------
+           CALCULATE COMMISSION
+        ------------------------------------------------ */
+
+        const departmentCommission =
+            isDepartmentAdmin(
+                currentAdmin.roleType
+            )
+            ? calculateCommission(
+                amount,
+                COMMISSION.departmentAdminPercent
+            )
+            : 0;
+
+
+        const coreCommission =
+            currentCoreAdmin
+            ? calculateCommission(
+                amount,
+                COMMISSION.coreAdminPercent
+            )
+            : 0;
+
+
+        const superCommission =
+            currentSuperAdmin
+            ? calculateCommission(
+                amount,
+                COMMISSION.superAdminPercent
+            )
+            : 0;
+
+
+        try{
+
+            saveButton.disabled =
+                true;
+
+            saveButton.textContent =
+                "Saving...";
+
+
+            /* -------------------------------------------
+               SALE RECORD
+            -------------------------------------------- */
+
+            const saleData = {
+
+                customerName:
+                    customerName,
+
+                customerMobile:
+                    customerMobile,
+
+                itemName:
+                    itemName,
+
+                quantity:
+                    quantity,
+
+                rate:
+                    rate,
+
+                amount:
+                    amount,
+
+
+                /* Department Admin */
+
+                adminUid:
+                    currentAdmin.uid,
+
+                adminId:
+                    currentAdmin.uid,
+
+                adminName:
+                    currentAdmin.name,
+
+                adminRole:
+                    currentAdmin.roleType,
+
+                department:
+                    currentAdmin.department,
+
+
+                /* Core Admin */
+
+                coreAdminUid:
+                    currentCoreAdmin
+                    ? currentCoreAdmin.uid
+                    : "",
+
+                coreAdminId:
+                    currentCoreAdmin
+                    ? currentCoreAdmin.uid
+                    : "",
+
+                coreAdminName:
+                    currentCoreAdmin
+                    ? currentCoreAdmin.name
+                    : "",
+
+
+                /* Super Admin */
+
+                superAdminUid:
+                    currentSuperAdmin
+                    ? currentSuperAdmin.uid
+                    : "",
+
+                superAdminId:
+                    currentSuperAdmin
+                    ? currentSuperAdmin.uid
+                    : "",
+
+                superAdminName:
+                    currentSuperAdmin
+                    ? currentSuperAdmin.name
+                    : "",
+
+
+                /* Commission */
+
+                departmentAdminPercent:
+                    COMMISSION.departmentAdminPercent,
+
+                departmentAdminCommission:
+                    departmentCommission,
+
+                coreAdminPercent:
+                    COMMISSION.coreAdminPercent,
+
+                coreAdminCommission:
+                    coreCommission,
+
+                superAdminPercent:
+                    COMMISSION.superAdminPercent,
+
+                superAdminCommission:
+                    superCommission,
+
+
+                /* Hierarchy */
+
+                reportsTo:
+                    currentAdmin.reportsTo,
+
+                createdBy:
+                    currentUser.uid,
+
+                createdByEmail:
+                    currentUser.email || "",
+
+                createdAt:
+                    serverTimestamp(),
+
+                saleType:
+                    "Cash Sale",
+
+                status:
+                    "Completed"
+            };
+
+
+            /* -------------------------------------------
+               SAVE TO FIRESTORE
+            -------------------------------------------- *
