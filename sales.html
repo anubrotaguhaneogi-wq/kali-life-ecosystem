@@ -82,10 +82,10 @@ label{
 
 input{
     width:100%;
-    <button class="module" onclick="location.href='sales.html'">
+    padding:12px;
     border:1px solid #ccc;
     border-radius:8px;
-    <button class="module" onclick="location.href='sales.html'"><div style="font-size:24px">💰</div><b>Sales Entry</b><span>Customer sale ও commission tracking</span></button>
+    font-size:15px;
 }
 
 input:focus{
@@ -186,13 +186,11 @@ button:disabled{
     <p>Sales Management</p>
 </div>
 
-
 <div class="container">
 
 <div class="card">
 
 <h2>Sales Entry</h2>
-
 
 <div class="admin-box">
 
@@ -216,127 +214,54 @@ button:disabled{
     <span id="reportsTo">Loading...</span>
 
     <div class="tracking-box">
-
         <strong>Automatic Tracking</strong>
         <br>
-
         This sale is automatically linked with the
         logged-in Admin, Department, Core Admin and
         Super Admin hierarchy.
-
         <br><br>
-
         <span class="small">
         Admin ID is saved with every sale so the source
         of the sale can be tracked later.
         </span>
-
     </div>
 
 </div>
 
+<label for="customerName">Customer Name</label>
+<input type="text" id="customerName" placeholder="Enter customer name">
 
-<label for="customerName">
-    Customer Name
-</label>
+<label for="customerMobile">Customer Mobile</label>
+<input type="tel" id="customerMobile" inputmode="numeric" maxlength="10" placeholder="Enter 10 digit mobile number">
 
-<input
-    type="text"
-    id="customerName"
-    placeholder="Enter customer name"
->
+<label for="itemName">Item Name</label>
+<input type="text" id="itemName" placeholder="Enter item name">
 
+<label for="quantity">Quantity</label>
+<input type="number" id="quantity" min="1" step="1" placeholder="Enter quantity">
 
-<label for="customerMobile">
-    Customer Mobile
-</label>
+<label for="rate">Rate</label>
+<input type="number" id="rate" min="0" step="0.01" placeholder="Enter rate">
 
-<input
-    type="tel"
-    id="customerMobile"
-    inputmode="numeric"
-    maxlength="10"
-    placeholder="Enter 10 digit mobile number"
->
+<label for="amount">Amount</label>
+<input type="number" id="amount" class="amount-box" readonly placeholder="Automatically calculated">
 
-
-<label for="itemName">
-    Item Name
-</label>
-
-<input
-    type="text"
-    id="itemName"
-    placeholder="Enter item name"
->
-
-
-<label for="quantity">
-    Quantity
-</label>
-
-<input
-    type="number"
-    id="quantity"
-    min="1"
-    step="1"
-    placeholder="Enter quantity"
->
-
-
-<label for="rate">
-    Rate
-</label>
-
-<input
-    type="number"
-    id="rate"
-    min="0"
-    step="0.01"
-    placeholder="Enter rate"
->
-
-
-<label for="amount">
-    Amount
-</label>
-
-<input
-    type="number"
-    id="amount"
-    class="amount-box"
-    readonly
-    placeholder="Automatically calculated"
->
-
-
-<button id="saveButton">
-    Save Sale
-</button>
+<button id="saveButton">Save Sale</button>
 
 <div id="message" class="message"></div>
 
 </div>
 
-
 <div class="card sales-list">
-
-<h2>My Sales</h2>
-
-<div id="salesList">
-    <div class="loading">
-        Loading sales...
+    <h2>My Sales</h2>
+    <div id="salesList">
+        <div class="loading">Loading sales...</div>
     </div>
 </div>
 
 </div>
 
-</div>
-
-
-
 <script type="module">
-
 
 /* =========================================================
    FIREBASE IMPORTS
@@ -345,13 +270,11 @@ button:disabled{
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-
 import {
     getAuth,
     onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
 
 import {
     getFirestore,
@@ -362,11 +285,9 @@ import {
     doc,
     query,
     where,
-    writeBatch,
     serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
 
 
 /* =========================================================
@@ -374,115 +295,50 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 ========================================================= */
 
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjT7B_OxZo",
-
-    authDomain:
-        "kali-life-ecosystem.firebaseapp.com",
-
-    projectId:
-        "kali-life-ecosystem",
-
-    storageBucket:
-        "kali-life-ecosystem.firebasestorage.app",
-
-    messagingSenderId:
-        "734170546737",
-
-    appId:
-        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-
-    measurementId:
-        "G-LBEY0W7RX3"
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+    measurementId: "G-LBEY0W7RX3"
 };
 
-
-const app =
-    initializeApp(firebaseConfig);
-
-
-const auth =
-    getAuth(app);
-
-
-const db =
-    getFirestore(app);
-
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 
 /* =========================================================
    COMMISSION CONFIGURATION
-
-   CURRENT BUSINESS RULE:
-
-   Department Admin = 20%
-   Core Admin       = 10%
-   Super Admin      = 5%
-
-   IMPORTANT:
-   Currently calculated on SALE AMOUNT.
 ========================================================= */
 
 const COMMISSION = {
-
     superAdminPercent: 5,
-
     coreAdminPercent: 10,
-
     departmentAdminPercent: 20
-
 };
-
 
 
 /* =========================================================
    HTML ELEMENTS
 ========================================================= */
 
-const adminNameEl =
-    document.getElementById("adminName");
+const adminNameEl = document.getElementById("adminName");
+const adminIdEl = document.getElementById("adminId");
+const roleTypeEl = document.getElementById("roleType");
+const departmentEl = document.getElementById("department");
+const reportsToEl = document.getElementById("reportsTo");
 
-const adminIdEl =
-    document.getElementById("adminId");
-
-const roleTypeEl =
-    document.getElementById("roleType");
-
-const departmentEl =
-    document.getElementById("department");
-
-const reportsToEl =
-    document.getElementById("reportsTo");
-
-
-const customerNameEl =
-    document.getElementById("customerName");
-
-const customerMobileEl =
-    document.getElementById("customerMobile");
-
-const itemNameEl =
-    document.getElementById("itemName");
-
-const quantityEl =
-    document.getElementById("quantity");
-
-const rateEl =
-    document.getElementById("rate");
-
-const amountEl =
-    document.getElementById("amount");
-
-const saveButton =
-    document.getElementById("saveButton");
-
-const messageEl =
-    document.getElementById("message");
-
-const salesListEl =
-    document.getElementById("salesList");
-
+const customerNameEl = document.getElementById("customerName");
+const customerMobileEl = document.getElementById("customerMobile");
+const itemNameEl = document.getElementById("itemName");
+const quantityEl = document.getElementById("quantity");
+const rateEl = document.getElementById("rate");
+const amountEl = document.getElementById("amount");
+const saveButton = document.getElementById("saveButton");
+const messageEl = document.getElementById("message");
+const salesListEl = document.getElementById("salesList");
 
 
 /* =========================================================
@@ -490,13 +346,9 @@ const salesListEl =
 ========================================================= */
 
 let currentUser = null;
-
 let currentAdmin = null;
-
 let currentCoreAdmin = null;
-
 let currentSuperAdmin = null;
-
 
 
 /* =========================================================
@@ -504,232 +356,118 @@ let currentSuperAdmin = null;
 ========================================================= */
 
 function clean(value){
-
     return String(value ?? "").trim();
-
 }
-
 
 function normalizeRole(value){
-
-    return clean(value)
-        .toLowerCase()
-        .replace(/\s+/g," ");
-
+    return clean(value).toLowerCase().replace(/\s+/g," ");
 }
-
 
 function isDepartmentAdmin(role){
-
-    return normalizeRole(role)
-        .includes("department admin");
-
+    return normalizeRole(role).includes("department admin");
 }
-
 
 function isCoreAdmin(role){
-
-    return normalizeRole(role)
-        .includes("core admin");
-
+    return normalizeRole(role).includes("core admin");
 }
-
 
 function isSuperAdmin(role){
-
-    return normalizeRole(role)
-        .includes("super admin");
-
+    return normalizeRole(role).includes("super admin");
 }
-
 
 function calculateCommission(amount, percent){
-
     return Number(
-        (
-            (Number(amount) || 0) *
-            percent /
-            100
-        ).toFixed(2)
+        ((Number(amount) || 0) * percent / 100).toFixed(2)
     );
-
 }
 
-
-function showMessage(text,type){
-
+function showMessage(text, type){
     messageEl.textContent = text;
-
-    messageEl.className =
-        "message " + type;
-
+    messageEl.className = "message " + type;
 }
-
 
 function calculateAmount(){
+    const quantity = Number(quantityEl.value) || 0;
+    const rate = Number(rateEl.value) || 0;
+    const amount = quantity * rate;
 
-    const quantity =
-        Number(quantityEl.value) || 0;
-
-    const rate =
-        Number(rateEl.value) || 0;
-
-    const amount =
-        quantity * rate;
-
-    amountEl.value =
-        amount > 0
-            ? amount.toFixed(2)
-            : "";
-
+    amountEl.value = amount > 0 ? amount.toFixed(2) : "";
 }
 
-
 function escapeHtml(value){
-
     return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
-
 }
 
+function clearForm(){
+    customerNameEl.value = "";
+    customerMobileEl.value = "";
+    itemNameEl.value = "";
+    quantityEl.value = "";
+    rateEl.value = "";
+    amountEl.value = "";
+}
 
 
 /* =========================================================
    INPUT EVENTS
 ========================================================= */
 
-quantityEl.addEventListener(
-    "input",
-    calculateAmount
-);
+quantityEl.addEventListener("input", calculateAmount);
+rateEl.addEventListener("input", calculateAmount);
 
-
-rateEl.addEventListener(
-    "input",
-    calculateAmount
-);
-
-
-customerMobileEl.addEventListener(
-    "input",
-    function(){
-
-        this.value =
-            this.value
-                .replace(/\D/g,"")
-                .slice(0,10);
-
-    }
-);
-
+customerMobileEl.addEventListener("input", function(){
+    this.value = this.value.replace(/\D/g,"").slice(0,10);
+});
 
 
 /* =========================================================
    GET CURRENT USER PROFILE
-=========================================================
-
-   First:
-   users/{Firebase Auth UID}
-
-   Fallback:
-   users document where email matches.
-
 ========================================================= */
 
 async function getUserProfile(user){
 
     try{
-
-        const uidRef =
-            doc(
-                db,
-                "users",
-                user.uid
-            );
-
-
-        const uidSnap =
-            await getDoc(uidRef);
-
+        const uidRef = doc(db, "users", user.uid);
+        const uidSnap = await getDoc(uidRef);
 
         if(uidSnap.exists()){
-
             return {
-
-                id:
-                    uidSnap.id,
-
-                data:
-                    uidSnap.data()
-
+                id: uidSnap.id,
+                data: uidSnap.data()
             };
-
         }
 
-
         if(user.email){
+            const emailQuery = query(
+                collection(db,"users"),
+                where("email", "==", user.email)
+            );
 
-            const emailQuery =
-                query(
-                    collection(db,"users"),
-                    where(
-                        "email",
-                        "==",
-                        user.email
-                    )
-                );
-
-
-            const emailSnap =
-                await getDocs(emailQuery);
-
+            const emailSnap = await getDocs(emailQuery);
 
             if(!emailSnap.empty){
-
-                const first =
-                    emailSnap.docs[0];
-
-
+                const first = emailSnap.docs[0];
                 return {
-
-                    id:
-                        first.id,
-
-                    data:
-                        first.data()
-
+                    id: first.id,
+                    data: first.data()
                 };
-
             }
-
         }
 
     }catch(error){
-
-        console.error(
-            "getUserProfile error:",
-            error
-        );
-
+        console.error("getUserProfile error:", error);
     }
 
-
     return {
-
-        id:
-            user.uid,
-
-        data:
-            {}
-
+        id: user.uid,
+        data: {}
     };
-
 }
-
 
 
 /* =========================================================
@@ -738,230 +476,96 @@ async function getUserProfile(user){
 
 async function getUserProfileByIdOrUid(identifier){
 
-    if(!identifier){
+    if(!identifier) return null;
 
-        return null;
+    const value = clean(identifier);
 
-    }
-
-
-    const value =
-        clean(identifier);
-
-
-    /*
-       STEP 1
-       Try users/{identifier}
-    */
-
+    // STEP 1: Try users/{identifier}
     try{
-
-        const directRef =
-            doc(
-                db,
-                "users",
-                value
-            );
-
-
-        const directSnap =
-            await getDoc(directRef);
-
+        const directRef = doc(db, "users", value);
+        const directSnap = await getDoc(directRef);
 
         if(directSnap.exists()){
-
             return {
-
-                id:
-                    directSnap.id,
-
-                data:
-                    directSnap.data()
-
+                id: directSnap.id,
+                data: directSnap.data()
             };
-
         }
-
     }catch(error){
-
-        console.warn(
-            "Direct user lookup failed:",
-            error
-        );
-
+        console.warn("Direct user lookup failed:", error);
     }
 
-
-
-    /*
-       STEP 2
-       Try uid field
-    */
-
+    // STEP 2: Try uid field
     try{
+        const uidQuery = query(
+            collection(db,"users"),
+            where("uid", "==", value)
+        );
 
-        const uidQuery =
-            query(
-                collection(db,"users"),
-                where(
-                    "uid",
-                    "==",
-                    value
-                )
-            );
-
-
-        const uidSnap =
-            await getDocs(uidQuery);
-
+        const uidSnap = await getDocs(uidQuery);
 
         if(!uidSnap.empty){
-
-            const first =
-                uidSnap.docs[0];
-
-
+            const first = uidSnap.docs[0];
             return {
-
-                id:
-                    first.id,
-
-                data:
-                    first.data()
-
+                id: first.id,
+                data: first.data()
             };
-
         }
-
     }catch(error){
-
-        console.warn(
-            "UID lookup failed:",
-            error
-        );
-
+        console.warn("UID lookup failed:", error);
     }
 
-
-
-    /*
-       STEP 3
-       Try email if identifier looks like email
-    */
-
+    // STEP 3: Try email if looks like email
     if(value.includes("@")){
-
         try{
-
-            const emailQuery =
-                query(
-                    collection(db,"users"),
-                    where(
-                        "email",
-                        "==",
-                        value
-                    )
-                );
-
-
-            const emailSnap =
-                await getDocs(emailQuery);
-
-
-            if(!emailSnap.empty){
-
-                const first =
-                    emailSnap.docs[0];
-
-
-                return {
-
-                    id:
-                        first.id,
-
-                    data:
-                        first.data()
-
-                };
-
-            }
-
-        }catch(error){
-
-            console.warn(
-                "Email lookup failed:",
-                error
+            const emailQuery = query(
+                collection(db,"users"),
+                where("email", "==", value)
             );
 
-        }
+            const emailSnap = await getDocs(emailQuery);
 
+            if(!emailSnap.empty){
+                const first = emailSnap.docs[0];
+                return {
+                    id: first.id,
+                    data: first.data()
+                };
+            }
+        }catch(error){
+            console.warn("Email lookup failed:", error);
+        }
     }
 
-
     return null;
-
 }
 
 
-
 /* =========================================================
-   CREATE HIERARCHY
-========================================================= */
-
-/* =========================================================
-   CREATE HIERARCHY + SALE SAVE SYSTEM
+   LOAD ADMIN HIERARCHY
 ========================================================= */
 
 async function loadAdminHierarchy(user){
 
-    const profile =
-        await getUserProfile(user);
-
-    const data =
-        profile.data || {};
+    const profile = await getUserProfile(user);
+    const data = profile.data || {};
 
     currentAdmin = {
         uid: user.uid,
-
-        name:
-            clean(data.name) ||
-            user.displayName ||
-            user.email ||
-            user.uid,
-
-        roleType:
-            clean(
-                data.roleType ||
-                data.role ||
-                "User"
-            ),
-
-        department:
-            clean(data.department),
-
-        reportsTo:
-            clean(data.reportsTo),
-
-        mobile:
-            clean(data.mobile),
-
-        email:
-            clean(
-                data.email ||
-                user.email
-            )
+        name: clean(data.name) || user.displayName || user.email || user.uid,
+        roleType: clean(data.roleType || data.role || "User"),
+        department: clean(data.department),
+        reportsTo: clean(data.reportsTo),
+        mobile: clean(data.mobile),
+        email: clean(data.email || user.email)
     };
 
     currentCoreAdmin = null;
     currentSuperAdmin = null;
 
 
-    /* =====================================================
-       IF CURRENT USER IS SUPER ADMIN
-    ===================================================== */
-
+    // IF CURRENT USER IS SUPER ADMIN
     if(isSuperAdmin(currentAdmin.roleType)){
-
         currentSuperAdmin = {
             uid: currentAdmin.uid,
             name: currentAdmin.name,
@@ -970,16 +574,11 @@ async function loadAdminHierarchy(user){
             reportsTo: currentAdmin.reportsTo,
             email: currentAdmin.email
         };
-
     }
 
 
-    /* =====================================================
-       IF CURRENT USER IS CORE ADMIN
-    ===================================================== */
-
+    // IF CURRENT USER IS CORE ADMIN
     if(isCoreAdmin(currentAdmin.roleType)){
-
         currentCoreAdmin = {
             uid: currentAdmin.uid,
             name: currentAdmin.name,
@@ -990,359 +589,118 @@ async function loadAdminHierarchy(user){
         };
 
         if(currentAdmin.reportsTo){
-
-            const superProfile =
-                await getUserProfileByIdOrUid(
-                    currentAdmin.reportsTo
-                );
+            const superProfile = await getUserProfileByIdOrUid(currentAdmin.reportsTo);
 
             if(superProfile){
-
-                const superData =
-                    superProfile.data || {};
-
+                const superData = superProfile.data || {};
                 currentSuperAdmin = {
-                    uid:
-                        superProfile.id,
-
-                    name:
-                        clean(superData.name),
-
-                    roleType:
-                        clean(
-                            superData.roleType ||
-                            superData.role ||
-                            "Super Admin"
-                        ),
-
-                    department:
-                        clean(
-                            superData.department
-                        ),
-
-                    reportsTo:
-                        clean(
-                            superData.reportsTo
-                        ),
-
-                    email:
-                        clean(
-                            superData.email
-                        )
+                    uid: superProfile.id,
+                    name: clean(superData.name),
+                    roleType: clean(superData.roleType || superData.role || "Super Admin"),
+                    department: clean(superData.department),
+                    reportsTo: clean(superData.reportsTo),
+                    email: clean(superData.email)
                 };
             }
         }
     }
 
 
-    /* =====================================================
-       DEPARTMENT ADMIN
-       Department Admin
-            ↓
-       Core Admin
-            ↓
-       Super Admin
-    ===================================================== */
+    // DEPARTMENT ADMIN
+    if(isDepartmentAdmin(currentAdmin.roleType)){
 
-    if(
-        isDepartmentAdmin(
-            currentAdmin.roleType
-        )
-    ){
-
-        /* -----------------------------------------------
-           FIRST: DIRECT CORE ADMIN MAPPING
-        ------------------------------------------------ */
-
+        // FIRST: DIRECT CORE ADMIN MAPPING
         if(data.coreAdminId || data.coreAdminUID){
-
-            const coreIdentifier =
-                clean(
-                    data.coreAdminId ||
-                    data.coreAdminUID
-                );
-
-            const coreProfile =
-                await getUserProfileByIdOrUid(
-                    coreIdentifier
-                );
+            const coreIdentifier = clean(data.coreAdminId || data.coreAdminUID);
+            const coreProfile = await getUserProfileByIdOrUid(coreIdentifier);
 
             if(coreProfile){
-
-                const coreData =
-                    coreProfile.data || {};
-
+                const coreData = coreProfile.data || {};
                 currentCoreAdmin = {
-
-                    uid:
-                        coreProfile.id,
-
-                    name:
-                        clean(
-                            coreData.name
-                        ),
-
-                    roleType:
-                        clean(
-                            coreData.roleType ||
-                            coreData.role ||
-                            "Core Admin"
-                        ),
-
-                    department:
-                        clean(
-                            coreData.department
-                        ),
-
-                    reportsTo:
-                        clean(
-                            coreData.reportsTo
-                        ),
-
-                    email:
-                        clean(
-                            coreData.email
-                        )
+                    uid: coreProfile.id,
+                    name: clean(coreData.name),
+                    roleType: clean(coreData.roleType || coreData.role || "Core Admin"),
+                    department: clean(coreData.department),
+                    reportsTo: clean(coreData.reportsTo),
+                    email: clean(coreData.email)
                 };
             }
         }
 
-
-        /* -----------------------------------------------
-           FALLBACK: REPORTS TO
-        ------------------------------------------------ */
-
-        if(
-            !currentCoreAdmin &&
-            currentAdmin.reportsTo
-        ){
-
-            const parentProfile =
-                await getUserProfileByIdOrUid(
-                    currentAdmin.reportsTo
-                );
+        // FALLBACK: REPORTS TO
+        if(!currentCoreAdmin && currentAdmin.reportsTo){
+            const parentProfile = await getUserProfileByIdOrUid(currentAdmin.reportsTo);
 
             if(parentProfile){
-
-                const parentData =
-                    parentProfile.data || {};
-
-                const parentRole =
-                    clean(
-                        parentData.roleType ||
-                        parentData.role
-                    );
-
+                const parentData = parentProfile.data || {};
+                const parentRole = clean(parentData.roleType || parentData.role);
 
                 if(isCoreAdmin(parentRole)){
-
                     currentCoreAdmin = {
-
-                        uid:
-                            parentProfile.id,
-
-                        name:
-                            clean(
-                                parentData.name
-                            ),
-
-                        roleType:
-                            parentRole,
-
-                        department:
-                            clean(
-                                parentData.department
-                            ),
-
-                        reportsTo:
-                            clean(
-                                parentData.reportsTo
-                            ),
-
-                        email:
-                            clean(
-                                parentData.email
-                            )
+                        uid: parentProfile.id,
+                        name: clean(parentData.name),
+                        roleType: parentRole,
+                        department: clean(parentData.department),
+                        reportsTo: clean(parentData.reportsTo),
+                        email: clean(parentData.email)
                     };
                 }
             }
         }
 
-
-        /* -----------------------------------------------
-           FIND SUPER ADMIN FROM CORE ADMIN
-        ------------------------------------------------ */
-
-        if(
-            currentCoreAdmin &&
-            currentCoreAdmin.reportsTo &&
-            !currentSuperAdmin
-        ){
-
-            const superProfile =
-                await getUserProfileByIdOrUid(
-                    currentCoreAdmin.reportsTo
-                );
+        // FIND SUPER ADMIN FROM CORE ADMIN
+        if(currentCoreAdmin && currentCoreAdmin.reportsTo && !currentSuperAdmin){
+            const superProfile = await getUserProfileByIdOrUid(currentCoreAdmin.reportsTo);
 
             if(superProfile){
-
-                const superData =
-                    superProfile.data || {};
-
+                const superData = superProfile.data || {};
                 currentSuperAdmin = {
-
-                    uid:
-                        superProfile.id,
-
-                    name:
-                        clean(
-                            superData.name
-                        ),
-
-                    roleType:
-                        clean(
-                            superData.roleType ||
-                            superData.role ||
-                            "Super Admin"
-                        ),
-
-                    department:
-                        clean(
-                            superData.department
-                        ),
-
-                    reportsTo:
-                        clean(
-                            superData.reportsTo
-                        ),
-
-                    email:
-                        clean(
-                            superData.email
-                        )
+                    uid: superProfile.id,
+                    name: clean(superData.name),
+                    roleType: clean(superData.roleType || superData.role || "Super Admin"),
+                    department: clean(superData.department),
+                    reportsTo: clean(superData.reportsTo),
+                    email: clean(superData.email)
                 };
             }
         }
 
-
-        /* -----------------------------------------------
-           DIRECT SUPER ADMIN MAPPING
-        ------------------------------------------------ */
-
-        if(
-            !currentSuperAdmin &&
-            (
-                data.superAdminId ||
-                data.superAdminUID
-            )
-        ){
-
-            const superIdentifier =
-                clean(
-                    data.superAdminId ||
-                    data.superAdminUID
-                );
-
-            const superProfile =
-                await getUserProfileByIdOrUid(
-                    superIdentifier
-                );
+        // DIRECT SUPER ADMIN MAPPING
+        if(!currentSuperAdmin && (data.superAdminId || data.superAdminUID)){
+            const superIdentifier = clean(data.superAdminId || data.superAdminUID);
+            const superProfile = await getUserProfileByIdOrUid(superIdentifier);
 
             if(superProfile){
-
-                const superData =
-                    superProfile.data || {};
-
+                const superData = superProfile.data || {};
                 currentSuperAdmin = {
-
-                    uid:
-                        superProfile.id,
-
-                    name:
-                        clean(
-                            superData.name
-                        ),
-
-                    roleType:
-                        clean(
-                            superData.roleType ||
-                            superData.role ||
-                            "Super Admin"
-                        ),
-
-                    department:
-                        clean(
-                            superData.department
-                        ),
-
-                    reportsTo:
-                        clean(
-                            superData.reportsTo
-                        ),
-
-                    email:
-                        clean(
-                            superData.email
-                        )
+                    uid: superProfile.id,
+                    name: clean(superData.name),
+                    roleType: clean(superData.roleType || superData.role || "Super Admin"),
+                    department: clean(superData.department),
+                    reportsTo: clean(superData.reportsTo),
+                    email: clean(superData.email)
                 };
             }
         }
     }
 
 
-    /* =====================================================
-       SHOW CURRENT ADMIN INFORMATION
-    ===================================================== */
-
-    function setElementValue(
-        element,
-        value
-    ){
-
+    // SHOW CURRENT ADMIN INFORMATION
+    function setElementValue(element, value){
         if(!element) return;
-
-        const text =
-            clean(value);
-
-        if(
-            "value" in element
-        ){
-
-            element.value =
-                text;
-
+        const text = clean(value);
+        if("value" in element){
+            element.value = text;
         }else{
-
-            element.textContent =
-                text;
+            element.textContent = text || "—";
         }
     }
 
-
-    setElementValue(
-        adminNameEl,
-        currentAdmin.name
-    );
-
-    setElementValue(
-        adminIdEl,
-        currentAdmin.uid
-    );
-
-    setElementValue(
-        roleTypeEl,
-        currentAdmin.roleType
-    );
-
-    setElementValue(
-        departmentEl,
-        currentAdmin.department
-    );
-
-    setElementValue(
-        reportsToEl,
-        currentAdmin.reportsTo
-    );
+    setElementValue(adminNameEl, currentAdmin.name);
+    setElementValue(adminIdEl, currentAdmin.uid);
+    setElementValue(roleTypeEl, currentAdmin.roleType);
+    setElementValue(departmentEl, currentAdmin.department);
+    setElementValue(reportsToEl, currentAdmin.reportsTo);
 }
 
 
@@ -1353,437 +711,58 @@ async function loadAdminHierarchy(user){
 async function loadMySales(){
 
     if(!currentUser){
-
-        salesListEl.innerHTML =
-            "<p>No user logged in.</p>";
-
+        salesListEl.innerHTML = "<p>No user logged in.</p>";
         return;
     }
 
     try{
+        const salesQuery = query(
+            collection(db, "sales"),
+            where("adminUid", "==", currentUser.uid)
+        );
 
-        const salesQuery =
-            query(
-                collection(
-                    db,
-                    "sales"
-                ),
-                where(
-                    "adminUid",
-                    "==",
-                    currentUser.uid
-                )
-            );
-
-        const snapshot =
-            await getDocs(
-                salesQuery
-            );
-
+        const snapshot = await getDocs(salesQuery);
 
         if(snapshot.empty){
-
-            salesListEl.innerHTML =
-                "<p>No sales recorded yet.</p>";
-
+            salesListEl.innerHTML = "<p>No sales recorded yet.</p>";
             return;
         }
-
 
         const sales = [];
 
-        snapshot.forEach(
-            function(docSnap){
-
-                sales.push({
-
-                    id:
-                        docSnap.id,
-
-                    ...docSnap.data()
-
-                });
-
-            }
-        );
-
-
-        sales.sort(
-            function(a,b){
-
-                const aTime =
-                    a.createdAt &&
-                    a.createdAt.toMillis
-                        ? a.createdAt.toMillis()
-                        : 0;
-
-                const bTime =
-                    b.createdAt &&
-                    b.createdAt.toMillis
-                        ? b.createdAt.toMillis()
-                        : 0;
-
-                return bTime - aTime;
-            }
-        );
-
-
-        salesListEl.innerHTML =
-            sales.map(
-                function(sale){
-
-                    return `
-                    <div class="sale-card">
-
-                        <b>
-                            ${escapeHtml(
-                                sale.itemName || ""
-                            )}
-                        </b>
-
-                        <div>
-                            Customer:
-                            ${escapeHtml(
-                                sale.customerName || ""
-                            )}
-                        </div>
-
-                        <div>
-                            Quantity:
-                            ${Number(
-                                sale.quantity || 0
-                            )}
-                        </div>
-
-                        <div>
-                            Rate:
-                            ₹${Number(
-                                sale.rate || 0
-                            ).toFixed(2)}
-                        </div>
-
-                        <div>
-                            Amount:
-                            ₹${Number(
-                                sale.amount || 0
-                            ).toFixed(2)}
-                        </div>
-
-                        <div>
-                            Department:
-                            ${escapeHtml(
-                                sale.department || ""
-                            )}
-                        </div>
-
-                    </div>
-                    `;
-
-                }
-            ).join("");
-
-
-    }catch(error){
-
-        console.error(
-            "Load sales error:",
-            error
-        );
-
-        salesListEl.innerHTML =
-            "<p>Unable to load sales.</p>";
-    }
-}
-
-
-/* =========================================================
-   SAVE SALE
-========================================================= */
-
-saveButton.addEventListener(
-    "click",
-    async function(){
-
-        if(!currentUser){
-
-            showMessage(
-                "Please login first.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const customerName =
-            clean(
-                customerNameEl.value
-            );
-
-        const customerMobile =
-            clean(
-                customerMobileEl.value
-            );
-
-        const itemName =
-            clean(
-                itemNameEl.value
-            );
-
-        const quantity =
-            Number(
-                quantityEl.value
-            ) || 0;
-
-        const rate =
-            Number(
-                rateEl.value
-            ) || 0;
-
-        const amount =
-            Number(
-                (quantity * rate)
-                    .toFixed(2)
-            );
-
-
-        /* -----------------------------------------------
-           VALIDATION
-        ------------------------------------------------ */
-
-        if(!customerName){
-
-            showMessage(
-                "Customer name is required.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if(
-            customerMobile &&
-            customerMobile.length !== 10
-        ){
-
-            showMessage(
-                "Enter a valid 10 digit mobile number.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if(!itemName){
-
-            showMessage(
-                "Item name is required.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if(quantity <= 0){
-
-            showMessage(
-                "Quantity must be greater than 0.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if(rate <= 0){
-
-            showMessage(
-                "Rate must be greater than 0.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if(amount <= 0){
-
-            showMessage(
-                "Sale amount is invalid.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        /* -----------------------------------------------
-           CALCULATE COMMISSION
-        ------------------------------------------------ */
-
-        const departmentCommission =
-            isDepartmentAdmin(
-                currentAdmin.roleType
-            )
-            ? calculateCommission(
-                amount,
-                COMMISSION.departmentAdminPercent
-            )
-            : 0;
-
-
-        const coreCommission =
-            currentCoreAdmin
-            ? calculateCommission(
-                amount,
-                COMMISSION.coreAdminPercent
-            )
-            : 0;
-
-
-        const superCommission =
-            currentSuperAdmin
-            ? calculateCommission(
-                amount,
-                COMMISSION.superAdminPercent
-            )
-            : 0;
-
-
-        try{
-
-            saveButton.disabled =
-                true;
-
-            saveButton.textContent =
-                "Saving...";
-
-
-            /* -------------------------------------------
-               SALE RECORD
-            -------------------------------------------- */
-
-            const saleData = {
-
-                customerName:
-                    customerName,
-
-                customerMobile:
-                    customerMobile,
-
-                itemName:
-                    itemName,
-
-                quantity:
-                    quantity,
-
-                rate:
-                    rate,
-
-                amount:
-                    amount,
-
-
-                /* Department Admin */
-
-                adminUid:
-                    currentAdmin.uid,
-
-                adminId:
-                    currentAdmin.uid,
-
-                adminName:
-                    currentAdmin.name,
-
-                adminRole:
-                    currentAdmin.roleType,
-
-                department:
-                    currentAdmin.department,
-
-
-                /* Core Admin */
-
-                coreAdminUid:
-                    currentCoreAdmin
-                    ? currentCoreAdmin.uid
-                    : "",
-
-                coreAdminId:
-                    currentCoreAdmin
-                    ? currentCoreAdmin.uid
-                    : "",
-
-                coreAdminName:
-                    currentCoreAdmin
-                    ? currentCoreAdmin.name
-                    : "",
-
-
-                /* Super Admin */
-
-                superAdminUid:
-                    currentSuperAdmin
-                    ? currentSuperAdmin.uid
-                    : "",
-
-                superAdminId:
-                    currentSuperAdmin
-                    ? currentSuperAdmin.uid
-                    : "",
-
-                superAdminName:
-                    currentSuperAdmin
-                    ? currentSuperAdmin.name
-                    : "",
-
-
-                /* Commission */
-
-                departmentAdminPercent:
-                    COMMISSION.departmentAdminPercent,
-
-                departmentAdminCommission:
-                    departmentCommission,
-
-                coreAdminPercent:
-                    COMMISSION.coreAdminPercent,
-
-                coreAdminCommission:
-                    coreCommission,
-
-                superAdminPercent:
-                    COMMISSION.superAdminPercent,
-
-                superAdminCommission:
-                    superCommission,
-
-
-                /* Hierarchy */
-
-                reportsTo:
-                    currentAdmin.reportsTo,
-
-                createdBy:
-                    currentUser.uid,
-
-                createdByEmail:
-                    currentUser.email || "",
-
-                createdAt:
-                    serverTimestamp(),
-
-                saleType:
-                    "Cash Sale",
-
-                status:
-                    "Completed"
-            };
-
-
-            /* -------------------------------------------
-               SAVE TO FIRESTORE
-            -------------------------------------------- *
+        snapshot.forEach(function(docSnap){
+            sales.push({
+                id: docSnap.id,
+                ...docSnap.data()
+            });
+        });
+
+        sales.sort(function(a, b){
+            const aTime = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+            const bTime = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
+            return bTime - aTime;
+        });
+
+        salesListEl.innerHTML = sales.map(function(sale){
+
+            const deptComm = Number(sale.departmentAdminCommission || 0).toFixed(2);
+            const coreComm = Number(sale.coreAdminCommission || 0).toFixed(2);
+            const superComm = Number(sale.superAdminCommission || 0).toFixed(2);
+
+            return `
+            <div class="sale-row">
+                <strong>${escapeHtml(sale.itemName || "")}</strong>
+                <div>Customer: ${escapeHtml(sale.customerName || "")}</div>
+                <div>Mobile: ${escapeHtml(sale.customerMobile || "—")}</div>
+                <div>Quantity: ${Number(sale.quantity || 0)}</div>
+                <div>Rate: ₹${Number(sale.rate || 0).toFixed(2)}</div>
+                <div>Amount: ₹${Number(sale.amount || 0).toFixed(2)}</div>
+                <div>Department: ${escapeHtml(sale.department || "—")}</div>
+
+                <div class="commission-box">
+                    <div>Dept Admin Commission: ₹${deptComm}</div>
+                    <div>Core Admin Commission: ₹${coreComm}</div>
+                    <div>Super Admin Commission: ₹${superComm}</div>
+                </div>
+            </div>
+    
