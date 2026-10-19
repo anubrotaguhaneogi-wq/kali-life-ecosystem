@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sales Management - KALI LIFE ECOSYSTEM</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Department Admin Sales | KALI LIFE</title>
 
 <style>
 *{
@@ -14,11 +14,11 @@
 body{
     margin:0;
     background:#f4f7f5;
-    color:#222;
+    color:#172033;
 }
 
 .header{
-    background:#16834b;
+    background:#064e3b;
     color:#fff;
     padding:18px;
     text-align:center;
@@ -26,58 +26,44 @@ body{
 
 .header h1{
     margin:0;
-    font-size:24px;
+    font-size:23px;
 }
 
 .header p{
     margin:5px 0 0;
-    font-size:14px;
 }
 
 .container{
     max-width:700px;
-    margin:25px auto;
+    margin:auto;
     padding:15px;
 }
 
 .card{
     background:#fff;
-    padding:22px;
+    padding:20px;
     border-radius:14px;
     box-shadow:0 4px 18px rgba(0,0,0,.08);
-    margin-bottom:20px;
+    margin-bottom:18px;
 }
 
-.card h2{
+h2{
     margin-top:0;
-    color:#16834b;
+    color:#064e3b;
 }
 
 .admin-box{
-    background:#eef8f2;
+    background:#ecfdf5;
     padding:14px;
-    border-radius:9px;
-    margin-bottom:18px;
-    font-size:14px;
+    border-radius:10px;
     line-height:1.8;
-    word-break:break-word;
-}
-
-.tracking-box{
-    background:#f7faf8;
-    border:1px solid #dbe9df;
-    padding:12px;
-    border-radius:9px;
-    margin-top:12px;
-    font-size:13px;
-    line-height:1.6;
+    font-size:14px;
 }
 
 label{
     display:block;
-    margin-top:14px;
-    margin-bottom:6px;
-    font-weight:bold;
+    margin:14px 0 6px;
+    font-weight:700;
 }
 
 input{
@@ -85,34 +71,25 @@ input{
     padding:12px;
     border:1px solid #ccc;
     border-radius:8px;
-    font-size:15px;
+    font-size:16px;
 }
 
-input:focus{
-    outline:none;
-    border-color:#16834b;
-}
-
-.amount-box{
-    background:#f1f8f4;
-    font-weight:bold;
+.amount{
+    background:#eef8f2;
+    font-weight:700;
 }
 
 button{
     width:100%;
-    margin-top:22px;
+    margin-top:20px;
     padding:14px;
     border:0;
-    border-radius:8px;
-    background:#16834b;
+    border-radius:9px;
+    background:#047857;
     color:#fff;
     font-size:17px;
-    font-weight:bold;
+    font-weight:700;
     cursor:pointer;
-}
-
-button:hover{
-    background:#116b3d;
 }
 
 button:disabled{
@@ -121,60 +98,47 @@ button:disabled{
 }
 
 .message{
-    margin-top:15px;
-    padding:10px;
-    border-radius:8px;
-    text-align:center;
+    margin-top:14px;
+    padding:12px;
+    border-radius:9px;
     display:none;
+    line-height:1.5;
 }
 
 .success{
     display:block;
-    background:#e5f7eb;
-    color:#126b38;
+    background:#ecfdf5;
+    color:#047857;
 }
 
 .error{
     display:block;
-    background:#fdeaea;
-    color:#b00020;
+    background:#fef2f2;
+    color:#b91c1c;
 }
 
-.sales-list{
-    margin-top:25px;
-}
-
-.sale-row{
+.sale{
     background:#fff;
-    padding:15px;
+    padding:14px;
     margin-top:10px;
     border-radius:10px;
+    border-left:4px solid #047857;
     box-shadow:0 2px 8px rgba(0,0,0,.06);
     line-height:1.7;
 }
 
-.sale-row strong{
-    color:#16834b;
-}
-
-.commission-box{
-    margin-top:10px;
-    padding:10px;
+.comm{
     background:#f7faf8;
+    padding:9px;
     border-radius:8px;
+    margin-top:8px;
     font-size:13px;
-    line-height:1.7;
 }
 
 .loading{
     text-align:center;
     color:#777;
     padding:15px;
-}
-
-.small{
-    font-size:12px;
-    color:#666;
 }
 </style>
 </head>
@@ -183,7 +147,7 @@ button:disabled{
 
 <div class="header">
     <h1>KALI LIFE ECOSYSTEM</h1>
-    <p>Sales Management</p>
+    <p>Department Admin • Sales Management</p>
 </div>
 
 <div class="container">
@@ -193,78 +157,100 @@ button:disabled{
 <h2>Sales Entry</h2>
 
 <div class="admin-box">
-
-    <strong>Logged-in Admin:</strong>
-    <span id="adminName">Loading...</span>
-    <br>
+    <strong>Admin:</strong>
+    <span id="adminName">Checking...</span><br>
 
     <strong>Admin ID:</strong>
-    <span id="adminId">Loading...</span>
-    <br>
+    <span id="adminId">Checking...</span><br>
 
     <strong>Role:</strong>
-    <span id="roleType">Loading...</span>
-    <br>
+    <span id="role">Checking...</span><br>
 
     <strong>Department:</strong>
-    <span id="department">Loading...</span>
-    <br>
+    <span id="department">Checking...</span><br>
 
     <strong>Reports To:</strong>
-    <span id="reportsTo">Loading...</span>
-
-    <div class="tracking-box">
-        <strong>Automatic Tracking</strong>
-        <br>
-        This sale is automatically linked with the
-        logged-in Admin, Department, Core Admin and
-        Super Admin hierarchy.
-        <br><br>
-        <span class="small">
-        Admin ID is saved with every sale so the source
-        of the sale can be tracked later.
-        </span>
-    </div>
-
+    <span id="reportsTo">Checking...</span>
 </div>
 
-<label for="customerName">Customer Name</label>
-<input type="text" id="customerName" placeholder="Enter customer name">
+<label>Customer Name</label>
+<input
+    id="customerName"
+    type="text"
+    placeholder="Enter customer name"
+>
 
-<label for="customerMobile">Customer Mobile</label>
-<input type="tel" id="customerMobile" inputmode="numeric" maxlength="10" placeholder="Enter 10 digit mobile number">
+<label>Customer Mobile</label>
+<input
+    id="customerMobile"
+    type="tel"
+    inputmode="numeric"
+    maxlength="10"
+    placeholder="10 digit mobile number"
+>
 
-<label for="itemName">Item Name</label>
-<input type="text" id="itemName" placeholder="Enter item name">
+<label>Item Name</label>
+<input
+    id="itemName"
+    type="text"
+    placeholder="Enter item name"
+>
 
-<label for="quantity">Quantity</label>
-<input type="number" id="quantity" min="1" step="1" placeholder="Enter quantity">
+<label>Quantity</label>
+<input
+    id="quantity"
+    type="number"
+    min="1"
+    step="1"
+    placeholder="Enter quantity"
+>
 
-<label for="rate">Rate</label>
-<input type="number" id="rate" min="0" step="0.01" placeholder="Enter rate">
+<label>Rate</label>
+<input
+    id="rate"
+    type="number"
+    min="0.01"
+    step="0.01"
+    placeholder="Enter rate"
+>
 
-<label for="amount">Amount</label>
-<input type="number" id="amount" class="amount-box" readonly placeholder="Automatically calculated">
+<label>Amount</label>
+<input
+    id="amount"
+    class="amount"
+    type="number"
+    readonly
+    placeholder="Auto calculation"
+>
 
-<button id="saveButton">Save Sale</button>
+<button id="saveButton" disabled>
+    Checking Login...
+</button>
 
 <div id="message" class="message"></div>
 
 </div>
 
-<div class="card sales-list">
-    <h2>My Sales</h2>
-    <div id="salesList">
-        <div class="loading">Loading sales...</div>
+
+<div class="card">
+
+<h2>My Sales</h2>
+
+<div id="salesList">
+    <div class="loading">
+        Loading...
     </div>
 </div>
 
 </div>
 
+</div>
+
+
 <script type="module">
 
 /* =========================================================
-   FIREBASE IMPORTS
+   FIREBASE IMPORT
 ========================================================= */
 
 import { initializeApp }
@@ -295,249 +281,332 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 ========================================================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjT7B_OxZo",
-    authDomain: "kali-life-ecosystem.firebaseapp.com",
-    projectId: "kali-life-ecosystem",
-    storageBucket: "kali-life-ecosystem.firebasestorage.app",
-    messagingSenderId: "734170546737",
-    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-    measurementId: "G-LBEY0W7RX3"
+
+    apiKey:
+        "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjT7B_OxZo",
+
+    authDomain:
+        "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+        "kali-life-ecosystem",
+
+    storageBucket:
+        "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+        "734170546737",
+
+    appId:
+        "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+        "G-LBEY0W7RX3"
 };
 
+
+/* =========================================================
+   INITIALIZE FIREBASE
+========================================================= */
+
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 
 
 /* =========================================================
-   COMMISSION CONFIGURATION
+   COMMISSION SETTINGS
 ========================================================= */
 
 const COMMISSION = {
-    superAdminPercent: 5,
-    coreAdminPercent: 10,
-    departmentAdminPercent: 20
+
+    department: 20,
+
+    core: 10,
+
+    super: 5
+
 };
 
 
 /* =========================================================
-   HTML ELEMENTS
+   COMMON HELPERS
 ========================================================= */
 
-const adminNameEl = document.getElementById("adminName");
-const adminIdEl = document.getElementById("adminId");
-const roleTypeEl = document.getElementById("roleType");
-const departmentEl = document.getElementById("department");
-const reportsToEl = document.getElementById("reportsTo");
-
-const customerNameEl = document.getElementById("customerName");
-const customerMobileEl = document.getElementById("customerMobile");
-const itemNameEl = document.getElementById("itemName");
-const quantityEl = document.getElementById("quantity");
-const rateEl = document.getElementById("rate");
-const amountEl = document.getElementById("amount");
-const saveButton = document.getElementById("saveButton");
-const messageEl = document.getElementById("message");
-const salesListEl = document.getElementById("salesList");
-
-
-/* =========================================================
-   CURRENT USER / HIERARCHY
-========================================================= */
+const $ = id => document.getElementById(id);
 
 let currentUser = null;
+
 let currentAdmin = null;
+
 let currentCoreAdmin = null;
+
 let currentSuperAdmin = null;
 
 
-/* =========================================================
-   BASIC HELPERS
-========================================================= */
+/* Clean text */
 
-function clean(value){
-    return String(value ?? "").trim();
+function clean(v){
+
+    return String(v ?? "").trim();
+
 }
 
-function normalizeRole(value){
-    return clean(value).toLowerCase().replace(/\s+/g," ");
+
+/* Normalize role */
+
+function role(v){
+
+    return clean(v)
+        .toLowerCase()
+        .replace(/\s+/g," ");
+
 }
 
-function isDepartmentAdmin(role){
-    return normalizeRole(role).includes("department admin");
+
+/* Check Department Admin */
+
+function isDept(v){
+
+    return role(v).includes("department admin");
+
 }
 
-function isCoreAdmin(role){
-    return normalizeRole(role).includes("core admin");
-}
 
-function isSuperAdmin(role){
-    return normalizeRole(role).includes("super admin");
-}
+/* Commission calculator */
 
-function calculateCommission(amount, percent){
+function commission(amount,pct){
+
     return Number(
-        ((Number(amount) || 0) * percent / 100).toFixed(2)
+        (
+            (Number(amount) || 0) *
+            pct /
+            100
+        ).toFixed(2)
     );
+
 }
 
-function showMessage(text, type){
-    messageEl.textContent = text;
-    messageEl.className = "message " + type;
-}
 
-function calculateAmount(){
-    const quantity = Number(quantityEl.value) || 0;
-    const rate = Number(rateEl.value) || 0;
-    const amount = quantity * rate;
+/* Escape HTML */
 
-    amountEl.value = amount > 0 ? amount.toFixed(2) : "";
-}
+function escapeHtml(v){
 
-function escapeHtml(value){
-    return String(value ?? "")
+    return String(v ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
+
 }
 
-function clearForm(){
-    customerNameEl.value = "";
-    customerMobileEl.value = "";
-    itemNameEl.value = "";
-    quantityEl.value = "";
-    rateEl.value = "";
-    amountEl.value = "";
+
+/* Message */
+
+function message(text,type){
+
+    $("message").textContent = text;
+
+    $("message").className =
+        "message " + type;
+
 }
 
 
 /* =========================================================
-   INPUT EVENTS
+   AMOUNT CALCULATION
 ========================================================= */
 
-quantityEl.addEventListener("input", calculateAmount);
-rateEl.addEventListener("input", calculateAmount);
+function amountCalc(){
 
-customerMobileEl.addEventListener("input", function(){
-    this.value = this.value.replace(/\D/g,"").slice(0,10);
-});
+    const q =
+        Number($("quantity").value) || 0;
+
+    const r =
+        Number($("rate").value) || 0;
+
+    $("amount").value =
+        q > 0 && r > 0
+            ? (q * r).toFixed(2)
+            : "";
+
+}
+
+
+$("quantity").addEventListener(
+    "input",
+    amountCalc
+);
+
+$("rate").addEventListener(
+    "input",
+    amountCalc
+);
 
 
 /* =========================================================
-   GET CURRENT USER PROFILE
+   MOBILE NUMBER VALIDATION
 ========================================================= */
 
-async function getUserProfile(user){
+$("customerMobile").addEventListener(
+    "input",
+    e => {
+
+        e.target.value =
+            e.target.value
+            .replace(/\D/g,"")
+            .slice(0,10);
+
+    }
+);
+
+
+/* =========================================================
+   FIND USER PROFILE
+========================================================= */
+
+async function profile(user){
 
     try{
-        const uidRef = doc(db, "users", user.uid);
-        const uidSnap = await getDoc(uidRef);
 
-        if(uidSnap.exists()){
-            return {
-                id: uidSnap.id,
-                data: uidSnap.data()
-            };
-        }
-
-        if(user.email){
-            const emailQuery = query(
-                collection(db,"users"),
-                where("email", "==", user.email)
+        const direct =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                )
             );
 
-            const emailSnap = await getDocs(emailQuery);
+        if(direct.exists()){
 
-            if(!emailSnap.empty){
-                const first = emailSnap.docs[0];
-                return {
-                    id: first.id,
-                    data: first.data()
-                };
-            }
+            return {
+                id: direct.id,
+                data: direct.data()
+            };
+
         }
 
-    }catch(error){
-        console.error("getUserProfile error:", error);
+    }catch(e){
+
+        console.warn(
+            "UID profile:",
+            e.message
+        );
+
     }
+
+
+    if(user.email){
+
+        try{
+
+            const q =
+                query(
+                    collection(db,"users"),
+                    where(
+                        "email",
+                        "==",
+                        user.email
+                    )
+                );
+
+            const s =
+                await getDocs(q);
+
+            if(!s.empty){
+
+                return {
+                    id: s.docs[0].id,
+                    data: s.docs[0].data()
+                };
+
+            }
+
+        }catch(e){
+
+            console.warn(
+                "Email profile:",
+                e.message
+            );
+
+        }
+
+    }
+
 
     return {
         id: user.uid,
         data: {}
     };
+
 }
 
 
 /* =========================================================
-   FIND USER BY DOCUMENT ID OR STORED UID
+   FIND USER BY ID
 ========================================================= */
 
-async function getUserProfileByIdOrUid(identifier){
+async function byId(value){
 
-    if(!identifier) return null;
+    if(!value) return null;
 
-    const value = clean(identifier);
 
-    // STEP 1: Try users/{identifier}
     try{
-        const directRef = doc(db, "users", value);
-        const directSnap = await getDoc(directRef);
 
-        if(directSnap.exists()){
-            return {
-                id: directSnap.id,
-                data: directSnap.data()
-            };
-        }
-    }catch(error){
-        console.warn("Direct user lookup failed:", error);
-    }
-
-    // STEP 2: Try uid field
-    try{
-        const uidQuery = query(
-            collection(db,"users"),
-            where("uid", "==", value)
-        );
-
-        const uidSnap = await getDocs(uidQuery);
-
-        if(!uidSnap.empty){
-            const first = uidSnap.docs[0];
-            return {
-                id: first.id,
-                data: first.data()
-            };
-        }
-    }catch(error){
-        console.warn("UID lookup failed:", error);
-    }
-
-    // STEP 3: Try email if looks like email
-    if(value.includes("@")){
-        try{
-            const emailQuery = query(
-                collection(db,"users"),
-                where("email", "==", value)
+        const s =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    value
+                )
             );
 
-            const emailSnap = await getDocs(emailQuery);
+        if(s.exists()){
 
-            if(!emailSnap.empty){
-                const first = emailSnap.docs[0];
-                return {
-                    id: first.id,
-                    data: first.data()
-                };
-            }
-        }catch(error){
-            console.warn("Email lookup failed:", error);
+            return {
+                id:s.id,
+                data:s.data()
+            };
+
         }
-    }
+
+    }catch(e){}
+
+
+    try{
+
+        const q =
+            query(
+                collection(db,"users"),
+                where(
+                    "uid",
+                    "==",
+                    value
+                )
+            );
+
+        const s =
+            await getDocs(q);
+
+        if(!s.empty){
+
+            return {
+                id:s.docs[0].id,
+                data:s.docs[0].data()
+            };
+
+        }
+
+    }catch(e){}
+
 
     return null;
+
 }
 
 
@@ -545,162 +614,235 @@ async function getUserProfileByIdOrUid(identifier){
    LOAD ADMIN HIERARCHY
 ========================================================= */
 
-async function loadAdminHierarchy(user){
+async function loadHierarchy(user){
 
-    const profile = await getUserProfile(user);
-    const data = profile.data || {};
+    const p =
+        await profile(user);
+
+    const d =
+        p.data || {};
+
+
+    /* Current Department Admin */
 
     currentAdmin = {
-        uid: user.uid,
-        name: clean(data.name) || user.displayName || user.email || user.uid,
-        roleType: clean(data.roleType || data.role || "User"),
-        department: clean(data.department),
-        reportsTo: clean(data.reportsTo),
-        mobile: clean(data.mobile),
-        email: clean(data.email || user.email)
+
+        uid:user.uid,
+
+        docId:p.id,
+
+        name:
+            clean(d.name) ||
+            user.displayName ||
+            user.email ||
+            user.uid,
+
+        roleType:
+            clean(
+                d.roleType ||
+                d.role ||
+                "User"
+            ),
+
+        department:
+            clean(d.department),
+
+        reportsTo:
+            clean(d.reportsTo),
+
+        mobile:
+            clean(d.mobile),
+
+        email:
+            clean(
+                d.email ||
+                user.email
+            )
+
     };
 
+
     currentCoreAdmin = null;
+
     currentSuperAdmin = null;
 
 
-    // IF CURRENT USER IS SUPER ADMIN
-    if(isSuperAdmin(currentAdmin.roleType)){
-        currentSuperAdmin = {
-            uid: currentAdmin.uid,
-            name: currentAdmin.name,
-            roleType: currentAdmin.roleType,
-            department: currentAdmin.department,
-            reportsTo: currentAdmin.reportsTo,
-            email: currentAdmin.email
-        };
-    }
+    /* =====================================================
+       FIND CORE ADMIN
+    ===================================================== */
+
+    if(
+        isDept(
+            currentAdmin.roleType
+        )
+    ){
+
+        let coreRef =
+            d.coreAdminId ||
+            d.coreAdminUID ||
+            d.reportsTo;
 
 
-    // IF CURRENT USER IS CORE ADMIN
-    if(isCoreAdmin(currentAdmin.roleType)){
-        currentCoreAdmin = {
-            uid: currentAdmin.uid,
-            name: currentAdmin.name,
-            roleType: currentAdmin.roleType,
-            department: currentAdmin.department,
-            reportsTo: currentAdmin.reportsTo,
-            email: currentAdmin.email
-        };
+        if(coreRef){
 
-        if(currentAdmin.reportsTo){
-            const superProfile = await getUserProfileByIdOrUid(currentAdmin.reportsTo);
+            const cp =
+                await byId(coreRef);
 
-            if(superProfile){
-                const superData = superProfile.data || {};
-                currentSuperAdmin = {
-                    uid: superProfile.id,
-                    name: clean(superData.name),
-                    roleType: clean(superData.roleType || superData.role || "Super Admin"),
-                    department: clean(superData.department),
-                    reportsTo: clean(superData.reportsTo),
-                    email: clean(superData.email)
-                };
-            }
-        }
-    }
+            if(cp){
+
+                const cd =
+                    cp.data || {};
 
 
-    // DEPARTMENT ADMIN
-    if(isDepartmentAdmin(currentAdmin.roleType)){
+                if(
+                    role(
+                        cd.roleType ||
+                        cd.role
+                    ).includes(
+                        "core admin"
+                    )
+                ){
 
-        // FIRST: DIRECT CORE ADMIN MAPPING
-        if(data.coreAdminId || data.coreAdminUID){
-            const coreIdentifier = clean(data.coreAdminId || data.coreAdminUID);
-            const coreProfile = await getUserProfileByIdOrUid(coreIdentifier);
-
-            if(coreProfile){
-                const coreData = coreProfile.data || {};
-                currentCoreAdmin = {
-                    uid: coreProfile.id,
-                    name: clean(coreData.name),
-                    roleType: clean(coreData.roleType || coreData.role || "Core Admin"),
-                    department: clean(coreData.department),
-                    reportsTo: clean(coreData.reportsTo),
-                    email: clean(coreData.email)
-                };
-            }
-        }
-
-        // FALLBACK: REPORTS TO
-        if(!currentCoreAdmin && currentAdmin.reportsTo){
-            const parentProfile = await getUserProfileByIdOrUid(currentAdmin.reportsTo);
-
-            if(parentProfile){
-                const parentData = parentProfile.data || {};
-                const parentRole = clean(parentData.roleType || parentData.role);
-
-                if(isCoreAdmin(parentRole)){
                     currentCoreAdmin = {
-                        uid: parentProfile.id,
-                        name: clean(parentData.name),
-                        roleType: parentRole,
-                        department: clean(parentData.department),
-                        reportsTo: clean(parentData.reportsTo),
-                        email: clean(parentData.email)
+
+                        uid:cp.id,
+
+                        name:
+                            clean(cd.name) ||
+                            "Core Admin",
+
+                        roleType:
+                            clean(
+                                cd.roleType ||
+                                cd.role
+                            ) ||
+                            "Core Admin",
+
+                        department:
+                            clean(cd.department),
+
+                        reportsTo:
+                            clean(cd.reportsTo),
+
+                        email:
+                            clean(cd.email)
+
                     };
+
                 }
+
             }
+
         }
 
-        // FIND SUPER ADMIN FROM CORE ADMIN
-        if(currentCoreAdmin && currentCoreAdmin.reportsTo && !currentSuperAdmin){
-            const superProfile = await getUserProfileByIdOrUid(currentCoreAdmin.reportsTo);
 
-            if(superProfile){
-                const superData = superProfile.data || {};
+        /* =================================================
+           FIND SUPER ADMIN
+        ================================================= */
+
+        if(
+            currentCoreAdmin?.reportsTo
+        ){
+
+            const sp =
+                await byId(
+                    currentCoreAdmin.reportsTo
+                );
+
+
+            if(sp){
+
+                const sd =
+                    sp.data || {};
+
+
                 currentSuperAdmin = {
-                    uid: superProfile.id,
-                    name: clean(superData.name),
-                    roleType: clean(superData.roleType || superData.role || "Super Admin"),
-                    department: clean(superData.department),
-                    reportsTo: clean(superData.reportsTo),
-                    email: clean(superData.email)
+
+                    uid:sp.id,
+
+                    name:
+                        clean(sd.name) ||
+                        "Super Admin",
+
+                    roleType:
+                        clean(
+                            sd.roleType ||
+                            sd.role
+                        ) ||
+                        "Super Admin",
+
+                    department:
+                        clean(sd.department),
+
+                    reportsTo:
+                        clean(sd.reportsTo),
+
+                    email:
+                        clean(sd.email)
+
                 };
+
             }
+
         }
 
-        // DIRECT SUPER ADMIN MAPPING
-        if(!currentSuperAdmin && (data.superAdminId || data.superAdminUID)){
-            const superIdentifier = clean(data.superAdminId || data.superAdminUID);
-            const superProfile = await getUserProfileByIdOrUid(superIdentifier);
-
-            if(superProfile){
-                const superData = superProfile.data || {};
-                currentSuperAdmin = {
-                    uid: superProfile.id,
-                    name: clean(superData.name),
-                    roleType: clean(superData.roleType || superData.role || "Super Admin"),
-                    department: clean(superData.department),
-                    reportsTo: clean(superData.reportsTo),
-                    email: clean(superData.email)
-                };
-            }
-        }
     }
 
 
-    // SHOW CURRENT ADMIN INFORMATION
-    function setElementValue(element, value){
-        if(!element) return;
-        const text = clean(value);
-        if("value" in element){
-            element.value = text;
-        }else{
-            element.textContent = text || "—";
-        }
+    /* =====================================================
+       DISPLAY ADMIN INFORMATION
+    ===================================================== */
+
+    $("adminName").textContent =
+        currentAdmin.name;
+
+    $("adminId").textContent =
+        currentAdmin.uid;
+
+    $("role").textContent =
+        currentAdmin.roleType;
+
+    $("department").textContent =
+        currentAdmin.department ||
+        "Not Set";
+
+    $("reportsTo").textContent =
+        currentAdmin.reportsTo ||
+        "Not Set";
+
+
+    /* =====================================================
+       DEPARTMENT ADMIN CHECK
+    ===================================================== */
+
+    if(
+        !isDept(
+            currentAdmin.roleType
+        )
+    ){
+
+        $("saveButton").disabled = true;
+
+        $("saveButton").textContent =
+            "Department Admin Only";
+
+        message(
+            "This page is for Department Admin only.",
+            "error"
+        );
+
+        return false;
+
     }
 
-    setElementValue(adminNameEl, currentAdmin.name);
-    setElementValue(adminIdEl, currentAdmin.uid);
-    setElementValue(roleTypeEl, currentAdmin.roleType);
-    setElementValue(departmentEl, currentAdmin.department);
-    setElementValue(reportsToEl, currentAdmin.reportsTo);
+
+    $("saveButton").disabled = false;
+
+    $("saveButton").textContent =
+        "Save Sale";
+
+    return true;
+
 }
 
 
@@ -710,59 +852,293 @@ async function loadAdminHierarchy(user){
 
 async function loadMySales(){
 
-    if(!currentUser){
-        salesListEl.innerHTML = "<p>No user logged in.</p>";
-        return;
-    }
+    if(!currentUser) return;
+
+
+    $("salesList").innerHTML =
+        '<div class="loading">Loading sales...</div>';
+
 
     try{
-        const salesQuery = query(
-            collection(db, "sales"),
-            where("adminUid", "==", currentUser.uid)
-        );
 
-        const snapshot = await getDocs(salesQuery);
+        const q =
+            query(
+                collection(db,"sales"),
+                where(
+                    "adminId",
+                    "==",
+                    currentUser.uid
+                )
+            );
 
-        if(snapshot.empty){
-            salesListEl.innerHTML = "<p>No sales recorded yet.</p>";
+
+        const snap =
+            await getDocs(q);
+
+
+        if(snap.empty){
+
+            $("salesList").innerHTML =
+                '<div class="loading">No sales recorded yet.</div>';
+
             return;
+
         }
 
-        const sales = [];
 
-        snapshot.forEach(function(docSnap){
-            sales.push({
-                id: docSnap.id,
-                ...docSnap.data()
-            });
+        const sales =
+            snap.docs.map(
+                d => ({
+                    id:d.id,
+                    ...d.data()
+                })
+            );
+
+
+        /* Sort latest first */
+
+        sales.sort((a,b) => {
+
+            const at =
+                a.createdAt?.toMillis
+                    ? a.createdAt.toMillis()
+                    : 0;
+
+            const bt =
+                b.createdAt?.toMillis
+                    ? b.createdAt.toMillis()
+                    : 0;
+
+            return bt - at;
+
         });
 
-        sales.sort(function(a, b){
-            const aTime = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
-            const bTime = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
-            return bTime - aTime;
-        });
 
-        salesListEl.innerHTML = sales.map(function(sale){
+        $("salesList").innerHTML =
+            sales.map(s => {
 
-            const deptComm = Number(sale.departmentAdminCommission || 0).toFixed(2);
-            const coreComm = Number(sale.coreAdminCommission || 0).toFixed(2);
-            const superComm = Number(sale.superAdminCommission || 0).toFixed(2);
+                const c =
+                    s.commissionAmount || {};
 
-            return `
-            <div class="sale-row">
-                <strong>${escapeHtml(sale.itemName || "")}</strong>
-                <div>Customer: ${escapeHtml(sale.customerName || "")}</div>
-                <div>Mobile: ${escapeHtml(sale.customerMobile || "—")}</div>
-                <div>Quantity: ${Number(sale.quantity || 0)}</div>
-                <div>Rate: ₹${Number(sale.rate || 0).toFixed(2)}</div>
-                <div>Amount: ₹${Number(sale.amount || 0).toFixed(2)}</div>
-                <div>Department: ${escapeHtml(sale.department || "—")}</div>
 
-                <div class="commission-box">
-                    <div>Dept Admin Commission: ₹${deptComm}</div>
-                    <div>Core Admin Commission: ₹${coreComm}</div>
-                    <div>Super Admin Commission: ₹${superComm}</div>
+                return `
+
+                <div class="sale">
+
+                    <strong>
+                        ${escapeHtml(
+                            s.itemName || ""
+                        )}
+                    </strong>
+
+                    <br>
+
+                    Customer:
+                    ${escapeHtml(
+                        s.customerName || ""
+                    )}
+
+                    <br>
+
+                    Mobile:
+                    ${escapeHtml(
+                        s.customerMobile || ""
+                    )}
+
+                    <br>
+
+                    Quantity:
+                    ${Number(
+                        s.quantity || 0
+                    )}
+                    ×
+                    ₹${Number(
+                        s.rate || 0
+                    ).toFixed(2)}
+
+                    <br>
+
+                    <strong>
+                        Amount:
+                        ₹${Number(
+                            s.amount ||
+                            s.totalSale ||
+                            0
+                        ).toFixed(2)}
+                    </strong>
+
+
+                    <div class="comm">
+
+                        Department 20%:
+                        ₹${Number(
+                            c.departmentAdmin ??
+                            s.departmentAdminCommission ??
+                            0
+                        ).toFixed(2)}
+
+                        <br>
+
+                        Core 10%:
+                        ₹${Number(
+                            c.coreAdmin ??
+                            s.coreAdminCommission ??
+                            0
+                        ).toFixed(2)}
+
+                        <br>
+
+                        Super 5%:
+                        ₹${Number(
+                            c.superAdmin ??
+                            s.superAdminCommission ??
+                            0
+                        ).toFixed(2)}
+
+                    </div>
+
                 </div>
-            </div>
-    
+
+                `;
+
+            }).join("");
+
+
+    }catch(e){
+
+        console.error(
+            "Load sales:",
+            e
+        );
+
+
+        $("salesList").innerHTML =
+
+            '<div class="loading">' +
+            'Unable to load sales: ' +
+            escapeHtml(e.message) +
+            '</div>';
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE SALE
+========================================================= */
+
+async function saveSale(){
+
+    /* Login check */
+
+    if(
+        !currentUser ||
+        !currentAdmin
+    ){
+
+        message(
+            "Login session is not ready. Please login again.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* Department Admin check */
+
+    if(
+        !isDept(
+            currentAdmin.roleType
+        )
+    ){
+
+        message(
+            "Only Department Admin can save a sale.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       GET FORM VALUES
+    ===================================================== */
+
+    const customerName =
+        clean(
+            $("customerName").value
+        );
+
+    const customerMobile =
+        clean(
+            $("customerMobile").value
+        );
+
+    const itemName =
+        clean(
+            $("itemName").value
+        );
+
+    const quantity =
+        Number(
+            $("quantity").value
+        );
+
+    const rate =
+        Number(
+            $("rate").value
+        );
+
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
+    if(!customerName)
+
+        return message(
+            "Enter customer name.",
+            "error"
+        );
+
+
+    if(
+        !/^\d{10}$/.test(
+            customerMobile
+        )
+    )
+
+        return message(
+            "Enter valid 10 digit customer mobile number.",
+            "error"
+        );
+
+
+    if(!itemName)
+
+        return message(
+            "Enter item name.",
+            "error"
+        );
+
+
+    if(
+        !Number.isInteger(quantity) ||
+        quantity <= 0
+    )
+
+        return message(
+            "Enter valid quantity.",
+            "error"
+        );
+
+
+    if(
+        !Number.isFinite(rate) ||
+        rate <= 0
+    )
