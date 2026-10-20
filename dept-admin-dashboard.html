@@ -1,310 +1,1448 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dept Admin | Kali Life Ecosystem</title>
-    <script src="auth.js"></script>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f7f6;
-            overflow-x: hidden;
-        }
-        /* Premium Sidebar */
-        #sidebar {
-            background: linear-gradient(180deg, #0f5132 0%, #198754 100%);
-            min-height: 100vh;
-            color: #fff;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        .brand-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #ffc107;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        .nav-link {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin: 5px 15px;
-            transition: 0.3s;
-        }
-        .nav-link:hover, .nav-link.active {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            transform: translateX(5px);
-        }
-        /* Premium Cards */
-        .info-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            background: #fff;
-        }
-        .info-card:hover {
-            transform: translateY(-5px);
-        }
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        /* Dynamic Table Customization */
-        .table-custom {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-        thead {
-            background-color: #e9ecef;
-        }
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#064e3b">
+
+<title>Department Admin Dashboard - KALI LIFE</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Segoe UI","Noto Sans Bengali",Arial,sans-serif;
+    background:#f3f7f5;
+    color:#0f172a;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:#064e3b;
+    color:#fff;
+    padding:14px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.12);
+}
+
+.brand h1{
+    font-size:18px;
+}
+
+.brand p{
+    font-size:11px;
+    opacity:.75;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.header-actions button{
+    border:0;
+    border-radius:9px;
+    padding:9px 11px;
+    color:#fff;
+    font-weight:700;
+}
+
+.refresh-btn{
+    background:#047857;
+}
+
+.logout-btn{
+    background:#dc2626;
+}
+
+.wrap{
+    max-width:1150px;
+    margin:auto;
+    padding:18px;
+}
+
+.loading,
+.error{
+    max-width:620px;
+    margin:50px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+.error{
+    color:#991b1b;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* PROFILE */
+
+.profile{
+    background:#fff;
+    border-radius:16px;
+    padding:18px;
+    display:flex;
+    gap:15px;
+    align-items:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
+    margin-bottom:16px;
+}
+
+.avatar{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#16a34a;
+    color:#fff;
+    font-size:22px;
+    font-weight:800;
+    flex:none;
+}
+
+.profile-info{
+    flex:1;
+}
+
+.profile-info h2{
+    font-size:19px;
+}
+
+.profile-info p{
+    font-size:12px;
+    color:#64748b;
+    margin-top:3px;
+}
+
+.badge{
+    padding:7px 10px;
+    border-radius:20px;
+    background:#dcfce7;
+    color:#166534;
+    font-size:11px;
+    font-weight:800;
+}
+
+/* STATISTICS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.stat{
+    background:#fff;
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 7px 22px rgba(0,0,0,.06);
+}
+
+.stat small{
+    color:#64748b;
+    font-weight:700;
+}
+
+.stat strong{
+    display:block;
+    font-size:25px;
+    margin-top:5px;
+}
+
+/* MODULES */
+
+.modules{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.module{
+    background:#fff;
+    border:0;
+    border-radius:14px;
+    padding:17px;
+    text-align:left;
+    box-shadow:0 7px 22px rgba(0,0,0,.06);
+    transition:.15s;
+}
+
+.module:hover{
+    transform:translateY(-2px);
+}
+
+.module b{
+    display:block;
+    margin-top:8px;
+}
+
+.module span{
+    display:block;
+    color:#64748b;
+    font-size:12px;
+    margin-top:3px;
+}
+
+/* CARD */
+
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+    margin-bottom:16px;
+}
+
+.card h2{
+    font-size:19px;
+    color:#065f46;
+    margin-bottom:12px;
+}
+
+.muted{
+    font-size:12px;
+    color:#64748b;
+    margin-top:4px;
+}
+
+/* ORDER FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:12px;
+}
+
+.field label{
+    display:block;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:6px;
+    color:#475569;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    background:#fff;
+}
+
+.total{
+    background:#ecfdf5;
+    border:1px solid #bbf7d0;
+    border-radius:10px;
+    padding:12px;
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+    font-weight:800;
+}
+
+.primary{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border:0;
+    border-radius:10px;
+    background:#047857;
+    color:#fff;
+    font-weight:800;
+}
+
+.primary:hover{
+    background:#065f46;
+}
+
+.primary:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.msg{
+    display:none;
+    margin-top:10px;
+    padding:10px;
+    border-radius:9px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.msg.show{
+    display:block;
+}
+
+.ok{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.bad{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+/* ORDERS */
+
+.order{
+    border:1px solid #e2e8f0;
+    border-radius:11px;
+    padding:12px;
+    margin-top:9px;
+}
+
+.order-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:15px;
+    background:#fef3c7;
+    color:#92400e;
+    font-size:11px;
+    font-weight:800;
+}
+
+/* INFORMATION */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.info-box{
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    padding:15px;
+    background:#f8fafc;
+}
+
+.info-box h3{
+    font-size:14px;
+    color:#065f46;
+    margin-bottom:6px;
+}
+
+.info-box p{
+    font-size:12px;
+    color:#64748b;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .modules{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:480px){
+
+    .wrap{
+        padding:12px;
+    }
+
+    .modules{
+        grid-template-columns:1fr;
+    }
+
+    .profile{
+        align-items:flex-start;
+    }
+
+    .badge{
+        display:none;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .header-actions button{
+        flex:1;
+    }
+}
+</style>
 </head>
+
 <body>
-<script>
-    checkLogin();
-    checkRole("Departmental Admin");
-</script>
-    <div class="container-fluid p-0">
-        <div class="d-flex">
-            <!-- Sidebar -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block collapse">
-                <div class="p-4 text-center border-bottom border-light border-opacity-25">
-                    <div class="brand-logo mb-2"><i class="fas fa-leaf"></i> Kali Life</div>
-                    <span class="badge bg-warning text-dark rounded-pill px-3 py-1">Department Admin</span>
-                </div>
-                <div class="mt-4">
-                <ul class="nav flex-column">
 
-    <!-- Department Admin: Dashboard Overview -->
-    <li class="nav-item">
-        <a class="nav-link active" href="dept-admin-dashboard.html">
-            <i class="fas fa-chart-pie me-2"></i> ওভারভিউ
-        </a>
-    </li>
+<!-- LOADING -->
 
-    <!-- Department Admin: Production & Stock -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-boxes me-2"></i> প্রোডাকশন ও স্টক
-        </a>
-    </li>
+<div id="loading" class="loading">
+    <h3>Department Admin Dashboard</h3>
+    <p style="margin-top:8px">
+        আপনার Department Admin account যাচাই হচ্ছে...
+    </p>
+</div>
 
-<!-- Department Admin: Machine Monitoring -->
-<li class="nav-item">
-    <a class="nav-link" href="#">
-        <i class="fas fa-cogs me-2"></i> Machine Monitoring
-    </a>
-</li>
+<!-- ERROR -->
 
-<!-- Department Admin: Sales & Commission -->
-<li class="nav-item">
-    <a class="nav-link" href="sales_tracking_commission.html">
-        <i class="fas fa-chart-line me-2"></i> Sales & Commission
-    </a>
-</li>
+<div id="errorBox" class="error hidden">
 
-    <!-- Logout -->
-    <li class="nav-item mt-5">
-        <a class="nav-link text-white bg-danger bg-opacity-75" href="login.html">
-            <i class="fas fa-power-off me-2"></i> লগআউট
-        </a>
-    </li>
+    <h2>Access Denied</h2>
 
-                </ul>    
-                </div>
-            </nav>
+    <p id="errorText" style="margin-top:8px"></p>
 
-            <!-- Main Workspace -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 p-4">
-                <!-- Top Navbar -->
-                <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-4 shadow-sm">
-                    <h4 class="mb-0 text-success fw-bold">ড্যাশবোর্ড কন্ট্রোল প্যানেল</h4>
-                    <div class="d-flex align-items-center">
-                        <div class="position-relative me-4">
-                            <i class="fas fa-bell fs-5 text-muted" style="cursor: pointer;"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">৩</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <img src="https://ui-avatars.com/api/?name=Admin&background=198754&color=fff" class="rounded-circle me-2" width="40">
-                            <span class="fw-semibold">অ্যাডমিন</span>
-                        </div>
-                    </div>
-                </div>
+    <button
+        class="primary"
+        style="max-width:260px"
+        onclick="location.href='login.html'">
+        Login
+    </button>
 
-                <!-- KPI Cards -->
-                <div class="row g-4 mb-4">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="info-card p-4 d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="text-muted mb-1 fs-6">নতুন অর্ডার</p>
-                                <h3 class="fw-bold mb-0 text-dark">৪২</h3>
-                            </div>
-                            <div class="icon-box bg-primary bg-opacity-10 text-primary">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="info-card p-4 d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="text-muted mb-1 fs-6">প্রোডাকশন স্টক</p>
-                                <h3 class="fw-bold mb-0 text-dark">১২০ কেজি</h3>
-                            </div>
-                            <div class="icon-box bg-success bg-opacity-10 text-success">
-                                <i class="fas fa-box-open"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="info-card p-4 d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="text-muted mb-1 fs-6">মেশিন স্ট্যাটাস</p>
-                                <h3 class="fw-bold mb-0 text-success">সক্রিয়</h3>
-                            </div>
-                            <div class="icon-box bg-info bg-opacity-10 text-info">
-                                <i class="fas fa-cogs"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="info-card p-4 d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="text-muted mb-1 fs-6">পেন্ডিং টাস্ক</p>
-                                <h3 class="fw-bold mb-0 text-danger">০৫</h3>
-                            </div>
-                            <div class="icon-box bg-danger bg-opacity-10 text-danger">
-                                <i class="fas fa-exclamation-circle"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+</div>
 
-                <!-- Chart and Table Section -->
-                <div class="row g-4">
-                    <!-- Dynamic Chart -->
-                    <div class="col-lg-6">
-                        <div class="card border-0 shadow-sm rounded-4 h-100">
-                            <div class="card-body p-4">
-                                <h5 class="fw-bold text-secondary mb-4">সাপ্তাহিক প্রোডাকশন গ্রাফ</h5>
-                                <canvas id="productionChart" height="200"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dynamic Table via JS -->
-                    <div class="col-lg-6">
-                        <div class="card border-0 shadow-sm rounded-4 h-100">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="fw-bold text-secondary mb-0">চলমান কার্যাবলী (Live)</h5>
-                                    <button class="btn btn-sm btn-outline-success">সব দেখুন</button>
-                                </div>
-                                <div class="table-responsive table-custom">
-                                    <table class="table table-hover align-middle mb-0 text-center">
-                                        <thead>
-                                            <tr>
-                                                <th>প্রোডাক্ট/টাস্ক</th>
-                                                <th>পরিমাণ</th>
-                                                <th>স্ট্যাটাস</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="dynamicTableBody">
-                                            <!-- Data will be injected here via JavaScript -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+<!-- MAIN APP -->
+
+<div id="app" class="hidden">
+
+<header class="header">
+
+    <div class="brand">
+
+        <h1>🌿 KALI LIFE ECOSYSTEM</h1>
+
+        <p>
+            DEPARTMENT ADMIN CONTROL PANEL
+        </p>
+
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js CDN for Premium Graphs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <script>
-        /* ==========================================
-   DEPARTMENT ADMIN ROLE & WORK ACCESS
-   Department Admin will see only assigned
-   department work and dashboard data.
-========================================== */
-        // 1. Dynamic Chart Data (Chart.js)
-        const ctx = document.getElementById('productionChart').getContext('2d');
-        const productionChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['সোম', 'মঙ্গল', 'বুধ', 'বৃহঃ', 'শুক্র', 'শনি', 'রবি'],
-                datasets: [{
-                    label: 'প্রোডাকশন (কেজি)',
-                    data: [15, 22, 18, 30, 25, 35, 40],
-                    borderColor: '#198754',
-                    backgroundColor: 'rgba(25, 135, 84, 0.2)',
-                    borderWidth: 3,
-                    tension: 0.4, // smooth curve
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true }
-                }
+    <div class="header-actions">
+
+        <button
+            id="refreshBtn"
+            class="refresh-btn">
+            🔄 Refresh
+        </button>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="wrap">
+
+
+<!-- PROFILE -->
+
+<section class="profile">
+
+    <div
+        id="avatar"
+        class="avatar">
+        A
+    </div>
+
+    <div class="profile-info">
+
+        <h2 id="adminName">
+            —
+        </h2>
+
+        <p>
+            Department:
+            <b id="department">—</b>
+        </p>
+
+        <p>
+            Reports To:
+            <b id="reportsTo">—</b>
+        </p>
+
+        <p>
+            Admin UID:
+            <span id="uid">—</span>
+        </p>
+
+    </div>
+
+    <div class="badge">
+        ACTIVE
+    </div>
+
+</section>
+
+
+<!-- STATISTICS -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <small>
+            MY ORDERS
+        </small>
+
+        <strong id="orderCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            MY SALES
+        </small>
+
+        <strong id="salesCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            MY COMMISSION
+        </small>
+
+        <strong id="commission">
+            ₹0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            ORDER PENDING
+        </small>
+
+        <strong id="pendingCount">
+            0
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- MODULES -->
+
+<section class="modules">
+
+
+<button
+    class="module"
+    onclick="goOrder()">
+
+    <div style="font-size:24px">
+        🛒
+    </div>
+
+    <b>
+        নতুন Order
+    </b>
+
+    <span>
+        Company থেকে product order করুন
+    </span>
+
+</button>
+
+
+<button
+    class="module"
+    onclick="goOrders()">
+
+    <div style="font-size:24px">
+        📋
+    </div>
+
+    <b>
+        My Orders
+    </b>
+
+    <span>
+        নিজের order status দেখুন
+    </span>
+
+</button>
+
+
+<button
+    class="module"
+    onclick="openSales()">
+
+    <div style="font-size:24px">
+        💰
+    </div>
+
+    <b>
+        Sales Entry
+    </b>
+
+    <span>
+        Customer sale ও commission tracking
+    </span>
+
+</button>
+
+
+<button
+    class="module"
+    onclick="loadAll()">
+
+    <div style="font-size:24px">
+        🔄
+    </div>
+
+    <b>
+        Refresh Data
+    </b>
+
+    <span>
+        Firestore থেকে live data আনুন
+    </span>
+
+</button>
+
+</section>
+
+
+<!-- PRODUCT ORDER -->
+
+<section
+    id="orderCard"
+    class="card">
+
+    <h2>
+        🛒 Product Order
+    </h2>
+
+    <p
+        class="muted"
+        style="margin-bottom:12px">
+
+        এই order Company/Core Admin-এর কাছে যাবে।
+        Order করার সময় stock কমবে না এবং commission তৈরি হবে না।
+
+    </p>
+
+
+    <div class="form-grid">
+
+
+        <div class="field">
+
+            <label>
+                Product
+            </label>
+
+            <select id="product">
+
+                <option value="">
+                    Product loading...
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Quantity
+            </label>
+
+            <input
+                id="qty"
+                type="number"
+                min="1"
+                step="1"
+                value="1">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Rate
+            </label>
+
+            <input
+                id="rate"
+                type="number"
+                min="0"
+                step="0.01"
+                readonly>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="field"
+        style="margin-top:12px">
+
+        <label>
+            Note
+        </label>
+
+        <input
+            id="note"
+            placeholder="Optional note">
+
+    </div>
+
+
+    <div class="total">
+
+        <span>
+            Estimated Total
+        </span>
+
+        <span id="total">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <button
+        id="placeOrder"
+        class="primary">
+
+        Place Order
+
+    </button>
+
+
+    <div
+        id="msg"
+        class="msg">
+    </div>
+
+</section>
+
+
+<!-- MY ORDERS -->
+
+<section
+    id="ordersCard"
+    class="card">
+
+    <h2>
+        📋 My Orders
+    </h2>
+
+    <div id="orders">
+
+        Loading orders...
+
+    </div>
+
+</section>
+
+
+<!-- DEPARTMENT INFORMATION -->
+
+<section class="card">
+
+    <h2>
+        🏢 Department Information
+    </h2>
+
+    <div class="info-grid">
+
+
+        <div class="info-box">
+
+            <h3>
+                Department
+            </h3>
+
+            <p id="infoDepartment">
+                —
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>
+                Core Admin
+            </h3>
+
+            <p id="infoCore">
+                —
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>
+                System Status
+            </h3>
+
+            <p>
+                Firebase Connected
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    query,
+    where,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+
+    authDomain:
+    "kali-life-ecosystem.firebaseapp.com",
+
+    projectId:
+    "kali-life-ecosystem",
+
+    storageBucket:
+    "kali-life-ecosystem.firebasestorage.app",
+
+    messagingSenderId:
+    "734170546737",
+
+    appId:
+    "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+
+    measurementId:
+    "G-LBEY0W7RX3"
+};
+
+
+/* FIREBASE INITIALIZE */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+/* SHORT FUNCTIONS */
+
+const $ =
+    id => document.getElementById(id);
+
+
+const norm =
+    v =>
+    String(v ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g," ");
+
+
+/* CURRENT DATA */
+
+let currentUser = null;
+
+let currentAdmin = null;
+
+let currentCore = null;
+
+let currentSuper = null;
+
+let products = [];
+
+
+/* ERROR */
+
+function showError(text){
+
+    $("loading")
+    .classList
+    .add("hidden");
+
+    $("app")
+    .classList
+    .add("hidden");
+
+    $("errorBox")
+    .classList
+    .remove("hidden");
+
+    $("errorText")
+    .textContent = text;
+}
+
+
+/* MESSAGE */
+
+function msg(text,ok=false){
+
+    $("msg")
+    .textContent = text;
+
+    $("msg")
+    .className =
+        "msg show " +
+        (ok ? "ok" : "bad");
+}
+
+
+/* MONEY */
+
+function money(value){
+
+    return "₹" +
+        Number(value || 0)
+        .toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
             }
-        });
+        );
+}
 
-        // 2. Dynamic Table Data Rendering (Simulation of API/Database fetch)
-        const activeTasks = [
-            { name: "মিক্সড ভেজিটেবল ড্রাইং", qty: "২০ কেজি", status: "Processing", color: "warning" },
-            { name: "প্যাকেজিং (Kali Dry)", qty: "৫০ প্যাক", status: "Completed", color: "success" },
-            { name: "মেশিন মেইনটেন্যান্স", qty: "-", status: "Pending", color: "danger" },
-            { name: "অর্গানিক সার মিক্সিং", qty: "১০০ কেজি", status: "Processing", color: "warning" }
-        ];
 
-        const tableBody = document.getElementById('dynamicTableBody');
-        let tableHTML = '';
+/* ESCAPE HTML */
 
-        activeTasks.forEach(task => {
-            tableHTML += `
-                <tr>
-                    <td class="text-start fw-medium">${task.name}</td>
-                    <td>${task.qty}</td>
-                    <td><span class="status-badge bg-${task.color} bg-opacity-25 text-${task.color}">${task.status}</span></td>
-                </tr>
-            `;
-        });
+function esc(value){
 
-        tableBody.innerHTML = tableHTML;
-    </script>
-</body>
-                              </html>
-                              
+    return String(value ?? "")
+    .replace(
+        /[&<>"']/g,
+        c => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[c])
+    );
+}
+
+
+/* NAVIGATION */
+
+window.goOrder =
+function(){
+
+    $("orderCard")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+};
+
+
+window.goOrders =
+function(){
+
+    $("ordersCard")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+};
+
+
+window.openSales =
+function(){
+
+    location.href =
+        "sales_tracking_commission.html";
+
+};
+
+
+/* USER PROFILE */
+
+async function profileForUser(u){
+
+    const direct =
+        await getDoc(
+            doc(db,"users",u.uid)
+        );
+
+
+    if(direct.exists()){
+
+        return {
+            id:direct.id,
+            data:direct.data()
+        };
+
+    }
+
+
+    if(u.email){
+
+        const q =
+            await getDocs(
+                query(
+                    collection(db,"users"),
+                    where("email","==",u.email)
+                )
+            );
+
+
+        if(!q.empty){
+
+            return {
+                id:q.docs[0].id,
+                data:q.docs[0].data()
+            };
+
+        }
+
+    }
+
+
+    return null;
+}
+
+
+/* FIND USER */
+
+async function findUser(identifier){
+
+    if(!identifier){
+
+        return null;
+
+    }
+
+
+    const direct =
+        await getDoc(
+            doc(db,"users",identifier)
+        );
+
+
+    if(direct.exists()){
+
+        return {
+            id:direct.id,
+            data:direct.data()
+        };
+
+    }
+
+
+    const q =
+        await getDocs(
+            query(
+                collection(db,"users"),
+                where("uid","==",identifier)
+            )
+        );
+
+
+    if(!q.empty){
+
+        return {
+            id:q.docs[0].id,
+            data:q.docs[0].data()
+        };
+
+    }
+
+
+    return null;
+}
+
+
+/* BUILD ADMIN HIERARCHY */
+
+async function buildHierarchy(){
+
+    const p =
+        await profileForUser(currentUser);
+
+
+    if(!p){
+
+        throw new Error(
+            "Firestore users profile পাওয়া যায়নি।"
+        );
+
+    }
+
+
+    const d =
+        p.data || {};
+
+
+    const role =
+        norm(
+            d.roleType ||
+            d.role ||
+            d.accountRole
+        );
+
+
+    const status =
+        norm(
+            d.status ||
+            d.accountStatus ||
+            ""
+        );
+
+
+    if(
+        ![
+            "department admin",
+            "departmental admin"
+        ].includes(role)
+    ){
+
+        throw new Error(
+            "এই account Department Admin নয়।"
+        );
+
+    }
+
+
+    if(status !== "active"){
+
+        throw new Error(
+            "Department Admin account Active নয়।"
+        );
+
+    }
+
+
+    if(!String(d.department || "").trim()){
+
+        throw new Error(
+            "Department profile-এ department সেট করা নেই।"
+        );
+
+    }
+
+
+    currentAdmin = {
+
+        uid:
+        currentUser.uid,
+
+        name:
+        d.name ||
+        d.fullName ||
+        currentUser.email ||
+        currentUser.uid,
+
+        email:
+        d.email ||
+        currentUser.email ||
+        "",
+
+        department:
+        String(
+            d.department
+        ).trim(),
+
+        reportsTo:
+        String(
+            d.reportsTo || ""
+        ).trim(),
+
+        adminId:
+        d.adminId ||
+        p.id
+
+    };
+
+
+    currentCore = null;
+
+    currentSuper = null;
+
+
+    if(currentAdmin.reportsTo){
+
+        const cp =
+            await findUser(
+                currentAdmin.reportsTo
+            );
+
+
+        if(cp){
+
+            const cd =
+                cp.data || {};
+
+
+            const cr =
+                norm(
+                    cd.roleType ||
+                    cd.role ||
+                    ""
+                );
+
+
+            if(cr === "core admin"){
+
+                currentCore = {
+
+                    uid:
+                    cp.id,
+
+                    name:
+                    cd.name ||
+                    "Core Admin",
+
+                    department:
+                    String(
+                        cd.department || ""
+                    ).trim(),
+
+                    reportsTo:
+                    String(
+                        cd.reportsTo || ""
+                    ).trim()
+
+                };
+
+
+                if(currentCore.reportsTo){
+
+                    const sp =
+                        await findUser(
+                            currentCore.reportsTo
+                        );
+
+
+                    if(sp){
+
+                        const sd =
+                            sp.data || {};
+
+
+                        currentSuper = {
+
+                            uid:
+                            sp.id,
+
+                            name:
+                            sd.name ||
+                            "Super Admin"
+
+                        };
+
+                    }
+
+                }
+
+            }
+
+            else if(
+                cr === "super admin"
+            ){
+
+                currentSuper = {
+
+                    uid:
+                    cp.id,
+
+                    name:
+                    cd.name ||
+                    "Super Admin"
+
+                };
+
+            }
+
+        }
+
+    }
+
+
+    /* DISPLAY PROFILE */
+
+    $("adminName")
+    .textContent =
+        currentAdmin.name;
+
+
+    $("department")
+    .textContent =
+        currentAdmin.department;
+
+
+    $("reportsTo")
+    .textContent =
+        currentCore?.name ||
+        currentAdmin.reportsTo ||
+        "—";
+
+
+    $("uid")
+    .textContent =
+        currentUser.uid;
+
+
+    $("avatar")
+    .textContent =
+        currentAdmin.name
+        .trim()
+        .charAt(0)
+        .toUpperCase() ||
+        "A";
+
+
+    $("infoDepartment")
+    .textContent =
+        currentAdmin.department;
+
+
+    $("infoCore")
+    .textContent =
+        currentCore?.name ||
+        "—";
+
+}
+
+
+/* PRODUCT FUNCTIONS */
+
+function productName(d){
+
+    return (
+        d.itemName ||
+        d.productName ||
+        d.name ||
+        "Unnamed Product"
+    );
+
+}
+
+
+function productPrice(d){
+
+    return Number(
+        d.sellingPrice ??
+        d.salePrice ??
+        d.price ??
+        d.mrp ??
+        0
+    ) || 0;
+
+}
+
+
+function productStock(d){
+
+    return Number(
+        d.stockQuantity ??
+        d.stock ??
+        d.quantity ??
+        0
+    ) || 0;
+
+}
+
+
+/* LOAD PRODUCTS */
+
+async function loadProdu
