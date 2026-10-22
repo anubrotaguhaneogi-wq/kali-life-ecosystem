@@ -3,413 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#064e3b">
+<meta name="theme-color" content="#0f5132">
 
-<title>Department Admin Dashboard - KALI LIFE</title>
+<title>Department Admin Dashboard | KALI LIFE</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 body{
-    font-family:"Segoe UI","Noto Sans Bengali",Arial,sans-serif;
-    background:#f3f7f5;
-    color:#0f172a;
+    margin:0;
+    font-family:'Poppins','Noto Sans Bengali',Arial,sans-serif;
+    background:#f4f7f6;
+    color:#17202a;
+    overflow-x:hidden;
 }
 
-button,input,select{
-    font:inherit;
+#sidebar{
+    background:linear-gradient(180deg,#0f5132,#198754);
+    min-height:100vh;
+    color:#fff;
+    box-shadow:4px 0 18px rgba(0,0,0,.12);
 }
 
-button{
+.brand-logo{
+    font-size:1.35rem;
+    font-weight:800;
+    color:#ffc107;
+}
+
+.brand-sub{
+    font-size:11px;
+    opacity:.8;
+}
+
+.nav-link{
+    color:rgba(255,255,255,.86);
+    font-weight:600;
+    padding:12px 18px;
+    border-radius:9px;
+    margin:4px 12px;
     cursor:pointer;
 }
 
-.header{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:#064e3b;
+.nav-link:hover,
+.nav-link.active{
+    background:rgba(255,255,255,.18);
     color:#fff;
-    padding:14px 16px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    box-shadow:0 4px 16px rgba(0,0,0,.12);
+    transform:translateX(3px);
 }
 
-.brand h1{
-    font-size:18px;
-}
-
-.brand p{
-    font-size:11px;
-    opacity:.75;
-}
-
-.header-actions{
-    display:flex;
-    gap:8px;
-}
-
-.header-actions button{
+.info-card,
+.panel{
     border:0;
-    border-radius:9px;
-    padding:9px 11px;
-    color:#fff;
+    border-radius:16px;
+    background:#fff;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.info-card{
+    transition:.2s;
+}
+
+.info-card:hover{
+    transform:translateY(-3px);
+}
+
+.icon-box{
+    width:52px;
+    height:52px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.35rem;
+}
+
+.small-label{
+    font-size:13px;
+    color:#6c757d;
+}
+
+.value{
+    font-size:28px;
+    font-weight:800;
+}
+
+.panel-title{
+    font-weight:800;
+    color:#35615a;
+}
+
+.table-custom{
+    overflow:hidden;
+    border-radius:12px;
+}
+
+.status-badge{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
     font-weight:700;
 }
 
-.refresh-btn{
-    background:#047857;
+.form-control,
+.form-select{
+    border-radius:10px;
+    padding:11px;
 }
 
-.logout-btn{
-    background:#dc2626;
+.btn-main{
+    background:#198754;
+    color:#fff;
+    border:0;
+    border-radius:10px;
+    padding:11px 18px;
+    font-weight:700;
 }
 
-.wrap{
-    max-width:1150px;
-    margin:auto;
-    padding:18px;
-}
-
-.loading,
-.error{
-    max-width:620px;
-    margin:50px auto;
-    background:#fff;
-    padding:25px;
-    border-radius:16px;
-    text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,.08);
-}
-
-.error{
-    color:#991b1b;
+.loading-box{
+    max-width:600px;
+    margin:80px auto;
 }
 
 .hidden{
     display:none!important;
 }
 
-/* PROFILE */
-
-.profile{
-    background:#fff;
-    border-radius:16px;
-    padding:18px;
-    display:flex;
-    gap:15px;
-    align-items:center;
-    box-shadow:0 8px 25px rgba(0,0,0,.07);
-    margin-bottom:16px;
-}
-
-.avatar{
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#16a34a;
-    color:#fff;
-    font-size:22px;
-    font-weight:800;
-    flex:none;
-}
-
-.profile-info{
-    flex:1;
-}
-
-.profile-info h2{
-    font-size:19px;
-}
-
-.profile-info p{
-    font-size:12px;
-    color:#64748b;
-    margin-top:3px;
-}
-
-.badge{
-    padding:7px 10px;
-    border-radius:20px;
-    background:#dcfce7;
-    color:#166534;
-    font-size:11px;
-    font-weight:800;
-}
-
-/* STATISTICS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin-bottom:16px;
-}
-
-.stat{
-    background:#fff;
-    border-radius:14px;
-    padding:16px;
-    box-shadow:0 7px 22px rgba(0,0,0,.06);
-}
-
-.stat small{
-    color:#64748b;
-    font-weight:700;
-}
-
-.stat strong{
-    display:block;
-    font-size:25px;
-    margin-top:5px;
-}
-
-/* MODULES */
-
-.modules{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin-bottom:16px;
-}
-
-.module{
-    background:#fff;
-    border:0;
-    border-radius:14px;
-    padding:17px;
-    text-align:left;
-    box-shadow:0 7px 22px rgba(0,0,0,.06);
-    transition:.15s;
-}
-
-.module:hover{
-    transform:translateY(-2px);
-}
-
-.module b{
-    display:block;
-    margin-top:8px;
-}
-
-.module span{
-    display:block;
-    color:#64748b;
-    font-size:12px;
-    margin-top:3px;
-}
-
-/* CARD */
-
-.card{
-    background:#fff;
-    border-radius:16px;
-    padding:18px;
-    box-shadow:0 8px 25px rgba(0,0,0,.06);
-    margin-bottom:16px;
-}
-
-.card h2{
-    font-size:19px;
-    color:#065f46;
-    margin-bottom:12px;
-}
-
-.muted{
-    font-size:12px;
-    color:#64748b;
-    margin-top:4px;
-}
-
-/* ORDER FORM */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr;
-    gap:12px;
-}
-
-.field label{
-    display:block;
-    font-size:12px;
-    font-weight:800;
-    margin-bottom:6px;
-    color:#475569;
-}
-
-.field input,
-.field select{
-    width:100%;
-    padding:11px;
-    border:1px solid #cbd5e1;
-    border-radius:9px;
-    background:#fff;
-}
-
-.total{
-    background:#ecfdf5;
-    border:1px solid #bbf7d0;
-    border-radius:10px;
-    padding:12px;
-    margin-top:12px;
-    display:flex;
-    justify-content:space-between;
-    font-weight:800;
-}
-
-.primary{
-    width:100%;
-    margin-top:12px;
-    padding:13px;
-    border:0;
-    border-radius:10px;
-    background:#047857;
-    color:#fff;
-    font-weight:800;
-}
-
-.primary:hover{
-    background:#065f46;
-}
-
-.primary:disabled{
-    opacity:.55;
-    cursor:not-allowed;
-}
-
-.msg{
-    display:none;
-    margin-top:10px;
-    padding:10px;
-    border-radius:9px;
-    font-size:13px;
-    font-weight:700;
-}
-
-.msg.show{
-    display:block;
-}
-
-.ok{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.bad{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-/* ORDERS */
-
-.order{
-    border:1px solid #e2e8f0;
-    border-radius:11px;
-    padding:12px;
-    margin-top:9px;
-}
-
-.order-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-}
-
-.status{
-    padding:5px 8px;
-    border-radius:15px;
-    background:#fef3c7;
-    color:#92400e;
-    font-size:11px;
-    font-weight:800;
-}
-
-/* INFORMATION */
-
-.info-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.info-box{
-    border:1px solid #e2e8f0;
+.order-row{
+    border:1px solid #e6ece9;
     border-radius:12px;
-    padding:15px;
-    background:#f8fafc;
+    padding:13px;
+    margin-bottom:9px;
 }
 
-.info-box h3{
-    font-size:14px;
-    color:#065f46;
-    margin-bottom:6px;
+.toast-msg{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:9999;
+    max-width:380px;
+    display:none;
 }
 
-.info-box p{
+.toast-msg.show{
+    display:block;
+}
+
+.machine-box{
+    border:1px dashed #ced8d2;
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+}
+
+.section-view{
+    display:none;
+}
+
+.section-view.active{
+    display:block;
+}
+
+.error-detail{
+    font-size:13px;
+    text-align:left;
+    background:#fff5f5;
+    border:1px solid #f1c1c1;
+    border-radius:10px;
+    padding:12px;
+    margin-top:15px;
+    word-break:break-word;
+}
+
+#connectionStatus{
     font-size:12px;
-    color:#64748b;
 }
 
-/* RESPONSIVE */
+@media(max-width:767px){
 
-@media(max-width:800px){
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
+    #sidebar{
+        min-height:auto;
     }
 
-    .modules{
-        grid-template-columns:repeat(2,1fr);
+    .value{
+        font-size:23px;
     }
 
-    .form-grid{
-        grid-template-columns:1fr;
+    .main-area{
+        padding:14px!important;
     }
 
-    .info-grid{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:480px){
-
-    .wrap{
-        padding:12px;
-    }
-
-    .modules{
-        grid-template-columns:1fr;
-    }
-
-    .profile{
-        align-items:flex-start;
-    }
-
-    .badge{
-        display:none;
-    }
-
-    .header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .header-actions{
-        width:100%;
-    }
-
-    .header-actions button{
-        flex:1;
+    .topbar h4{
+        font-size:17px;
     }
 }
 </style>
@@ -417,1032 +208,604 @@ button{
 
 <body>
 
-<!-- LOADING -->
+<!-- =========================================================
+     DEPARTMENT ADMIN DASHBOARD
+     KALI LIFE ECOSYSTEM
+     Firebase verification + Firestore data loading
+     ========================================================= -->
 
-<div id="loading" class="loading">
-    <h3>Department Admin Dashboard</h3>
-    <p style="margin-top:8px">
-        আপনার Department Admin account যাচাই হচ্ছে...
+<!-- LOADING -->
+<div id="loading"
+     class="loading-box text-center bg-white rounded-4 shadow-sm p-4">
+
+    <div class="spinner-border text-success mb-3"></div>
+
+    <h5 id="loadingTitle">
+        Department Admin account যাচাই হচ্ছে...
+    </h5>
+
+    <p id="loadingText"
+       class="text-muted mb-0">
+        Firebase account ও Department profile যাচাই করা হচ্ছে।
     </p>
+
+    <div id="connectionStatus"
+         class="text-muted mt-3">
+        Firebase connection অপেক্ষা করছে...
+    </div>
 </div>
+
 
 <!-- ERROR -->
+<div id="errorBox"
+     class="loading-box text-center bg-white rounded-4 shadow-sm p-4 hidden">
 
-<div id="errorBox" class="error hidden">
-
-    <h2>Access Denied</h2>
-
-    <p id="errorText" style="margin-top:8px"></p>
-
-    <button
-        class="primary"
-        style="max-width:260px"
-        onclick="location.href='login.html'">
-        Login
-    </button>
-
-</div>
-
-<!-- MAIN APP -->
-
-<div id="app" class="hidden">
-
-<header class="header">
-
-    <div class="brand">
-
-        <h1>🌿 KALI LIFE ECOSYSTEM</h1>
-
-        <p>
-            DEPARTMENT ADMIN CONTROL PANEL
-        </p>
-
+    <div class="text-danger fs-1 mb-2">
+        <i class="fa-solid fa-circle-exclamation"></i>
     </div>
 
-    <div class="header-actions">
+    <h4>Department Admin Access সমস্যা</h4>
 
-        <button
-            id="refreshBtn"
-            class="refresh-btn">
-            🔄 Refresh
-        </button>
-
-        <button
-            id="logoutBtn"
-            class="logout-btn">
-            🚪 Logout
-        </button>
-
-    </div>
-
-</header>
-
-
-<main class="wrap">
-
-
-<!-- PROFILE -->
-
-<section class="profile">
-
-    <div
-        id="avatar"
-        class="avatar">
-        A
-    </div>
-
-    <div class="profile-info">
-
-        <h2 id="adminName">
-            —
-        </h2>
-
-        <p>
-            Department:
-            <b id="department">—</b>
-        </p>
-
-        <p>
-            Reports To:
-            <b id="reportsTo">—</b>
-        </p>
-
-        <p>
-            Admin UID:
-            <span id="uid">—</span>
-        </p>
-
-    </div>
-
-    <div class="badge">
-        ACTIVE
-    </div>
-
-</section>
-
-
-<!-- STATISTICS -->
-
-<section class="stats">
-
-    <div class="stat">
-
-        <small>
-            MY ORDERS
-        </small>
-
-        <strong id="orderCount">
-            0
-        </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-        <small>
-            MY SALES
-        </small>
-
-        <strong id="salesCount">
-            0
-        </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-        <small>
-            MY COMMISSION
-        </small>
-
-        <strong id="commission">
-            ₹0
-        </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-        <small>
-            ORDER PENDING
-        </small>
-
-        <strong id="pendingCount">
-            0
-        </strong>
-
-    </div>
-
-</section>
-
-
-<!-- MODULES -->
-
-<section class="modules">
-
-
-<button
-    class="module"
-    onclick="goOrder()">
-
-    <div style="font-size:24px">
-        🛒
-    </div>
-
-    <b>
-        নতুন Order
-    </b>
-
-    <span>
-        Company থেকে product order করুন
-    </span>
-
-</button>
-
-
-<button
-    class="module"
-    onclick="goOrders()">
-
-    <div style="font-size:24px">
-        📋
-    </div>
-
-    <b>
-        My Orders
-    </b>
-
-    <span>
-        নিজের order status দেখুন
-    </span>
-
-</button>
-
-
-<button
-    class="module"
-    onclick="openSales()">
-
-    <div style="font-size:24px">
-        💰
-    </div>
-
-    <b>
-        Sales Entry
-    </b>
-
-    <span>
-        Customer sale ও commission tracking
-    </span>
-
-</button>
-
-
-<button
-    class="module"
-    onclick="loadAll()">
-
-    <div style="font-size:24px">
-        🔄
-    </div>
-
-    <b>
-        Refresh Data
-    </b>
-
-    <span>
-        Firestore থেকে live data আনুন
-    </span>
-
-</button>
-
-</section>
-
-
-<!-- PRODUCT ORDER -->
-
-<section
-    id="orderCard"
-    class="card">
-
-    <h2>
-        🛒 Product Order
-    </h2>
-
-    <p
-        class="muted"
-        style="margin-bottom:12px">
-
-        এই order Company/Core Admin-এর কাছে যাবে।
-        Order করার সময় stock কমবে না এবং commission তৈরি হবে না।
-
+    <p id="errorText"
+       class="text-muted">
     </p>
 
-
-    <div class="form-grid">
-
-
-        <div class="field">
-
-            <label>
-                Product
-            </label>
-
-            <select id="product">
-
-                <option value="">
-                    Product loading...
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Quantity
-            </label>
-
-            <input
-                id="qty"
-                type="number"
-                min="1"
-                step="1"
-                value="1">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Rate
-            </label>
-
-            <input
-                id="rate"
-                type="number"
-                min="0"
-                step="0.01"
-                readonly>
-
-        </div>
-
+    <div id="errorDetail"
+         class="error-detail hidden">
     </div>
 
-
-    <div
-        class="field"
-        style="margin-top:12px">
-
-        <label>
-            Note
-        </label>
-
-        <input
-            id="note"
-            placeholder="Optional note">
-
-    </div>
-
-
-    <div class="total">
-
-        <span>
-            Estimated Total
-        </span>
-
-        <span id="total">
-            ₹0
-        </span>
-
-    </div>
-
-
-    <button
-        id="placeOrder"
-        class="primary">
-
-        Place Order
-
+    <button class="btn btn-danger mt-3"
+            onclick="location.href='login.html'">
+        <i class="fa-solid fa-right-to-bracket me-1"></i>
+        Login Page
     </button>
-
-
-    <div
-        id="msg"
-        class="msg">
-    </div>
-
-</section>
-
-
-<!-- MY ORDERS -->
-
-<section
-    id="ordersCard"
-    class="card">
-
-    <h2>
-        📋 My Orders
-    </h2>
-
-    <div id="orders">
-
-        Loading orders...
-
-    </div>
-
-</section>
-
-
-<!-- DEPARTMENT INFORMATION -->
-
-<section class="card">
-
-    <h2>
-        🏢 Department Information
-    </h2>
-
-    <div class="info-grid">
-
-
-        <div class="info-box">
-
-            <h3>
-                Department
-            </h3>
-
-            <p id="infoDepartment">
-                —
-            </p>
-
-        </div>
-
-
-        <div class="info-box">
-
-            <h3>
-                Core Admin
-            </h3>
-
-            <p id="infoCore">
-                —
-            </p>
-
-        </div>
-
-
-        <div class="info-box">
-
-            <h3>
-                System Status
-            </h3>
-
-            <p>
-                Firebase Connected
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-</main>
-
 </div>
 
 
-<script type="module">
+<!-- MAIN APP -->
+<div id="app"
+     class="container-fluid p-0 hidden">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    <div class="row g-0">
 
+        <!-- SIDEBAR -->
+        <nav id="sidebar"
+             class="col-lg-2 col-md-3">
 
-import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+            <div class="p-4 text-center border-bottom border-light border-opacity-25">
 
+                <div class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    KALI LIFE
+                </div>
 
-import {
-    getFirestore,
-    collection,
-    getDocs,
-    getDoc,
-    doc,
-    query,
-    where,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+                <div class="brand-sub">
+                    ECOSYSTEM • DEPARTMENT ADMIN
+                </div>
 
+                <span class="badge bg-warning text-dark mt-3">
+                    Department Admin
+                </span>
 
-/* FIREBASE CONFIG */
+            </div>
 
-const firebaseConfig = {
 
-    apiKey:
-    "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
+            <div class="mt-3">
 
-    authDomain:
-    "kali-life-ecosystem.firebaseapp.com",
+                <a class="nav-link active"
+                   data-view="overview">
+                    <i class="fa-solid fa-chart-pie me-2"></i>
+                    ওভারভিউ
+                </a>
 
-    projectId:
-    "kali-life-ecosystem",
+                <a class="nav-link"
+                   data-view="orders">
+                    <i class="fa-solid fa-cart-shopping me-2"></i>
+                    আমার অর্ডার
+                </a>
 
-    storageBucket:
-    "kali-life-ecosystem.firebasestorage.app",
+                <a class="nav-link"
+                   data-view="stock">
+                    <i class="fa-solid fa-boxes-stacked me-2"></i>
+                    প্রোডাক্ট ও স্টক
+                </a>
 
-    messagingSenderId:
-    "734170546737",
+                <a class="nav-link"
+                   data-view="processing">
+                    <i class="fa-solid fa-clipboard-list me-2"></i>
+                    প্রসেসিং অর্ডার
+                </a>
 
-    appId:
-    "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+                <a class="nav-link"
+                   data-view="machine">
+                    <i class="fa-solid fa-gears me-2"></i>
+                    মেশিন মনিটরিং
+                </a>
 
-    measurementId:
-    "G-LBEY0W7RX3"
-};
+                <a class="nav-link"
+                   data-view="sales">
+                    <i class="fa-solid fa-money-bill-trend-up me-2"></i>
+                    Sales Entry
+                </a>
 
+                <a class="nav-link mt-4 bg-danger bg-opacity-75"
+                   id="logoutSide">
 
-/* FIREBASE INITIALIZE */
+                    <i class="fa-solid fa-power-off me-2"></i>
+                    লগআউট
 
-const app =
-    initializeApp(firebaseConfig);
+                </a>
 
-const auth =
-    getAuth(app);
+            </div>
 
-const db =
-    getFirestore(app);
+        </nav>
 
 
-/* SHORT FUNCTIONS */
+        <!-- MAIN AREA -->
+        <main class="col-lg-10 col-md-9 main-area p-4">
 
-const $ =
-    id => document.getElementById(id);
+            <!-- TOP BAR -->
+            <div class="topbar bg-white rounded-4 shadow-sm p-3 mb-4
+                        d-flex justify-content-between align-items-center">
 
+                <div>
 
-const norm =
-    v =>
-    String(v ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g," ");
+                    <h4 class="mb-1 fw-bold text-success">
+                        ড্যাশবোর্ড কন্ট্রোল প্যানেল
+                    </h4>
 
+                    <small class="text-muted">
+                        KALI LIFE ECOSYSTEM • Live Firestore Data
+                    </small>
 
-/* CURRENT DATA */
+                </div>
 
-let currentUser = null;
 
-let currentAdmin = null;
+                <div class="d-flex align-items-center gap-3">
 
-let currentCore = null;
+                    <button id="refreshBtn"
+                            class="btn btn-success btn-sm">
 
-let currentSuper = null;
+                        <i class="fa-solid fa-rotate me-1"></i>
+                        Refresh
 
-let products = [];
+                    </button>
 
 
-/* ERROR */
+                    <div class="text-end">
 
-function showError(text){
+                        <div id="topName"
+                             class="fw-bold">
+                            Admin
+                        </div>
 
-    $("loading")
-    .classList
-    .add("hidden");
+                        <small id="topDept"
+                               class="text-muted">
+                            Department
+                        </small>
 
-    $("app")
-    .classList
-    .add("hidden");
+                    </div>
 
-    $("errorBox")
-    .classList
-    .remove("hidden");
 
-    $("errorText")
-    .textContent = text;
-}
+                    <div id="topAvatar"
+                         class="rounded-circle bg-success text-white
+                                d-flex align-items-center
+                                justify-content-center"
+                         style="width:42px;height:42px;font-weight:800">
 
+                        A
 
-/* MESSAGE */
+                    </div>
 
-function msg(text,ok=false){
+                </div>
 
-    $("msg")
-    .textContent = text;
+            </div>
 
-    $("msg")
-    .className =
-        "msg show " +
-        (ok ? "ok" : "bad");
-}
 
+            <!-- OVERVIEW -->
+            <section id="view-overview"
+                     class="section-view active">
 
-/* MONEY */
+                <div class="row g-4 mb-4">
 
-function money(value){
+                    <!-- ORDERS -->
+                    <div class="col-xl-3 col-md-6">
 
-    return "₹" +
-        Number(value || 0)
-        .toLocaleString(
-            "en-IN",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
-        );
-}
+                        <div class="info-card p-4
+                                    d-flex justify-content-between
+                                    align-items-center">
 
+                            <div>
 
-/* ESCAPE HTML */
+                                <div class="small-label">
+                                    MY ORDERS
+                                </div>
 
-function esc(value){
+                                <div id="orderCount"
+                                     class="value">
+                                    0
+                                </div>
 
-    return String(value ?? "")
-    .replace(
-        /[&<>"']/g,
-        c => ({
-            "&":"&amp;",
-            "<":"&lt;",
-            ">":"&gt;",
-            '"':"&quot;",
-            "'":"&#039;"
-        }[c])
-    );
-}
+                            </div>
 
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary">
 
-/* NAVIGATION */
+                                <i class="fa-solid fa-cart-shopping"></i>
 
-window.goOrder =
-function(){
+                            </div>
 
-    $("orderCard")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
+                        </div>
 
-};
+                    </div>
 
 
-window.goOrders =
-function(){
+                    <!-- SALES -->
+                    <div class="col-xl-3 col-md-6">
 
-    $("ordersCard")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
+                        <div class="info-card p-4
+                                    d-flex justify-content-between
+                                    align-items-center">
 
-};
+                            <div>
 
+                                <div class="small-label">
+                                    MY SALES
+                                </div>
 
-window.openSales =
-function(){
+                                <div id="salesCount"
+                                     class="value">
+                                    0
+                                </div>
 
-    location.href =
-        "sales_tracking_commission.html";
+                            </div>
 
-};
+                            <div class="icon-box bg-success bg-opacity-10 text-success">
 
+                                <i class="fa-solid fa-chart-line"></i>
 
-/* USER PROFILE */
+                            </div>
 
-async function profileForUser(u){
+                        </div>
 
-    const direct =
-        await getDoc(
-            doc(db,"users",u.uid)
-        );
+                    </div>
 
 
-    if(direct.exists()){
+                    <!-- COMMISSION -->
+                    <div class="col-xl-3 col-md-6">
 
-        return {
-            id:direct.id,
-            data:direct.data()
-        };
+                        <div class="info-card p-4
+                                    d-flex justify-content-between
+                                    align-items-center">
 
-    }
+                            <div>
 
+                                <div class="small-label">
+                                    MY COMMISSION
+                                </div>
 
-    if(u.email){
+                                <div id="commission"
+                                     class="value">
+                                    ₹0
+                                </div>
 
-        const q =
-            await getDocs(
-                query(
-                    collection(db,"users"),
-                    where("email","==",u.email)
-                )
-            );
+                            </div>
 
+                            <div class="icon-box bg-warning bg-opacity-10 text-warning">
 
-        if(!q.empty){
+                                <i class="fa-solid fa-coins"></i>
 
-            return {
-                id:q.docs[0].id,
-                data:q.docs[0].data()
-            };
+                            </div>
 
-        }
+                        </div>
 
-    }
+                    </div>
 
 
-    return null;
-}
+                    <!-- PENDING -->
+                    <div class="col-xl-3 col-md-6">
 
+                        <div class="info-card p-4
+                                    d-flex justify-content-between
+                                    align-items-center">
 
-/* FIND USER */
+                            <div>
 
-async function findUser(identifier){
+                                <div class="small-label">
+                                    PENDING ORDER
+                                </div>
 
-    if(!identifier){
+                                <div id="pendingCount"
+                                     class="value text-danger">
+                                    0
+                                </div>
 
-        return null;
+                            </div>
 
-    }
+                            <div class="icon-box bg-danger bg-opacity-10 text-danger">
 
+                                <i class="fa-solid fa-clock"></i>
 
-    const direct =
-        await getDoc(
-            doc(db,"users",identifier)
-        );
+                            </div>
 
+                        </div>
 
-    if(direct.exists()){
+                    </div>
 
-        return {
-            id:direct.id,
-            data:direct.data()
-        };
+                </div>
 
-    }
 
+                <!-- CHART + LIVE -->
+                <div class="row g-4">
 
-    const q =
-        await getDocs(
-            query(
-                collection(db,"users"),
-                where("uid","==",identifier)
-            )
-        );
+                    <div class="col-lg-6">
 
+                        <div class="panel p-4 h-100">
 
-    if(!q.empty){
+                            <h5 class="panel-title mb-4">
+                                সাপ্তাহিক Order Activity
+                            </h5>
 
-        return {
-            id:q.docs[0].id,
-            data:q.docs[0].data()
-        };
+                            <canvas id="activityChart"
+                                    height="210">
+                            </canvas>
 
-    }
+                            <div class="small text-muted mt-2">
+                                আপনার নিজের order-এর তারিখ অনুযায়ী chart তৈরি হবে।
+                            </div>
 
+                        </div>
 
-    return null;
-}
+                    </div>
 
 
-/* BUILD ADMIN HIERARCHY */
+                    <div class="col-lg-6">
 
-async function buildHierarchy(){
+                        <div class="panel p-4 h-100">
 
-    const p =
-        await profileForUser(currentUser);
+                            <div class="d-flex justify-content-between
+                                        align-items-center mb-3">
 
+                                <h5 class="panel-title mb-0">
+                                    চলমান কার্যাবলী
+                                </h5>
 
-    if(!p){
+                                <button class="btn btn-sm btn-outline-success"
+                                        onclick="showView('orders')">
 
-        throw new Error(
-            "Firestore users profile পাওয়া যায়নি।"
-        );
+                                    সব দেখুন
 
-    }
+                                </button>
 
+                            </div>
 
-    const d =
-        p.data || {};
 
+                            <div class="table-responsive table-custom">
 
-    const role =
-        norm(
-            d.roleType ||
-            d.role ||
-            d.accountRole
-        );
+                                <table class="table table-hover align-middle mb-0">
 
+                                    <thead>
 
-    const status =
-        norm(
-            d.status ||
-            d.accountStatus ||
-            ""
-        );
+                                        <tr>
+                                            <th>Order</th>
+                                            <th>Product</th>
+                                            <th>Status</th>
+                                        </tr>
 
+                                    </thead>
 
-    if(
-        ![
-            "department admin",
-            "departmental admin"
-        ].includes(role)
-    ){
+                                    <tbody id="liveTable">
 
-        throw new Error(
-            "এই account Department Admin নয়।"
-        );
+                                        <tr>
+                                            <td colspan="3"
+                                                class="text-center text-muted">
+                                                Loading...
+                                            </td>
+                                        </tr>
 
-    }
+                                    </tbody>
 
+                                </table>
 
-    if(status !== "active"){
+                            </div>
 
-        throw new Error(
-            "Department Admin account Active নয়।"
-        );
+                        </div>
 
-    }
+                    </div>
 
+                </div>
 
-    if(!String(d.department || "").trim()){
+            </section>
 
-        throw new Error(
-            "Department profile-এ department সেট করা নেই।"
-        );
 
-    }
+            <!-- ORDERS -->
+            <section id="view-orders"
+                     class="section-view">
 
+                <div class="panel p-4">
 
-    currentAdmin = {
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-3">
 
-        uid:
-        currentUser.uid,
+                        <h5 class="panel-title mb-0">
+                            📋 আমার অর্ডার
+                        </h5>
 
-        name:
-        d.name ||
-        d.fullName ||
-        currentUser.email ||
-        currentUser.uid,
+                        <button class="btn btn-sm btn-success"
+                                onclick="showView('overview')">
 
-        email:
-        d.email ||
-        currentUser.email ||
-        "",
+                            Overview
 
-        department:
-        String(
-            d.department
-        ).trim(),
+                        </button>
 
-        reportsTo:
-        String(
-            d.reportsTo || ""
-        ).trim(),
+                    </div>
 
-        adminId:
-        d.adminId ||
-        p.id
+                    <div id="ordersList">
+                        Loading orders...
+                    </div>
 
-    };
+                </div>
 
+            </section>
 
-    currentCore = null;
 
-    currentSuper = null;
+            <!-- STOCK -->
+            <section id="view-stock"
+                     class="section-view">
 
+                <div class="panel p-4">
 
-    if(currentAdmin.reportsTo){
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-3">
 
-        const cp =
-            await findUser(
-                currentAdmin.reportsTo
-            );
+                        <h5 class="panel-title mb-0">
+                            📦 প্রোডাক্ট ও স্টক
+                        </h5>
 
+                        <button class="btn btn-sm btn-success"
+                                onclick="loadProducts()">
 
-        if(cp){
+                            Refresh Stock
 
-            const cd =
-                cp.data || {};
+                        </button>
 
+                    </div>
 
-            const cr =
-                norm(
-                    cd.roleType ||
-                    cd.role ||
-                    ""
-                );
 
+                    <div class="table-responsive">
 
-            if(cr === "core admin"){
+                        <table class="table table-hover align-middle">
 
-                currentCore = {
+                            <thead>
 
-                    uid:
-                    cp.id,
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Rate</th>
+                                    <th>Stock</th>
+                                    <th>Source</th>
+                                </tr>
 
-                    name:
-                    cd.name ||
-                    "Core Admin",
+                            </thead>
 
-                    department:
-                    String(
-                        cd.department || ""
-                    ).trim(),
+                            <tbody id="stockTable">
 
-                    reportsTo:
-                    String(
-                        cd.reportsTo || ""
-                    ).trim()
+                                <tr>
+                                    <td colspan="4">
+                                        Loading...
+                                    </td>
+                                </tr>
 
-                };
+                            </tbody>
 
+                        </table>
 
-                if(currentCore.reportsTo){
+                    </div>
 
-                    const sp =
-                        await findUser(
-                            currentCore.reportsTo
-                        );
+                </div>
 
+            </section>
 
-                    if(sp){
 
-                        const sd =
-                            sp.data || {};
+            <!-- PROCESSING -->
+            <section id="view-processing"
+                     class="section-view">
 
+                <div class="panel p-4">
 
-                        currentSuper = {
+                    <h5 class="panel-title mb-3">
+                        ⏳ প্রসেসিং অর্ডার
+                    </h5>
 
-                            uid:
-                            sp.id,
+                    <div id="processingList">
+                        Loading...
+                    </div>
 
-                            name:
-                            sd.name ||
-                            "Super Admin"
+                </div>
 
-                        };
+            </section>
 
-                    }
 
-                }
+            <!-- MACHINE -->
+            <section id="view-machine"
+                     class="section-view">
 
-            }
+                <div class="panel p-4">
 
-            else if(
-                cr === "super admin"
-            ){
+                    <h5 class="panel-title mb-3">
+                        ⚙️ মেশিন মনিটরিং
+                    </h5>
 
-                currentSuper = {
+                    <div class="machine-box">
 
-                    uid:
-                    cp.id,
+                        <div class="fs-1 text-secondary">
+                            <i class="fa-solid fa-gears"></i>
+                        </div>
 
-                    name:
-                    cd.name ||
-                    "Super Admin"
+                        <h5 class="mt-3">
+                            Live Machine Data সংযুক্ত নেই
+                        </h5>
 
-                };
+                        <p class="text-muted mb-0">
+                            Machine collection/data source বর্তমানে
+                            সংযুক্ত করা হয়নি।
+                        </p>
 
-            }
+                    </div>
 
-        }
+                </div>
 
-    }
+            </section>
 
 
-    /* DISPLAY PROFILE */
+            <!-- SALES -->
+            <section id="view-sales"
+                     class="section-view">
 
-    $("adminName")
-    .textContent =
-        currentAdmin.name;
+                <div class="panel p-4 text-center">
 
+                    <div class="fs-1 text-success">
+                        <i class="fa-solid fa-money-bill-trend-up"></i>
+                    </div>
 
-    $("department")
-    .textContent =
-        currentAdmin.department;
+                    <h4 class="mt-3">
+                        Sales Entry & Commission
+                    </h4>
 
+                    <p class="text-muted">
+                        Customer sale, profit এবং commission tracking-এর
+                        জন্য Sales module খুলুন।
+                    </p>
 
-    $("reportsTo")
-    .textContent =
-        currentCore?.name ||
-        currentAdmin.reportsTo ||
-        "—";
+                    <a href="sales.html"
+                       class="btn btn-success">
 
+                        <i class="fa-solid fa-arrow-right me-1"></i>
+                        Open Sales Entry
 
-    $("uid")
-    .textContent =
-        currentUser.uid;
+                    </a>
 
+                </div>
 
-    $("avatar")
-    .textContent =
-        currentAdmin.name
-        .trim()
-        .charAt(0)
-        .toUpperCase() ||
-        "A";
+            </section>
 
 
-    $("infoDepartment")
-    .textContent =
-        currentAdmin.department;
+            <!-- PROFILE -->
+            <section class="panel p-4 mt-4">
 
+                <div class="row g-3 align-items-center">
 
-    $("infoCore")
-    .textContent =
-        currentCore?.name ||
-        "—";
+                    <div class="col-md-8">
 
-}
+                        <h6 class="fw-bold mb-1">
+                            Department Profile
+                        </h6>
 
+                        <div class="small text-muted">
 
-/* PRODUCT FUNCTIONS */
+                            Admin:
+                            <b id="adminName">—</b>
 
-function productName(d){
+                            • Department:
+                            <b id="department">—</b>
 
-    return (
-        d.itemName ||
-        d.productName ||
-        d.name ||
-        "Unnamed Product"
-    );
-
-}
-
-
-function productPrice(d){
-
-    return Number(
-        d.sellingPrice ??
-        d.salePrice ??
-        d.price ??
-        d.mrp ??
-        0
-    ) || 0;
-
-}
-
-
-function productStock(d){
-
-    return Number(
-        d.stockQuantity ??
-        d.stock ??
-        d.quantity ??
-        0
-    ) || 0;
-
-}
-
-
-/* LOAD PRODUCTS */
-
-async function loadProdu
+                            • Reports To:
+                            <b id="reportsTo">
