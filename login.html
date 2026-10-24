@@ -215,16 +215,15 @@ department: userData.department || ""
             window.location.href = "super-admin-dashboard.html";
         } else if (userRole === "Core Admin") {
             window.location.href = "core-admin-dashboard.html";
-        } else if (userRole === "Departmental Admin") {
-            } else if (userRole === "Departmental Admin") {
-    window.location.href = "dept-admin-dashboard-final.html";
-        }
+                } else if (userRole === "Departmental Admin") {
+            window.location.href = "dept-admin-dashboard-final.html";
+
         } else if (userRole === "Admin") {
             window.location.href = "admin-dashboard.html";
+
         } else {
             window.location.href = "dashboard.html";
         }
-
     } catch (error) {
         console.error("Auth Error:", error);
         setUIState(false);
