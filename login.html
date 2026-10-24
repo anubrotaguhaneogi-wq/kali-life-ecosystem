@@ -216,7 +216,9 @@ department: userData.department || ""
         } else if (userRole === "Core Admin") {
             window.location.href = "core-admin-dashboard.html";
         } else if (userRole === "Departmental Admin") {
-            window.location.href = "dept-admin-dashboard.html";
+            } else if (userRole === "Departmental Admin") {
+    window.location.href = "dept-admin-dashboard-final.html";
+        }
         } else if (userRole === "Admin") {
             window.location.href = "admin-dashboard.html";
         } else {
