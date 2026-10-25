@@ -149,11 +149,26 @@ function logoutUser() {
     window.location.replace("login.html");
 }
 
-/* ================================
+/* =================================
+   COMPATIBILITY AUTH FUNCTIONS
+   Dashboard uses getCurrentUser() and logout()
+================================= */
+
+function getCurrentUser() {
+    return getSession();
+}
+
+function logout() {
+    logoutUser();
+}
+
+/* =================================
    GLOBAL ACCESS
-================================ */
+================================= */
+
 window.createSession = createSession;
 window.getSession = getSession;
+window.getCurrentUser = getCurrentUser;
 window.isUserLoggedIn = isUserLoggedIn;
 window.getRole = getRole;
 window.isAdminRole = isAdminRole;
@@ -161,5 +176,7 @@ window.checkLogin = checkLogin;
 window.checkRole = checkRole;
 window.redirectToDashboard = redirectToDashboard;
 window.logoutUser = logoutUser;
+window.logout = logout;
+
 window.ADMIN_ROLES = ADMIN_ROLES;
 window.ROLE_DASHBOARD = ROLE_DASHBOARD;
