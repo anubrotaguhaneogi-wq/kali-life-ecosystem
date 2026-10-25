@@ -11,6 +11,7 @@ const ADMIN_ROLES = [
     "Super Admin",
     "Core Admin",
     "Departmental Admin",
+    "Department Admin",
     "Admin"
 ];
 
@@ -18,6 +19,7 @@ const ROLE_DASHBOARD = {
     "Super Admin": "super-admin-dashboard.html",
     "Core Admin": "core-admin-dashboard.html",
     "Departmental Admin": "dept-admin-dashboard-final.html",
+    "Department Admin": "dept-admin-dashboard-final.html",
     "Admin": "admin-dashboard.html",
     "User": "dashboard.html"
 };
