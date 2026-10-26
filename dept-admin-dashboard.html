@@ -916,3 +916,1187 @@ function toast(message, success=true){
 
 document.querySelectorAll('.nav-btn[data-view]')
 .for
+<!-- =========================
+     FIREBASE + DASHBOARD JS
+========================= -->
+<script type="module">
+
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    query,
+    where,
+    addDoc,
+    writeBatch,
+    serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+    measurementId: "G-LBEY0W7RX3"
+};
+
+
+/* =========================
+   FIREBASE INITIALIZE
+========================= */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+/* =========================
+   STATE
+========================= */
+
+let currentUser = null;
+let currentAdmin = null;
+let currentCoreAdmin = null;
+let currentSuperAdmin = null;
+
+let orders = [];
+let products = [];
+let sales = [];
+
+let chart = null;
+
+
+/* =========================
+   HELPERS
+========================= */
+
+const $ = id => document.getElementById(id);
+
+function norm(value){
+    return String(value ?? "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g," ");
+}
+
+function money(value){
+    return "₹" + Number(value || 0)
+        .toLocaleString("en-IN",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+}
+
+function esc(value){
+    return String(value ?? "")
+        .replace(/[&<>"']/g,c => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[c]));
+}
+
+function toast(message, success=true){
+
+    const box = $("toast");
+
+    if(!box) return;
+
+    box.textContent = message;
+
+    box.className =
+        "toast-msg alert shadow-sm " +
+        (success ? "alert-success" : "alert-danger") +
+        " show";
+
+    setTimeout(() => {
+        box.classList.remove("show");
+    },3500);
+}
+
+function showError(message){
+
+    const loading = $("loading");
+    const errorBox = $("errorBox");
+    const errorText = $("errorText");
+
+    if(loading){
+        loading.classList.add("hidden");
+    }
+
+    if(errorText){
+        errorText.textContent = message;
+    }
+
+    if(errorBox){
+        errorBox.classList.remove("hidden");
+    }
+
+    console.error(message);
+}
+
+
+/* =========================
+   COMMISSION CONFIG
+========================= */
+
+const COMMISSION = {
+    superAdminPercent: 5,
+    coreAdminPercent: 10,
+    departmentAdminPercent: 20
+};
+
+function calculateCommission(amount, percent){
+    return Number(
+        ((Number(amount) || 0) * percent / 100)
+        .toFixed(2)
+    );
+}
+
+
+/* =========================
+   FIND USER PROFILE
+========================= */
+
+async function profileForUser(user){
+
+    const directRef =
+        doc(db,"users",user.uid);
+
+    const directSnap =
+        await getDoc(directRef);
+
+    if(directSnap.exists()){
+        return {
+            id: directSnap.id,
+            data: directSnap.data()
+        };
+    }
+
+    if(user.email){
+
+        const q =
+            query(
+                collection(db,"users"),
+                where("email","==",user.email)
+            );
+
+        const snap =
+            await getDocs(q);
+
+        if(!snap.empty){
+
+            const first = snap.docs[0];
+
+            return {
+                id:first.id,
+                data:first.data()
+            };
+        }
+    }
+
+    return null;
+}
+
+
+/* =========================
+   FIND USER BY ID / UID
+========================= */
+
+async function getUserProfileByIdOrUid(identifier){
+
+    if(!identifier) return null;
+
+    const directRef =
+        doc(db,"users",identifier);
+
+    const directSnap =
+        await getDoc(directRef);
+
+    if(directSnap.exists()){
+
+        return {
+            id:directSnap.id,
+            data:directSnap.data()
+        };
+    }
+
+    const q =
+        query(
+            collection(db,"users"),
+            where("uid","==",identifier)
+        );
+
+    const snap =
+        await getDocs(q);
+
+    if(!snap.empty){
+
+        const first = snap.docs[0];
+
+        return {
+            id:first.id,
+            data:first.data()
+        };
+    }
+
+    return null;
+}
+
+
+/* =========================
+   BUILD DEPARTMENT PROFILE
+========================= */
+
+async function buildProfile(){
+
+    const profile =
+        await profileForUser(currentUser);
+
+    if(!profile){
+
+        throw new Error(
+            "Firestore users profile পাওয়া যায়নি।"
+        );
+    }
+
+    const data =
+        profile.data || {};
+
+    const role =
+        norm(
+            data.roleType ||
+            data.role ||
+            data.accountRole
+        );
+
+    const status =
+        norm(
+            data.status ||
+            data.accountStatus ||
+            ""
+        );
+
+    if(
+        ![
+            "department admin",
+            "departmental admin"
+        ].includes(role)
+    ){
+
+        throw new Error(
+            "এই account Department Admin নয়।"
+        );
+    }
+
+    if(status !== "active"){
+
+        throw new Error(
+            "Department Admin account Active নয়।"
+        );
+    }
+
+    if(!String(data.department || "").trim()){
+
+        throw new Error(
+            "Department profile-এ department সেট করা নেই।"
+        );
+    }
+
+
+    currentAdmin = {
+
+        uid: currentUser.uid,
+
+        name:
+            data.name ||
+            data.fullName ||
+            currentUser.email ||
+            currentUser.uid,
+
+        email:
+            data.email ||
+            currentUser.email ||
+            "",
+
+        department:
+            String(data.department).trim(),
+
+        reportsTo:
+            String(data.reportsTo || "").trim(),
+
+        adminId:
+            data.adminId ||
+            profile.id,
+
+        roleType:
+            data.roleType ||
+            data.role ||
+            data.accountRole ||
+            "Department Admin"
+    };
+
+
+    currentCoreAdmin = null;
+    currentSuperAdmin = null;
+
+
+    /* =========================
+       DEPARTMENT ADMIN
+       ↓
+       CORE ADMIN
+       ↓
+       SUPER ADMIN
+    ========================= */
+
+    if(currentAdmin.reportsTo){
+
+        const parent =
+            await getUserProfileByIdOrUid(
+                currentAdmin.reportsTo
+            );
+
+        if(parent){
+
+            const parentData =
+                parent.data || {};
+
+            const parentRole =
+                norm(
+                    parentData.roleType ||
+                    parentData.role ||
+                    parentData.accountRole
+                );
+
+            const parentAdmin = {
+
+                uid: parent.data.uid || parent.id,
+
+                name:
+                    parentData.name ||
+                    parentData.fullName ||
+                    "",
+
+                roleType:
+                    parentData.roleType ||
+                    parentData.role ||
+                    parentData.accountRole ||
+                    "",
+
+                department:
+                    parentData.department ||
+                    "",
+
+                reportsTo:
+                    parentData.reportsTo ||
+                    "",
+
+                email:
+                    parentData.email ||
+                    ""
+            };
+
+
+            if(parentRole.includes("super admin")){
+
+                currentSuperAdmin =
+                    parentAdmin;
+
+            }else{
+
+                currentCoreAdmin =
+                    parentAdmin;
+            }
+        }
+    }
+
+
+    /* =========================
+       CORE ADMIN → SUPER ADMIN
+    ========================= */
+
+    if(
+        currentCoreAdmin &&
+        currentCoreAdmin.reportsTo
+    ){
+
+        const superProfile =
+            await getUserProfileByIdOrUid(
+                currentCoreAdmin.reportsTo
+            );
+
+        if(superProfile){
+
+            const d =
+                superProfile.data || {};
+
+            currentSuperAdmin = {
+
+                uid:
+                    d.uid ||
+                    superProfile.id,
+
+                name:
+                    d.name ||
+                    d.fullName ||
+                    "",
+
+                roleType:
+                    d.roleType ||
+                    d.role ||
+                    d.accountRole ||
+                    "",
+
+                department:
+                    d.department ||
+                    "",
+
+                reportsTo:
+                    d.reportsTo ||
+                    "",
+
+                email:
+                    d.email ||
+                    ""
+            };
+        }
+    }
+
+
+    renderAdminInfo();
+}
+
+
+/* =========================
+   PROFILE DISPLAY
+========================= */
+
+function renderAdminInfo(){
+
+    if(!currentAdmin) return;
+
+
+    if($("adminName"))
+        $("adminName").textContent =
+            currentAdmin.name;
+
+    if($("department"))
+        $("department").textContent =
+            currentAdmin.department;
+
+    if($("reportsTo"))
+        $("reportsTo").textContent =
+            currentAdmin.reportsTo || "—";
+
+    if($("uid"))
+        $("uid").textContent =
+            currentUser.uid;
+
+    if($("topName"))
+        $("topName").textContent =
+            currentAdmin.name;
+
+    if($("topDept"))
+        $("topDept").textContent =
+            currentAdmin.department;
+
+    if($("topAvatar"))
+        $("topAvatar").textContent =
+            String(currentAdmin.name || "A")
+            .trim()
+            .charAt(0)
+            .toUpperCase();
+}
+
+
+/* =========================
+   PRODUCT FUNCTIONS
+========================= */
+
+function productName(data){
+
+    return (
+        data.itemName ||
+        data.productName ||
+        data.name ||
+        "Unnamed Product"
+    );
+}
+
+function productPrice(data){
+
+    return Number(
+        data.sellingPrice ??
+        data.salePrice ??
+        data.price ??
+        data.mrp ??
+        0
+    ) || 0;
+}
+
+function productStock(data){
+
+    return Number(
+        data.stockQuantity ??
+        data.stock ??
+        data.quantity ??
+        0
+    ) || 0;
+}
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts(){
+
+    products = [];
+
+
+    try{
+
+        const snap =
+            await getDocs(
+                collection(db,"products")
+            );
+
+        snap.forEach(item => {
+
+            products.push({
+
+                id:item.id,
+
+                data:item.data(),
+
+                source:"products"
+            });
+        });
+
+    }catch(error){
+
+        console.warn(
+            "Products collection unavailable:",
+            error
+        );
+    }
+
+
+    /* FALLBACK INVENTORY */
+
+    if(!products.length){
+
+        try{
+
+            const snap =
+                await getDocs(
+                    collection(db,"inventory")
+                );
+
+            snap.forEach(item => {
+
+                products.push({
+
+                    id:item.id,
+
+                    data:item.data(),
+
+                    source:"inventory"
+                });
+            });
+
+        }catch(error){
+
+            console.warn(
+                "Inventory collection unavailable:",
+                error
+            );
+        }
+    }
+
+
+    const table =
+        $("stockTable");
+
+    if(!table) return;
+
+
+    if(!products.length){
+
+        table.innerHTML =
+            `<tr>
+                <td colspan="4"
+                    class="text-center text-muted">
+                    কোনো product/inventory data পাওয়া যায়নি।
+                </td>
+             </tr>`;
+
+        return;
+    }
+
+
+    table.innerHTML =
+        products.map(product => {
+
+            const data =
+                product.data;
+
+            return `
+                <tr>
+
+                    <td class="fw-semibold">
+                        ${esc(productName(data))}
+                    </td>
+
+                    <td>
+                        ${money(productPrice(data))}
+                    </td>
+
+                    <td>
+                        ${productStock(data)}
+                    </td>
+
+                    <td>
+                        ${esc(product.source)}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+    if(!currentUser) return;
+
+    try{
+
+        const q =
+            query(
+                collection(db,"orders"),
+                where(
+                    "requestedById",
+                    "==",
+                    currentUser.uid
+                )
+            );
+
+        const snap =
+            await getDocs(q);
+
+        orders = [];
+
+        snap.forEach(item => {
+
+            orders.push({
+
+                id:item.id,
+
+                ...item.data()
+            });
+        });
+
+
+        orders.sort(
+            (a,b) =>
+                (Number(b.createdAtMs) || 0) -
+                (Number(a.createdAtMs) || 0)
+        );
+
+
+        if($("orderCount"))
+            $("orderCount").textContent =
+                orders.length;
+
+        if($("pendingCount"))
+            $("pendingCount").textContent =
+                orders.filter(
+                    item =>
+                        norm(item.status) === "pending"
+                ).length;
+
+
+        renderOrders();
+        renderProcessing();
+        renderLive();
+        renderChart();
+
+    }catch(error){
+
+        console.error(
+            "Order loading error:",
+            error
+        );
+
+        toast(
+            "Order data load করা যায়নি।",
+            false
+        );
+    }
+}
+
+
+/* =========================
+   STATUS BADGE
+========================= */
+
+function statusBadge(status){
+
+    const value =
+        norm(status);
+
+    let cls =
+        "bg-warning-subtle text-warning-emphasis";
+
+    if(value === "completed"){
+        cls =
+            "bg-success-subtle text-success";
+    }
+
+    if(value === "cancelled"){
+        cls =
+            "bg-danger-subtle text-danger";
+    }
+
+    return `
+        <span class="status-badge ${cls}">
+            ${esc(status || "Pending")}
+        </span>
+    `;
+}
+
+
+/* =========================
+   RENDER ORDERS
+========================= */
+
+function renderOrders(){
+
+    const box =
+        $("ordersList");
+
+    if(!box) return;
+
+
+    if(!orders.length){
+
+        box.innerHTML =
+            `<div class="text-muted text-center p-4">
+                এখনও কোনো order নেই।
+             </div>`;
+
+        return;
+    }
+
+
+    box.innerHTML =
+        orders.map(order => {
+
+            return `
+                <div class="order-row">
+
+                    <div class="d-flex
+                                justify-content-between
+                                gap-2">
+
+                        <b>
+                            ${esc(
+                                order.orderId ||
+                                order.id
+                            )}
+                        </b>
+
+                        ${statusBadge(
+                            order.status
+                        )}
+
+                    </div>
+
+
+                    <div class="fw-semibold mt-2">
+                        ${esc(
+                            order.productName ||
+                            "Product"
+                        )}
+                    </div>
+
+
+                    <div class="small text-muted">
+
+                        Quantity:
+                        ${Number(order.quantity || 0)}
+
+                        • Rate:
+                        ${money(order.unitRate || 0)}
+
+                        • Total:
+                        ${money(
+                            order.estimatedTotal || 0
+                        )}
+
+                    </div>
+
+
+                    <div class="small text-muted">
+
+                        ${esc(
+                            order.department || ""
+                        )}
+
+                        •
+
+                        ${esc(
+                            order.dateText || ""
+                        )}
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================
+   PROCESSING ORDERS
+========================= */
+
+function renderProcessing(){
+
+    const box =
+        $("processingList");
+
+    if(!box) return;
+
+
+    const list =
+        orders.filter(order =>
+            ![
+                "completed",
+                "cancelled"
+            ].includes(
+                norm(order.status)
+            )
+        );
+
+
+    box.innerHTML =
+        list.length
+        ?
+
+        list.map(order => {
+
+            return `
+                <div class="order-row">
+
+                    <b>
+                        ${esc(
+                            order.orderId ||
+                            order.id
+                        )}
+                    </b>
+
+                    —
+
+                    ${esc(
+                        order.productName ||
+                        "Product"
+                    )}
+
+                    —
+
+                    Qty
+                    ${Number(order.quantity || 0)}
+
+                    ${statusBadge(
+                        order.status
+                    )}
+
+                </div>
+            `;
+
+        }).join("")
+
+        :
+
+        `<div class="text-muted">
+            কোনো pending/processing order নেই।
+         </div>`;
+}
+
+
+/* =========================
+   LIVE ORDERS
+========================= */
+
+function renderLive(){
+
+    const table =
+        $("liveTable");
+
+    if(!table) return;
+
+
+    const list =
+        orders.slice(0,6);
+
+
+    table.innerHTML =
+        list.length
+
+        ?
+
+        list.map(order => {
+
+            return `
+                <tr>
+
+                    <td>
+                        ${esc(
+                            order.orderId ||
+                            order.id
+                        )}
+                    </td>
+
+                    <td>
+                        ${esc(
+                            order.productName ||
+                            "Product"
+                        )}
+                    </td>
+
+                    <td>
+                        ${statusBadge(
+                            order.status
+                        )}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("")
+
+        :
+
+        `<tr>
+            <td colspan="3"
+                class="text-center text-muted">
+                কোনো order নেই।
+            </td>
+         </tr>`;
+}
+
+
+/* =========================
+   WEEKLY CHART
+========================= */
+
+function renderChart(){
+
+    const canvas =
+        $("activityChart");
+
+    if(!canvas) return;
+
+    if(typeof Chart === "undefined"){
+        return;
+    }
+
+
+    const days = [
+        "রবি",
+        "সোম",
+        "মঙ্গল",
+        "বুধ",
+        "বৃহঃ",
+        "শুক্র",
+        "শনি"
+    ];
+
+
+    const counts =
+        [0,0,0,0,0,0,0];
+
+
+    const today =
+        new Date();
+
+
+    orders.forEach(order => {
+
+        const date =
+            new Date(
+                Number(order.createdAtMs) || 0
+            );
+
+        if(Number.isNaN(date.getTime())){
+            return;
+        }
+
+
+        const dayDiff =
+            Math.floor(
+                (
+                    new Date(
+                        today.getFullYear(),
+                        today.getMonth(),
+                        today.getDate()
+                    )
+                    -
+                    new Date(
+                        date.getFullYear(),
+                        date.getMonth(),
+                        date.getDate()
+                    )
+                ) / 86400000
+            );
+
+
+        if(dayDiff >= 
+           if(dayDiff >= 0 && dayDiff <= 6){
+
+    const index = 6 - dayDiff;
+
+    if(activityData[index] !== undefined){
+        activityData[index]++;
+    }
+}
+
+});
+
+
+// =========================
+// ACTIVITY CHART UPDATE
+// =========================
+
+if(typeof activityChart !== 'undefined' && activityChart){
+
+    activityChart.data.datasets[0].data =
+        activityData;
+
+    activityChart.update();
+
+}
+
+
+// =========================
+// RECENT ORDERS UPDATE
+// =========================
+
+if($('recentOrders')){
+
+    const recent = orders
+        .slice()
+        .sort((a,b) =>
+            Number(b.createdAtMs || 0) -
+            Number(a.createdAtMs || 0)
+        )
+        .slice(0,5);
+
+    if(!recent.length){
+
+        $('recentOrders').innerHTML =
+            '<div class="text-muted">কোনো সাম্প্রতিক অর্ডার নেই।</div>';
+
+    }else{
+
+        $('recentOrders').innerHTML =
+            recent.map(order => `
+
+                <div class="order">
+
+                    <strong>
+                        ${escapeHTML(
+                            order.itemName ||
+                            order.productName ||
+                            order.product ||
+                            'Product'
+                        )}
+                    </strong>
+
+                    <br>
+
+                    <small class="text-muted">
+                        Customer:
+                        ${escapeHTML(
+                            order.customerName ||
+                            '—'
+                        )}
+                    </small>
+
+                    <br>
+
+                    <small class="text-muted">
+                        Quantity:
+                        ${Number(order.quantity || 0)}
+                    </small>
+
+                    <br>
+
+                    <small class="text-muted">
+                        Status:
+                        ${escapeHTML(
+                            order.status ||
+                            'Pending'
+                        )}
+                    </small>
+
+                </div>
+
+            `).join('');
+    }
+}
+
+
+// =========================
+// DASHBOARD COUNTS
+// =========================
+
+if($('orderCount')){
+    $('orderCount').textContent =
+        orders.length;
+}
+
+if($('pendingCount')){
+
+    $('pendingCount').textContent =
+        orders.filter(order =>
+            normalize(order.status) === 'pending'
+        ).length;
+}
+
+
+// =========================
+// ACTIVITY COMPLETE
+// =========================
