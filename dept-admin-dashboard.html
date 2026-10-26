@@ -3,202 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0f5132">
-<title>Department Admin Dashboard | KALI LIFE</title>
+
+<title>Department Admin | KALI LIFE</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 *{box-sizing:border-box}
 
 body{
-margin:0;
-font-family:'Poppins','Noto Sans Bengali',Arial,sans-serif;
-background:#f4f7f6;
-color:#17202a;
-overflow-x:hidden
+    margin:0;
+    font-family:Arial,"Noto Sans Bengali",sans-serif;
+    background:#f4f7f6;
+    color:#17202a;
 }
 
-#sidebar{
-background:linear-gradient(180deg,#0f5132,#198754);
-min-height:100vh;
-color:#fff;
-box-shadow:4px 0 18px rgba(0,0,0,.12)
+.hidden{display:none!important}
+
+#loading{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f4f7f6;
 }
 
-.brand-logo{
-font-size:1.35rem;
-font-weight:800;
-color:#ffc107
+.loading-card{
+    width:min(92%,420px);
+    background:#fff;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
 }
 
-.brand-sub{
-font-size:11px;
-opacity:.8
+#app{
+    min-height:100vh;
 }
 
-.nav-link{
-color:rgba(255,255,255,.86);
-font-weight:600;
-padding:12px 18px;
-border-radius:9px;
-margin:4px 12px;
-cursor:pointer
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:linear-gradient(180deg,#0f5132,#198754);
+    color:#fff;
+    padding:20px 12px;
+    z-index:1000;
 }
 
-.nav-link:hover,
-.nav-link.active{
-background:rgba(255,255,255,.18);
-color:#fff;
-transform:translateX(3px)
+.brand{
+    text-align:center;
+    padding:12px 5px 22px;
+    border-bottom:1px solid rgba(255,255,255,.2);
 }
 
-.info-card,
-.panel{
-border:0;
-border-radius:16px;
-background:#fff;
-box-shadow:0 5px 20px rgba(0,0,0,.06)
+.brand h3{
+    margin:0;
+    color:#ffc107;
+    font-weight:800;
 }
 
-.info-card{
-transition:.2s
+.brand small{
+    opacity:.8;
 }
 
-.info-card:hover{
-transform:translateY(-3px)
+.nav-menu{
+    margin-top:20px;
 }
 
-.icon-box{
-width:52px;
-height:52px;
-border-radius:13px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:1.35rem
+.nav-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#fff;
+    text-align:left;
+    padding:13px 15px;
+    border-radius:10px;
+    margin-bottom:6px;
+    font-weight:600;
 }
 
-.small-label{
-font-size:13px;
-color:#6c757d
+.nav-btn:hover,
+.nav-btn.active{
+    background:rgba(255,255,255,.18);
 }
 
-.value{
-font-size:28px;
-font-weight:800
+.logout{
+    background:rgba(220,53,69,.85);
+    margin-top:20px;
 }
 
-.panel-title{
-font-weight:800;
-color:#35615a
+.main{
+    margin-left:245px;
+    padding:22px;
 }
 
-.table-custom{
-overflow:hidden;
-border-radius:12px
+.topbar{
+    background:#fff;
+    border-radius:16px;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    margin-bottom:22px;
 }
 
-.status-badge{
-padding:5px 10px;
-border-radius:20px;
-font-size:12px;
-font-weight:700
+.card-box{
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.stat{
+    font-size:28px;
+    font-weight:800;
+}
+
+.label{
+    color:#6c757d;
+    font-size:13px;
+}
+
+.view{
+    display:none;
+}
+
+.view.active{
+    display:block;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.table{
+    min-width:650px;
 }
 
 .form-control,
 .form-select{
-border-radius:10px;
-padding:11px
+    border-radius:10px;
+    padding:11px;
 }
 
 .btn-main{
-background:#198754;
-color:#fff;
-border:0;
-border-radius:10px;
-padding:11px 18px;
-font-weight:700
+    background:#198754;
+    color:#fff;
+    border:0;
+    border-radius:10px;
+    padding:11px 18px;
+    font-weight:700;
 }
 
 .btn-main:hover{
-background:#146c43;
-color:#fff
+    background:#146c43;
+    color:#fff;
 }
 
-.loading-box{
-max-width:600px;
-margin:80px auto
+.profile{
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
 
-.hidden{
-display:none!important
+.badge-active{
+    background:#d1e7dd;
+    color:#0f5132;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:700;
 }
 
-.profile-img{
-width:42px;
-height:42px;
-border-radius:50%;
-object-fit:cover
+.order{
+    border:1px solid #e5ebe8;
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:10px;
 }
 
-.order-row{
-border:1px solid #e6ece9;
-border-radius:12px;
-padding:13px;
-margin-bottom:9px
+.toast-box{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:9999;
 }
 
-.toast-msg{
-position:fixed;
-right:18px;
-bottom:18px;
-z-index:1000;
-max-width:360px;
-display:none
-}
+@media(max-width:800px){
 
-.toast-msg.show{
-display:block
-}
+    .sidebar{
+        position:relative;
+        width:100%;
+        min-height:auto;
+    }
 
-.machine-box{
-border:1px dashed #ced8d2;
-border-radius:14px;
-padding:20px;
-text-align:center
-}
+    .main{
+        margin-left:0;
+        padding:14px;
+    }
 
-.section-view{
-display:none
-}
+    .topbar{
+        gap:10px;
+        flex-wrap:wrap;
+    }
 
-.section-view.active{
-display:block
-}
+    .nav-menu{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:5px;
+    }
 
-@media(max-width:767px){
-#sidebar{
-min-height:auto
-}
-
-.value{
-font-size:23px
-}
-
-.main-area{
-padding:14px!important
-}
-
-.topbar h4{
-font-size:17px
-}
-
-.profile-img{
-display:none
-}
+    .logout{
+        margin-top:5px;
+    }
 }
 </style>
 </head>
@@ -209,19 +231,14 @@ display:none
      LOADING
 ========================= -->
 
-<div id="loading"
-class="loading-box text-center bg-white rounded-4 shadow-sm p-4">
-
-<div class="spinner-border text-success mb-3"></div>
-
-<h5>
-Department Admin account যাচাই হচ্ছে...
-</h5>
-
-<p class="text-muted mb-0">
-Firebase account ও Department profile যাচাই করা হচ্ছে।
-</p>
-
+<div id="loading">
+    <div class="loading-card">
+        <div class="spinner-border text-success mb-3"></div>
+        <h5>Department Admin যাচাই হচ্ছে...</h5>
+        <p class="text-muted mb-0">
+            Firebase account ও Department profile যাচাই করা হচ্ছে।
+        </p>
+    </div>
 </div>
 
 
@@ -229,29 +246,22 @@ Firebase account ও Department profile যাচাই করা হচ্ছ�
      ERROR
 ========================= -->
 
-<div id="errorBox"
-class="loading-box text-center bg-white rounded-4 shadow-sm p-4 hidden">
+<div id="errorBox" class="hidden">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;">
+        <div class="loading-card">
+            <div class="text-danger fs-1">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
 
-<div class="text-danger fs-1 mb-2">
-<i class="fa-solid fa-circle-exclamation"></i>
-</div>
+            <h4>Access Denied</h4>
 
-<h4>
-Access Denied
-</h4>
+            <p id="errorText" class="text-muted"></p>
 
-<p id="errorText"
-class="text-muted">
-</p>
-
-<button
-class="btn btn-danger"
-onclick="location.href='login.html'">
-
-Login
-
-</button>
-
+            <button class="btn btn-danger" onclick="location.href='login.html'">
+                Login
+            </button>
+        </div>
+    </div>
 </div>
 
 
@@ -259,667 +269,485 @@ Login
      MAIN APP
 ========================= -->
 
-<div id="app"
-class="container-fluid p-0 hidden">
+<div id="app" class="hidden">
 
-<div class="row g-0">
+    <!-- SIDEBAR -->
 
+    <aside class="sidebar">
 
-<!-- =========================
-     SIDEBAR
-========================= -->
+        <div class="brand">
+            <h3>
+                <i class="fa-solid fa-leaf"></i>
+                KALI LIFE
+            </h3>
 
-<nav id="sidebar"
-class="col-lg-2 col-md-3">
+            <small>
+                ECOSYSTEM
+            </small>
 
-<div class="p-4 text-center border-bottom border-light border-opacity-25">
+            <div class="mt-2">
+                <span class="badge bg-warning text-dark">
+                    Department Admin
+                </span>
+            </div>
+        </div>
 
-<div class="brand-logo">
-<i class="fa-solid fa-leaf"></i>
-KALI LIFE
-</div>
-
-<div class="brand-sub">
-ECOSYSTEM • DEPARTMENT ADMIN
-</div>
-
-<span class="badge bg-warning text-dark mt-3">
-Department Admin
-</span>
-
-</div>
-
-
-<div class="mt-3">
-
-<a class="nav-link active"
-data-view="overview">
-
-<i class="fa-solid fa-chart-pie me-2"></i>
-ওভারভিউ
-
-</a>
-
-
-<a class="nav-link"
-data-view="orders">
-
-<i class="fa-solid fa-cart-shopping me-2"></i>
-আমার অর্ডার
-
-</a>
-
-
-<a class="nav-link"
-data-view="stock">
-
-<i class="fa-solid fa-boxes-stacked me-2"></i>
-প্রোডাক্ট ও স্টক
-
-</a>
-
-
-<a class="nav-link"
-data-view="processing">
-
-<i class="fa-solid fa-clipboard-list me-2"></i>
-প্রসেসিং অর্ডার
-
-</a>
-
-
-<a class="nav-link"
-data-view="machine">
-
-<i class="fa-solid fa-gears me-2"></i>
-মেশিন মনিটরিং
-
-</a>
-
-
-<a class="nav-link"
-data-view="sales">
-
-<i class="fa-solid fa-money-bill-trend-up me-2"></i>
-Sales Entry
-
-</a>
-
-
-<a class="nav-link mt-4 bg-danger bg-opacity-75"
-id="logoutSide">
-
-<i class="fa-solid fa-power-off me-2"></i>
-লগআউট
-
-</a>
-
-</div>
-
-</nav>
-
-
-<!-- =========================
-     MAIN AREA
-========================= -->
-
-<main class="col-lg-10 col-md-9 main-area p-4">
-
-
-<!-- TOP BAR -->
-
-<div class="topbar bg-white rounded-4 shadow-sm p-3 mb-4 d-flex justify-content-between align-items-center">
-
-<div>
-
-<h4 class="mb-1 fw-bold text-success">
-ড্যাশবোর্ড কন্ট্রোল প্যানেল
-</h4>
-
-<small class="text-muted">
-KALI LIFE ECOSYSTEM • Live Firestore Data
-</small>
-
-</div>
-
-
-<div class="d-flex align-items-center gap-3">
-
-<button
-id="refreshBtn"
-class="btn btn-success btn-sm">
-
-<i class="fa-solid fa-rotate me-1"></i>
-Refresh
-
-</button>
-
-
-<div class="text-end">
-
-<div id="topName"
-class="fw-bold">
-Admin
-</div>
-
-<small id="topDept"
-class="text-muted">
-Department
-</small>
-
-</div>
-
-
-<div id="topAvatar"
-class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center"
-style="width:42px;height:42px;font-weight:800">
-
-A
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     OVERVIEW
-========================= -->
-
-<section id="view-overview"
-class="section-view active">
-
-<div class="row g-4 mb-4">
-
-
-<div class="col-xl-3 col-md-6">
-
-<div class="info-card p-4 d-flex justify-content-between align-items-center">
-
-<div>
-
-<div class="small-label">
-MY ORDERS
-</div>
-
-<div id="orderCount"
-class="value">
-0
-</div>
-
-</div>
-
-<div class="icon-box bg-primary bg-opacity-10 text-primary">
-
-<i class="fa-solid fa-cart-shopping"></i>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-xl-3 col-md-6">
-
-<div class="info-card p-4 d-flex justify-content-between align-items-center">
-
-<div>
 
-<div class="small-label">
-MY SALES
-</div>
-
-<div id="salesCount"
-class="value">
-0
-</div>
-
-</div>
-
-<div class="icon-box bg-success bg-opacity-10 text-success">
-
-<i class="fa-solid fa-chart-line"></i>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-xl-3 col-md-6">
-
-<div class="info-card p-4 d-flex justify-content-between align-items-center">
-
-<div>
-
-<div class="small-label">
-MY COMMISSION
-</div>
-
-<div id="commission"
-class="value">
-₹0
-</div>
-
-</div>
-
-<div class="icon-box bg-warning bg-opacity-10 text-warning">
-
-<i class="fa-solid fa-coins"></i>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-xl-3 col-md-6">
-
-<div class="info-card p-4 d-flex justify-content-between align-items-center">
-
-<div>
-
-<div class="small-label">
-PENDING ORDER
-</div>
-
-<div id="pendingCount"
-class="value text-danger">
-0
-</div>
-
-</div>
-
-<div class="icon-box bg-danger bg-opacity-10 text-danger">
-
-<i class="fa-solid fa-clock"></i>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="row g-4">
-
-
-<div class="col-lg-6">
-
-<div class="panel p-4 h-100">
-
-<h5 class="panel-title mb-4">
-সাপ্তাহিক প্রোডাক্ট/অর্ডার Activity
-</h5>
-
-<canvas
-id="activityChart"
-height="210">
-</canvas>
-
-<div class="small text-muted mt-2">
-এই চার্ট আপনার নিজের order-এর তারিখ অনুযায়ী তৈরি হবে।
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-lg-6">
-
-<div class="panel p-4 h-100">
-
-<div class="d-flex justify-content-between align-items-center mb-3">
-
-<h5 class="panel-title mb-0">
-চলমান কার্যাবলী (Live)
-</h5>
-
-<button
-class="btn btn-sm btn-outline-success"
-onclick="showView('orders')">
-
-সব দেখুন
-
-</button>
+        <div class="nav-menu">
 
-</div>
+            <button class="nav-btn active" data-view="overview">
+                <i class="fa-solid fa-chart-pie me-2"></i>
+                Overview
+            </button>
+
+            <button class="nav-btn" data-view="orders">
+                <i class="fa-solid fa-cart-shopping me-2"></i>
+                আমার অর্ডার
+            </button>
+
+            <button class="nav-btn" data-view="stock">
+                <i class="fa-solid fa-boxes-stacked me-2"></i>
+                Product & Stock
+            </button>
 
+            <button class="nav-btn" data-view="processing">
+                <i class="fa-solid fa-clock me-2"></i>
+                Processing
+            </button>
 
-<div class="table-responsive table-custom">
+            <button class="nav-btn" data-view="sales">
+                <i class="fa-solid fa-money-bill-trend-up me-2"></i>
+                Sales Entry
+            </button>
 
-<table class="table table-hover align-middle mb-0">
+            <button class="nav-btn logout" id="logoutBtn">
+                <i class="fa-solid fa-power-off me-2"></i>
+                Logout
+            </button>
 
-<thead>
+        </div>
 
-<tr>
+    </aside>
 
-<th>
-Order
-</th>
 
-<th>
-Product
-</th>
+    <!-- MAIN -->
 
-<th>
-Status
-</th>
+    <main class="main">
 
-</tr>
+        <!-- TOP BAR -->
 
-</thead>
+        <div class="topbar">
 
-<tbody id="liveTable">
+            <div>
+                <h4 class="mb-1 text-success fw-bold">
+                    Department Admin Dashboard
+                </h4>
 
-<tr>
+                <small class="text-muted">
+                    KALI LIFE ECOSYSTEM
+                </small>
+            </div>
 
-<td
-colspan="3"
-class="text-center text-muted">
+            <div class="text-end">
+                <strong id="topName">Admin</strong>
+                <br>
+                <small id="topDepartment" class="text-muted">
+                    Department
+                </small>
+            </div>
 
-Loading...
+        </div>
 
-</td>
 
-</tr>
+        <!-- =========================
+             OVERVIEW
+        ========================= -->
 
-</tbody>
+        <section id="overview" class="view active">
 
-</table>
+            <div class="row g-4 mb-4">
 
-</div>
+                <div class="col-md-3">
+                    <div class="card-box">
+                        <div class="label">MY ORDERS</div>
+                        <div id="orderCount" class="stat text-primary">
+                            0
+                        </div>
+                    </div>
+                </div>
 
-</div>
+                <div class="col-md-3">
+                    <div class="card-box">
+                        <div class="label">MY SALES</div>
+                        <div id="salesCount" class="stat text-success">
+                            0
+                        </div>
+                    </div>
+                </div>
 
-</div>
+                <div class="col-md-3">
+                    <div class="card-box">
+                        <div class="label">MY COMMISSION</div>
+                        <div id="commission" class="stat text-warning">
+                            ₹0
+                        </div>
+                    </div>
+                </div>
 
-</div>
+                <div class="col-md-3">
+                    <div class="card-box">
+                        <div class="label">PENDING ORDERS</div>
+                        <div id="pendingCount" class="stat text-danger">
+                            0
+                        </div>
+                    </div>
+                </div>
 
-</section>
+            </div>
 
 
-<!-- =========================
-     ORDERS
-========================= -->
+            <div class="card-box">
 
-<section id="view-orders"
-class="section-view">
+                <h5 class="fw-bold text-success mb-3">
+                    <i class="fa-solid fa-bolt me-2"></i>
+                    Recent Orders
+                </h5>
 
-<div class="panel p-4">
+                <div id="recentOrders">
+                    Loading...
+                </div>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+            </div>
 
-<h5 class="panel-title mb-0">
-📋 আমার অর্ডার
-</h5>
+        </section>
 
-<button
-class="btn btn-sm btn-success"
-onclick="showView('overview')">
 
-Overview
+        <!-- =========================
+             ORDERS
+        ========================= -->
 
-</button>
+        <section id="orders" class="view">
 
-</div>
+            <div class="card-box">
 
-<div id="ordersList">
-Loading orders...
-</div>
+                <h5 class="fw-bold text-success mb-3">
+                    📋 আমার অর্ডার
+                </h5>
 
-</div>
+                <div id="ordersList">
+                    Loading...
+                </div>
 
-</section>
+            </div>
 
+        </section>
 
-<!-- =========================
-     STOCK
-========================= -->
 
-<section id="view-stock"
-class="section-view">
+        <!-- =========================
+             STOCK
+        ========================= -->
 
-<div class="panel p-4">
+        <section id="stock" class="view">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="card-box">
 
-<h5 class="panel-title mb-0">
-📦 প্রোডাক্ট ও স্টক
-</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
 
-<button
-class="btn btn-sm btn-success"
-onclick="loadProducts()">
+                    <h5 class="fw-bold text-success mb-0">
+                        📦 Product & Stock
+                    </h5>
 
-Refresh Stock
+                    <button class="btn btn-outline-success btn-sm"
+                            id="refreshStock">
+                        Refresh
+                    </button>
 
-</button>
+                </div>
 
-</div>
+                <div class="table-wrap">
 
+                    <table class="table table-hover align-middle">
 
-<div class="table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Rate</th>
+                                <th>Stock</th>
+                                <th>Source</th>
+                            </tr>
+                        </thead>
 
-<table class="table table-hover align-middle">
+                        <tbody id="stockTable">
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    Loading...
+                                </td>
+                            </tr>
+                        </tbody>
 
-<thead>
+                    </table>
 
-<tr>
+                </div>
 
-<th>
-Product
-</th>
+            </div>
 
-<th>
-Rate
-</th>
+        </section>
 
-<th>
-Stock
-</th>
 
-<th>
-Source
-</th>
+        <!-- =========================
+             PROCESSING
+        ========================= -->
 
-</tr>
+        <section id="processing" class="view">
 
-</thead>
+            <div class="card-box">
 
-<tbody id="stockTable">
+                <h5 class="fw-bold text-success mb-3">
+                    ⏳ Processing Orders
+                </h5>
 
-<tr>
+                <div id="processingList">
+                    Loading...
+                </div>
 
-<td colspan="4">
-Loading...
-</td>
+            </div>
 
-</tr>
+        </section>
 
-</tbody>
 
-</table>
+        <!-- =========================
+             SALES
+        ========================= -->
 
-</div>
+        <section id="sales" class="view">
 
-</div>
+            <div class="card-box mb-4">
 
-</section>
+                <h5 class="fw-bold text-success mb-4">
+                    💰 Sales Entry
+                </h5>
 
+                <form id="salesForm">
 
-<!-- =========================
-     PROCESSING
-========================= -->
+                    <div class="row g-3">
 
-<section id="view-processing"
-class="section-view">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Product / Item Name
+                            </label>
 
-<div class="panel p-4">
+                            <input
+                                id="saleProduct"
+                                class="form-control"
+                                required
+                            >
+                        </div>
 
-<h5 class="panel-title mb-3">
-⏳ প্রসেসিং অর্ডার
-</h5>
 
-<div id="processingList">
-Loading...
-</div>
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                Quantity
+                            </label>
 
-</div>
+                            <input
+                                id="saleQuantity"
+                                type="number"
+                                min="1"
+                                class="form-control"
+                                required
+                            >
+                        </div>
 
-</section>
 
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                Rate
+                            </label>
 
-<!-- =========================
-     MACHINE
-========================= -->
+                            <input
+                                id="saleRate"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                required
+                            >
+                        </div>
 
-<section id="view-machine"
-class="section-view">
 
-<div class="panel p-4">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Customer Name
+                            </label>
 
-<h5 class="panel-title mb-3">
-⚙️ মেশিন মনিটরিং
-</h5>
+                            <input
+                                id="customerName"
+                                class="form-control"
+                                required
+                            >
+                        </div>
 
-<div class="machine-box">
 
-<div class="fs-1 text-secondary">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Customer Mobile
+                            </label>
 
-<i class="fa-solid fa-gears"></i>
+                            <input
+                                id="customerMobile"
+                                class="form-control"
+                                maxlength="10"
+                            >
+                        </div>
 
-</div>
 
-<h5 class="mt-3">
-Live Machine Data সংযুক্ত নেই
-</h5>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Total Amount
+                            </label>
 
-<p class="text-muted mb-0">
+                            <input
+                                id="saleAmount"
+                                class="form-control"
+                                readonly
+                            >
+                        </div>
 
-এই dashboard-এ machine collection/data source বর্তমানে সংযুক্ত করা হয়নি।
-তাই এখানে কোনো fake “Active” status দেখানো হচ্ছে না।
 
-</p>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Department Commission
+                            </label>
 
-</div>
+                            <input
+                                id="saleCommission"
+                                class="form-control"
+                                readonly
+                            >
+                        </div>
 
-</div>
 
-</section>
+                        <div class="col-12">
 
+                            <button
+                                type="submit"
+                                class="btn-main">
 
-<!-- =========================
-     SALES
-========================= -->
+                                <i class="fa-solid fa-floppy-disk me-2"></i>
+                                Save Sale
 
-<section id="view-sales"
-class="section-view">
+                            </button>
 
-<div class="panel p-4 text-center">
+                        </div>
 
-<div class="fs-1 text-success">
+                    </div>
 
-<i class="fa-solid fa-money-bill-trend-up"></i>
+                </form>
 
-</div>
+            </div>
 
-<h4 class="mt-3">
-Sales Entry & Commission
-</h4>
 
-<p class="text-muted">
+            <div class="card-box">
 
-Customer sale, profit এবং commission tracking-এর জন্য Sales module খুলুন।
+                <h5 class="fw-bold text-success mb-3">
+                    My Sales
+                </h5>
 
-</p>
+                <div class="table-wrap">
 
-<a
-href="sales_tracking_commission.html"
-class="btn btn-success">
+                    <table class="table table-hover">
 
-Open Sales Entry
+                        <thead>
 
-</a>
+                            <tr>
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Customer</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                                <th>Commission</th>
+                            </tr>
 
-</div>
+                        </thead>
 
-</section>
+                        <tbody id="salesTable">
 
+                            <tr>
+                                <td colspan="6"
+                                    class="text-center text-muted">
+                                    কোনো sale নেই।
+                                </td>
+                            </tr>
 
-<!-- =========================
-     PROFILE
-========================= -->
+                        </tbody>
 
-<section class="panel p-4 mt-4">
+                    </table>
 
-<div class="row g-3 align-items-center">
+                </div>
 
-<div class="col-md-8">
+            </div>
 
-<h6 class="fw-bold mb-1">
-Department Profile
-</h6>
+        </section>
 
-<div class="small text-muted">
 
-Admin:
-<b id="adminName">—</b>
+        <!-- =========================
+             PROFILE
+        ========================= -->
 
-•
+        <div class="profile mt-4">
 
-Department:
-<b id="department">—</b>
+            <div class="row align-items-center">
 
-•
+                <div class="col-md-9">
 
-Reports To:
-<b id="reportsTo">—</b>
+                    <h6 class="fw-bold">
+                        Department Profile
+                    </h6>
 
-</div>
+                    <div class="text-muted">
 
-<div class="small text-muted">
+                        Admin:
+                        <strong id="profileName">—</strong>
 
-UID:
-<span id="uid">—</span>
+                        &nbsp; | &nbsp;
 
-</div>
+                        Department:
+                        <strong id="profileDepartment">—</strong>
 
-</div>
+                        &nbsp; | &nbsp;
 
+                        Reports To:
+                        <strong id="profileReports">—</strong>
 
-<div class="col-md-4 text-md-end">
+                    </div>
 
-<span class="badge bg-success-subtle text-success px-3 py-2">
+                    <small class="text-muted">
+                        UID:
+                        <span id="profileUid">—</span>
+                    </small>
 
-ACTIVE & VERIFIED
+                </div>
 
-</span>
+                <div class="col-md-3 text-md-end mt-3 mt-md-0">
 
-</div>
+                    <span class="badge-active">
+                        ACTIVE & VERIFIED
+                    </span>
 
-</div>
+                </div>
 
-</section>
+            </div>
 
+        </div>
 
-</main>
+    </main>
 
 </div>
 
-</div>
 
+<!-- TOAST -->
 
-<div id="toast"
-class="toast-msg alert shadow-sm">
-</div>
+<div id="toast" class="toast-box"></div>
 
 
 <!-- =========================
@@ -929,853 +757,162 @@ class="toast-msg alert shadow-sm">
 <script type="module">
 
 import {
-initializeApp
-}
-from
+    initializeApp
+} from
 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
 
-
 import {
-getAuth,
-onAuthStateChanged,
-signOut
-}
-from
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from
 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
 
-
 import {
-getFirestore,
-collection,
-getDocs,
-getDoc,
-doc,
-query,
-where
-}
-from
+    getFirestore,
+    collection,
+    getDocs,
+    getDoc,
+    addDoc,
+    doc,
+    query,
+    where,
+    orderBy,
+    limit
+} from
 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
 
 
-const firebaseConfig={
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
-apiKey:'AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo',
+const firebaseConfig = {
 
-authDomain:'kali-life-ecosystem.firebaseapp.com',
+    apiKey:
+    'AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo',
 
-projectId:'kali-life-ecosystem',
+    authDomain:
+    'kali-life-ecosystem.firebaseapp.com',
 
-storageBucket:'kali-life-ecosystem.firebasestorage.app',
+    projectId:
+    'kali-life-ecosystem',
 
-messagingSenderId:'734170546737',
+    storageBucket:
+    'kali-life-ecosystem.firebasestorage.app',
 
-appId:'1:734170546737:web:26f79e1b4b19ebabfe0b10',
+    messagingSenderId:
+    '734170546737',
 
-measurementId:'G-LBEY0W7RX3'
+    appId:
+    '1:734170546737:web:26f79e1b4b19ebabfe0b10',
 
+    measurementId:
+    'G-LBEY0W7RX3'
 };
 
 
-let app,
-auth,
-db,
-currentUser=null,
-currentAdmin=null,
-orders=[],
-products=[],
-chart=null;
+/* =========================
+   INITIALIZE
+========================= */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
 
 
-const $=id=>document.getElementById(id);
+/* =========================
+   STATE
+========================= */
 
-const norm=v=>
-String(v??'')
-.trim()
-.toLowerCase()
-.replace(/\s+/g,' ');
+let currentUser = null;
+
+let currentAdmin = null;
+
+let orders = [];
+
+let sales = [];
 
 
-function showError(msg){
+/* =========================
+   HELPERS
+========================= */
 
-$('loading').classList.add('hidden');
+const $ = id =>
+    document.getElementById(id);
 
-$('errorText').textContent=msg;
 
-$('errorBox').classList.remove('hidden');
+function normalize(value){
+
+    return String(value ?? '')
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g,' ');
+}
+
+
+function money(value){
+
+    return '₹' +
+        Number(value || 0)
+        .toLocaleString('en-IN',{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? '')
+        .replace(/[&<>"']/g, char => ({
+
+            '&':'&amp;',
+            '<':'&lt;',
+            '>':'&gt;',
+            '"':'&quot;',
+            "'":'&#039;'
+
+        }[char]));
+}
+
+
+function showError(message){
+
+    $('loading').classList.add('hidden');
+
+    $('app').classList.add('hidden');
+
+    $('errorBox').classList.remove('hidden');
+
+    $('errorText').textContent = message;
 
 }
 
 
-<!-- Firebase initialize -->
+function toast(message, success=true){
 
-try{
+    const box = $('toast');
 
-app=initializeApp(firebaseConfig);
+    box.innerHTML = `
+        <div class="alert ${
+            success ? 'alert-success' : 'alert-danger'
+        } shadow">
+            ${escapeHTML(message)}
+        </div>
+    `;
 
-auth=getAuth(app);
-
-db=getFirestore(app);
-
-}catch(e){
-
-console.error('Firebase init error:',e);
-
-showError(
-'Firebase শুরু করা যায়নি: '+(e.message||e)
-);
-
+    setTimeout(() => {
+        box.innerHTML = '';
+    },3500);
 }
 
 
-function money(v){
-
-return '₹'+
-Number(v||0)
-.toLocaleString(
-'en-IN',
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-)
-
-}
-
-
-function esc(v){
-
-return String(v??'')
-.replace(
-/[&<>"']/g,
-c=>({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-}[c])
-)
-
-}
-
-
-function toast(t,ok=true){
-
-const x=$('toast');
-
-x.textContent=t;
-
-x.className=
-'toast-msg alert shadow-sm '+
-(ok?'alert-success':'alert-danger')+
-' show';
-
-setTimeout(
-()=>x.classList.remove('show'),
-3500
-);
-
-}
-
-
-<!-- =========================
-     FIND FIRESTORE PROFILE
-========================= -->
-
-async function profileForUser(u){
-
-const d=
-await getDoc(
-doc(db,'users',u.uid)
-);
-
-if(d.exists())
-return{
-id:d.id,
-data:d.data()
-};
-
-
-if(u.email){
-
-const q=
-await getDocs(
-query(
-collection(db,'users'),
-where('email','==',u.email)
-)
-);
-
-if(!q.empty)
-return{
-id:q.docs[0].id,
-data:q.docs[0].data()
-};
-
-}
-
-return null;
-
-}
-
-
-<!-- =========================
-     BUILD PROFILE
-========================= -->
-
-async function buildProfile(){
-
-const p=
-await profileForUser(currentUser);
-
-
-if(!p)
-throw new Error(
-'Firestore users profile পাওয়া যায়নি।'
-);
-
-
-const d=p.data||{};
-
-
-const role=
-norm(
-d.roleType||
-d.role||
-d.accountRole
-);
-
-
-const status=
-norm(
-d.status||
-d.accountStatus||
-''
-);
-
-
-if(
-![
-'department admin',
-'departmental admin'
-].includes(role)
-){
-
-throw new Error(
-'এই account Department Admin নয়।'
-);
-
-}
-
-
-if(status!=='active'){
-
-throw new Error(
-'Department Admin account Active নয়।'
-);
-
-}
-
-
-if(
-!String(d.department||'').trim()
-){
-
-throw new Error(
-'Department profile-এ department সেট করা নেই।'
-);
-
-}
-
-
-currentAdmin={
-
-uid:currentUser.uid,
-
-name:
-d.name||
-d.fullName||
-currentUser.email||
-currentUser.uid,
-
-email:
-d.email||
-currentUser.email||
-'',
-
-department:
-String(d.department).trim(),
-
-reportsTo:
-String(d.reportsTo||'').trim(),
-
-adminId:
-d.adminId||
-p.id
-
-};
-
-
-$('adminName').textContent=
-currentAdmin.name;
-
-$('department').textContent=
-currentAdmin.department;
-
-$('reportsTo').textContent=
-currentAdmin.reportsTo||'—';
-
-$('uid').textContent=
-currentUser.uid;
-
-$('topName').textContent=
-currentAdmin.name;
-
-$('topDept').textContent=
-currentAdmin.department;
-
-$('topAvatar').textContent=
-currentAdmin.name
-.trim()
-.charAt(0)
-.toUpperCase()||
-'A';
-
-}
-
-
-<!-- =========================
-     PRODUCT FUNCTIONS
-========================= -->
-
-function productName(d){
-
-return d.itemName||
-d.productName||
-d.name||
-'Unnamed Product';
-
-}
-
-
-function productPrice(d){
-
-return Number(
-d.sellingPrice??
-d.salePrice??
-d.price??
-d.mrp??
-0
-)||0;
-
-}
-
-
-function productStock(d){
-
-return Number(
-d.stockQuantity??
-d.stock??
-d.quantity??
-0
-)||0;
-
-}
-
-
-async function loadProducts(){
-
-products=[];
-
-
-try{
-
-const s=
-await getDocs(
-collection(db,'products')
-);
-
-s.forEach(
-x=>
-products.push({
-id:x.id,
-data:x.data(),
-source:'products'
-})
-);
-
-}catch(e){}
-
-
-if(!products.length){
-
-try{
-
-const s=
-await getDocs(
-collection(db,'inventory')
-);
-
-s.forEach(
-x=>
-products.push({
-id:x.id,
-data:x.data(),
-source:'inventory'
-})
-);
-
-}catch(e){}
-
-}
-
-
-const tb=$('stockTable');
-
-
-if(!products.length){
-
-tb.innerHTML=
-'<tr><td colspan="4" class="text-center text-muted">কোনো product/inventory data পাওয়া যায়নি।</td></tr>';
-
-return;
-
-}
-
-
-tb.innerHTML=
-products
-.map(
-p=>
-`<tr>
-<td class="fw-semibold">
-${esc(productName(p.data))}
-</td>
-<td>
-${money(productPrice(p.data))}
-</td>
-<td>
-${productStock(p.data)}
-</td>
-<td>
-${esc(p.source)}
-</td>
-</tr>`
-)
-.join('');
-
-}
-
-
-<!-- =========================
-     ORDER FUNCTIONS
-========================= -->
-
-async function loadOrders(){
-
-const s=
-await getDocs(
-query(
-collection(db,'orders'),
-where(
-'requestedById',
-'==',
-currentUser.uid
-)
-)
-);
-
-
-orders=[];
-
-
-s.forEach(
-x=>
-orders.push({
-id:x.id,
-...x.data()
-})
-);
-
-
-orders.sort(
-(a,b)=>
-(Number(b.createdAtMs)||0)-
-(Number(a.createdAtMs)||0)
-);
-
-
-$('orderCount').textContent=
-orders.length;
-
-
-$('pendingCount').textContent=
-orders.filter(
-x=>norm(x.status)==='pending'
-).length;
-
-
-renderOrders();
-
-renderProcessing();
-
-renderLive();
-
-renderChart();
-
-}
-
-
-function statusBadge(s){
-
-const n=norm(s);
-
-const cls=
-n==='completed'
-?
-'bg-success-subtle text-success'
-:
-n==='cancelled'
-?
-'bg-danger-subtle text-danger'
-:
-'bg-warning-subtle text-warning-emphasis';
-
-
-return `
-<span class="status-badge ${cls}">
-${esc(s||'Pending')}
-</span>
-`;
-
-}
-
-
-function renderOrders(){
-
-const box=$('ordersList');
-
-
-if(!orders.length){
-
-box.innerHTML=
-'<div class="text-muted text-center p-4">এখনও কোনো order নেই।</div>';
-
-return;
-
-}
-
-
-box.innerHTML=
-orders
-.map(
-o=>
-`<div class="order-row">
-
-<div class="d-flex justify-content-between gap-2">
-
-<b>
-${esc(o.orderId||o.id)}
-</b>
-
-${statusBadge(o.status)}
-
-</div>
-
-<div class="fw-semibold mt-2">
-
-${esc(o.productName||'Product')}
-
-</div>
-
-<div class="small text-muted">
-
-Quantity:
-${Number(o.quantity||0)}
-
-•
-
-Rate:
-${money(o.unitRate||0)}
-
-•
-
-Total:
-${money(o.estimatedTotal||0)}
-
-</div>
-
-<div class="small text-muted">
-
-${esc(o.department||'')}
-
-•
-
-${esc(o.dateText||'')}
-
-</div>
-
-</div>`
-)
-.join('');
-
-}
-
-
-function renderProcessing(){
-
-const list=
-orders.filter(
-o=>
-![
-'completed',
-'cancelled'
-]
-.includes(
-norm(o.status)
-)
-);
-
-
-$('processingList').innerHTML=
-list.length
-?
-list
-.map(
-o=>
-`<div class="order-row">
-
-<b>
-${esc(o.orderId||o.id)}
-</b>
-
-—
-
-${esc(o.productName||'Product')}
-
-—
-
-Qty
-${Number(o.quantity||0)}
-
-${statusBadge(o.status)}
-
-</div>`
-)
-.join('')
-:
-'<div class="text-muted">কোনো pending/processing order নেই।';
-
-}
-
-
-function renderLive(){
-
-const list=
-orders.slice(0,6);
-
-
-$('liveTable').innerHTML=
-list.length
-?
-list
-.map(
-o=>
-`<tr>
-
-<td>
-${esc(o.orderId||o.id)}
-</td>
-
-<td>
-${esc(o.productName||'Product')}
-</td>
-
-<td>
-${statusBadge(o.status)}
-</td>
-
-</tr>`
-)
-.join('')
-:
-'<tr><td colspan="3" class="text-center text-muted">কোনো order নেই।</td></tr>';
-
-}
-
-
-<!-- =========================
-     CHART
-========================= -->
-
-function renderChart(){
-
-const days=[
-'রবি',
-'সোম',
-'মঙ্গল',
-'বুধ',
-'বৃহঃ',
-'শুক্র',
-'শনি'
-];
-
-
-const counts=[
-0,0,0,0,0,0,0
-];
-
-
-const now=new Date();
-
-
-orders.forEach(
-o=>{
-
-const d=
-new Date(
-Number(o.createdAtMs)||0
-);
-
-
-if(
-!Number.isNaN(
-d.getTime()
-)
-){
-
-const diff=
-Math.floor(
-(
-new Date(
-now.getFullYear(),
-now.getMonth(),
-now.getDate()
-)
--
-new Date(
-d.getFullYear(),
-d.getMonth(),
-d.getDate()
-)
-)/
-86400000
-);
-
-
-if(
-diff>=0 &&
-diff<7
-){
-
-const idx=d.getDay();
-
-counts[idx]++;
-
-}
-
-}
-
-});
-
-
-if(chart)
-chart.destroy();
-
-
-chart=
-new Chart(
-$('activityChart'),
-{
-
-type:'line',
-
-data:{
-
-labels:days,
-
-datasets:[{
-
-label:'Orders',
-
-data:counts,
-
-borderColor:'#198754',
-
-backgroundColor:
-'rgba(25,135,84,.15)',
-
-borderWidth:3,
-
-tension:.35,
-
-fill:true
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-plugins:{
-legend:{
-display:false
-}
-},
-
-scales:{
-y:{
-beginAtZero:true,
-ticks:{
-precision:0
-}
-}
-}
-
-}
-
-}
-);
-
-}
-
-
-<!-- =========================
-     SALES
-========================= -->
-
-async function loadSales(){
-
-try{
-
-const s=
-await getDocs(
-query(
-collection(db,'sales'),
-where(
-'adminId',
-'==',
-currentUser.uid
-)
-)
-);
-
-
-$('salesCount').textContent=
-s.size;
-
-}catch(e){
-
-$('salesCount').textContent='—';
-
-}
-
-
-try{
-
-const s=
-await getDocs(
-query(
-c
+/* =========================
+   NAVIGATION
+========================= */
+
+document.querySelectorAll('.nav-btn[data-view]')
+.for
