@@ -1,725 +1,3 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Department Admin | KALI LIFE ECOSYSTEM</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:#f4f7f6;color:#17202a}
-.hidden{display:none!important}
-#loading,#errorBox{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f4f7f6}
-.loading-card{width:min(92%,460px);background:#fff;padding:35px;border-radius:20px;text-align:center;box-shadow:0 10px 35px rgba(0,0,0,.08)}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:245px;background:linear-gradient(180deg,#0f5132,#198754);color:#fff;padding:20px 12px;z-index:1000}
-.brand{text-align:center;padding:12px 5px 22px;border-bottom:1px solid rgba(255,255,255,.2)}
-.brand h3{margin:0;color:#ffc107;font-weight:800}
-.brand small{opacity:.8}
-.nav-menu{margin-top:20px}
-.nav-btn{cursor:pointer;width:100%;border:0;background:transparent;color:#fff;text-align:left;padding:13px 15px;border-radius:10px;margin-bottom:6px;font-weight:600}
-.nav-btn:hover,.nav-btn.active{background:rgba(255,255,255,.18)}
-.logout{background:rgba(220,53,69,.85);margin-top:20px}
-.main{margin-left:245px;padding:22px}
-.topbar,.card-box,.profile{background:#fff;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.06)}
-.topbar{padding:15px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
-.card-box,.profile{padding:20px}
-.stat{font-size:28px;font-weight:800}
-.label{color:#6c757d;font-size:13px}
-.view{display:none}.view.active{display:block}
-.table-wrap{overflow-x:auto}.table{min-width:650px}
-.form-control,.form-select{border-radius:10px;padding:11px}
-.btn-main{cursor:pointer;background:#198754;color:#fff;border:0;border-radius:10px;padding:11px 18px;font-weight:700}
-.btn-main:hover{background:#146c43;color:#fff}
-.btn-main:disabled{opacity:.6;cursor:not-allowed}
-.badge-active{background:#d1e7dd;color:#0f5132;padding:7px 12px;border-radius:20px;font-weight:700}
-.order-row{border:1px solid #e5ebe8;border-radius:12px;padding:14px;margin-bottom:10px}
-.toast-box{position:fixed;right:20px;bottom:20px;z-index:9999}
-.status-badge{display:inline-block;padding:4px 9px;border-radius:20px;font-size:12px;font-weight:700}
-@media(max-width:800px){
-.sidebar{position:relative;width:100%;bottom:auto}
-.main{margin-left:0;padding:14px}
-.topbar{gap:10px;flex-wrap:wrap}
-.nav-menu{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.logout{margin-top:5px}
-}
-</style>
-</head>
-
-<body>
-
-<!-- =========================
-     LOADING
-========================= -->
-<div id="loading">
-  <div class="loading-card">
-    <div class="spinner-border text-success mb-3"></div>
-    <h5>Department Admin যাচাই হচ্ছে...</h5>
-    <p class="text-muted mb-0">Firebase account ও Department profile যাচাই করা হচ্ছে।</p>
-  </div>
-</div>
-
-<!-- =========================
-     ERROR
-========================= -->
-<div id="errorBox" class="hidden">
-  <div class="loading-card">
-    <div class="text-danger fs-1"><i class="fa-solid fa-circle-exclamation"></i></div>
-    <h4>Access Denied</h4>
-    <p id="errorText" class="text-muted"></p>
-    <button class="btn btn-danger" id="errorLoginBtn">Login</button>
-  </div>
-</div>
-
-<!-- =========================
-     MAIN APP
-========================= -->
-<div id="app" class="hidden">
-
-  <aside class="sidebar">
-    <div class="brand">
-      <h3><i class="fa-solid fa-leaf"></i> KALI LIFE</h3>
-      <small>ECOSYSTEM</small>
-      <div class="mt-2">
-        <span class="badge bg-warning text-dark">Department Admin</span>
-      </div>
-    </div>
-
-    <div class="nav-menu">
-      <button type="button" class="nav-btn active" data-view="overview"><i class="fa-solid fa-chart-pie me-2"></i>Overview</button>
-      <button type="button" class="nav-btn" data-view="orders"><i class="fa-solid fa-cart-shopping me-2"></i>আমার অর্ডার</button>
-      <button type="button" class="nav-btn" data-view="stock"><i class="fa-solid fa-boxes-stacked me-2"></i>Product & Stock</button>
-      <button type="button" class="nav-btn" data-view="processing"><i class="fa-solid fa-clock me-2"></i>Processing</button>
-      <button type="button" class="nav-btn" data-view="sales"><i class="fa-solid fa-money-bill-trend-up me-2"></i>Sales Entry</button>
-      <button type="button" class="nav-btn logout" id="logoutBtn"><i class="fa-solid fa-power-off me-2"></i>Logout</button>
-    </div>
-  </aside>
-
-  <main class="main">
-
-    <div class="topbar">
-      <div>
-        <h4 class="mb-1 text-success fw-bold">Department Admin Dashboard</h4>
-        <small class="text-muted">KALI LIFE ECOSYSTEM</small>
-      </div>
-      <div class="text-end">
-        <strong id="topName">Admin</strong><br>
-        <small id="topDepartment" class="text-muted">Department</small>
-      </div>
-    </div>
-
-    <!-- OVERVIEW -->
-    <section id="overview" class="view active">
-      <div class="row g-4 mb-4">
-        <div class="col-md-3"><div class="card-box">
-          <div class="label">MY ORDERS</div><div id="orderCount" class="stat text-primary">0</div>
-        </div></div>
-        <div class="col-md-3"><div class="card-box">
-          <div class="label">MY SALES</div><div id="salesCount" class="stat text-success">0</div>
-        </div></div>
-        <div class="col-md-3"><div class="card-box">
-          <div class="label">MY COMMISSION</div><div id="commission" class="stat text-warning">₹0.00</div>
-        </div></div>
-        <div class="col-md-3"><div class="card-box">
-          <div class="label">PENDING ORDERS</div><div id="pendingCount" class="stat text-danger">0</div>
-        </div></div>
-      </div>
-
-      <div class="card-box">
-        <h5 class="fw-bold text-success mb-3"><i class="fa-solid fa-bolt me-2"></i>Recent Orders</h5>
-        <div id="recentOrders">Loading...</div>
-      </div>
-    </section>
-
-    <!-- ORDERS -->
-    <section id="orders" class="view">
-      <div class="card-box">
-        <h5 class="fw-bold text-success mb-3">📋 আমার অর্ডার</h5>
-        <div id="ordersList">Loading...</div>
-      </div>
-    </section>
-
-    <!-- STOCK -->
-    <section id="stock" class="view">
-      <div class="card-box">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold text-success mb-0">📦 Product & Stock</h5>
-          <button class="btn btn-outline-success btn-sm" id="refreshStock">Refresh</button>
-        </div>
-        <div class="table-wrap">
-          <table class="table table-hover align-middle">
-            <thead><tr><th>Product</th><th>Rate</th><th>Stock</th><th>Source</th></tr></thead>
-            <tbody id="stockTable">
-              <tr><td colspan="4" class="text-center">Loading...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESSING -->
-    <section id="processing" class="view">
-      <div class="card-box">
-        <h5 class="fw-bold text-success mb-3">⏳ Processing Orders</h5>
-        <div id="processingList">Loading...</div>
-      </div>
-    </section>
-
-    <!-- SALES -->
-    <section id="sales" class="view">
-      <div class="card-box mb-4">
-        <h5 class="fw-bold text-success mb-4">💰 Sales Entry</h5>
-
-        <form id="salesForm">
-          <div class="row g-3">
-
-            <div class="col-md-6">
-              <label class="form-label">Product / Item Name</label>
-              <input id="saleProduct" class="form-control" required>
-            </div>
-
-            <div class="col-md-3">
-              <label class="form-label">Quantity</label>
-              <input id="saleQuantity" type="number" min="1" class="form-control" required>
-            </div>
-
-            <div class="col-md-3">
-              <label class="form-label">Rate</label>
-              <input id="saleRate" type="number" min="0" step="0.01" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Customer Name</label>
-              <input id="customerName" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Customer Mobile</label>
-              <input id="customerMobile" class="form-control" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" placeholder="10 digit (ঐচ্ছিক)">
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Total Amount</label>
-              <input id="saleAmount" class="form-control" readonly>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Department Commission (20%)</label>
-              <input id="saleCommission" class="form-control" readonly>
-            </div>
-
-            <div class="col-12">
-              <button type="submit" class="btn-main" id="saveSaleBtn">
-                <i class="fa-solid fa-floppy-disk me-2"></i>Save Sale
-              </button>
-            </div>
-
-          </div>
-        </form>
-      </div>
-
-      <div class="card-box">
-        <h5 class="fw-bold text-success mb-3">My Sales</h5>
-        <div class="table-wrap">
-          <table class="table table-hover">
-            <thead><tr>
-              <th>Date</th><th>Product</th><th>Customer</th>
-              <th>Qty</th><th>Amount</th><th>Commission</th>
-            </tr></thead>
-            <tbody id="salesTable">
-              <tr><td colspan="6" class="text-center text-muted">কোনো sale নেই।</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROFILE -->
-    <div class="profile mt-4">
-      <div class="row align-items-center">
-        <div class="col-md-9">
-          <h6 class="fw-bold">Department Profile</h6>
-          <div class="text-muted">
-            Admin: <strong id="profileName">—</strong>
-            &nbsp; | &nbsp;
-            Department: <strong id="profileDepartment">—</strong>
-            &nbsp; | &nbsp;
-            Reports To: <strong id="profileReports">—</strong>
-          </div>
-          <small class="text-muted">UID: <span id="profileUid">—</span></small>
-        </div>
-        <div class="col-md-3 text-md-end mt-3 mt-md-0">
-          <span class="badge-active">ACTIVE & VERIFIED</span>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
-
-<div id="toast" class="toast-box"></div>
-
-<!-- =========================
-     SINGLE FIREBASE SCRIPT
-========================= -->
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  getDoc,
-  addDoc,
-  doc,
-  query,
-  where,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-
-/* =========================
-   FIREBASE CONFIG
-========================= */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDqXcxTrI22JuR1j9mtbUSCjGkT7B_OxZo",
-  authDomain: "kali-life-ecosystem.firebaseapp.com",
-  projectId: "kali-life-ecosystem",
-  storageBucket: "kali-life-ecosystem.firebasestorage.app",
-  messagingSenderId: "734170546737",
-  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-  measurementId: "G-LBEY0W7RX3"
-};
-
-
-/* =========================
-   INITIALIZE
-========================= */
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-
-/* =========================
-   STATE
-========================= */
-
-let currentUser = null;
-let currentAdmin = null;
-let orders = [];
-let products = [];
-let sales = [];
-
-const DEPARTMENT_COMMISSION = 20;
-
-
-/* =========================
-   HELPERS
-========================= */
-
-const $ = id => document.getElementById(id);
-
-function normalize(value){
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g," ");
-}
-
-function money(value){
-  return "₹" + Number(value || 0).toLocaleString("en-IN",{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
-}
-
-function escapeHTML(value){
-  return String(value ?? "").replace(/[&<>"']/g,c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[c]));
-}
-
-let toastTimer = null;
-
-function toast(message,success=true){
-  const box = $("toast");
-  clearTimeout(toastTimer);
-  box.innerHTML = `
-    <div class="alert ${success ? "alert-success" : "alert-danger"} shadow">
-      ${escapeHTML(message)}
-    </div>`;
-  toastTimer = setTimeout(() => box.innerHTML="",3500);
-}
-
-function showError(message){
-  $("loading").classList.add("hidden");
-  $("app").classList.add("hidden");
-  $("errorBox").classList.remove("hidden");
-  $("errorText").textContent = message;
-  console.error(message);
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-document.querySelectorAll(".nav-btn[data-view]").forEach(button => {
-  button.addEventListener("click", () => {
-
-    const target = button.dataset.view;
-
-    document.querySelectorAll(".nav-btn[data-view]")
-      .forEach(btn => btn.classList.remove("active"));
-
-    document.querySelectorAll(".view")
-      .forEach(view => view.classList.remove("active"));
-
-    button.classList.add("active");
-
-    const view = $(target);
-    if(view) view.classList.add("active");
-    window.scrollTo({top:0,behavior:"smooth"});
-
-  });
-});
-
-
-/* =========================
-   PROFILE LOOKUP
-========================= */
-
-async function profileForUser(user){
-
-  const directRef = doc(db,"users",user.uid);
-  const directSnap = await getDoc(directRef);
-
-  if(directSnap.exists()){
-    return {
-      id: directSnap.id,
-      data: directSnap.data()
-    };
-  }
-
-  if(user.email){
-
-    const q = query(
-      collection(db,"users"),
-      where("email","==",user.email)
-    );
-
-    const snap = await getDocs(q);
-
-    if(!snap.empty){
-
-      const first = snap.docs[0];
-
-      return {
-        id:first.id,
-        data:first.data()
-      };
-    }
-  }
-
-  return null;
-}
-
-
-/* =========================
-   BUILD DEPARTMENT PROFILE
-========================= */
-
-async function buildProfile(){
-
-  const profile = await profileForUser(currentUser);
-
-  if(!profile){
-    throw new Error("Firestore users profile পাওয়া যায়নি।");
-  }
-
-  const data = profile.data || {};
-
-  const role = normalize(
-    data.roleType ||
-    data.role ||
-    data.accountRole
-  );
-
-  const status = normalize(
-    data.status ||
-    data.accountStatus ||
-    ""
-  );
-
-  const allowedRoles = [
-    "department admin",
-    "departmental admin"
-  ];
-
-  if(!allowedRoles.includes(role)){
-    throw new Error("এই account Department Admin নয়।");
-  }
-
-  if(status !== "active"){
-    throw new Error("Department Admin account Active নয়।");
-  }
-
-  if(!String(data.department || "").trim()){
-    throw new Error("Department profile-এ department সেট করা নেই।");
-  }
-
-  currentAdmin = {
-    uid: currentUser.uid,
-    name:
-      data.name ||
-      data.fullName ||
-      currentUser.email ||
-      currentUser.uid,
-    email:
-      data.email ||
-      currentUser.email ||
-      "",
-    department:String(data.department).trim(),
-    reportsTo:String(data.reportsTo || "").trim(),
-    adminId:data.adminId || profile.id,
-    roleType:
-      data.roleType ||
-      data.role ||
-      data.accountRole ||
-      "Department Admin"
-  };
-
-  renderAdminInfo();
-}
-
-
-/* =========================
-   PROFILE DISPLAY
-========================= */
-
-function renderAdminInfo(){
-
-  if(!currentAdmin) return;
-
-  $("topName").textContent = currentAdmin.name;
-  $("topDepartment").textContent = currentAdmin.department;
-
-  $("profileName").textContent = currentAdmin.name;
-  $("profileDepartment").textContent = currentAdmin.department;
-  $("profileReports").textContent = currentAdmin.reportsTo || "—";
-  $("profileUid").textContent = currentUser.uid;
-}
-
-
-/* =========================
-   PRODUCT HELPERS
-========================= */
-
-function productName(data){
-  return data.itemName ||
-         data.productName ||
-         data.name ||
-         "Unnamed Product";
-}
-
-function productPrice(data){
-  return Number(
-    data.sellingPrice ??
-    data.salePrice ??
-    data.price ??
-    data.mrp ??
-    0
-  ) || 0;
-}
-
-function productStock(data){
-  return Number(
-    data.stockQuantity ??
-    data.stock ??
-    data.quantity ??
-    0
-  ) || 0;
-}
-
-
-/* =========================
-   LOAD PRODUCTS
-========================= */
-
-async function loadProducts(){
-
-  products = [];
-
-  try{
-
-    const snap = await getDocs(collection(db,"products"));
-
-    snap.forEach(item => {
-      products.push({
-        id:item.id,
-        data:item.data(),
-        source:"products"
-      });
-    });
-
-  }catch(error){
-    console.warn("Products collection unavailable:",error);
-  }
-
-  if(!products.length){
-
-    try{
-
-      const snap = await getDocs(collection(db,"inventory"));
-
-      snap.forEach(item => {
-        products.push({
-          id:item.id,
-          data:item.data(),
-          source:"inventory"
-        });
-      });
-
-    }catch(error){
-      console.warn("Inventory collection unavailable:",error);
-    }
-  }
-
-  renderProducts();
-}
-
-function renderProducts(){
-
-  const table = $("stockTable");
-
-  if(!products.length){
-    table.innerHTML = `
-      <tr>
-        <td colspan="4" class="text-center text-muted">
-          কোনো product/inventory data পাওয়া যায়নি।
-        </td>
-      </tr>`;
-    return;
-  }
-
-  table.innerHTML = products.map(product => {
-
-    const data = product.data;
-
-    return `
-      <tr>
-        <td class="fw-semibold">${escapeHTML(productName(data))}</td>
-        <td>${money(productPrice(data))}</td>
-        <td>${productStock(data)}</td>
-        <td>${escapeHTML(product.source)}</td>
-      </tr>`;
-
-  }).join("");
-}
-
-
-$("refreshStock").addEventListener("click",async () => {
-
-  const button = $("refreshStock");
-  button.disabled = true;
-
-  try{
-    await loadProducts();
-    toast("Stock refresh হয়েছে।",true);
-  }finally{
-    button.disabled = false;
-  }
-});
-
-
-/* =========================
-   LOAD ORDERS
-========================= */
-
-async function loadOrders(){
-
-  if(!currentUser) return;
-
-  try{
-
-    const q = query(
-      collection(db,"orders"),
-      where("requestedById","==",currentUser.uid)
-    );
-
-    const snap = await getDocs(q);
-
-    orders = [];
-
-    snap.forEach(item => {
-      orders.push({
-        id:item.id,
-        ...item.data()
-      });
-    });
-
-    orders.sort((a,b) =>
-      (Number(b.createdAtMs) || 0) -
-      (Number(a.createdAtMs) || 0)
-    );
-
-    $("orderCount").textContent = orders.length;
-
-    $("pendingCount").textContent =
-      orders.filter(item =>
-        normalize(item.status) === "pending"
-      ).length;
-
-    renderOrders();
-    renderProcessing();
-    renderRecentOrders();
-
-  }catch(error){
-
-    console.error("Order loading error:",error);
-    toast("Order data load করা যায়নি।",false);
-  }
-}
-
-
-/* =========================
-   STATUS BADGE
-========================= */
-
-function statusBadge(status){
-
-  const value = normalize(status);
-
-  let cls = "bg-warning-subtle text-warning-emphasis";
-
-  if(value === "completed")
-    cls = "bg-success-subtle text-success";
-
-  if(value === "cancelled")
-    cls = "bg-danger-subtle text-danger";
-
-  return `
-    <span class="status-badge ${cls}">
-      ${escapeHTML(status || "Pending")}
-    </span>`;
-}
-
-
 /* =========================
    RENDER ORDERS
 ========================= */
@@ -736,8 +14,705 @@ function renderOrders(){
     return;
   }
 
-  box.innerHTML = orders.map(order => `
-    <div class="order-row">
-      <div class="d-flex justify-content-between gap-2">
-        <b>${escapeHTML(order.orderId || order.id)}</b>
-        
+  box.innerHTML = orders.map(order => {
+
+    const amount =
+      Number(
+        order.totalAmount ??
+        order.amount ??
+        order.total ??
+        0
+      ) || 0;
+
+    const date =
+      order.createdAtMs
+        ? new Date(Number(order.createdAtMs)).toLocaleString("en-IN")
+        : "—";
+
+    return `
+      <div class="order-row">
+
+        <div class="d-flex justify-content-between gap-2 mb-2">
+          <b>${escapeHTML(order.orderId || order.id)}</b>
+          ${statusBadge(order.status || "Pending")}
+        </div>
+
+        <div class="row g-2 small">
+
+          <div class="col-md-6">
+            <strong>Product:</strong>
+            ${escapeHTML(
+              order.productName ||
+              order.itemName ||
+              order.product ||
+              "—"
+            )}
+          </div>
+
+          <div class="col-md-3">
+            <strong>Qty:</strong>
+            ${Number(order.quantity || order.qty || 0)}
+          </div>
+
+          <div class="col-md-3">
+            <strong>Amount:</strong>
+            ${money(amount)}
+          </div>
+
+          <div class="col-md-6">
+            <strong>Date:</strong> ${escapeHTML(date)}
+          </div>
+
+          <div class="col-md-6">
+            <strong>Department:</strong>
+            ${escapeHTML(
+              order.department ||
+              currentAdmin?.department ||
+              "—"
+            )}
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+}
+
+
+/* =========================
+   PROCESSING ORDERS
+========================= */
+
+function renderProcessing(){
+
+  const box = $("processingList");
+
+  const processingOrders = orders.filter(order => {
+
+    const status = normalize(order.status);
+
+    return (
+      status === "pending" ||
+      status === "processing" ||
+      status === "approved"
+    );
+
+  });
+
+  if(!processingOrders.length){
+
+    box.innerHTML = `
+      <div class="text-muted text-center p-4">
+        বর্তমানে কোনো processing order নেই।
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML = processingOrders.map(order => {
+
+    const amount =
+      Number(
+        order.totalAmount ??
+        order.amount ??
+        order.total ??
+        0
+      ) || 0;
+
+    return `
+      <div class="order-row">
+
+        <div class="d-flex justify-content-between gap-2">
+
+          <div>
+            <b>${escapeHTML(order.orderId || order.id)}</b>
+
+            <div class="small text-muted mt-1">
+              ${escapeHTML(
+                order.productName ||
+                order.itemName ||
+                order.product ||
+                "Product"
+              )}
+
+              ×
+
+              ${Number(
+                order.quantity ||
+                order.qty ||
+                0
+              )}
+            </div>
+          </div>
+
+          <div class="text-end">
+
+            ${statusBadge(order.status || "Pending")}
+
+            <div class="fw-bold mt-1">
+              ${money(amount)}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+}
+
+
+/* =========================
+   RECENT ORDERS
+========================= */
+
+function renderRecentOrders(){
+
+  const box = $("recentOrders");
+
+  const recent = orders.slice(0,5);
+
+  if(!recent.length){
+
+    box.innerHTML = `
+      <div class="text-muted">
+        এখনও কোনো recent order নেই।
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML = recent.map(order => {
+
+    const amount =
+      Number(
+        order.totalAmount ??
+        order.amount ??
+        order.total ??
+        0
+      ) || 0;
+
+    return `
+      <div class="order-row">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+          <div>
+
+            <strong>
+              ${escapeHTML(
+                order.orderId ||
+                order.id
+              )}
+            </strong>
+
+            <div class="small text-muted">
+              ${escapeHTML(
+                order.productName ||
+                order.itemName ||
+                order.product ||
+                "Product"
+              )}
+            </div>
+
+          </div>
+
+          <div class="text-end">
+
+            ${statusBadge(order.status || "Pending")}
+
+            <div class="small fw-bold mt-1">
+              ${money(amount)}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+}
+
+
+/* =========================
+   LOAD SALES
+========================= */
+
+async function loadSales(){
+
+  if(!currentUser) return;
+
+  try{
+
+    const q = query(
+      collection(db,"sales"),
+      where("adminUid","==",currentUser.uid)
+    );
+
+    const snap = await getDocs(q);
+
+    sales = [];
+
+    snap.forEach(item => {
+
+      sales.push({
+        id:item.id,
+        ...item.data()
+      });
+
+    });
+
+    sales.sort((a,b) =>
+      (Number(b.createdAtMs) || 0) -
+      (Number(a.createdAtMs) || 0)
+    );
+
+    renderSales();
+
+    $("salesCount").textContent = sales.length;
+
+    const totalCommission = sales.reduce(
+      (sum,item) =>
+        sum + Number(item.commission || 0),
+      0
+    );
+
+    $("commission").textContent =
+      money(totalCommission);
+
+  }catch(error){
+
+    console.error("Sales loading error:",error);
+
+    $("salesTable").innerHTML = `
+      <tr>
+        <td colspan="6"
+            class="text-center text-danger">
+          Sales data load করা যায়নি।
+        </td>
+      </tr>
+    `;
+
+  }
+}
+
+
+/* =========================
+   RENDER SALES
+========================= */
+
+function renderSales(){
+
+  const table = $("salesTable");
+
+  if(!sales.length){
+
+    table.innerHTML = `
+      <tr>
+        <td colspan="6"
+            class="text-center text-muted">
+          কোনো sale নেই।
+        </td>
+      </tr>`;
+
+    return;
+  }
+
+  table.innerHTML = sales.map(item => {
+
+    const date = item.createdAtMs
+      ? new Date(
+          Number(item.createdAtMs)
+        ).toLocaleDateString("en-IN")
+      : "—";
+
+    return `
+      <tr>
+
+        <td>
+          ${escapeHTML(date)}
+        </td>
+
+        <td class="fw-semibold">
+          ${escapeHTML(
+            item.productName ||
+            item.itemName ||
+            "—"
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            item.customerName ||
+            "—"
+          )}
+        </td>
+
+        <td>
+          ${Number(item.quantity || 0)}
+        </td>
+
+        <td>
+          ${money(item.amount)}
+        </td>
+
+        <td class="fw-bold text-success">
+          ${money(item.commission)}
+        </td>
+
+      </tr>
+    `;
+
+  }).join("");
+}
+
+
+/* =========================
+   SALE CALCULATION
+========================= */
+
+function calculateSale(){
+
+  const quantity =
+    Number($("saleQuantity").value) || 0;
+
+  const rate =
+    Number($("saleRate").value) || 0;
+
+  const amount = quantity * rate;
+
+  const commission =
+    amount * (DEPARTMENT_COMMISSION / 100);
+
+  $("saleAmount").value =
+    amount.toFixed(2);
+
+  $("saleCommission").value =
+    commission.toFixed(2);
+}
+
+
+$("saleQuantity").addEventListener(
+  "input",
+  calculateSale
+);
+
+$("saleRate").addEventListener(
+  "input",
+  calculateSale
+);
+
+
+/* =========================
+   SAVE SALE
+========================= */
+
+$("salesForm").addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+    if(!currentUser || !currentAdmin){
+
+      toast(
+        "Department Admin profile পাওয়া যায়নি।",
+        false
+      );
+
+      return;
+    }
+
+    const button = $("saveSaleBtn");
+
+    const productName =
+      $("saleProduct").value.trim();
+
+    const quantity =
+      Number($("saleQuantity").value);
+
+    const rate =
+      Number($("saleRate").value);
+
+    const customerName =
+      $("customerName").value.trim();
+
+    const customerMobile =
+      $("customerMobile").value.trim();
+
+    if(!productName){
+
+      toast(
+        "Product / Item Name দিন।",
+        false
+      );
+
+      return;
+    }
+
+    if(!quantity || quantity <= 0){
+
+      toast(
+        "সঠিক Quantity দিন।",
+        false
+      );
+
+      return;
+    }
+
+    if(rate < 0){
+
+      toast(
+        "সঠিক Rate দিন।",
+        false
+      );
+
+      return;
+    }
+
+    if(!customerName){
+
+      toast(
+        "Customer Name দিন।",
+        false
+      );
+
+      return;
+    }
+
+    if(
+      customerMobile &&
+      !/^[0-9]{10}$/.test(customerMobile)
+    ){
+
+      toast(
+        "Customer Mobile অবশ্যই 10 digit হতে হবে।",
+        false
+      );
+
+      return;
+    }
+
+    const amount =
+      quantity * rate;
+
+    const commission =
+      amount *
+      (DEPARTMENT_COMMISSION / 100);
+
+    button.disabled = true;
+
+    button.innerHTML = `
+      <span class="spinner-border spinner-border-sm me-2"></span>
+      Saving...
+    `;
+
+    try{
+
+      await addDoc(
+        collection(db,"sales"),
+        {
+
+          adminUid: currentUser.uid,
+
+          adminId:
+            currentAdmin.adminId || "",
+
+          adminName:
+            currentAdmin.name || "",
+
+          department:
+            currentAdmin.department || "",
+
+          productName:
+
+            productName,
+
+          quantity:
+
+            quantity,
+
+          rate:
+
+            rate,
+
+          amount:
+
+            amount,
+
+          customerName:
+
+            customerName,
+
+          customerMobile:
+
+            customerMobile,
+
+          commission:
+
+            commission,
+
+          commissionRate:
+
+            DEPARTMENT_COMMISSION,
+
+          status:
+
+            "Completed",
+
+          createdAtMs:
+
+            Date.now(),
+
+          createdAt:
+
+            serverTimestamp()
+
+        }
+      );
+
+      toast(
+        "Sale সফলভাবে save হয়েছে।",
+        true
+      );
+
+      $("salesForm").reset();
+
+      $("saleAmount").value = "";
+
+      $("saleCommission").value = "";
+
+      await loadSales();
+
+    }catch(error){
+
+      console.error(
+        "Sale save error:",
+        error
+      );
+
+      toast(
+        "Sale save হয়নি। Firestore permission/check করুন।",
+        false
+      );
+
+    }finally{
+
+      button.disabled = false;
+
+      button.innerHTML = `
+        <i class="fa-solid fa-floppy-disk me-2"></i>
+        Save Sale
+      `;
+
+    }
+
+  }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+$("logoutBtn").addEventListener(
+  "click",
+  async () => {
+
+    try{
+
+      await signOut(auth);
+
+      window.location.href =
+        "login.html";
+
+    }catch(error){
+
+      console.error(
+        "Logout error:",
+        error
+      );
+
+      toast(
+        "Logout করা যায়নি।",
+        false
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+$("errorLoginBtn").addEventListener(
+  "click",
+  () => {
+
+    window.location.href =
+      "login.html";
+
+  }
+);
+
+
+/* =========================
+   FIREBASE AUTH STATE
+========================= */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    try{
+
+      if(!user){
+
+        showError(
+          "Firebase login পাওয়া যায়নি। আবার Login করুন।"
+        );
+
+        return;
+      }
+
+      currentUser = user;
+
+      await buildProfile();
+
+      $("loading").classList.add("hidden");
+
+      $("errorBox").classList.add("hidden");
+
+      $("app").classList.remove("hidden");
+
+      await Promise.all([
+        loadProducts(),
+        loadOrders(),
+        loadSales()
+      ]);
+
+    }catch(error){
+
+      console.error(
+        "Department Admin startup error:",
+        error
+      );
+
+      showError(
+        error?.message ||
+        "Department Admin dashboard চালু করা যায়নি।"
+      );
+
+    }
+
+  }
+);
