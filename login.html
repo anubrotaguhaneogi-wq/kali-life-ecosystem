@@ -238,7 +238,7 @@ department: userData.department || ""
         } else if (error.message === "profile-missing") {
             errorMsg.innerText = "User profile setup is incomplete. Contact support.";
         } else {
-            errorMsg.innerText = "Connection error. Please try again.";
+            errorMsg.innerText = error.code || error.message || "Unknown error";
         }
     }
 });
