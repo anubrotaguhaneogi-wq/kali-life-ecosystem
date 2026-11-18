@@ -1243,10 +1243,14 @@ onAuthStateChanged(auth,async user => {
 
   try{
 
-    if(!user){
-      location.href = "login.html";
-      return;
-    }
+    
+if(!user){
+  showError(
+    "Firebase Session পাওয়া যায়নি। Please login again and check authentication persistence."
+  );
+  return;
+     }
+     
 
     currentUser = user;
 
