@@ -10,9 +10,9 @@
 const ADMIN_ROLES = [
     "Super Admin",
     "Core Admin",
-    "Departmental Admin",
     "Department Admin",
     "Admin"
+];
 ];
 
 const ROLE_DASHBOARD = {
