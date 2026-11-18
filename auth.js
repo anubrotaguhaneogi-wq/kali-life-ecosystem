@@ -13,7 +13,7 @@ const ADMIN_ROLES = [
     "Department Admin",
     "Admin"
 ];
-];
+
 
 const ROLE_DASHBOARD = {
     "Super Admin": "super-admin-dashboard.html",
