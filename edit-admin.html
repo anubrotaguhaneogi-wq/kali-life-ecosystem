@@ -486,7 +486,7 @@ async function saveChanges() {
 
         showMessage("✅ সফলভাবে আপডেট হয়েছে!", "success");
         $("displayRole").textContent = role;
-
+applyRoleUI(role);
     } catch (err) {
         console.error(err);
         showMessage("সংরক্ষণ করতে সমস্যা হয়েছে: " + (err.message || "Unknown error"), "error");
