@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KALI LIFE | Market Order Entry</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f6f2;
+  color: #183b2a;
+}
+header {
+  background: #164b32;
+  color: white;
+  padding: 20px;
+}
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+header p {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #d7eadc;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 16px;
+}
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px #0000000d;
+}
+h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #164b32;
+}
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: bold;
+  font-size: 13px;
+}
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d5dfd7;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fff;
+}
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.primary {
+  background: #187346;
+  color: white;
+  width: 100%;
+}
+.secondary {
+  background: #e4efe7;
+  color: #185b36;
+}
+.danger {
+  background: #fee8e5;
+  color: #a32b20;
+}
+.product-row {
+  border: 1px solid #dce7de;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.product-row h3 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+.line-total {
+  font-weight: bold;
+  color: #176b3d;
+  margin-top: 10px;
+}
+.total-box {
+  background: #eaf5ed;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+.total-box strong {
+  font-size: 22px;
+}
+.status {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #fff0d2;
+  color: #885c00;
+  font-size: 11px;
+  font-weight: bold;
+}
+.order {
+  border: 1px solid #e2e9e3;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.order h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.order p {
+  margin: 5px 0;
+  font-size: 13px;
+}
+.small {
+  color: #65776b;
+  font-size: 12px;
+}
+#loading {
+  text-align: center;
+  padding: 30px;
+}
+#app {
+  display: none;
+}
+#errorBox {
+  display: none;
+  margin: 20px;
+  padding: 15px;
+  background: #ffe7e5;
+  color: #9d2b21;
+  border-radius: 10px;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.actions button {
+  flex: 1;
+}
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 10px;
+  }
+  .card {
+    padding: 14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>KALI LIFE</h1>
+  <p>Core Admin | Market Order Entry</p>
+</header>
+
+<div id="loading">
+  Verifying account...
+</div>
+
+<div id="errorBox">
+  <h3>Access Error</h3>
+  <p id="errorText"></p>
+</div>
+
+<div id="app">
+<div class="container">
+
+<div class="card">
+  <h2>Market Order Information</h2>
+  <div id="adminInfo" class="small"></div>
+
+  <div class="grid">
+    <div>
+      <label>Customer Name *</label>
+      <input id="customerName" placeholder="Customer name">
+    </div>
+    <div>
+      <label>Customer Mobile *</label>
+      <input id="customerMobile" inputmode="numeric"
+        maxlength="10" placeholder="10 digit mobile number">
+    </div>
+  </div>
+
+  <label>Market / Supplier Name *</label>
+  <input id="marketName" placeholder="Market or supplier name">
+
+  <label>Order Date</label>
+  <input id="orderDate" type="date">
+
+  <label>Notes</label>
+  <textarea id="note" placeholder="Additional order information"></textarea>
+</div>
+
+<div class="card">
+  <h2>Products</h2>
+  <div id="productList"></div>
+
+  <button type="button" class="secondary"
+    onclick="addProductRow()">
+    + Add Another Product
+  </button>
+
+  <div class="total-box">
+    <div>Estimated Order Total</div>
+    <strong id="grandTotal">₹0.00</strong>
+  </div>
+
+  <button id="submitBtn" class="primary"
+    onclick="submitOrder()">
+    SUBMIT MARKET ORDER
+  </button>
+</div>
+
+<div class="card">
+  <h2>My Submitted Orders</h2>
+  <div id="myOrders">
+    Loading orders...
+  </div>
+</div>
+
+<div class="card">
+  <button class="secondary" onclick="logout()">
+    Logout
+  </button>
+</div>
+
+</div>
+</div>
+</body>
+    </html>
+    
+<script type="module">
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+  authDomain: "kali-life-ecosystem.firebaseapp.com",
+  projectId: "kali-life-ecosystem",
+  storageBucket: "kali-life-ecosystem.firebasestorage.app",
+  messagingSenderId: "734170546737",
+  appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10"
+};
+
+const appFirebase = initializeApp(firebaseConfig);
+const auth = getAuth(appFirebase);
+const db = getFirestore(appFirebase);
+
+let currentUser = null;
+let adminData = null;
+let submitting = false;
+
+/* HELPERS */
+function clean(value) {
+  return String(value || "").trim();
+}
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function money(value) {
+  return "₹" + Number(value || 0).toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+function showError(message) {
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("errorBox").style.display = "block";
+  document.getElementById("errorText").textContent = message;
+}
+
+/* ADMIN PROFILE */
+async function verifyCoreAdmin(user) {
+  const snap = await getDocs(
+    query(collection(db, "users"), where("uid", "==", user.uid))
+  );
+
+  if (snap.empty) {
+    throw new Error("Admin profile not found.");
+  }
+
+  let profile = null;
+  let profileId = null;
+
+  snap.forEach(docSnap => {
+    if (!profile) {
+      profile = docSnap.data();
+      profileId = docSnap.id;
+    }
+  });
+
+  const role = clean(
+    profile.roleType || profile.role || profile.accountRole
+  ).toLowerCase();
+
+  const status = clean(
+    profile.status || profile.accountStatus || "active"
+  ).toLowerCase();
+
+  if (!["core admin", "coreadmin"].includes(role)) {
+    throw new Error("Only Core Admin can access this page.");
+  }
+
+  if (status !== "active") {
+    throw new Error("Your admin account is not active.");
+  }
+
+  adminData = {
+    ...profile,
+    profileId
+  };
+
+  currentUser = user;
+
+  document.getElementById("adminInfo").textContent =
+    "Logged in: " +
+    (profile.name || profile.fullName || user.email || "Core Admin");
+
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  addProductRow();
+  setToday();
+  await loadMyOrders();
+}
+
+/* DEFAULT DATE */
+function setToday() {
+  const today = new Date();
+  const dateString =
+    today.getFullYear() + "-" +
+    String(today.getMonth() + 1).padStart(2, "0") + "-" +
+    String(today.getDate()).padStart(2, "0");
+
+  document.getElementById("orderDate").value = dateString;
+}
+
+/* PRODUCT ROW */
+window.addProductRow = function() {
+  const container = document.getElementById("productList");
+  const row = document.createElement("div");
+
+  row.className = "product-row";
+
+  row.innerHTML = `
+    <h3>Product</h3>
+
+    <label>Product Name *</label>
+    <input class="p-name" placeholder="Product name">
+
+    <div class="grid">
+      <div>
+        <label>Quantity *</label>
+        <input class="p-qty" type="number"
+          min="0.01" step="any" placeholder="Quantity">
+      </div>
+
+      <div>
+        <label>Unit Price (₹) *</label>
+        <input class="p-rate" type="number"
+          min="0" step="0.01" placeholder="Rate">
+      </div>
+    </div>
+
+    <div class="line-total">
+      Line Total: <span class="p-total">₹0.00</span>
+    </div>
+
+    <button type="button" class="danger"
+      onclick="removeProductRow(this)">
+      Remove Product
+    </button>
+  `;
+
+  row.querySelector(".p-qty").addEventListener("input", calculateTotal);
+  row.querySelector(".p-rate").addEventListener("input", calculateTotal);
+
+  container.appendChild(row);
+};
+
+window.removeProductRow = function(button) {
+  const rows = document.querySelectorAll(".product-row");
+
+  if (rows.length <= 1) {
+    alert("At least one product is required.");
+    return;
+  }
+
+  button.closest(".product-row").remove();
+  calculateTotal();
+};
+
+/* TOTAL CALCULATION */
+function getProductRows() {
+  return [...document.querySelectorAll(".product-row")];
+}
+
+function calculateTotal() {
+  let grandTotal = 0;
+
+  getProductRows().forEach(row => {
+    const qty = Number(row.querySelector(".p-qty").value || 0);
+    const rate = Number(row.querySelector(".p-rate").value || 0);
+    const lineTotal = qty * rate;
+
+    row.querySelector(".p-total").textContent = money(lineTotal);
+    grandTotal += lineTotal;
+  });
+
+  document.getElementById("grandTotal").textContent = money(grandTotal);
+  return grandTotal;
+}
+
+/* COLLECT PRODUCTS */
+function collectProducts() {
+  const items = [];
+
+  for (const row of getProductRows()) {
+    const productName = clean(row.querySelector(".p-name").value);
+    const quantity = Number(row.querySelector(".p-qty").value);
+    const unitPrice = Number(row.querySelector(".p-rate").value);
+
+    if (!productName || quantity <= 0 || unitPrice < 0) {
+      throw new Error("Please complete every product name, quantity and rate.");
+    }
+
+    items.push({
+      productName,
+      quantity,
+      unitPrice,
+      lineTotal: Number((quantity * unitPrice).toFixed(2))
+    });
+  }
+
+  if (!items.length) {
+    throw new Error("Add at least one product.");
+  }
+
+  return items;
+}
+
+/* SUBMIT ORDER */
+window.submitOrder = async function() {
+  if (!currentUser || !adminData || submitting) return;
+
+  try {
+    const customerName = clean(
+      document.getElementById("customerName").value
+    );
+
+    const customerMobile = clean(
+      document.getElementById("customerMobile").value
+    );
+
+    const marketName = clean(
+      document.getElementById("marketName").value
+    );
+
+    const orderDate = clean(
+      document.getElementById("orderDate").value
+    );
+
+    const note = clean(
+      document.getElementById("note").value
+    );
+
+    if (!customerName || !marketName || !orderDate) {
+      throw new Error("Please fill in all required fields.");
+    }
+
+    if (!/^[0-9]{10}$/.test(customerMobile)) {
+      throw new Error("Enter a valid 10-digit mobile number.");
+    }
+
+    const items = collectProducts();
+    const estimatedTotal = items.reduce(
+      (sum, item) => sum + item.lineTotal, 0
+    );
+
+    submitting = true;
+
+    const button = document.getElementById("submitBtn");
+    button.disabled = true;
+    button.textContent = "SUBMITTING...";
+
+    const totalQuantity = items.reduce(
+      (sum, item) => sum + item.quantity, 0
+    );
+
+    const payload = {
+      orderType: "CORE_MARKET_ORDER",
+      orderStatus: "PENDING",
+      paymentStatus: "UNPAID",
+      deliveryStatus: "NOT_DISPATCHED",
+
+      requestedById: currentUser.uid,
+      coreAdminId: currentUser.uid,
+      coreAdminDocId: adminData.profileId,
+
+      requestedByName:
+        adminData.name || adminData.fullName || currentUser.email || "",
+      requestedByEmail: currentUser.email || "",
+      requestedByMobile: adminData.mobile || "",
+      department: adminData.department || "",
+
+      customerName,
+      customerMobile,
+      marketName,
+
+      items,
+      itemCount: items.length,
+      totalQuantity,
+      estimatedTotal,
+      totalAmount: estimatedTotal,
+
+      orderDate,
+      dateText: orderDate,
+      note,
+
+      createdAt: serverTimestamp(),
+      createdAtMs: Date.now(),
+      updatedAt: serverTimestamp()
+    };
+
+    await addDoc(collection(db, "marketOrders"), payload);
+
+    alert("Market Order submitted successfully!");
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerMobile").value = "";
+    document.getElementById("marketName").value = "";
+    document.getElementById("note").value = "";
+
+    document.getElementById("productList").innerHTML = "";
+    addProductRow();
+    calculateTotal();
+
+    await loadMyOrders();
+
+  } catch (error) {
+    console.error("Market Order Error:", error);
+    alert(error.message || "Order submission failed.");
+  } finally {
+    submitting = false;
+
+    const button = document.getElementById("submitBtn");
+    button.disabled = false;
+    button.textContent = "SUBMIT MARKET ORDER";
+  }
+};
+
+/* MY ORDERS */
+async function loadMyOrders() {
+  const container = document.getElementById("myOrders");
+
+  try {
+    const snap = await getDocs(
+      query(
+        collection(db, "marketOrders"),
+        where("coreAdminId", "==", currentUser.uid)
+      )
+    );
+
+    if (snap.empty) {
+      container.innerHTML = "<p>No orders submitted yet.</p>";
+      return;
+    }
+
+    const orders = [];
+
+    snap.forEach(docSnap => {
+      orders.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
+
+    orders.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+
+    container.innerHTML = orders.map(order => `
+      <div class="order">
+        <h3>Order #${escapeHTML(order.id)}</h3>
+
+        <p><b>Customer:</b>
+          ${escapeHTML(order.customerName || "-")}
+        </p>
+
+        <p><b>Market:</b>
+          ${escapeHTML(order.marketName || "-")}
+        </p>
+
+        <p><b>Date:</b>
+          ${escapeHTML(order.orderDate || "-")}
+        </p>
+
+        <p><b>Products:</b>
+          ${Number(order.itemCount || 0)}
+        </p>
+
+        <p><b>Total:</b>
+          ${money(order.estimatedTotal)}
+        </p>
+
+        <p><b>Payment:</b>
+          <span class="status">
+            ${escapeHTML(order.paymentStatus || "UNPAID")}
+          </span>
+        </p>
+
+        <p><b>Delivery:</b>
+          ${escapeHTML(order.deliveryStatus || "NOT_DISPATCHED")}
+        </p>
+
+        <p><b>Order Status:</b>
+          ${escapeHTML(order.orderStatus || "PENDING")}
+        </p>
+      </div>
+    `).join("");
+
+  } catch (error) {
+    console.error("Order History Error:", error);
+    container.innerHTML =
+      "<p>Unable to load order history. Check Firestore rules.</p>";
+  }
+}
+
+/* LOGOUT */
+window.logout = async function() {
+  try {
+    await signOut(auth);
+    location.href = "login.html";
+  } catch (error) {
+    alert("Logout failed.");
+  }
+};
+
+/* AUTH CHECK */
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    location.href = "login.html";
+    return;
+  }
+
+  try {
+    await verifyCoreAdmin(user);
+  } catch (error) {
+    console.error("Access Verification Error:", error);
+    showError(error.message || "Access denied.");
+  }
+});
+</script>
+
+</body>
+</html>
+</script>
+</body>
+</html>
