@@ -1,103 +1,261 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Studio | KALI LIFE ECOSYSTEM</title>
+<title>Edit Admin | KALI LIFE ECOSYSTEM</title>
+
 <style>
-:root{--bg:#071510;--panel:#0e2118;--panel2:#12291d;--line:#244332;--text:#e8f5eb;--muted:#a7c3ae;--green:#25c26e;--green2:#15803d;--red:#f87171;--amber:#fbbf24;--blue:#60a5fa}
+:root{
+  --bg:#071510;
+  --panel:#0e2118;
+  --line:#244332;
+  --text:#e8f5eb;
+  --muted:#a7c3ae;
+  --green:#25c26e;
+  --red:#f87171;
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Inter,system-ui,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 0%,#173a26 0,#071510 48%,#050c08 100%);padding:20px}
-.wrap{max-width:980px;margin:auto}
-.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+body{
+  margin:0;padding:15px;min-height:100vh;
+  font-family:Inter,system-ui,Arial,sans-serif;
+  background:radial-gradient(circle at top,#173a26,#071510 55%,#050c08);
+  color:var(--text)
+}
+.wrap{max-width:900px;margin:auto}
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;margin-bottom:20px
+}
 .brand{display:flex;align-items:center;gap:12px}
-.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#22c55e,#166534);display:grid;place-items:center;font-size:24px;box-shadow:0 8px 24px #16a34a33}
-.brand h1{font-size:20px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:4px 0 0}
-.pill{border:1px solid #2b6340;background:#133522;color:#a7f3c0;border-radius:30px;padding:8px 12px;font-size:12px;font-weight:700}
-.hero{padding:24px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(120deg,#143621,#0d2117);margin-bottom:18px}
-.hero h2{margin:0;font-size:24px}.hero p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
-.card{background:linear-gradient(180deg,#0e2118,#0a1a12);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px;box-shadow:0 18px 40px #0002}
-.cardhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.cardhead h3{margin:0;font-size:17px}.cardhead small{color:var(--muted)}
-.notice{padding:14px;border-radius:12px;background:#102d1c;border:1px solid #28583a;color:#b8e9c6;font-size:13px;line-height:1.5;margin-bottom:16px}
-.notice.error{background:#3a1717;border-color:#7f2929;color:#fecaca}.notice.warn{background:#352b13;border-color:#76601d;color:#fde68a}
+.logo{
+  width:48px;height:48px;border-radius:15px;
+  display:grid;place-items:center;font-size:24px;
+  background:linear-gradient(135deg,#22c55e,#166534)
+}
+h1{font-size:20px;margin:0}
+.brand p{font-size:12px;color:var(--muted);margin:4px 0}
+.pill{
+  background:#133522;border:1px solid #2b6340;
+  color:#a7f3c0;padding:8px 12px;border-radius:30px;
+  font-size:12px;font-weight:bold
+}
+.hero,.card{
+  border:1px solid var(--line);border-radius:18px;
+  background:linear-gradient(180deg,#0e2118,#0a1a12);
+  padding:20px;margin-bottom:16px
+}
+.hero{background:linear-gradient(120deg,#143621,#0d2117)}
+.hero h2{margin:0;font-size:23px}
+.hero p{color:var(--muted);font-size:13px;line-height:1.5}
+.card h3{margin:0 0 16px;font-size:17px}
 .hidden{display:none!important}
-.loading{padding:40px 10px;text-align:center;color:var(--muted)}
-.profile{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;padding:16px;background:#0a1a12;border:1px solid var(--line);border-radius:16px;margin-bottom:22px}
-.avatarWrap{width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid #2e9e59;background:#173724;display:grid;place-items:center;font-size:45px}
-.avatarWrap img{width:100%;height:100%;object-fit:cover}
-.profileMeta .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.profileMeta .uid{font-size:12px;word-break:break-all;margin:6px 0 10px;color:#c4dfcd}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.field{margin-bottom:15px}.field label{display:block;font-size:12px;font-weight:700;color:#c9dfd0;margin-bottom:7px}
-input,select{width:100%;padding:12px 13px;border:1px solid #31523b;border-radius:11px;background:#07150d;color:var(--text);font-size:14px;outline:none}
-input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px #25c26e22}
+.notice{
+  padding:13px;border-radius:11px;background:#102d1c;
+  border:1px solid #28583a;color:#b8e9c6;
+  font-size:13px;line-height:1.5;margin-bottom:15px
+}
+.error{background:#3a1717!important;border-color:#7f2929!important;color:#fecaca!important}
+.warn{background:#352b13!important;border-color:#76601d!important;color:#fde68a!important}
+.loading{text-align:center;padding:35px;color:var(--muted)}
+.profile{
+  display:grid;grid-template-columns:120px 1fr;
+  align-items:center;gap:18px;padding:15px;
+  background:#0a1a12;border:1px solid var(--line);
+  border-radius:14px;margin-bottom:20px
+}
+.avatar{
+  width:110px;height:110px;border-radius:50%;
+  overflow:hidden;border:3px solid #2e9e59;
+  background:#173724;display:grid;place-items:center;font-size:40px
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.uid{font-size:12px;word-break:break-all;color:#c4dfcd;margin:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{margin-bottom:14px}
+label{display:block;font-size:12px;font-weight:bold;margin-bottom:7px;color:#c9dfd0}
+input,select{
+  width:100%;padding:12px;border:1px solid #31523b;
+  border-radius:10px;background:#07150d;color:var(--text);
+  font-size:14px;outline:none
+}
+input:focus,select:focus{border-color:var(--green)}
 input[readonly]{color:#9ab6a2;background:#0b1b12}
-.help{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.45}
-.file{border:1px dashed #3a6848;padding:12px;border-radius:11px;background:#0a1b11}
+.help{font-size:11px;color:var(--muted);margin-top:6px}
+.file{border:1px dashed #3a6848;padding:12px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-button{border:0;border-radius:11px;padding:12px 16px;font-weight:800;font-size:13px;cursor:pointer;color:#fff;transition:.15s}
+button{
+  border:0;border-radius:10px;padding:12px 16px;
+  font-weight:bold;font-size:13px;cursor:pointer;color:white
+}
 button:disabled{opacity:.5;cursor:not-allowed}
-.primary{background:linear-gradient(135deg,#22c55e,#15803d)}.primary:hover{filter:brightness(1.1)}
-.secondary{background:#1d3526;border:1px solid #35543d;color:#d5e8da}
-.danger{background:#7f1d1d;border:1px solid #a43b3b}.danger:hover{background:#991b1b}
-.status{display:inline-block;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800}
-.status.active{background:#153a24;color:#86efac}.status.inactive{background:#3b1d1d;color:#fca5a5}
-.bottomlinks{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:15px 0 6px}
-.bottomlinks a{color:#9de9b6;text-decoration:none;font-size:12px;font-weight:700}
-.bottomlinks a:hover{text-decoration:underline}
-#message{margin-top:16px}
-@media(max-width:640px){body{padding:12px}.hero{padding:19px}.hero h2{font-size:21px}.card{padding:16px}.grid{grid-template-columns:1fr}.profile{grid-template-columns:1fr;text-align:center;justify-items:center}.profileMeta .uid{text-align:center}.actions button{width:100%}}
+.primary{background:linear-gradient(135deg,#22c55e,#15803d)}
+.secondary{background:#1d3526;border:1px solid #35543d}
+.danger{background:#7f1d1d;border:1px solid #a43b3b}
+.links{
+  display:flex;justify-content:center;gap:15px;
+  flex-wrap:wrap;margin:20px 0
+}
+.links a{color:#9de9b6;text-decoration:none;font-size:12px}
+#message{margin-top:15px}
+@media(max-width:600px){
+  body{padding:10px}
+  .grid{grid-template-columns:1fr}
+  .profile{grid-template-columns:1fr;text-align:center;justify-items:center}
+  .actions button{width:100%}
+  .hero,.card{padding:16px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <div class="brand"><div class="logo">🌿</div><div><h1>KALI LIFE ECOSYSTEM</h1><p>Admin control center</p></div></div>
-    <div class="pill">👑 SUPER ADMIN • MANAGEMENT</div>
-  </header>
-  <section class="hero"><h2>Admin Studio</h2><p>Edit administrator profile, role, department assignment, reporting manager and account status. Changes are saved to the Firestore user record.</p></section>
-  <div id="loading" class="card loading">🔄 Loading administrator profile…</div>
-  <div id="error" class="notice error hidden"></div>
-  <main id="editor" class="hidden">
-    <section class="card">
-      <div class="cardhead"><h3>Administrator identity</h3><small>Profile record</small></div>
-      <div class="profile">
-        <div class="avatarWrap"><span id="avatarFallback">👤</span><img id="avatar" class="hidden" alt="Admin photo"></div>
-        <div class="profileMeta"><div class="label">Document UID</div><div class="uid" id="uidText">—</div><div id="roleBadge" class="pill">Role</div></div>
-      </div>
-      <div class="grid">
-        <div class="field"><label for="name">Full name</label><input id="name" maxlength="100" placeholder="Enter administrator name"></div>
-        <div class="field"><label for="email">Email / Login identity</label><input id="email" readonly><div class="help">Email is read-only here; authentication identity is not changed.</div></div>
-        <div class="field"><label for="mobile">Mobile</label><input id="mobile" readonly><div class="help">Mobile is read-only here.</div></div>
-        <div class="field"><label for="status">Account status</label><select id="status"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
-      </div>
-    </section>
-    <section class="card">
-      <div class="cardhead"><h3>Role & access assignment</h3><small>Operational permissions</small></div>
-      <div class="field"><label for="role">Administrator role</label><select id="role"><option value="Core Admin">Core Admin</option><option value="Departmental Admin">Departmental Admin</option></select></div>
-      <div id="roleNote" class="notice">Choose the administrator role.</div>
-      <div id="departmentWrap" class="field"><label for="department">Department</label><select id="department"><option value="">— Select department —</option></select></div>
-      <div id="reportsWrap" class="field"><label for="reportsTo">Reports to (Core Admin)</label><select id="reportsTo"><option value="">— Select Core Admin —</option></select></div>
-    </section>
-    <section class="card">
-      <div class="cardhead"><h3>Profile photo</h3><small>Optional</small></div>
-      <div class="field"><label for="photo">Upload new photo</label><input id="photo" class="file" type="file" accept="image/jpeg,image/png,image/webp"><div class="help">JPEG, PNG or WEBP. Image will be resized to max 600×600 and uploaded as JPEG.</div><div id="photoName" class="help">No new photo selected</div></div>
-    </section>
-    <section class="card">
-      <div class="cardhead"><h3>Actions</h3><small>Review before saving</small></div>
-      <div class="notice warn">Role or department changes can affect access and reporting. Verify the selection before saving. Delete removes the Firestore profile and photo only; it does not delete the Firebase Authentication account.</div>
-      <div class="actions"><button id="saveBtn" class="primary" type="button">💾 Save changes</button><button id="deleteBtn" class="danger" type="button">🗑 Delete profile record</button><button id="backBtn" class="secondary" type="button">← Back to Admin List</button></div>
-      <div id="message" class="hidden"></div>
-    </section>
-  </main>
-  <nav class="bottomlinks"><a href="super-admin-dashboard.html">Super Admin Dashboard</a><a href="admin-list.html">Admin List</a><a href="create-admin.html">Create Admin</a></nav>
+
+<header>
+  <div class="brand">
+    <div class="logo">🌿</div>
+    <div>
+      <h1>KALI LIFE ECOSYSTEM</h1>
+      <p>Administrator Management</p>
+    </div>
+  </div>
+  <div class="pill">SUPER ADMIN • EDIT</div>
+</header>
+
+<section class="hero">
+  <h2>Edit Administrator</h2>
+  <p>Edit administrator profile, role, department, reporting manager and account status.</p>
+</section>
+
+<div id="loading" class="card loading">
+  Loading administrator profile…
 </div>
-<script src="./auth.js"></script>
+
+<div id="error" class="notice error hidden"></div>
+
+<main id="editor" class="hidden">
+
+<section class="card">
+  <h3>Administrator Profile</h3>
+
+  <div class="profile">
+    <div class="avatar">
+      <span id="avatarFallback">👤</span>
+      <img id="avatar" class="hidden" alt="Admin photo">
+    </div>
+    <div>
+      <strong>Admin UID</strong>
+      <div id="uidText" class="uid">—</div>
+      <div id="roleBadge" class="pill">Role</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input id="name" maxlength="100">
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" readonly>
+    </div>
+    <div class="field">
+      <label for="mobile">Mobile</label>
+      <input id="mobile" readonly>
+    </div>
+    <div class="field">
+      <label for="status">Account Status</label>
+      <select id="status">
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h3>Role & Department</h3>
+
+  <div class="field">
+    <label for="role">Admin Role</label>
+    <select id="role">
+      <option value="Core Admin">Core Admin</option>
+      <option value="Departmental Admin">Departmental Admin</option>
+    </select>
+  </div>
+
+  <div id="departmentWrap" class="field">
+    <label for="department">Department</label>
+    <select id="department">
+      <option value="">Select Department</option>
+    </select>
+  </div>
+
+  <div id="reportsWrap" class="field">
+    <label for="reportsTo">Reports To</label>
+    <select id="reportsTo">
+      <option value="">Select Core Admin</option>
+    </select>
+  </div>
+
+  <div id="roleNote" class="notice">
+    Role assignment information
+  </div>
+</section>
+
+<section class="card">
+  <h3>Profile Photo</h3>
+  <div class="field">
+    <label for="photo">Upload Photo</label>
+    <input id="photo" class="file" type="file"
+      accept="image/jpeg,image/png,image/webp">
+    <div class="help">Optional. JPEG, PNG or WEBP.</div>
+    <div id="photoName" class="help">No new photo selected</div>
+  </div>
+</section>
+
+<section class="card">
+  <h3>Actions</h3>
+  <div class="notice warn">
+    Carefully check the administrator details before saving.
+  </div>
+  <div class="actions">
+    <button id="saveBtn" class="primary">Save Changes</button>
+    <button id="deleteBtn" class="danger">Delete Admin</button>
+    <button id="backBtn" class="secondary">Back to Admin List</button>
+  </div>
+  <div id="message" class="hidden"></div>
+</section>
+
+</main>
+
+<nav class="links">
+  <a href="super-admin-dashboard.html">Super Admin</a>
+  <a href="admin-list.html">Admin List</a>
+  <a href="create-admin.html">Create Admin</a>
+</nav>
+</div>
+<!-- PART 2 starts here -->
+  <img id="avatar" class="hidden" alt="Admin photo">
+  
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import { getAuth, onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  getFirestore, collection, getDocs, doc, getDoc,
+  updateDoc, deleteDoc, query, where
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+import {
+  getStorage, ref, uploadBytes, getDownloadURL, deleteObject
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
@@ -108,115 +266,393 @@ const firebaseConfig = {
   appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
   measurementId: "G-LBEY0W7RX3"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
+
 const USERS = "users";
 const CORE = "Core Admin";
 const DEPT = "Departmental Admin";
-const DEPARTMENTS = ["Product","Agriculture","Technology","Marriage","Education"];
-const $ = id => document.getElementById(id);
-let sessionUser=null, targetUid="", targetData=null, chosenPhoto=null, coreList=[];
 
-function showMessage(text,type="info"){
-  const m=$("message");m.textContent=text;m.className="notice "+(type==="error"?"error":"");m.classList.remove("hidden");
+const DEPARTMENTS = [
+  "Product",
+  "Agriculture",
+  "Technology",
+  "Marriage",
+  "Education"
+];
+
+const $ = id => document.getElementById(id);
+
+let sessionUser = null;
+let targetUid = "";
+let targetData = null;
+let chosenPhoto = null;
+let coreAdmins = [];
+
+function roleOf(data){
+  return String(data?.roleType || data?.role || "").trim();
 }
-function hideMessage(){const m=$("message");m.textContent="";m.className="hidden";}
-function roleOf(d){return String(d?.roleType||d?.role||"").trim();}
-function active(d){return String(d?.status||"Active").toLowerCase()==="active";}
-function queryUid(){const p=new URLSearchParams(location.search);return (p.get("uid")||p.get("id")||p.get("userId")||p.get("adminId")||"").trim();}
-function isSuper(){
-  const r=String(sessionUser?.roleType||sessionUser?.role||"").trim().toLowerCase();
-  const s=String(sessionUser?.status||"Active").trim().toLowerCase();
-  return r==="super admin" && s!=="inactive" && s!=="blocked";
+
+function isActive(data){
+  return String(data?.status || "Active")
+    .trim().toLowerCase() === "active";
 }
+
+function getTargetUid(){
+  const params = new URLSearchParams(location.search);
+  return (
+    params.get("uid") ||
+    params.get("id") ||
+    params.get("userId") ||
+    params.get("adminId") ||
+    ""
+  ).trim();
+}
+
+function showMessage(text,type="success"){
+  const box = $("message");
+  box.textContent = text;
+  box.className = "notice " + (type==="error" ? "error" : "");
+}
+
+function clearMessage(){
+  $("message").textContent = "";
+  $("message").className = "hidden";
+}
+
+function showError(text){
+  $("loading").classList.add("hidden");
+  $("editor").classList.add("hidden");
+  $("error").textContent = text;
+  $("error").classList.remove("hidden");
+}
+
 function setPhoto(url){
-  if(url){$("avatar").src=url;$("avatar").classList.remove("hidden");$("avatarFallback").classList.add("hidden");}
-  else{$("avatar").classList.add("hidden");$("avatarFallback").classList.remove("hidden");}
+  const img = $("avatarImg");
+  const fallback = $("avatarFallback");
+
+  if(url){
+    img.src = url;
+    img.classList.remove("hidden");
+    fallback.classList.add("hidden");
+  }else{
+    img.src = "";
+    img.classList.add("hidden");
+    fallback.classList.remove("hidden");
+  }
 }
-function fillDepartmentOptions(){
-  $("department").innerHTML='<option value="">— Select department —</option>';
-  DEPARTMENTS.forEach(d=>{const o=document.createElement("option");o.value=d;o.textContent=d;$("department").appendChild(o);});
+
+function fillDepartments(){
+  const select = $("department");
+  select.innerHTML = '<option value="">Select Department</option>';
+
+  DEPARTMENTS.forEach(name=>{
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    select.appendChild(option);
+  });
 }
-function roleUI(role){
-  const core=role===CORE;
-  $("departmentWrap").classList.toggle("hidden",core);
-  $("reportsWrap").classList.toggle("hidden",core);
-  $("roleNote").textContent=core
-    ?"Core Admin has broad operational access. Super Admin retains final authority."
-    :"Departmental Admin is assigned to one department and must report to an active Core Admin.";
-  if(core){$("department").value="";$("reportsTo").value="";}
+
+function updateRoleUI(){
+  const role = $("role").value;
+  const isCore = role === CORE;
+
+  $("departmentWrap").classList.toggle("hidden",isCore);
+  $("reportsWrap").classList.toggle("hidden",isCore);
+
+  $("roleNote").textContent = isCore
+    ? "Core Admin role selected."
+    : "Departmental Admin must have a department and a Core Admin manager.";
+
+  if(isCore){
+    $("department").value = "";
+    $("reportsTo").value = "";
+  }
 }
+
+async function verifySuperAdmin(user){
+  if(!user) throw new Error("Please login first.");
+
+  const snap = await getDoc(doc(db,USERS,user.uid));
+  if(!snap.exists()) throw new Error("Your admin profile was not found.");
+
+  const profile = snap.data();
+  const role = roleOf(profile).toLowerCase();
+  const status = String(profile.status || "Active").toLowerCase();
+
+  if(role !== "super admin")
+    throw new Error("Super Admin access is required.");
+
+  if(status === "inactive" || status === "blocked")
+    throw new Error("Your account is not active.");
+
+  sessionUser = {...profile,uid:user.uid};
+}
+
 async function loadCoreAdmins(){
-  const q=query(collection(db,USERS),where("roleType","==",CORE));
-  const snap=await getDocs(q);coreList=[];
-  snap.forEach(ds=>{const d=ds.data();if(ds.id!==targetUid&&active(d))coreList.push({uid:ds.id,name:d.name||d.fullName||d.email||ds.id});});
-  coreList.sort((a,b)=>a.name.localeCompare(b.name));
-  $("reportsTo").innerHTML='<option value="">— Select Core Admin —</option>';
-  coreList.forEach(c=>{const o=document.createElement("option");o.value=c.uid;o.textContent=c.name;$("reportsTo").appendChild(o);});
+  const snapshot = await getDocs(collection(db,USERS));
+  coreAdmins = [];
+
+  snapshot.forEach(ds=>{
+    const data = ds.data();
+    const role = roleOf(data);
+
+    if(ds.id !== targetUid && role === CORE && isActive(data)){
+      coreAdmins.push({
+        uid:ds.id,
+        name:data.name || data.fullName || data.email || ds.id
+      });
+    }
+  });
+
+  coreAdmins.sort((a,b)=>a.name.localeCompare(b.name));
+
+  const select = $("reportsTo");
+  select.innerHTML = '<option value="">Select Core Admin</option>';
+
+  coreAdmins.forEach(core=>{
+    const option = document.createElement("option");
+    option.value = core.uid;
+    option.textContent = core.name;
+    select.appendChild(option);
+  });
 }
-async function loadTarget(){
-  targetUid=queryUid();if(!targetUid)throw new Error("Admin UID missing from URL.");
-  const snap=await getDoc(doc(db,USERS,targetUid));if(!snap.exists())throw new Error("Admin profile not found.");
-  targetData=snap.data();if(roleOf(targetData).toLowerCase()==="super admin")throw new Error("Super Admin profile cannot be edited from this page.");
-  $("uidText").textContent=targetUid;$("roleBadge").textContent=roleOf(targetData)||"Unknown role";
-  $("name").value=targetData.name||targetData.fullName||"";$("email").value=targetData.email||"";$("mobile").value=targetData.mobile||targetData.phone||"";
-  $("status").value=active(targetData)?"Active":"Inactive";
-  $("role").value=roleOf(targetData)===DEPT?DEPT:CORE;
-  $("department").value=targetData.department||"";
-  setPhoto(targetData.photoURL||targetData.photo||"");
-  await loadCoreAdmins();if(targetData.reportsTo)$("reportsTo").value=targetData.reportsTo;
-  roleUI($("role").value);
-  $("loading").classList.add("hidden");$("editor").classList.remove("hidden");
+
+async function loadTargetAdmin(){
+  targetUid = getTargetUid();
+
+  if(!targetUid)
+    throw new Error("Admin UID is missing from the URL.");
+
+  const snap = await getDoc(doc(db,USERS,targetUid));
+
+  if(!snap.exists())
+    throw new Error("Administrator profile not found.");
+
+  targetData = snap.data();
+
+  if(roleOf(targetData).toLowerCase() === "super admin")
+    throw new Error("Super Admin profile cannot be edited here.");
+
+  $("uidText").textContent = targetUid;
+  $("roleBadge").textContent = roleOf(targetData);
+
+  $("name").value = targetData.name || targetData.fullName || "";
+  $("email").value = targetData.email || "";
+  $("mobile").value = targetData.mobile || targetData.phone || "";
+
+  $("status").value = isActive(targetData) ? "Active" : "Inactive";
+  $("role").value = roleOf(targetData) === DEPT ? DEPT : CORE;
+  $("department").value = targetData.department || "";
+
+  setPhoto(targetData.photoURL || targetData.photo || "");
+
+  await loadCoreAdmins();
+
+  if(targetData.reportsTo)
+    $("reportsTo").value = targetData.reportsTo;
+
+  updateRoleUI();
+
+  $("loading").classList.add("hidden");
+  $("editor").classList.remove("hidden");
 }
-async function resizePhoto(file,max=600,quality=.85){
-  return new Promise((resolve,reject)=>{const image=new Image(),reader=new FileReader();
-    reader.onload=e=>{image.onload=()=>{let w=image.width,h=image.height;if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
-      const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;canvas.getContext("2d").drawImage(image,0,0,w,h);
-      canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("Image conversion failed")),"image/jpeg",quality);};
-      image.onerror=()=>reject(new Error("Image cannot be opened"));image.src=e.target.result;};
-    reader.onerror=()=>reject(new Error("Photo read failed"));reader.readAsDataURL(file);});
-}
-$("photo").addEventListener("change",e=>{chosenPhoto=e.target.files[0]||null;$("photoName").textContent=chosenPhoto?chosenPhoto.name:"No new photo selected";if(chosenPhoto){const reader=new FileReader();reader.onload=ev=>setPhoto(ev.target.result);reader.readAsDataURL(chosenPhoto);}});
-$("role").addEventListener("change",()=>roleUI($("role").value));
-$("backBtn").addEventListener("click",()=>location.href="admin-list.html");
+
+// PART 3 starts here
+</script>
+
+$("role").addEventListener("change",updateRoleUI);
+
+$("photo").addEventListener("change",event=>{
+  chosenPhoto = event.target.files?.[0] || null;
+
+  $("photoName").textContent = chosenPhoto
+    ? chosenPhoto.name
+    : "No new photo selected";
+
+  if(chosenPhoto){
+    const reader = new FileReader();
+    reader.onload = e=>{
+      $("avatarImg").src = e.target.result;
+      $("avatarImg").classList.remove("hidden");
+      $("avatarFallback").classList.add("hidden");
+    };
+    reader.readAsDataURL(chosenPhoto);
+  }
+});
+
+$("backBtn").addEventListener("click",()=>{
+  location.href = "admin-list.html";
+});
+
 $("saveBtn").addEventListener("click",async()=>{
-  hideMessage();const name=$("name").value.trim(),role=$("role").value,status=$("status").value,department=$("department").value,reportsTo=$("reportsTo").value;
-  if(!name){showMessage("Full name is required.","error");return;}
-  if(role===DEPT&&(!department||!reportsTo)){showMessage("Department and Reports To are required for Departmental Admin.","error");return;}
-  $("saveBtn").disabled=true;$("deleteBtn").disabled=true;
+  clearMessage();
+
+  const name = $("name").value.trim();
+  const role = $("role").value;
+  const status = $("status").value;
+  const department = $("department").value;
+  const reportsTo = $("reportsTo").value;
+
+  if(!name){
+    showMessage("Admin name is required.","error");
+    return;
+  }
+
+  if(role === DEPT && (!department || !reportsTo)){
+    showMessage("Department and Reports To are required.","error");
+    return;
+  }
+
+  if(chosenPhoto && chosenPhoto.size > 5*1024*1024){
+    showMessage("Photo must be smaller than 5 MB.","error");
+    return;
+  }
+
+  $("saveBtn").disabled = true;
+  $("deleteBtn").disabled = true;
+
   try{
-    let photoURL=targetData.photoURL||targetData.photo||"";
-    if(chosenPhoto){const blob=await resizePhoto(chosenPhoto);const photoRef=ref(storage,`admin-photos/${targetUid}.jpg`);await uploadBytes(photoRef,blob);photoURL=await getDownloadURL(photoRef);}
-    const patch={name,roleType:role,role,status,photoURL,updatedAt:new Date().toISOString(),updatedBy:sessionUser?.uid||"super-admin"};
-    if(role===CORE){patch.department="";patch.reportsTo="";}else{patch.department;patch.department=department;patch.reportsTo=reportsTo;}
-    await updateDoc(doc(db,USERS,targetUid),patch);targetData={...targetData,...patch};chosenPhoto=null;$("photo").value="";$("photoName").textContent="No new photo selected";$("roleBadge").textContent=role;
-    showMessage("Profile updated successfully.","success");roleUI(role);
-  }catch(err){console.error(err);showMessage("Save failed: "+(err.message||err),"error");}
-  finally{$("saveBtn").disabled=false;$("deleteBtn").disabled=false;}
+    let photoURL = targetData.photoURL || targetData.photo || "";
+
+    if(chosenPhoto){
+      const photoRef = ref(storage,`admin-photos/${targetUid}.jpg`);
+      await uploadBytes(photoRef,chosenPhoto);
+      photoURL = await getDownloadURL(photoRef);
+    }
+
+    let reportsToName = "";
+
+    if(role === DEPT){
+      const manager = coreAdmins.find(c=>c.uid===reportsTo);
+      if(!manager){
+        throw new Error("Selected Core Admin is invalid.");
+      }
+      reportsToName = manager.name;
+    }
+
+    const patch = {
+      name:name,
+      roleType:role,
+      role:role,
+      status:status,
+      department:role===CORE ? "" : department,
+      reportsTo:role===CORE ? "" : reportsTo,
+      reportsToName:role===CORE ? "" : reportsToName,
+      photoURL:photoURL,
+      updatedAt:new Date().toISOString(),
+      updatedBy:sessionUser.uid
+    };
+
+    await updateDoc(doc(db,USERS,targetUid),patch);
+
+    targetData = {...targetData,...patch};
+    chosenPhoto = null;
+
+    $("photo").value = "";
+    $("photoName").textContent = "No new photo selected";
+    $("roleBadge").textContent = role;
+
+    showMessage("Admin profile updated successfully.");
+    updateRoleUI();
+
+  }catch(error){
+    console.error("Edit Admin Save Error:",error);
+    showMessage("Save failed: "+(error.message || error),"error");
+  }finally{
+    $("saveBtn").disabled = false;
+    $("deleteBtn").disabled = false;
+  }
 });
+
 $("deleteBtn").addEventListener("click",async()=>{
-  if(targetUid===sessionUser?.uid){showMessage("You cannot delete your own account from this page.","error");return;}
-  if(!confirm(`Delete Firestore profile for ${targetData?.name||targetUid}? This will not delete the Firebase Authentication account.`))return;
-  $("saveBtn").disabled=true;$("deleteBtn").disabled=true;
+  clearMessage();
+
+  if(targetUid === sessionUser.uid){
+    showMessage("You cannot delete your own account.","error");
+    return;
+  }
+
+  if(roleOf(targetData) === "Super Admin"){
+    showMessage("Super Admin cannot be deleted.","error");
+    return;
+  }
+
+  if(roleOf(targetData) === CORE){
+    const snapshot = await getDocs(collection(db,USERS));
+    const hasSubAdmins = snapshot.docs.some(ds=>{
+      const data = ds.data();
+      return ds.id !== targetUid && data.reportsTo === targetUid;
+    });
+
+    if(hasSubAdmins){
+      showMessage(
+        "This Core Admin has assigned admins. Reassign them first.",
+        "error"
+      );
+      return;
+    }
+  }
+
+  const confirmed = confirm(
+    `Delete admin profile for ${targetData.name || targetUid}?\n\nThis removes the Firestore profile only.`
+  );
+
+  if(!confirmed) return;
+
+  $("saveBtn").disabled = true;
+  $("deleteBtn").disabled = true;
+
   try{
-    const photoRef=ref(storage,`admin-photos/${targetUid}.jpg`);
-    try{await deleteObject(photoRef);}catch(photoErr){if(photoErr.code!=="storage/object-not-found")console.warn("Photo cleanup issue:",photoErr);}
-    await deleteDoc(doc(db,USERS,targetUid));showMessage("Firestore profile deleted. Authentication account remains; server-side deletion is required to remove it.","success");
-    setTimeout(()=>location.href="admin-list.html",1200);
-  }catch(err){console.error(err);showMessage("Delete failed: "+(err.message||err),"error");}
-  finally{$("saveBtn").disabled=false;$("deleteBtn").disabled=false;}
+    const photoRef = ref(storage,`admin-photos/${targetUid}.jpg`);
+
+    try{
+      await deleteObject(photoRef);
+    }catch(photoError){
+      if(photoError.code !== "storage/object-not-found"){
+        console.warn("Photo cleanup warning:",photoError);
+      }
+    }
+
+    await deleteDoc(doc(db,USERS,targetUid));
+
+    showMessage("Admin profile deleted successfully.");
+
+    setTimeout(()=>{
+      location.href = "admin-list.html";
+    },1200);
+
+  }catch(error){
+    console.error("Delete Admin Error:",error);
+    showMessage("Delete failed: "+(error.message || error),"error");
+  }finally{
+    $("saveBtn").disabled = false;
+    $("deleteBtn").disabled = false;
+  }
 });
+
+fillDepartments();
+
 onAuthStateChanged(auth,async user=>{
-  if(!user){location.href="login.html";return;}
   try{
-    const profile=await window.getCurrentUser();
-    sessionUser=profile||{uid:user.uid};
-    if(!isSuper()){throw new Error("Super Admin access required.");}
-    await loadTarget();
-  }catch(err){console.error(err);$("loading").classList.add("hidden");$("error").textContent=err.message||"Access denied or profile load failed.";$("error").classList.remove("hidden");}
+    if(!user){
+      location.href = "login.html";
+      return;
+    }
+
+    await verifySuperAdmin(user);
+    await loadTargetAdmin();
+
+  }catch(error){
+    console.error("Edit Admin Initialization Error:",error);
+    showError(error.message || "Failed to load Admin Editor.");
+  }
 });
+
 </script>
 </body>
 </html>
