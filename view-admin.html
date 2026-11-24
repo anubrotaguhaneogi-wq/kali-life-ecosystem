@@ -1,441 +1,665 @@
+
 <!DOCTYPE html>
-
-<!--
-==========================================
-KALI LIFE ECOSYSTEM
-Page     : View Admin
-File     : view-admin.html
-Version  : 4.0 (Firebase Fixed)
-Status   : Completed
-Updated  : 06-09-2026
-==========================================
--->
-
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>View Admin - KALI LIFE ECOSYSTEM</title>
-
-
-    <!-- ==========================================
-         AUTHENTICATION SYSTEM
-    ========================================== -->
-
-    <script src="auth.js"></script>
-
-
-    <!-- ==========================================
-         PAGE STYLE
-    ========================================== -->
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f8;
-            color: #1f2937;
-        }
-
-
-        .page-container {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-
-        .admin-card {
-            background: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-        }
-
-
-        /* ==========================================
-           HEADER
-        ========================================== */
-
-        .card-header {
-            background: #1f2937;
-            color: #ffffff;
-            padding: 25px;
-        }
-
-
-        .card-header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-
-        .card-header p {
-            margin: 8px 0 0;
-            font-size: 14px;
-            color: #d1d5db;
-        }
-
-
-        /* ==========================================
-           ADMIN DETAILS
-        ========================================== */
-
-        .admin-details {
-            padding: 25px;
-        }
-
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            padding: 17px 0;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-
-        .detail-label {
-            font-weight: bold;
-            color: #374151;
-        }
-
-
-        .detail-value {
-            text-align: right;
-            color: #111827;
-            word-break: break-word;
-        }
-
-
-        /* ==========================================
-           STATUS
-        ========================================== */
-
-        .status-active {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: #dcfce7;
-            color: #166534;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-
-        .status-inactive {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: #fee2e2;
-            color: #991b1b;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-
-        /* ==========================================
-           ERROR MESSAGE
-        ========================================== */
-
-        .message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-            color: #9a3412;
-            display: none;
-            font-weight: bold;
-        }
-
-
-        /* ==========================================
-           FOOTER
-        ========================================== */
-
-        .card-footer {
-            padding: 20px 25px;
-            background: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-        }
-
-
-        .back-button {
-            width: 100%;
-            padding: 13px 18px;
-            border: none;
-            border-radius: 7px;
-            background: #1f2937;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-
-        .back-button:hover {
-            background: #374151;
-        }
-
-
-        /* ==========================================
-           MOBILE
-        ========================================== */
-
-        @media (max-width: 600px) {
-
-            .page-container {
-                margin: 15px auto;
-                padding: 12px;
-            }
-
-
-            .card-header {
-                padding: 20px;
-            }
-
-
-            .card-header h1 {
-                font-size: 22px;
-            }
-
-
-            .admin-details {
-                padding: 20px;
-            }
-
-
-            .detail-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-
-            .detail-value {
-                text-align: left;
-                width: 100%;
-            }
-
-
-            .card-footer {
-                padding: 15px 20px;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Profile | KALI LIFE ECOSYSTEM</title>
+
+<script src="auth.js"></script>
+
+<style>
+:root {
+    --bg: #071410;
+    --panel: #10231c;
+    --panel2: #142b22;
+    --green: #10b981;
+    --green2: #34d399;
+    --text: #f0fdf4;
+    --muted: #94a3a0;
+    --border: rgba(255,255,255,.09);
+    --danger: #f87171;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Inter, Arial, sans-serif;
+    background:
+        radial-gradient(circle at top right, rgba(16,185,129,.12), transparent 35%),
+        var(--bg);
+    color: var(--text);
+    padding: 24px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+.brand {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--green2);
+    font-weight: 800;
+}
+
+.top-label {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.profile-card {
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--panel);
+    box-shadow: 0 25px 70px rgba(0,0,0,.28);
+}
+
+.hero {
+    position: relative;
+    padding: 35px;
+    background:
+        linear-gradient(120deg, rgba(16,185,129,.18), transparent 65%),
+        #10231c;
+    border-bottom: 1px solid var(--border);
+}
+
+.hero-tag {
+    display: inline-flex;
+    padding: 7px 12px;
+    border-radius: 30px;
+    background: rgba(16,185,129,.12);
+    color: #6ee7b7;
+    border: 1px solid rgba(16,185,129,.25);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.profile-main {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: 900;
+    color: #052e1b;
+    background: linear-gradient(135deg, #6ee7b7, #10b981);
+    box-shadow: 0 10px 35px rgba(16,185,129,.2);
+    flex-shrink: 0;
+}
+
+.profile-heading {
+    min-width: 0;
+}
+
+.profile-heading h1 {
+    font-size: clamp(23px, 4vw, 34px);
+    font-weight: 800;
+    word-break: break-word;
+}
+
+.profile-heading p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.role-badge {
+    background: rgba(16,185,129,.12);
+    color: #6ee7b7;
+    border: 1px solid rgba(16,185,129,.2);
+}
+
+.status-badge {
+    background: rgba(34,197,94,.12);
+    color: #86efac;
+    border: 1px solid rgba(34,197,94,.2);
+}
+
+.status-badge.inactive {
+    background: rgba(248,113,113,.12);
+    color: #fca5a5;
+    border-color: rgba(248,113,113,.2);
+}
+
+.content {
+    padding: 30px;
+}
+
+.section-title {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 15px;
+}
+
+.info-box {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: var(--panel2);
+    min-width: 0;
+    transition: .2s ease;
+}
+
+.info-box:hover {
+    border-color: rgba(16,185,129,.35);
+    transform: translateY(-2px);
+}
+
+.info-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.info-value.small {
+    font-size: 13px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 22px 30px;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,.12);
+}
+
+.footer-note {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.back-btn {
+    border: 1px solid rgba(16,185,129,.3);
+    background: rgba(16,185,129,.12);
+    color: #6ee7b7;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.back-btn:hover {
+    background: var(--green);
+    color: #042e1b;
+}
+
+.message-box {
+    display: none;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: rgba(248,113,113,.1);
+    border: 1px solid rgba(248,113,113,.2);
+    color: #fca5a5;
+    font-size: 14px;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted);
+}
+
+.spinner {
+    width: 35px;
+    height: 35px;
+    margin: 0 auto 15px;
+    border: 3px solid rgba(16,185,129,.15);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    .hero {
+        padding: 22px;
+    }
+
+    .profile-main {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .avatar {
+        width: 68px;
+        height: 68px;
+        border-radius: 19px;
+        font-size: 27px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        padding: 20px;
+    }
+
+    .back-btn {
+        width: 100%;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<div class="container">
 
-    <!-- ==========================================
-         LOGIN & ROLE SECURITY
-         ONLY SUPER ADMIN CAN ACCESS
-    ========================================== -->
+    <div class="topbar">
+        <div class="brand">KALI LIFE ECOSYSTEM</div>
+        <div class="top-label">ADMIN PROFILE</div>
+    </div>
 
-    <script>
-        checkLogin();
-        checkRole("Super Admin");
-    </script>
+    <div id="errorMessage" class="message-box"></div>
 
+    <div id="loadingBox" class="loading">
+        <div class="spinner"></div>
+        <p>Loading administrator profile...</p>
+    </div>
 
-    <!-- ==========================================
-         MAIN CONTAINER
-    ========================================== -->
+    <div id="profileCard" class="profile-card hidden">
 
-    <div class="page-container">
+        <div class="hero">
 
-        <div class="admin-card">
+            <div class="hero-tag">ADMINISTRATOR PROFILE</div>
 
-            <!-- ==========================================
-                 HEADER
-            ========================================== -->
+            <div class="profile-main">
 
-            <div class="card-header">
-                <h1>Admin Details</h1>
-                <p>KALI LIFE ECOSYSTEM - Admin Management</p>
-            </div>
+                <div id="adminAvatar" class="avatar">A</div>
 
+                <div class="profile-heading">
+                    <h1 id="adminName">Administrator</h1>
+                    <p id="adminSubtitle">KALI LIFE ECOSYSTEM</p>
 
-            <!-- ==========================================
-                 ADMIN INFORMATION
-            ========================================== -->
+                    <div class="badges">
+                        <span id="roleBadge" class="badge role-badge">
+                            Admin
+                        </span>
 
-            <div class="admin-details">
-
-                <!-- ERROR -->
-                <div id="errorMessage" class="message"></div>
-
-                <!-- ADMIN ID -->
-                <div class="detail-row">
-                    <span class="detail-label">Admin ID</span>
-                    <span id="adminId" class="detail-value">-</span>
-                </div>
-
-                <!-- NAME -->
-                <div class="detail-row">
-                    <span class="detail-label">Name</span>
-                    <span id="adminName" class="detail-value">-</span>
-                </div>
-
-                <!-- ROLE -->
-                <div class="detail-row">
-                    <span class="detail-label">Role</span>
-                    <span id="adminRole" class="detail-value">-</span>
-                </div>
-
-                <!-- REPORTS TO -->
-                <div class="detail-row">
-                    <span class="detail-label">Reports To</span>
-                    <span id="adminReportsTo" class="detail-value">-</span>
-                </div>
-
-                <!-- STATUS -->
-                <div class="detail-row">
-                    <span class="detail-label">Status</span>
-                    <span id="adminStatus" class="detail-value">-</span>
+                        <span id="statusBadge" class="badge status-badge">
+                            ● Active
+                        </span>
+                    </div>
                 </div>
 
             </div>
+        </div>
 
+        <div class="content">
 
-            <!-- ==========================================
-                 FOOTER
-            ========================================== -->
+            <div class="section-title">Administrator Information</div>
 
-            <div class="card-footer">
-                <button type="button" class="back-button" onclick="goBack()">
-                    ← Back to Admin List
-                </button>
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <div class="info-label">Admin ID</div>
+                    <div id="adminId" class="info-value small">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Administrator Name</div>
+                    <div id="adminFullName" class="info-value">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Assigned Role</div>
+                    <div id="adminRole" class="info-value">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Department</div>
+                    <div id="adminDepartment" class="info-value">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Reports To</div>
+                    <div id="adminReportsTo" class="info-value">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Account Status</div>
+                    <div id="adminStatus" class="info-value">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Created Date</div>
+                    <div id="adminCreatedAt" class="info-value">—</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Account Type</div>
+                    <div id="adminAccountType" class="info-value">Administrator</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-note">
+                Secure Administrator Information
             </div>
 
+            <button type="button" class="back-btn" onclick="goBack()">
+                ← Back to Admin List
+            </button>
         </div>
 
     </div>
 
-
-    <!-- ==========================================
-         VIEW ADMIN JAVASCRIPT (Firebase)
-    ========================================== -->
-
-    <script type="module">
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-        /* Firebase Configuration */
-        const firebaseConfig = {
-            apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
-            authDomain: "kali-life-ecosystem.firebaseapp.com",
-            projectId: "kali-life-ecosystem",
-            storageBucket: "kali-life-ecosystem.firebasestorage.app",
-            messagingSenderId: "734170546737",
-            appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
-            measurementId: "G-LBEY0W7RX3"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        /* Get Admin ID from URL */
-        const params = new URLSearchParams(window.location.search);
-        const adminId = params.get("id");
-
-        const errorMessage = document.getElementById("errorMessage");
-
-        /* Load Admin Data from Firebase */
-        async function loadAdmin() {
-
-            if (!adminId) {
-                showError("Admin information was not found.");
-                return;
-            }
-
-            try {
-                const docRef = doc(db, "users", adminId);
-                const docSnap = await getDoc(docRef);
-
-                if (!docSnap.exists()) {
-                    showError("Admin information was not found.");
-                    return;
-                }
-
-                const admin = docSnap.data();
-
-                // Admin ID
-                document.getElementById("adminId").textContent =
-                    admin.uid || adminId || "-";
-
-                // Name
-                document.getElementById("adminName").textContent =
-                    admin.name || admin.fullName || "-";
-
-                // Role
-                document.getElementById("adminRole").textContent =
-                    admin.roleType || admin.role || "-";
-
-                // Reports To
-                document.getElementById("adminReportsTo").textContent =
-                    admin.createdByRole || admin.reportsTo || "Super Admin";
-
-                // Status
-                const status = admin.status || "Active";
-                const statusElement = document.getElementById("adminStatus");
-                statusElement.textContent = status;
-
-                if (status.toLowerCase() === "active") {
-                    statusElement.classList.add("status-active");
-                } else {
-                    statusElement.classList.add("status-inactive");
-                }
-
-            } catch (error) {
-                console.error("View Admin Error:", error);
-                showError("Admin information was not found.");
-            }
-        }
-
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = "block";
-        }
-
-        /* Back Button */
-        window.goBack = function () {
-            window.location.href = "admin-list.html";
-        };
-
-        /* Initialize */
-        loadAdmin();
-
-    </script>
-
+</div>
 </body>
+    </html>
+                        
+<!-- ==========================================
+     SECURITY CHECK
+========================================== -->
+<script>
+    checkLogin();
+    checkRole("Super Admin");
+</script>
 
+<!-- ==========================================
+     FIREBASE + DYNAMIC ADMIN PROFILE
+========================================== -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* FIREBASE CONFIGURATION */
+const firebaseConfig = {
+    apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
+    authDomain: "kali-life-ecosystem.firebaseapp.com",
+    projectId: "kali-life-ecosystem",
+    storageBucket: "kali-life-ecosystem.firebasestorage.app",
+    messagingSenderId: "734170546737",
+    appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10",
+    measurementId: "G-LBEY0W7RX3"
+};
+
+/* INITIALIZE FIREBASE */
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* DOM ELEMENTS */
+const loadingBox = document.getElementById("loadingBox");
+const profileCard = document.getElementById("profileCard");
+const errorMessage = document.getElementById("errorMessage");
+
+/* ADMIN ID FROM URL */
+const params = new URLSearchParams(window.location.search);
+const adminId = params.get("id");
+
+/* SAFE TEXT DISPLAY */
+function setText(id, value, fallback = "Not available") {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    if (value === undefined || value === null || value === "") {
+        element.textContent = fallback;
+    } else {
+        element.textContent = String(value);
+    }
+}
+
+/* GET INITIALS */
+function getInitials(name) {
+    if (!name || typeof name !== "string") return "A";
+
+    const words = name.trim().split(/\s+/).filter(Boolean);
+
+    if (words.length >= 2) {
+        return (words[0][0] + words[1][0]).toUpperCase();
+    }
+
+    return name.substring(0, 2).toUpperCase();
+}
+
+/* DATE FORMATTER */
+function formatDate(value) {
+    if (!value) return "Not available";
+
+    let date;
+
+    if (value.toDate && typeof value.toDate === "function") {
+        date = value.toDate();
+    } else if (value.seconds) {
+        date = new Date(value.seconds * 1000);
+    } else {
+        date = new Date(value);
+    }
+
+    if (isNaN(date.getTime())) {
+        return "Not available";
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+/* SHOW ERROR */
+function showError(message) {
+    loadingBox.classList.add("hidden");
+    profileCard.classList.add("hidden");
+
+    errorMessage.textContent = message;
+    errorMessage.style.display = "block";
+}
+
+/* LOAD ADMIN PROFILE */
+async function loadAdminProfile() {
+
+    if (!adminId) {
+        showError("Admin ID is missing from the page URL.");
+        return;
+    }
+
+    try {
+
+        const adminRef = doc(db, "users", adminId);
+        const adminSnap = await getDoc(adminRef);
+
+        if (!adminSnap.exists()) {
+            showError("Administrator record could not be found.");
+            return;
+        }
+
+        const admin = adminSnap.data();
+
+        /* NAME */
+        const name =
+            admin.name ||
+            admin.fullName ||
+            admin.displayName ||
+            "Administrator";
+
+        setText("adminName", name);
+        setText("adminFullName", name);
+
+        /* AVATAR */
+        document.getElementById("adminAvatar").textContent =
+            getInitials(name);
+
+        /* ROLE */
+        const role =
+            admin.roleType ||
+            admin.role ||
+            admin.adminRole ||
+            "Admin";
+
+        setText("adminRole", role);
+        setText("roleBadge", role);
+
+        /* DEPARTMENT */
+        const department =
+            admin.department ||
+            admin.departmentName ||
+            admin.assignedDepartment ||
+            admin.coreDepartment ||
+            admin.sector ||
+            "";
+
+        setText("adminDepartment", department, "Not assigned");
+
+        /* ADMIN ID */
+        setText("adminId", admin.uid || adminId);
+
+        /* REPORTS TO */
+        const reportsTo =
+            admin.createdByRole ||
+            admin.reportsTo ||
+            admin.createdBy ||
+            "Super Admin";
+
+        setText("adminReportsTo", reportsTo);
+
+        /* STATUS */
+        const status = admin.status || "Active";
+        const statusElement = document.getElementById("adminStatus");
+        const statusBadge = document.getElementById("statusBadge");
+
+        statusElement.textContent = status;
+        statusBadge.textContent = "● " + status;
+
+        if (String(status).toLowerCase() === "active") {
+            statusBadge.classList.remove("inactive");
+        } else {
+            statusBadge.classList.add("inactive");
+        }
+
+        /* CREATED DATE */
+        const createdAt =
+            admin.createdAt ||
+            admin.timestamp ||
+            admin.dateCreated ||
+            admin.registeredAt ||
+            null;
+
+        setText("adminCreatedAt", formatDate(createdAt));
+
+        /* ACCOUNT TYPE */
+        setText(
+            "adminAccountType",
+            admin.accountType || admin.adminType || "Administrator"
+        );
+
+        /* PAGE TITLE */
+        document.title = name + " | KALI LIFE ECOSYSTEM";
+
+        /* SHOW PROFILE */
+        loadingBox.classList.add("hidden");
+        errorMessage.style.display = "none";
+        profileCard.classList.remove("hidden");
+
+    } catch (error) {
+
+        console.error("Admin Profile Loading Error:", error);
+
+        showError(
+            "Unable to load administrator information. Please try again."
+        );
+    }
+}
+
+/* BACK BUTTON */
+window.goBack = function () {
+    window.location.href = "admin-list.html";
+};
+
+/* START */
+loadAdminProfile();
+
+            </script>
+            </body>
+</html>
+</body>
 </html>
