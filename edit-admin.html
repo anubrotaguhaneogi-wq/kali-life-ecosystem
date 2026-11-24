@@ -98,6 +98,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   flex-wrap:wrap;margin:20px 0
 }
 .links a{color:#9de9b6;text-decoration:none;font-size:12px}
+.links a:hover{text-decoration:underline}
 #message{margin-top:15px}
 @media(max-width:600px){
   body{padding:10px}
@@ -108,6 +109,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 }
 </style>
 </head>
+
 <body>
 <div class="wrap">
 
@@ -141,7 +143,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <div class="profile">
     <div class="avatar">
       <span id="avatarFallback">👤</span>
-      <img id="avatar" class="hidden" alt="Admin photo">
+      <img id="avatarImg" class="hidden" alt="Admin photo">
     </div>
     <div>
       <strong>Admin UID</strong>
@@ -153,16 +155,19 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <div class="grid">
     <div class="field">
       <label for="name">Full Name</label>
-      <input id="name" maxlength="100">
+      <input id="name" maxlength="100" placeholder="Enter admin name">
     </div>
+
     <div class="field">
       <label for="email">Email</label>
       <input id="email" readonly>
     </div>
+
     <div class="field">
       <label for="mobile">Mobile</label>
       <input id="mobile" readonly>
     </div>
+
     <div class="field">
       <label for="status">Account Status</label>
       <select id="status">
@@ -192,7 +197,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   </div>
 
   <div id="reportsWrap" class="field">
-    <label for="reportsTo">Reports To</label>
+    <label for="reportsTo">Reports To (Core Admin)</label>
     <select id="reportsTo">
       <option value="">Select Core Admin</option>
     </select>
@@ -205,6 +210,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 <section class="card">
   <h3>Profile Photo</h3>
+
   <div class="field">
     <label for="photo">Upload Photo</label>
     <input id="photo" class="file" type="file"
@@ -216,14 +222,17 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 <section class="card">
   <h3>Actions</h3>
+
   <div class="notice warn">
-    Carefully check the administrator details before saving.
+    Carefully check administrator details before saving.
   </div>
+
   <div class="actions">
-    <button id="saveBtn" class="primary">Save Changes</button>
-    <button id="deleteBtn" class="danger">Delete Admin</button>
-    <button id="backBtn" class="secondary">Back to Admin List</button>
+    <button id="saveBtn" class="primary" type="button">Save Changes</button>
+    <button id="deleteBtn" class="danger" type="button">Delete Admin</button>
+    <button id="backBtn" class="secondary" type="button">Back to Admin List</button>
   </div>
+
   <div id="message" class="hidden"></div>
 </section>
 
@@ -234,11 +243,16 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <a href="admin-list.html">Admin List</a>
   <a href="create-admin.html">Create Admin</a>
 </nav>
+
 </div>
-<!-- PART 2 starts here -->
-  <img id="avatar" class="hidden" alt="Admin photo">
+
+<!-- PART 1 END | PART 2 START -->
   
 <script type="module">
+
+// ===============================
+// FIREBASE IMPORTS
+// ===============================
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -248,7 +262,7 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
   getFirestore, collection, getDocs, doc, getDoc,
-  updateDoc, deleteDoc, query, where
+  updateDoc, deleteDoc
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
@@ -256,6 +270,10 @@ import {
   getStorage, ref, uploadBytes, getDownloadURL, deleteObject
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+// ===============================
+// FIREBASE CONFIG
+// ===============================
 
 const firebaseConfig = {
   apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjGkT7B_OxZo",
@@ -272,6 +290,10 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 
+// ===============================
+// CONSTANTS
+// ===============================
+
 const USERS = "users";
 const CORE = "Core Admin";
 const DEPT = "Departmental Admin";
@@ -284,6 +306,10 @@ const DEPARTMENTS = [
   "Education"
 ];
 
+// ===============================
+// GLOBAL VARIABLES
+// ===============================
+
 const $ = id => document.getElementById(id);
 
 let sessionUser = null;
@@ -291,6 +317,10 @@ let targetUid = "";
 let targetData = null;
 let chosenPhoto = null;
 let coreAdmins = [];
+
+// ===============================
+// HELPER FUNCTIONS
+// ===============================
 
 function roleOf(data){
   return String(data?.roleType || data?.role || "").trim();
@@ -303,6 +333,7 @@ function isActive(data){
 
 function getTargetUid(){
   const params = new URLSearchParams(location.search);
+
   return (
     params.get("uid") ||
     params.get("id") ||
@@ -316,6 +347,7 @@ function showMessage(text,type="success"){
   const box = $("message");
   box.textContent = text;
   box.className = "notice " + (type==="error" ? "error" : "");
+  box.classList.remove("hidden");
 }
 
 function clearMessage(){
@@ -345,6 +377,10 @@ function setPhoto(url){
   }
 }
 
+// ===============================
+// DEPARTMENT DROPDOWN
+// ===============================
+
 function fillDepartments(){
   const select = $("department");
   select.innerHTML = '<option value="">Select Department</option>';
@@ -357,6 +393,10 @@ function fillDepartments(){
   });
 }
 
+// ===============================
+// ROLE INTERFACE
+// ===============================
+
 function updateRoleUI(){
   const role = $("role").value;
   const isCore = role === CORE;
@@ -365,8 +405,8 @@ function updateRoleUI(){
   $("reportsWrap").classList.toggle("hidden",isCore);
 
   $("roleNote").textContent = isCore
-    ? "Core Admin role selected."
-    : "Departmental Admin must have a department and a Core Admin manager.";
+    ? "Core Admin has operational access. Super Admin retains final authority."
+    : "Departmental Admin requires a department and an active Core Admin manager.";
 
   if(isCore){
     $("department").value = "";
@@ -374,24 +414,43 @@ function updateRoleUI(){
   }
 }
 
+// ===============================
+// SUPER ADMIN VERIFICATION
+// ===============================
+
 async function verifySuperAdmin(user){
-  if(!user) throw new Error("Please login first.");
+  if(!user){
+    throw new Error("Please login first.");
+  }
 
   const snap = await getDoc(doc(db,USERS,user.uid));
-  if(!snap.exists()) throw new Error("Your admin profile was not found.");
+
+  if(!snap.exists()){
+    throw new Error("Your administrator profile was not found.");
+  }
 
   const profile = snap.data();
   const role = roleOf(profile).toLowerCase();
-  const status = String(profile.status || "Active").toLowerCase();
+  const status = String(profile.status || "Active")
+    .trim().toLowerCase();
 
-  if(role !== "super admin")
+  if(role !== "super admin"){
     throw new Error("Super Admin access is required.");
+  }
 
-  if(status === "inactive" || status === "blocked")
-    throw new Error("Your account is not active.");
+  if(status === "inactive" || status === "blocked"){
+    throw new Error("Your account is inactive or blocked.");
+  }
 
-  sessionUser = {...profile,uid:user.uid};
+  sessionUser = {
+    ...profile,
+    uid:user.uid
+  };
 }
+
+// ===============================
+// LOAD CORE ADMIN LIST
+// ===============================
 
 async function loadCoreAdmins(){
   const snapshot = await getDocs(collection(db,USERS));
@@ -401,7 +460,11 @@ async function loadCoreAdmins(){
     const data = ds.data();
     const role = roleOf(data);
 
-    if(ds.id !== targetUid && role === CORE && isActive(data)){
+    if(
+      ds.id !== targetUid &&
+      role === CORE &&
+      isActive(data)
+    ){
       coreAdmins.push({
         uid:ds.id,
         name:data.name || data.fullName || data.email || ds.id
@@ -422,39 +485,64 @@ async function loadCoreAdmins(){
   });
 }
 
+// ===============================
+// LOAD ADMIN PROFILE
+// ===============================
+
 async function loadTargetAdmin(){
   targetUid = getTargetUid();
 
-  if(!targetUid)
+  if(!targetUid){
     throw new Error("Admin UID is missing from the URL.");
+  }
 
   const snap = await getDoc(doc(db,USERS,targetUid));
 
-  if(!snap.exists())
+  if(!snap.exists()){
     throw new Error("Administrator profile not found.");
+  }
 
   targetData = snap.data();
 
-  if(roleOf(targetData).toLowerCase() === "super admin")
+  if(roleOf(targetData).toLowerCase() === "super admin"){
     throw new Error("Super Admin profile cannot be edited here.");
+  }
 
   $("uidText").textContent = targetUid;
-  $("roleBadge").textContent = roleOf(targetData);
+  $("roleBadge").textContent = roleOf(targetData) || "Unknown Role";
 
-  $("name").value = targetData.name || targetData.fullName || "";
+  $("name").value =
+    targetData.name || targetData.fullName || "";
+
   $("email").value = targetData.email || "";
-  $("mobile").value = targetData.mobile || targetData.phone || "";
 
-  $("status").value = isActive(targetData) ? "Active" : "Inactive";
-  $("role").value = roleOf(targetData) === DEPT ? DEPT : CORE;
+  $("mobile").value =
+    targetData.mobile || targetData.phone || "";
+
+  $("status").value = isActive(targetData)
+    ? "Active"
+    : "Inactive";
+
+  $("role").value =
+    roleOf(targetData) === DEPT
+      ? DEPT
+      : CORE;
+
+  fillDepartments();
+
   $("department").value = targetData.department || "";
 
-  setPhoto(targetData.photoURL || targetData.photo || "");
+  setPhoto(
+    targetData.photoURL ||
+    targetData.photo ||
+    ""
+  );
 
   await loadCoreAdmins();
 
-  if(targetData.reportsTo)
+  if(targetData.reportsTo){
     $("reportsTo").value = targetData.reportsTo;
+  }
 
   updateRoleUI();
 
@@ -462,10 +550,20 @@ async function loadTargetAdmin(){
   $("editor").classList.remove("hidden");
 }
 
-// PART 3 starts here
-</script>
+// ===============================
+// PART 2 END | PART 3 START
+// ===============================
+  
+  
+// ===============================
+// ROLE CHANGE EVENT
+// ===============================
 
 $("role").addEventListener("change",updateRoleUI);
+
+// ===============================
+// PHOTO PREVIEW
+// ===============================
 
 $("photo").addEventListener("change",event=>{
   chosenPhoto = event.target.files?.[0] || null;
@@ -476,18 +574,28 @@ $("photo").addEventListener("change",event=>{
 
   if(chosenPhoto){
     const reader = new FileReader();
+
     reader.onload = e=>{
       $("avatarImg").src = e.target.result;
       $("avatarImg").classList.remove("hidden");
       $("avatarFallback").classList.add("hidden");
     };
+
     reader.readAsDataURL(chosenPhoto);
   }
 });
 
+// ===============================
+// BACK BUTTON
+// ===============================
+
 $("backBtn").addEventListener("click",()=>{
   location.href = "admin-list.html";
 });
+
+// ===============================
+// SAVE ADMIN
+// ===============================
 
 $("saveBtn").addEventListener("click",async()=>{
   clearMessage();
@@ -504,7 +612,10 @@ $("saveBtn").addEventListener("click",async()=>{
   }
 
   if(role === DEPT && (!department || !reportsTo)){
-    showMessage("Department and Reports To are required.","error");
+    showMessage(
+      "Department and Reports To are required.",
+      "error"
+    );
     return;
   }
 
@@ -520,7 +631,11 @@ $("saveBtn").addEventListener("click",async()=>{
     let photoURL = targetData.photoURL || targetData.photo || "";
 
     if(chosenPhoto){
-      const photoRef = ref(storage,`admin-photos/${targetUid}.jpg`);
+      const photoRef = ref(
+        storage,
+        `admin-photos/${targetUid}.jpg`
+      );
+
       await uploadBytes(photoRef,chosenPhoto);
       photoURL = await getDownloadURL(photoRef);
     }
@@ -528,10 +643,14 @@ $("saveBtn").addEventListener("click",async()=>{
     let reportsToName = "";
 
     if(role === DEPT){
-      const manager = coreAdmins.find(c=>c.uid===reportsTo);
+      const manager = coreAdmins.find(
+        core=>core.uid === reportsTo
+      );
+
       if(!manager){
         throw new Error("Selected Core Admin is invalid.");
       }
+
       reportsToName = manager.name;
     }
 
@@ -540,19 +659,25 @@ $("saveBtn").addEventListener("click",async()=>{
       roleType:role,
       role:role,
       status:status,
-      department:role===CORE ? "" : department,
-      reportsTo:role===CORE ? "" : reportsTo,
-      reportsToName:role===CORE ? "" : reportsToName,
+      department:role === CORE ? "" : department,
+      reportsTo:role === CORE ? "" : reportsTo,
+      reportsToName:role === CORE ? "" : reportsToName,
       photoURL:photoURL,
       updatedAt:new Date().toISOString(),
       updatedBy:sessionUser.uid
     };
 
-    await updateDoc(doc(db,USERS,targetUid),patch);
+    await updateDoc(
+      doc(db,USERS,targetUid),
+      patch
+    );
 
-    targetData = {...targetData,...patch};
+    targetData = {
+      ...targetData,
+      ...patch
+    };
+
     chosenPhoto = null;
-
     $("photo").value = "";
     $("photoName").textContent = "No new photo selected";
     $("roleBadge").textContent = role;
@@ -562,31 +687,52 @@ $("saveBtn").addEventListener("click",async()=>{
 
   }catch(error){
     console.error("Edit Admin Save Error:",error);
-    showMessage("Save failed: "+(error.message || error),"error");
+
+    showMessage(
+      "Save failed: " + (error.message || error),
+      "error"
+    );
+
   }finally{
     $("saveBtn").disabled = false;
     $("deleteBtn").disabled = false;
   }
 });
 
+// ===============================
+// DELETE ADMIN PROFILE
+// ===============================
+
 $("deleteBtn").addEventListener("click",async()=>{
   clearMessage();
 
   if(targetUid === sessionUser.uid){
-    showMessage("You cannot delete your own account.","error");
+    showMessage(
+      "You cannot delete your own account.",
+      "error"
+    );
     return;
   }
 
-  if(roleOf(targetData) === "Super Admin"){
-    showMessage("Super Admin cannot be deleted.","error");
+  if(roleOf(targetData).toLowerCase() === "super admin"){
+    showMessage(
+      "Super Admin cannot be deleted.",
+      "error"
+    );
     return;
   }
 
+  // Prevent deleting Core Admin with assigned admins
   if(roleOf(targetData) === CORE){
     const snapshot = await getDocs(collection(db,USERS));
+
     const hasSubAdmins = snapshot.docs.some(ds=>{
       const data = ds.data();
-      return ds.id !== targetUid && data.reportsTo === targetUid;
+
+      return (
+        ds.id !== targetUid &&
+        data.reportsTo === targetUid
+      );
     });
 
     if(hasSubAdmins){
@@ -602,13 +748,18 @@ $("deleteBtn").addEventListener("click",async()=>{
     `Delete admin profile for ${targetData.name || targetUid}?\n\nThis removes the Firestore profile only.`
   );
 
-  if(!confirmed) return;
+  if(!confirmed){
+    return;
+  }
 
   $("saveBtn").disabled = true;
   $("deleteBtn").disabled = true;
 
   try{
-    const photoRef = ref(storage,`admin-photos/${targetUid}.jpg`);
+    const photoRef = ref(
+      storage,
+      `admin-photos/${targetUid}.jpg`
+    );
 
     try{
       await deleteObject(photoRef);
@@ -618,7 +769,9 @@ $("deleteBtn").addEventListener("click",async()=>{
       }
     }
 
-    await deleteDoc(doc(db,USERS,targetUid));
+    await deleteDoc(
+      doc(db,USERS,targetUid)
+    );
 
     showMessage("Admin profile deleted successfully.");
 
@@ -628,14 +781,27 @@ $("deleteBtn").addEventListener("click",async()=>{
 
   }catch(error){
     console.error("Delete Admin Error:",error);
-    showMessage("Delete failed: "+(error.message || error),"error");
+
+    showMessage(
+      "Delete failed: " + (error.message || error),
+      "error"
+    );
+
   }finally{
     $("saveBtn").disabled = false;
     $("deleteBtn").disabled = false;
   }
 });
 
+// ===============================
+// INITIALIZE DEPARTMENTS
+// ===============================
+
 fillDepartments();
+
+// ===============================
+// AUTHENTICATION & INITIAL LOAD
+// ===============================
 
 onAuthStateChanged(auth,async user=>{
   try{
@@ -649,9 +815,16 @@ onAuthStateChanged(auth,async user=>{
 
   }catch(error){
     console.error("Edit Admin Initialization Error:",error);
-    showError(error.message || "Failed to load Admin Editor.");
+
+    showError(
+      error.message || "Failed to load Admin Editor."
+    );
   }
 });
+
+// ===============================
+// PART 3 END | FILE END
+// ===============================
 
 </script>
 </body>
