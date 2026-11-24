@@ -415,6 +415,17 @@ async function loadAdminData() {
         $("accessDenied").classList.add("show");
         $("accessDenied").textContent = "ডাটা লোড করতে সমস্যা হয়েছে।";
         }
+        } catch (err) {
+        console.error(err);
+        $("loadingBox").classList.add("hidden");
+        $("accessDenied").classList.add("show");
+        $("accessDenied").textContent = "ডাটা লোড করতে সমস্যা হয়েছে।";
+    }
+
+} // End of loadAdminData()
+
+/* =========================================================
+   SAVE CHANGES
     /* =========================================================
    SAVE CHANGES
 ========================================================= */
