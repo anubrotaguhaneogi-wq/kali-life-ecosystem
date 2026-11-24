@@ -931,6 +931,249 @@ loadCoreMarketOrders();
 
 }
 
+/* ==========================================
+   CORE ADMIN MARKET ORDERS
+========================================== */
+
+async function loadCoreMarketOrders() {
+
+    const container = document.getElementById(
+        "marketOrdersContainer"
+    );
+
+    if (!container) {
+        console.error("Market Orders container not found.");
+        return;
+    }
+
+    container.innerHTML = "Loading Core Admin Orders...";
+
+    try {
+
+        const { initializeApp, getApps } =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js"
+            );
+
+        const { getFirestore, collection, getDocs } =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"
+            );
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqXcxTrI22Ju1Rj9mtbUSCjT7B_OxZo",
+            authDomain: "kali-life-ecosystem.firebaseapp.com",
+            projectId: "kali-life-ecosystem",
+            storageBucket: "kali-life-ecosystem.firebasestorage.app",
+            messagingSenderId: "734170546737",
+            appId: "1:734170546737:web:26f79e1b4b19ebabfe0b10"
+        };
+
+        let marketApp = getApps().find(
+            app => app.name === "KALI_MARKET_VIEW"
+        );
+
+        if (!marketApp) {
+            marketApp = initializeApp(
+                firebaseConfig,
+                "KALI_MARKET_VIEW"
+            );
+        }
+
+        const db = getFirestore(marketApp);
+
+        const snapshot = await getDocs(
+            collection(db, "marketOrders")
+        );
+
+        const orders = [];
+
+        snapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+            if (
+                data.orderType === "CORE_MARKET_ORDER"
+            ) {
+
+                orders.push({
+                    id: docSnap.id,
+                    ...data
+                });
+
+            }
+
+        });
+
+        orders.sort(
+            (a, b) =>
+                (b.createdAtMs || 0) -
+                (a.createdAtMs || 0)
+        );
+
+        if (orders.length === 0) {
+
+            container.innerHTML = `
+                <div style="padding:20px;text-align:center;">
+                    No Core Admin Market Orders found.
+                </div>
+            `;
+
+            return;
+        }
+
+        function safeText(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+        let html = "";
+
+        orders.forEach(order => {
+
+            const adminName =
+                order.requestedByName ||
+                order.coreAdminName ||
+                "Core Admin";
+
+            const items = Array.isArray(order.items)
+                ? order.items
+                : [];
+
+            const totalQuantity =
+                Number(order.totalQuantity || 0);
+
+            const totalAmount =
+                Number(
+                    order.estimatedTotal ||
+                    order.totalAmount ||
+                    0
+                );
+
+            html += `
+                <div style="
+                    border:1px solid #ddd;
+                    border-radius:12px;
+                    padding:16px;
+                    margin-bottom:15px;
+                    background:#fff;
+                    color:#222;
+                ">
+
+                    <h3 style="margin-top:0;color:#b8860b;">
+                        ${safeText(adminName)}
+                    </h3>
+
+                    <p>
+                        <b>Customer:</b>
+                        ${safeText(order.customerName || "-")}
+                    </p>
+
+                    <p>
+                        <b>Mobile:</b>
+                        ${safeText(order.customerMobile || "-")}
+                    </p>
+
+                    <p>
+                        <b>Market / Supplier:</b>
+                        ${safeText(order.marketName || "-")}
+                    </p>
+
+                    <p>
+                        <b>Order Date:</b>
+                        ${safeText(order.orderDate || order.dateText || "-")}
+                    </p>
+
+                    <p>
+                        <b>Order Status:</b>
+                        ${safeText(order.orderStatus || "-")}
+                    </p>
+
+                    <p>
+                        <b>Payment Status:</b>
+                        ${safeText(order.paymentStatus || "-")}
+                    </p>
+
+                    <hr>
+
+                    <h4>Ordered Products</h4>
+
+                    ${
+                        items.length
+                        ? items.map(item => `
+                            <div style="
+                                padding:8px 0;
+                                border-bottom:1px solid #eee;
+                            ">
+                                <b>${safeText(item.productName || "-")}</b>
+                                <br>
+                                Quantity:
+                                ${safeText(item.quantity || 0)}
+                                <br>
+                                Unit Price:
+                                ₹${safeText(item.unitPrice || 0)}
+                                <br>
+                                Line Total:
+                                ₹${safeText(item.lineTotal || 0)}
+                            </div>
+                        `).join("")
+                        : "<p>No product details available.</p>"
+                    }
+
+                    <hr>
+
+                    <p>
+                        <b>Total Quantity:</b>
+                        ${safeText(totalQuantity)}
+                    </p>
+
+                    <h3 style="color:#087f23;">
+                        Order Total: ₹${totalAmount.toFixed(2)}
+                    </h3>
+
+                    ${
+                        order.note
+                        ? `<p><b>Note:</b> ${safeText(order.note)}</p>`
+                        : ""
+                    }
+
+                </div>
+            `;
+
+        });
+
+        container.innerHTML = html;
+
+    } catch (error) {
+
+        console.error(
+            "Core Admin Market Orders Error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div style="
+                padding:15px;
+                color:#b00020;
+                background:#fff0f0;
+                border-radius:10px;
+            ">
+                Failed to load Core Admin Market Orders.
+                <br>
+                <small>${String(error.message || error)}</small>
+            </div>
+        `;
+
+    }
+
+    }
+    
 
 /* ==========================================
    ADMIN STATISTICS
